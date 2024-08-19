@@ -1,0 +1,229 @@
+<div class="page-sidebar">
+  
+  {% for block in section.blocks %}
+  {% case block.type %}
+  {% when 'category' %}
+  <div class="single-sidebar-widget mb-40 widget-collapse outSideCollapse">
+    {%- if block.settings.widget_title != '' -%}
+    <h2 class="single-sidebar-widget--title">{{ block.settings.widget_title }}</h2>
+    {%- endif -%}
+    <div class="sidebar-body widget-collapse-hide">
+      <ul class="single-sidebar-widget--list single-sidebar-widget--list--category">
+        {% assign categories_list_limit = block.settings.categories_list_limit_hanlde %}
+        {% for c in collections limit: categories_list_limit %}
+        <li class="{% if collection and collection.handle == c.handle %}active{% endif %}"><a href="{{ c.url }}">{{ c.title }} <span>({{ c.products_count }})</span></a></li>
+        {% endfor %}
+
+      </ul>
+    </div>
+  </div>
+
+  {% when 'menu' %}
+  <div class="single-sidebar-widget category-sub-menu mb-40 widget-collapse outSideCollapse">
+    {%- if block.settings.widget_title != '' -%}
+    <h2 class="single-sidebar-widget--title">{{ block.settings.widget_title }}</h2>
+    {%- endif -%}
+    <div class="sidebar-body widget-collapse-hide">
+      <ul class="category__menu">
+        {% assign menu = block.settings.menu_handle %}
+        {% for link in linklists[menu].links %}
+        {% assign childlink_handle = link.title | handle %}
+        {% if linklists[childlink_handle] and linklists[childlink_handle].links != blank %}
+        <li class="has-sub {% if link.active %}active{% endif %}"><a class="cat_main__Menu" href="{{ link.url }}">{{ link.title }}</a>
+          <ul class="cat__sub_menu">
+            {% for childlink in linklists[childlink_handle].links %}
+            {%- if childlink.links != blank -%}
+            <li class="has-sub"><a href="{{ childlink.url }}">{{ childlink.title }}</a>
+              <ul class="cat__sub_menu">
+                {%- for grandchildlink in childlink.links -%}
+                <li><a href="{{ grandchildlink.url }}">{{ grandchildlink.title | escape }}</a></li>
+                {%- endfor -%}
+              </ul>
+            </li>
+            {%- else -%}
+            <li><a href="{{ childlink.url }}">{{ childlink.title }}</a></li>
+            {%- endif -%}
+            {% endfor %}
+          </ul>
+        </li>
+        {% else %}
+        <li class="{% if link.active %}active{% endif %}"><a class="cat_main__Menu" href="{{ link.url }}">{{ link.title }}</a></li>
+        {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  {% endcase %}
+  {% endfor %}
+  
+  <form class="filter-form DesktopFilter" name="filterForm" id="myform">
+
+    {%- for filter in collection.filters -%}
+    {%- case filter.type -%}
+    {%- when 'list' -%}
+    <div class="single-sidebar-widget mb-40 widget-collapse">
+      <h2 class="single-sidebar-widget--title">
+        {{ filter.label }}
+      </h2>
+      <div class="sidebar-body widget-collapse-hide" {% if forloop.index > 3 %} style="display: none;" {% endif %}>
+        <ul class="checkbox-container categories-list">
+          {%- for value in filter.values -%}
+           <li class="list-menu__item facets__item">
+                <label for="Filter-{{ filter.label | escape }}-{{ forloop.index }}" class="facet-checkbox{% if value.count == 0 and value.active == false %} facet-checkbox--disabled{% endif %}">
+                  <input type="checkbox"
+                         name="{{ value.param_name }}"
+                         value="{{ value.value }}"
+                         id="Filter-{{ filter.label | escape }}-{{ forloop.index }}"
+                         {% if value.active %}checked{% endif %}
+                         {% if value.count == 0 and value.active == false %}disabled{% endif %}
+                         >
+
+                  <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                    <rect width="16" height="16" stroke="currentColor" fill="none" stroke-width="1"></rect>
+                  </svg>
+
+                  <svg class="icon icon-checkmark"
+                       width="11"
+                       height="7"
+                       viewBox="0 0 11 7"
+                       fill="none"
+                       xmlns="http://www.w3.org/2000/svg">
+
+                    <path d="M1.5 3.5L2.83333 4.75L4.16667 6L9.5 1"
+                          stroke="currentColor"
+                          stroke-width="1.75"
+                          stroke-linecap="round"
+                          stroke-linejoin="round" />
+                  </svg>
+                {{ value.label | escape }} ({{ value.count }})
+              </label>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    </div>
+
+    {%- when 'price_range' -%}
+    <div class="single-sidebar-widget mb-40 widget-collapse">
+      <h2 class="single-sidebar-widget--title">
+        {{ filter.label }}
+      </h2>
+      <div class="sidebar-body widget-collapse-hide">
+       
+        <div class="checkbox-container categories-list sidebar-price-filter">
+
+          <div class="filter-range-from">
+
+            <label for="Filter-{{ filter.label }}-{{ forloop.index }}">From</label>
+            <div class="filter_range_input">
+              <span>{{ cart.currency.symbol }}</span>
+              <input name="{{ filter.min_value.param_name }}"
+                     id="Filter-{{ filter.label }}-{{ forloop.index }}"
+                     {% if filter.min_value.value -%}
+                     value="{{ filter.min_value.value | money_without_currency | replace: ',', '' }}"
+                     {%- endif %}
+                  type="number"
+                     placeholder="0"
+                     min="0"
+                     max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                     >
+            </div>
+          </div>
+
+          <div class="filter-price-range-to">
+            <label for="Filter-{{ filter.label }}-{{ forloop.index }}">To</label>
+          
+            <div class="filter_range_input">
+              <span>{{ cart.currency.symbol }}</span>
+              <input name="{{ filter.max_value.param_name }}"
+                     id="Filter-{{ filter.label }}-{{ forloop.index }}"
+                     {% if filter.max_value.value -%}
+                     value="{{ filter.max_value.value | money_without_currency | replace: ',', '' }}"
+                     {%- endif %}
+                  type="number"
+                     placeholder="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                     min="0"
+                     max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                     >
+            </div>
+          </div>
+
+        </div>
+        <input class="mt-20 theme-default-button" type="submit" value="Filter">
+      </div>
+    </div>
+    {%- endcase -%}
+    {%- endfor -%}
+  </form>
+  
+  {% for block in section.blocks %}
+  {% case block.type %}
+  {% when 'banner' %}
+  {% capture i %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+  <div class="single-sidebar-widge widget__banner">
+
+    <div class="sidebar-body" style="background: #f2f2f2;">
+      {% if block.settings.banner_image != blank and block.settings.banner_image_url != blank %}
+      <a href="{{ block.settings.banner_image_url }}">
+        <img src="{{ block.settings.banner_image | img_url: 'grande' }}" alt="{{ block.settings.banner_image.alt }}">
+      </a>
+      {% elsif block.settings.banner_image != blank %}
+      <img src="{{ block.settings.banner_image | img_url: 'grande' }}" alt="{{ block.settings.banner_image.alt }}">
+      {% else %}
+      {% if block.settings.banner_image_url != blank %}
+      <a href="{{ block.settings.banner_image_url }}">
+        {{ 'collection-' | append: i | placeholder_svg_tag }}
+      </a>
+      {% else %}
+      {{ 'collection-' | append: i | placeholder_svg_tag }}
+      {% endif %}
+      {% endif %}
+    </div>
+  </div>
+
+  {% endcase %}
+  {% endfor %}
+ 
+</div>
+
+
+<style>
+/*  Before  */
+  .single-filter-widget--list--color li a {
+    text-indent: -9999px;
+  }
+  .single-filter-widget--list--size li {
+    display: inline-block;
+    margin-right: 5px;
+  }
+
+  .single-filter-widget--list--size li:last-child {
+    margin-right: 0;
+  }
+
+  .single-filter-widget--list--size li a {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ccc;
+    text-align: center;
+    line-height: 30px;
+  }
+  .single-filter-widget--list li.active a{
+    border-color: #333;
+  }
+  .single-filter-widget--list li.active:before {
+    position: absolute;
+    content: "\f36e";
+    font-family: Ionicons;
+    top: -11px;
+    right: -3px;
+    font-size: 14px;
+    pointer-events: none;
+    color: #333;
+    z-index: 9;
+  }
+
+  .single-filter-widget--list li.active {
+    position: relative;
+  }
+</style>

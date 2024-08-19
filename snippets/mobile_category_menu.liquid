@@ -1,0 +1,95 @@
+<div class="offcanvas_overlay"></div>
+<div class="offcanvas-mobile-menu" id="category-mobile-menu-overlay">
+  <a href="javascript:void(0)" class="offcanvas-menu-close" id="category-mobile-menu-close-trigger">
+    <i class="ti-close"></i>
+  </a>
+  <div class="offcanvas-wrapper">
+    <div class="offcanvas-inner-content">
+                   <div class="new_header_search_bar">
+                {%- render 'search-bar-cat' -%}
+              </div>
+      <nav class="offcanvas-navigation" id="offcanvas__category--menu">
+        <ul>
+          {%- assign cat_menu = section.settings.cat_menu_handle -%}
+          {%- if cat_menu != blank -%}
+          {%- for link in linklists[cat_menu].links -%}
+          {%- assign childlink_handle = link.title | handle -%}
+          {% if linklists[childlink_handle] and linklists[childlink_handle].links.size > 0 %}
+          <li class="cat-item-has-children">
+            <a href="{{ link.url }}">{{ link.title }}</a>
+            <ul class="sub-cat-menu">
+              {% for childlink in linklists[childlink_handle].links %}
+              {% assign grand_childlink_handle = childlink.title | handle %}
+              {% if linklists[grand_childlink_handle] and linklists[grand_childlink_handle].links.size > 0 %}
+              <li class="cat-item-has-children">
+                <a href="{{ childlink.url }}">{{ childlink.title }}</a>
+                <ul class="sub-cat-menu">
+                  {% for grand_childlink in linklists[grand_childlink_handle].links %}
+                  <li><a href="{{ grand_childlink.url }}">{{ grand_childlink.title }}</a></li>
+                  {% endfor %}
+                </ul>
+              </li>
+              {% else %}
+              <li><a href="{{ childlink.url }}">{{ childlink.title }}</a></li>
+              {% endif %}  
+              {% endfor %}
+            </ul>
+          </li>
+          {% else %}
+          <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {%- endif -%}
+          {%- endfor -%}
+          {%- else -%}
+          <li><a href="#">Demo Item 1</a></li>
+          <li><a href="#">Demo Item 2</a></li>
+          <li><a href="#">Demo Item 3</a></li>
+          {%- endif -%}
+        </ul>
+      </nav>
+      
+    </div>
+  </div>
+</div>
+
+<script>
+
+  $("#category_mobile_trigger").on('click', function(){
+    $("#category-mobile-menu-overlay,.offcanvas_overlay").addClass("active");
+  });
+
+  $("#category-mobile-menu-close-trigger,.offcanvas_overlay").on('click', function(){
+    $("#category-mobile-menu-overlay,.offcanvas_overlay").removeClass("active");
+  });
+  
+    
+  /*=============================================
+    =            offcanvas mobile menu            =
+    =============================================*/
+
+  var $offCanvasNav = $('#offcanvas__category--menu'),
+      $offCanvasNavSubMenu = $offCanvasNav.find('.sub-cat-menu');
+
+  /*Add Toggle Button With Off Canvas Sub Menu*/
+  $offCanvasNavSubMenu.parent().prepend('<span class="menu-expand"><i></i></span>');
+
+  /*Close Off Canvas Sub Menu*/
+  $offCanvasNavSubMenu.slideUp();
+
+  /*Category Sub Menu Toggle*/
+  $offCanvasNav.on('click', 'li a, li .menu-expand', function(e) {
+    var $this = $(this);
+    if ( ($this.parent().attr('class').match(/\b(cat-item-has-children)\b/)) && ($this.attr('href') === '#' || $this.hasClass('menu-expand')) ) {
+      e.preventDefault();
+      if ($this.siblings('ul:visible').length){
+        $this.parent('li').removeClass('active');
+        $this.siblings('ul').slideUp();
+      } else {
+        $this.parent('li').addClass('active');
+        $this.closest('li').siblings('li').removeClass('active').find('li').removeClass('active');
+        $this.closest('li').siblings('li').find('ul:visible').slideUp();
+        $this.siblings('ul').slideDown();
+      }
+    }
+  });
+
+</script>

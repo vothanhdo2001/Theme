@@ -1,0 +1,389 @@
+{%- capture html -%}
+<div class="homepage-content--creative mb-20" id="section-{{ section.id }}" data-section="BannerSection">
+  <div class="{% if section.settings.container_width == 'container' %} container {% elsif section.settings.container_width == 'fluid' %} container wide {% endif %}">
+    <div class="row masonry-category-layout--creativehome">
+      {% for block in section.blocks %}
+      {%- case block.type -%}
+      {% when 'banner_grid_6' %}
+      <div class="col-lg-6 grid-item">
+        <div class="single-category single-category--three">
+          
+          <div class="single-category__image single-category__image--three single-category__image--three--creativehome">
+            {%- if block.settings.banner_img != blank -%}
+            <img id="bannerImage-{{ block.settings.banner_img.id }}" class="lazyload {{ image_class }}"
+               src="{{ block.settings.banner_img | img_url: 'master' }}" data-src="{{ block.settings.banner_img | img_url: 'master' }}" data-sizes="auto"
+               alt="{{  block.settings.banner_img.alt | escape }}">
+            {%- else -%}
+            
+            {%- if block.settings.banner_height == "sqaure" -%}
+            {%- render 'svg_placholder', param: 'image', size: '880x645' -%}
+            {%- else -%}
+            {%- render 'svg_placholder', param: 'image', size: '880x415' -%}
+            {%- endif -%}
+            {%- endif -%}
+          </div>
+
+          <div class="single-category__content single-category__content--three single-category__content--three--creativehome mt-25 mb-25">
+            <div class="title">
+              {% if block.settings.banner_title != blank  %}
+              <p><a href="{{ block.settings.banner_url }}">{{ block.settings.banner_title }}</a></p>
+              {% endif %}
+              
+              {% if block.settings.banner_button_text != blank %}
+              <a href="{{ block.settings.banner_url }}">{{ block.settings.banner_button_text }}</a>
+              {% endif %}
+            </div>
+
+          </div>
+          <!--=======  banner-link  =======-->
+
+          <a href="{{ block.settings.banner_url }}" class="banner-link"></a>
+
+          <!--=======  End of banner-link  =======-->
+        </div>
+        <!--=======  End of single category  =======-->
+      </div>
+      {% when 'banner_grid_3' %}
+      <div class="col-lg-3 grid-item grid-item--width2">
+
+        <div class="single-category single-category--three">
+          <!--=======  single category image  =======-->
+
+          <div class="single-category__image single-category__image--three single-category__image--three--creativehome">
+            {%- if block.settings.banner_img != blank -%}
+            <img id="bannerImage-{{ block.settings.banner_img.id }}" class="lazyload {{ image_class }}"
+               src="{{ block.settings.banner_img | img_url: 'master' }}" data-src="{{ block.settings.banner_img | img_url: 'master' }}" data-sizes="auto"
+               alt="{{  block.settings.banner_img.alt | escape }}">
+            {%- else -%}
+            {%- if block.settings.banner_height == "sqaure" -%}
+            {%- render 'svg_placholder', param: 'image', size: '420x415' -%}
+            {%- else -%}
+            {%- render 'svg_placholder', param: 'image', size: '420x640' -%}
+            {%- endif -%}
+            {%- endif -%}
+            
+           </div>
+
+          <div class="single-category__content single-category__content--three single-category__content--three--creativehome mt-25 mb-25">
+            <div class="title">
+              {% if block.settings.banner_title != blank  %}
+              <p><a href="{{ block.settings.banner_url }}">{{ block.settings.banner_title }}</a></p>
+              {% endif %}
+              
+              {% if block.settings.banner_button_text != blank %}
+              <a href="{{ block.settings.banner_url }}">{{ block.settings.banner_button_text }}</a>
+              {% endif %}
+            </div>
+          </div>
+          <a href="{{ block.settings.banner_url }}" class="banner-link"></a>
+
+        </div>
+      </div>
+      {%- endcase -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+
+{% render 'section_typography' %}
+
+
+{% schema %}
+  {
+    "name": "Banner Grid Masonry",
+    "settings": [
+		{
+          "type":  "radio",
+          "id":    "container_width",
+          "label": "Container Width",
+          "options": [
+            { "value": "container", "label": "Container" },
+            { "value": "fluid", "label": "Full Width" }
+          ],
+          "default":   "fluid"
+        }
+	],
+	"blocks":[
+	   {
+          "type": "banner_grid_6",
+          "name": "Banner Grid 6",
+		   "settings": [
+			{
+              "type":  "select",
+              "id":    "banner_height",
+              "label": "Banner Height",
+			  "info": "It's only for placeholder image",
+              "options": [
+                { "value": "sqaure", "label": "Square" },
+                { "value": "portrait", "label": "landscape" }
+              ],
+              "default":   "sqaure"
+            },
+            {
+              "type": "image_picker",
+              "id": "banner_img",
+              "label": "Banner Image",
+              "info": "Recommended Size: 880x645 px or 880x415 px"
+              },
+              {
+                "type": "textarea",
+                "id": "banner_title",
+                "label": "Banner Title",
+                "default": "New Arrivals"
+              },
+              {
+                  "type": "text",
+                  "id": "banner_button_text",
+                  "label": "Button Text",
+                  "default": "+ Shop Now"
+              },
+              {
+                "type": "url",
+                "id": "banner_url",
+                "label": "URL"
+              }
+          ]
+       },
+	   {
+          "type": "banner_grid_3",
+          "name": "Banner Grid 3",
+		   "settings": [ 
+			{
+              "type":  "select",
+              "id":    "banner_height",
+              "label": "Banner Height",
+			  "info": "It's only for placeholder image",
+              "options": [
+                { "value": "sqaure", "label": "Square" },
+                { "value": "portrait", "label": "Portrait Vertical Height" }
+              ],
+              "default":   "portrait"
+            },
+            {
+              "type": "image_picker",
+              "id": "banner_img",
+              "label": "Banner Image",
+              "info": "Recommended Size: 420x640 px or 420x415 px"
+              },
+              {
+                "type": "textarea",
+                "id": "banner_title",
+                "label": "Banner Title",
+                "default": "New Arrivals"
+              },
+              {
+                  "type": "text",
+                  "id": "banner_button_text",
+                  "label": "Button Text",
+                  "default": "+ Shop Now"
+              },
+              {
+                "type": "url",
+                "id": "banner_url",
+                "label": "URL"
+              }
+			  
+          ]
+       },
+	   {
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#ffffff"
+			}
+          ]
+       }
+		
+	],
+	"presets": [
+		{
+		  "name": "Banner Grid Masorny",
+		  "category": "4. Banner",
+		  "blocks":[
+				{
+					"type": "banner_grid_6"
+				},
+				{
+					"type": "banner_grid_3"
+				},
+				{
+					"type": "banner_grid_6"
+				},
+				{
+					"type": "banner_grid_3"
+				}
+			]
+		}
+	]
+  }
+{% endschema %}

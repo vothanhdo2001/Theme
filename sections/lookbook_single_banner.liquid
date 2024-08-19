@@ -1,0 +1,339 @@
+ {%- capture html -%}
+<div class="home-content home-content--shoppable" data-section="lookbooBanner" id="section-{{ section.id }}">
+
+  <div class="row no-gutters">
+    <div class="col-md-12">
+      <!--=======  single shoppable  =======-->
+
+      <div class="single-shoppable single-shoppable--width-half">
+        <img src="{% if section.settings.banner_img != blank %} {{ section.settings.banner_img | img_url: 'master' }}{% else %} https://via.placeholder.com/1920x550 {% endif %}" class="img-fluid" alt="{{ section.settings.banner_img.alt }}">
+		 {% for block in section.blocks %}
+         {% case.block.type %}
+         {% when "lookbook_product_add" %}
+         {% assign product_handle = all_products[block.settings.product_handgle_id] %}
+          <div class="cloth-tag" style="top: {{ block.settings.vertical_postion }}%; left:{{ block.settings.horizontal_postion }}%;">
+            <span class="cloth-tag__icon">
+              <i class="ion-ios-plus-empty"></i>
+            </span>
+            <div class="cloth-tag__content">
+              <span class="lookbook_close__icon">
+                <i class="ion-ios-close"></i>
+              </span>
+              <div class="cloth-tag__content__image">
+                <img data-src="{{ product_handle.featured_image | product_img_url: 'small', crop: 'bottom' }}" class="lazyload img-fluid" alt="">
+              </div>
+              <div class="cloth-tag__content__content">
+                {% assign title_trim = block.settings.prouct_title_limit %}
+                <h1>{{ product_handle.title | truncatewords: title_trim }}</h1>
+                <p class="price"><span class="main-price">{{ product_handle.variants.first.price | money }}</span></p>
+                <a href="{{ product_handle.url }}" class="phoone-button phoone-button--small phoone-button--small--style2"> {{ section.settings.lookbook_productbtn | default: "shop it" }}</a>
+              </div>
+            </div>
+          </div>
+        {% endcase %}
+          
+         {% endfor %}
+
+      </div>
+    </div>
+  </div>
+
+  {% if section.settings.lookbook_banner_btn_enable %}
+  <div class="shop-button text-center w-100 mt-80 mb-100">
+    <a class="phoone-button phoone-button--medium phoone-button--icon--left" href="{{ section.settings.lookbook_btn_link }}" > <i class="icon-left ion-plus"></i> {{ section.settings.lookbook_btn_text  }}</a>
+  </div>
+  {% endif %}
+
+
+</div>
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+{% render 'section_typography' %}
+
+
+
+{% schema %}
+  {
+    "name": "Lookook Single Banner",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "banner_img",
+        "label": "Lookbook Banner Image",
+        "info": "Recommended Size: 1920 x 550 px"
+      },
+      {
+        "type": "checkbox",
+        "id": "lookbook_banner_btn_enable",
+        "label": "LookBook Banner Button Enable",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "lookbook_btn_text",
+        "label": "Button Text",
+        "default": "Online Store"
+      },
+      {
+        "type": "url",
+        "id": "lookbook_btn_link",
+        "label": "Button url"
+      },
+	  {
+        "type": "header",
+        "content": "Single LookBook Button text"
+      },
+      {
+        "type": "text",
+        "id": "lookbook_productbtn",
+        "label": "Button Text",
+        "default": "Shop IT"
+      }
+
+	],
+	"blocks": [
+       {
+        "type": "lookbook_product_add",
+        "name": "Single LookBook Product",
+        "settings": [
+            {
+               "type": "product",
+               "id": "product_handgle_id",
+               "label": "Add Product"
+            },
+            {
+              "type": "header",
+              "content": "Vertical Position"
+            },
+			{
+                "type": "range",
+                "id": "vertical_postion",
+                "min": 1,
+                "max": 100,
+                "step": 1,
+                "label": "Top To Bottom",
+				"unit":  "%",
+                "default": 30
+            },
+			{
+              "type": "header",
+              "content": "Horizontal Position"
+            },
+			{
+                "type": "range",
+                "id": "horizontal_postion",
+                "min": 1,
+                "max": 100,
+                "step": 1,
+                "label": "Left Top Right",
+				"unit":  "%",
+                "default": 30
+            },
+			{
+              "type": "header",
+              "content": "Title Limit Word"
+            },
+			{
+                "type": "range",
+                "id": "prouct_title_limit",
+                "min": 2,
+                "max": 50,
+                "step": 1,
+                "label": "Limit",
+				"default": 10
+            }
+          ]
+        },
+		{
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#ffffff"
+			}
+          ]
+       }
+	],
+	"presets": [
+		{
+		  "name": "LookBook Single Banner",
+		  "category": "6. Lookbook",
+		   "blocks": [
+              {
+                "type": "lookbook_product_add"
+              },
+			  {
+                "type": "lookbook_product_add"
+              }
+		  ]
+		}
+	]
+  }
+{% endschema %}

@@ -1,0 +1,7 @@
+{%- if product.handle != blank -%}
+<a class="action-wishlist tile-actions--btn flex wishlist-btn wishlist" href="javascript: void(0)" button-wishlist data-product-handle="{{ product.handle }}" >
+  <span class="add-wishlist" data-tippy-content="{{ settings.add_to_wishlist_tittle }}" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme = "sharpborder" data-tippy-placement = "{% if settings.rtl_enable %}right{% else %}left{% endif %}"> <i class="ion-android-favorite-outline"></i></span>
+  <span class="loading-wishlist"><i class="fa animated rotateIn infinite fa-spinner"> </i></span>
+  <span class="remove-wishlist" data-tippy-content="{{ settings.remove_from_wishlist_tittle }}" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme = "sharpborder" data-tippy-placement = "{% if settings.rtl_enable %}right{% else %}left{% endif %}"><i class="ion-close-round"></i></span>
+</a>
+{%- endif -%}

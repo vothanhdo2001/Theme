@@ -1,0 +1,72 @@
+<ul class="dl-menu dl-menu-toggle">
+  {%- for block in section.blocks -%}
+  {%- case block.type -%}
+  {%- when 'singleMenu' -%}
+  <li><a href="{{ block.settings.menuItemUrl }}">{{ block.settings.menuItemText }}</a></li>
+  {%- when 'dropdown' -%}
+  {% assign sub_menu = block.settings.subMenu %}
+  <li><a href="{{ block.settings.menuItemUrl }}">{{ block.settings.menuItemText }}</a>
+    <ul class="dl-submenu">
+      {% for link in linklists[sub_menu].links %}
+      <li><a href="{{ link.url }}"> {{ link.title }}</a></li>
+      {% endfor %}
+    </ul>
+  </li>
+  {%- when 'multi-level' -%}
+  {% assign sub_menu = block.settings.multiLevel %}
+  <li><a href="{{ block.settings.menuItemUrl }}">{{ block.settings.menuItemText }}</a>
+    <ul class="dl-submenu">
+      {% for link in linklists[sub_menu].links %}
+      <li><a href="{{ link.url }}"> {{ link.title }}</a>
+        {%- if link.links != blank -%}
+        <ul class="dl-submenu">
+          {%- for child_link in link.links -%} 
+          <li><a href="{{ child_link.url }}">{{ child_link.title }}</a>
+            {%- if child_link.links != blank -%}
+            <ul class="dl-submenu">
+              {%- for grand_child_link  in child_link.links -%}
+              <li><a href="{{ grand_child_link.url }}">{{ grand_child_link.title }}</a></li>
+              {%- endfor -%}
+            </ul>
+            {%- endif -%}
+          </li>
+          {%- endfor -%}              
+        </ul>
+        {%- endif -%}
+      </li>
+      {% endfor %}
+    </ul>
+  </li>
+  {%- when 'megaMenu' -%}
+  {% assign mega_menu = block.settings.MegaMenu %}
+  <li><a href="{{ block.settings.menuItemUrl }}">{{ block.settings.menuItemText }}</a>
+    <ul class="dl-submenu">
+      {% for link in linklists[mega_menu].links %}
+      <li><a href="{{ link.url }}"> {{ link.title }}</a>
+        {%- if link.links != blank -%}
+        <ul class="dl-submenu">
+          {%- for child_link in link.links -%} 
+          <li><a href="{{ child_link.url }}">{{ child_link.title }}</a>
+            {%- if child_link.links != blank -%}
+            <ul class="dl-submenu">
+              {%- for grandchild_link  in child_link.links -%}
+              <li><a href="{{ grandchild_link.url }}">{{ grandchild_link.title }}</a></li>
+              {%- endfor -%}
+            </ul>
+            {%- endif -%}
+          </li>
+          {%- endfor -%}
+        </ul> 
+        {%- endif -%}
+      </li>
+      {% endfor %}
+    </ul>
+  </li>
+  {%- endcase -%}
+  {%- endfor -%}  
+</ul>
+
+
+<script>
+  $(".site-mobile-nav .dl-menu li > a img").remove();
+</script>

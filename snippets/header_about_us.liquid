@@ -1,0 +1,80 @@
+{%- capture html -%}
+<div class="header-offcanvas about-overlay" id="about-overlay">
+  <div class="overlay-close inactive"></div>
+  <div class="overlay-content">
+
+    <!--=======  close icon  =======-->
+
+    <span class="close-icon" id="about-close-icon">
+      <a href="javascript:void(0)">
+        <i class="ti-close"></i>
+      </a>
+    </span>
+
+    <!--=======  End of close icon  =======-->
+
+    <!--=======  overlay content container  =======-->
+
+    <div class="overlay-content-container d-flex flex-column justify-content-between h-100">
+      <!--=======  widget wrapper  =======-->
+
+      <div class="widget-wrapper">
+        
+
+        <div class="single-widget">
+          {% if section.settings.about_us_title != blank %}
+          <h2 class="widget-title">{{ section.settings.about_us_title }}</h2>
+          {% endif %}
+          
+          {% if section.settings.about_us_description != blank %}
+          <p>{{ section.settings.about_us_description }}</p>
+          {% endif %}
+        
+        </div>
+
+      </div>
+
+      <!--=======  End of widget wrapper  =======-->
+
+      <!--=======  contact widget  =======-->
+
+      <div class="contact-widget">
+        {% if section.settings.email_id != blank  %}
+        <p class="email"><a href="{{ section.settings.email_id_link }}"> {{ section.settings.email_id }}</a></p>
+        {% endif %}
+        
+        {% if section.settings.phone_number != blank %}
+        <p class="phone">{{ section.settings.phone_number }}</p>
+        {% endif %}
+
+        
+        {% if section.settings.social_media == true %}
+        <div class="social-icons">
+          <ul>
+            {% if section.settings.social_icon_1_name != blank %}
+            <li><a data-tippy="{{ section.settings.social_icon_1_name }}" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" target="_blank" href="{{ section.settings.social_icon_1_link }}"><i class="fa fa-{{ section.settings.social_icon_1_name }}"></i></a></li>        
+            {% endif %}
+            {% if section.settings.social_icon_2_name != blank %}
+            <li><a data-tippy="{{ section.settings.social_icon_2_name }}" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true"  target="_blank" href="{{ section.settings.social_icon_2_link }}"><i class="fa fa-{{ section.settings.social_icon_2_name }}"></i></a></li>        
+            {% endif %}   
+            {% if section.settings.social_icon_3_name != blank %}
+            <li><a data-tippy="{{ section.settings.social_icon_3_name }}" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" target="_blank" href="{{ section.settings.social_icon_3_link }}"><i class="fa fa-{{ section.settings.social_icon_3_name }}"></i></a></li>        
+            {% endif %}
+            {% if section.settings.social_icon_4_name != blank %}
+            <li><a data-tippy="{{ section.settings.social_icon_4_name }}" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" target="_blank" href="{{ section.settings.social_icon_4_link }}"><i class="fa fa-{{ section.settings.social_icon_4_name }}"></i></a></li>        
+            {% endif %}
+          </ul>
+        </div>
+        {% endif %}
+        
+        
+      </div>
+
+      <!--=======  End of contact widget  =======-->
+    </div>
+
+    <!--=======  End of overlay content container  =======-->
+  </div>
+</div>
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}

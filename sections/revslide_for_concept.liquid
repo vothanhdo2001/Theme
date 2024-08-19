@@ -1,0 +1,517 @@
+{%- capture html -%}
+<div class="slider-area revolution-js mb-100 mb-md-80 mb-sm-60" id="section-{{ section.id }}" data-section2="RevolutionSlider4">
+  <div id="rev_slider_10_1_wrapper" class="rev_slider_wrapper fullwidthbanner-container" data-alias="homepage-4" data-source="gallery" style="margin:0px auto;background:transparent;padding:0px;margin-top:0px;margin-bottom:0px;">
+    <!-- START REVOLUTION SLIDER 5.4.7 fullwidth mode -->
+    <div id="rev_slider_10_1" class="rev_slider fullwidthabanner" style="display:none;" data-version="5.4.7">
+      <ul>	<!-- SLIDE  -->
+        	{% render 'rev_slider_widget_for_concept' %}
+      </ul>
+      <div class="tp-bannertimer tp-bottom" style="visibility: hidden !important;"></div>	</div>
+  </div><!-- END REVOLUTION SLIDER -->
+</div>
+
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+
+{%- capture css -%}
+<style>
+  
+  #section-{{ section.id }} #rev_slider_10_1_wrapper .metis.tparrows{
+    background: {{ section.settings.rev_arrow_bg_color}};
+  }; 
+  
+  #section-{{ section.id }}{
+    margin-top: {{ section.settings.section_margin_top }}px !important;
+    margin-bottom: {{ section.settings.section_margin_bottom }}px !important;
+  }
+  
+  @media (min-width: 768px) and (max-width: 991px) {
+    #section-{{ section.id }}{
+      margin-top: {{ section.settings.section_margin_top_md }}px !important;
+      margin-bottom: {{ section.settings.section_margin_bottom_md }}px !important;
+    }
+  }
+  @media (max-width: 767px) {
+    #section-{{ section.id }}{
+      margin-top: {{ section.settings.section_margin_top_xs }}px !important;
+      margin-bottom: {{ section.settings.section_margin_bottom_xs }}px !important;
+    }
+  }
+  
+</style>
+{%- endcapture -%}
+
+{{ css | strip_newlines
+       | replace: '  ', '' 
+       | replace: ': ', ':'
+       | replace: ' {', '{'
+}}
+		
+
+{% schema %}
+  {
+    "name": "Revolution Concept",
+    "settings": [
+		{
+          "type": "header",
+          "content": "Prev And Next"
+        },
+        {
+          "type": "text",
+          "id": "previous_text_color",
+          "label": "Previous text",
+          "default": "Prev"
+        },
+		{
+          "type": "text",
+          "id": "next_text_color",
+          "label": "Next text",
+          "default": "Next"
+        },
+		{
+          "type": "header",
+          "content": "Slider Arrow Style"
+        },
+        {
+          "type": "color",
+          "id": "rev_navigation_color",
+          "label": "Navigation Color",
+          "default": "#9b9b9b"	
+        },
+		{
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 65
+			}
+	],
+	"blocks":[
+      {
+          "type": "slide1",
+          "name": "Slideshow 1",
+          "settings": [
+			  {
+                "type": "header",
+                "content": "Layer Thumbnail"
+              },
+              {
+                  "type": "image_picker",
+                  "id": "slider_thubnail",
+                  "label": "Slide Thumbnail",
+                  "info": "Recommended Size: 1275 x 860px"
+              },
+			  {
+                "type": "header",
+                "content": "Slide Caption"
+              },
+			  {
+                "type": "textarea",
+                "id": "slider_count_number",
+                "label": "Slider Slide Count",
+				"default": "01/"
+			  },
+			  {
+                "type": "textarea",
+                "id": "layer_caption_title2",
+                "label": "Caption Title 2",
+				"default": "Simplicity <br> freedom <br> comfort",
+				"info": "For New Line: content <br> New line content "
+			  },
+			  {
+                  "type": "text",
+                  "id": "rev_slide1_btn",
+                  "label": "Caption Button",
+					"default": "+ store"
+                },
+                {
+                  "type": "url",
+                  "id": "rev_slide1_btn_link",
+                  "label": "Caption Button Url"
+                },
+			  {
+                "type": "header",
+                "content": "Slider Caption Style"
+              },
+			  {
+                "type": "color",
+                "id": "slide_title1_color",
+                "label": "Slide Title Color",
+                "default": "#333"	
+              },
+			  {
+                "type": "color",
+                "id": "slider_slide_count_color",
+                "label": "Slide Counter Color",
+                "default": "#333333"	
+              },
+			  {
+                "type": "paragraph",
+                "content": "Slider Caption Button"
+              },
+			  {
+                "type": "color",
+                "id": "rev_slide_caption_btn_color",
+                "label": "Caption Button Color",
+                "default": "#d3122a"	
+              },
+			  {
+                "type": "color",
+                "id": "rev_slide_caption_btn_hover_color",
+                "label": "Caption Button Hover Color",
+                "default": "#333"	
+              },
+			  {
+                "type": "header",
+                "content": "Slider Paginate"
+              },
+              {
+                "type": "color",
+                "id": "pgainate_active_color",
+                "label": "Paginate Active Color",
+                "default": "#333"	
+              },
+			  {
+                "type": "color",
+                "id": "pgainate_prev_color",
+                "label": "Paginate Color",
+                "default": "rgba(51,51,51,0.3)"	
+              },
+			  {
+                "type": "header",
+                "content": "Divider Color Options"
+              },
+			  {
+                "type": "color",
+                "id": "divider_color",
+                "label": "Divider Bg Color",
+                "default": "#000000"
+              },
+              {
+                "type": "range",
+                "id": "divider_color_opacity",
+                "min": 0,
+                "max": 1,
+                "step": 0.1,
+                "label": "Divider Color Opacity",
+                "default": 0.5
+              }
+			  
+          ]
+        },
+		{
+          "type": "slide2",
+          "name": "Slideshow 2",
+          "settings": [
+			  {
+                "type": "header",
+                "content": "Layer Image"
+              },
+              {
+                  "type": "image_picker",
+                  "id": "slider_thubnail",
+                  "label": "Slide Thumbnail",
+                  "info": "Recommended Size: 1275 x 860px"
+              },
+			  {
+                "type": "header",
+                "content": "Slide Caption"
+              },
+			  {
+                "type": "textarea",
+                "id": "slider_count_number",
+                "label": "Slider Slide Count",
+				"default": "02/"
+			  },
+			  {
+                "type": "textarea",
+                "id": "layer_caption_title2",
+                "label": "Caption Title 2",
+				"default": "The Spring<br>racing<br> edition ",
+				"info": "For New Line: content <br> New line content "
+			  },
+			  {
+                  "type": "text",
+                  "id": "rev_slide1_btn",
+                  "label": "Caption Button",
+					"default": "+ store"
+                },
+                {
+                  "type": "url",
+                  "id": "rev_slide1_btn_link",
+                  "label": "Caption Button Url"
+                },
+			  {
+                "type": "header",
+                "content": "Slider Caption style"
+              },
+			  {
+                "type": "color",
+                "id": "slide_title1_color",
+                "label": "Slide Title Color",
+                "default": "#333333"	
+              },
+			  {
+                "type": "color",
+                "id": "slider_slide_count_color",
+                "label": "Slide Counter Color",
+                "default": "#333333"	
+              },
+			  
+			  {
+                "type": "paragraph",
+                "content": "Slider Caption Button"
+              },
+			  {
+                "type": "color",
+                "id": "rev_slide_caption_btn_color",
+                "label": "Caption Button Color",
+                "default": "#d3122a"	
+              },
+			  {
+                "type": "color",
+                "id": "rev_slide_caption_btn_hover_color",
+                "label": "Caption Button Hover Color",
+                "default": "#333"	
+              },
+			  {
+                "type": "header",
+                "content": "Slider Paginate"
+              },
+              {
+                "type": "color",
+                "id": "pgainate_active_color",
+                "label": "Paginate Active Color",
+                "default": "#333"	
+              },
+			  {
+                "type": "color",
+                "id": "pgainate_prev_color",
+                "label": "Paginate Color",
+                "default": "rgba(51,51,51,0.3)"	
+              },
+			 {
+                "type": "header",
+                "content": "Divider Color Options"
+              },
+			  {
+                "type": "color",
+                "id": "divider_color",
+                "label": "Divider Bg Color",
+                "default": "#000000"
+              },
+              {
+                "type": "range",
+                "id": "divider_color_opacity",
+                "min": 0,
+                "max": 1,
+                "step": 0.1,
+                "label": "Divider Color Opacity",
+                "default": 0.5
+              }
+			  
+			  
+          ]
+        },
+		
+		{
+          "type": "slide3",
+          "name": "Slideshow 3",
+          "settings": [
+			  {
+                "type": "header",
+                "content": "Layer Image"
+              },
+              {
+                  "type": "image_picker",
+                  "id": "slider_thubnail",
+                  "label": "Slide Thumbnail",
+                  "info": "Recommended Size: 1275 x 860px"
+              },
+			  
+			  {
+                "type": "header",
+                "content": "Slide Caption"
+              },
+			  {
+                "type": "textarea",
+                "id": "slider_count_number",
+                "label": "Slider Slide Count",
+				"default": "03/"
+			  },
+			  {
+                "type": "textarea",
+                "id": "layer_caption_title2",
+                "label": "Caption Title 2",
+				"default": "New <br> arrivals <br> ss-2018",
+				"info": "For New Line: content <br> New line content "
+			  },
+			  {
+                  "type": "text",
+                  "id": "rev_slide1_btn",
+                  "label": "Caption Button",
+					"default": "+ store"
+                },
+                {
+                  "type": "url",
+                  "id": "rev_slide1_btn_link",
+                  "label": "Caption Button Url"
+                },
+               
+			  
+			  {
+                "type": "header",
+                "content": "Slider Caption"
+              },
+			  {
+                "type": "color",
+                "id": "slide_title1_color",
+                "label": "Slide Title Color",
+                "default": "#333333"	
+              },
+			  {
+                "type": "color",
+                "id": "slider_slide_count_color",
+                "label": "Slide Counter Color",
+                "default": "#333333"	
+              },
+			  {
+                "type": "paragraph",
+                "content": "Slider Caption Button"
+              },
+			  {
+                "type": "color",
+                "id": "rev_slide_caption_btn_color",
+                "label": "Caption Button Color",
+                "default": "#d3122a"	
+              },
+			  {
+                "type": "color",
+                "id": "rev_slide_caption_btn_hover_color",
+                "label": "Caption Button Hover Color",
+                "default": "#333"	
+              },
+			  {
+                "type": "header",
+                "content": "Slider Paginate"
+              },
+              {
+                "type": "color",
+                "id": "pgainate_active_color",
+                "label": "Paginate Active Color",
+                "default": "#333"	
+              },
+			  {
+                "type": "color",
+                "id": "pgainate_prev_color",
+                "label": "Paginate Color",
+                "default": "rgba(51,51,51,0.3)"	
+              },
+			  {
+                "type": "header",
+                "content": "Divider Color Options"
+              },
+			  {
+                "type": "color",
+                "id": "divider_color",
+                "label": "Divider Bg Color",
+                "default": "#000000"
+              },
+              {
+                "type": "range",
+                "id": "divider_color_opacity",
+                "min": 0,
+                "max": 1,
+                "step": 0.1,
+                "label": "Divider Color Opacity",
+                "default": 0.5
+              }
+			  
+			  
+          ]
+        }
+     ],
+	"presets": [
+        {
+          "category": "1. Revolution Slider",
+          "name": "4. Slider - Concept",
+           "blocks":[
+				{
+					"type": "slide1"
+				},
+				{
+					"type": "slide2"
+				},
+				{
+					"type": "slide3"
+				}
+			]
+        }
+     ]
+  }
+{% endschema %}

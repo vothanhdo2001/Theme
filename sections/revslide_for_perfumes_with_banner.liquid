@@ -1,0 +1,532 @@
+{%- capture html -%}
+<div class="slider-area revolution-js mb-130 mb-md-100 mb-sm-80" id="section -{{ section.id }}" data-section2="RevolutionSlider10">
+  <div class="container wide">
+    <div class="row">
+      <div class="{% if section.settings.banner_enable == true %} col-lg-6 {% else %} col-12 {% endif %} mb-md-40 mb-sm-40">
+        <!--=======  slider wrapper  =======-->
+
+        <div class="slider-wrapper">
+          <div id="rev_slider_13_1_wrapper" class="rev_slider_wrapper fullwidthbanner-container" data-alias="homepage-13" data-source="gallery" style="margin:0px auto;background:transparent;padding:0px;margin-top:0px;margin-bottom:0px;">
+            <!-- START REVOLUTION SLIDER 5.4.7 auto mode -->
+            <div id="rev_slider_13_1" class="rev_slider fullwidthabanner" style="display:none;" data-version="5.4.7">
+              <ul>	<!-- SLIDE  -->
+                {% render 'rev_slider_widget_for_perfumes' %}
+              </ul>
+              <div class="tp-bannertimer tp-bottom" style="visibility: hidden !important;"></div>	
+           </div>
+          </div><!-- END REVOLUTION SLIDER -->
+        </div>
+
+        <!--=======  End of slider wrapper  =======-->
+      </div>
+
+      {% if section.settings.banner_enable == true %}
+      <div class="col-lg-6">
+        <div class="row">
+
+          {% for block in section.blocks %}
+          {% case block.type %}
+          {% when 'banner' %}
+          <div class="col-lg-12 {% if forloop.first == true %} mb-40 {% endif %}">
+            <!--=======  hover zoom banner  =======-->              
+            <div class="single-banner single-banner--hoverzoom">
+              <a href="{{ block.settings.banner_url }}">
+                <img class="img-fluid" src="{% if block.settings.banner_img != blank %} {{ block.settings.banner_img | img_url: '845x400', crop: 'center' }}{% else %} https://via.placeholder.com/845x400 {% endif %}" alt="{{ block.settings.banner_img.alt }}">
+                <span class="banner-content banner-content--product-type banner-content--product-type--bigtitle">
+
+                  {% if block.settings.banner_title != blank %}
+                  <span class="name">{{ block.settings.banner_title }}</span>
+                  {% endif %}
+                  {% if block.settings.banner_price != blank %}
+                  <span class="price">{{ block.settings.banner_price }}</span>
+                  {% endif %}
+                </span>
+              </a>
+            </div>
+          </div>
+          {% endcase %}
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+      
+    </div>
+  </div>
+</div>
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+
+{%- capture css -%}
+<style>
+  #section-{{ section.id }}{
+    margin-top: {{ section.settings.section_margin_top }}px !important;
+    margin-bottom: {{ section.settings.section_margin_bottom }}px !important;
+  }
+  
+  @media (min-width: 768px) and (max-width: 991px) {
+    #section-{{ section.id }}{
+      margin-top: {{ section.settings.section_margin_top_md }}px !important;
+      margin-bottom: {{ section.settings.section_margin_bottom_md }}px !important;
+    }
+  }
+  @media (max-width: 767px) {
+    #section-{{ section.id }}{
+      margin-top: {{ section.settings.section_margin_top_xs }}px !important;
+      margin-bottom: {{ section.settings.section_margin_bottom_xs }}px !important;
+    }
+  }
+  #section-{{ section.id }} #rev_slider_13_1_wrapper .metis.tparrows{
+    background: {{ section.settings.rev_arrow_bg_color}};
+  }; 
+
+</style>
+{%- endcapture -%}
+
+{{ css | strip_newlines
+       | replace: '  ', '' 
+       | replace: ': ', ':'
+       | replace: ' {', '{'
+}}
+		
+
+{% schema %}
+  {
+    "name": "Revolution Perfumes ",
+    "settings": [
+		{
+          "type": "header",
+          "content": "Banner enable"
+        },
+		{
+          "type": "checkbox",
+          "id": "banner_enable",
+          "label": "Banner Enable",
+		  "default": true
+        },
+		{
+          "type": "header",
+          "content": "Slider Arrow Style"
+        },
+        {
+          "type": "color",
+          "id": "rev_navigation_color",
+          "label": "Navigation Color",
+          "default": "#9b9b9b"	
+        },
+		{
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 130
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 80
+			}
+	],
+	"blocks":[
+      {
+          "type": "slide1",
+          "name": "Slide Layer 1",
+          "settings": [
+			  {
+                "type": "header",
+                "content": "Layer Thumbnail"
+              },
+              {
+                  "type": "image_picker",
+                  "id": "slider_thubnail",
+                  "label": "Slide Thumbnail",
+                  "info": "Recommended Size: 845x830px"
+              },
+			  {
+                "type": "header",
+                "content": "Slide Caption"
+              },
+			  {
+                "type": "textarea",
+                "id": "layer_caption_title1",
+                "label": "Layer Caption Title 1",
+				"default": "New arrivals "
+			  },
+			  {
+                "type": "textarea",
+                "id": "layer_caption_title2",
+                "label": "Caption Title 2",
+				"default": "Spring collection",
+				"info": "For New Line: content <br> New line content "
+			  },
+			  {
+                  "type": "text",
+                  "id": "rev_slide1_btn",
+                  "label": "Caption Button",
+					"default": "Shop Collection"
+                },
+                {
+                  "type": "url",
+                  "id": "rev_slide1_btn_link",
+                  "label": "Caption Button Url"
+                },
+			  {
+                "type": "header",
+                "content": "Slider Caption Style"
+              },
+			  {
+                "type": "color",
+                "id": "slide_title1_color",
+                "label": "Slide Title Color",
+                "default": "#333"	
+              },
+			  {
+                "type": "color",
+                "id": "slide_title2_color",
+                "label": "Slide Title2 Color",
+                "default": "#333333"	
+              },
+			  {
+                "type": "paragraph",
+                "content": "Slider Caption Button"
+              },
+			  {
+                "type": "color",
+                "id": "rev_slide_caption_btn_color",
+                "label": "Caption Button Color",
+                "default": "#333"	
+              },
+			  {
+                "type": "color",
+                "id": "rev_slide_caption_btn_hover_color",
+                "label": "Caption Button Hover Color",
+                "default": "#d3122a"	
+              },
+			  {
+                "type": "header",
+                "content": "Slider Paginate"
+              },
+              {
+                "type": "color",
+                "id": "pgainate_active_color",
+                "label": "Paginate Active Color",
+                "default": "#333"	
+              },
+			  {
+                "type": "color",
+                "id": "pgainate_prev_color",
+                "label": "Paginate Color",
+                "default": "rgba(51,51,51,0.3)"	
+              }
+			  
+          ]
+        },
+		{
+          "type": "slide2",
+          "name": "Slide Layer 2",
+          "settings": [
+			  {
+                "type": "header",
+                "content": "Layer Image"
+              },
+              {
+                  "type": "image_picker",
+                  "id": "slider_thubnail",
+                  "label": "Slide Thumbnail",
+                  "info": "Recommended Size: 845x830px"
+              },
+			  {
+                "type": "header",
+                "content": "Slide Caption"
+              },
+			  {
+                "type": "textarea",
+                "id": "layer_caption_title1",
+                "label": "Layer Caption Title1",
+				"default": "Skin care  "
+			  },
+			  {
+                "type": "textarea",
+                "id": "layer_caption_title2",
+                "label": "Caption Title 2",
+				"default": "New products",
+				"info": "For New Line: content <br> New line content "
+			  },
+			  {
+                  "type": "text",
+                  "id": "rev_slide1_btn",
+                  "label": "Caption Button",
+					"default": "Shop Collection"
+                },
+                {
+                  "type": "url",
+                  "id": "rev_slide1_btn_link",
+                  "label": "Caption Button Url"
+                },
+			{
+                "type": "header",
+                "content": "Slider Caption style"
+              },
+			  {
+                "type": "color",
+                "id": "slide_title1_color",
+                "label": "Slide Title Color",
+                "default": "#333"	
+              },
+			  {
+                "type": "color",
+                "id": "slide_title2_color",
+                "label": "Slide Title2 Color",
+                "default": "#333333"	
+              },
+			  
+			  {
+                "type": "paragraph",
+                "content": "Slider Caption Button"
+              },
+			  {
+                "type": "color",
+                "id": "rev_slide_caption_btn_color",
+                "label": "Caption Button Color",
+                "default": "#333"	
+              },
+			  {
+                "type": "color",
+                "id": "rev_slide_caption_btn_hover_color",
+                "label": "Caption Button Hover Color",
+                "default": "#d3122a"	
+              },
+			  {
+                "type": "header",
+                "content": "Slider Paginate"
+              },
+              {
+                "type": "color",
+                "id": "pgainate_active_color",
+                "label": "Paginate Active Color",
+                "default": "#333"	
+              },
+			  {
+                "type": "color",
+                "id": "pgainate_prev_color",
+                "label": "Paginate Color",
+                "default": "rgba(51,51,51,0.3)"	
+              }
+			  
+			  
+          ]
+        },
+		
+		{
+          "type": "slide3",
+          "name": "Slide Layer 3",
+          "settings": [
+			  {
+                "type": "header",
+                "content": "Layer Thumbnail"
+              },
+              {
+                  "type": "image_picker",
+                  "id": "slider_thubnail",
+                  "label": "Slide Thumbnail",
+                  "info": "Recommended Size: 845x830px"
+              },
+			  {
+                "type": "header",
+                "content": "Slide Caption"
+              },
+			  {
+                "type": "textarea",
+                "id": "layer_caption_title1",
+                "label": "Layer Caption Title1",
+				"default": "New Products "
+			  },
+			  {
+                "type": "textarea",
+                "id": "layer_caption_title2",
+                "label": "Caption Title 2",
+				"default": "New products",
+				"info": "For New Line: content <br> New line content "
+			  },
+			  {
+                  "type": "text",
+                  "id": "rev_slide1_btn",
+                  "label": "Caption Button",
+					"default": "Shop Collection"
+                },
+                {
+                  "type": "url",
+                  "id": "rev_slide1_btn_link",
+                  "label": "Caption Button Url"
+                },
+              
+			  {
+                "type": "header",
+                "content": "Slider Caption Style"
+              },
+			  {
+                "type": "color",
+                "id": "slide_title1_color",
+                "label": "Slide Title Color",
+                "default": "#333"	
+              },
+			  {
+                "type": "color",
+                "id": "slide_title2_color",
+                "label": "Slide Title2 Color",
+                "default": "#333333"	
+              },
+			  
+			  {
+                "type": "paragraph",
+                "content": "Slider Caption Button"
+              },
+			  {
+                "type": "color",
+                "id": "rev_slide_caption_btn_color",
+                "label": "Caption Button Color",
+                "default": "#333"	
+              },
+			  {
+                "type": "color",
+                "id": "rev_slide_caption_btn_hover_color",
+                "label": "Caption Button Hover Color",
+                "default": "#d3122a"	
+              },
+			
+			  {
+                "type": "header",
+                "content": "Slider Paginate"
+              },
+              {
+                "type": "color",
+                "id": "pgainate_active_color",
+                "label": "Paginate Active Color",
+                "default": "#333"	
+              },
+			  {
+                "type": "color",
+                "id": "pgainate_prev_color",
+                "label": "Paginate Color",
+                "default": "rgba(51,51,51,0.3)"	
+              }
+			  
+			  
+          ]
+        },
+		{
+          "type": "banner",
+          "name": "Banner Block",
+          "settings": [
+			 {
+                "type": "image_picker",
+                "id": "banner_img",
+                "label": "Image",
+                "info": "Recommended Size: 845x400 px"
+              },
+              {
+                "type": "url",
+                "id": "banner_url",
+                "label": "URL"
+              },
+              {
+                "type": "textarea",
+                "id": "banner_title",
+                "default": "Perfumes <br> for women",
+				"info": "For New line: content <br> New Line",
+                "label": "Banner Title 1"
+              },
+              {
+                "type": "text",
+                "id": "banner_price",
+                "default": "$19.00",
+                "label": "Banner Price"
+        	  }
+          ]
+	  }
+     ],
+	"presets": [
+        {
+          "category": "1. Revolution Slider",
+          "name": "10. Slider & Banner - Perfumes",
+		  "blocks":[
+				{
+                    "type": "banner"
+          		},
+          		{
+                    "type": "banner"
+          		},
+				{
+					"type": "slide1"
+				},
+				{
+					"type": "slide2"
+				},
+				{
+					"type": "slide3"
+				}
+			]
+           
+        }
+     ]
+  }
+{% endschema %}

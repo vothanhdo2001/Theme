@@ -1,0 +1,53 @@
+<div class="methods-of-payment">
+  {%- for block in section.blocks -%}
+  {%- case block.type -%}
+  
+  {%- when 'amazon_payments' -%}
+  <img src="{{ 'amazon_payments' | payment_type_img_url }}" height="35" alt="amazon payments" />
+  {%- when 'american_express' -%}
+  <img src="{{ 'american_express' | payment_type_img_url }}" height="35" alt="american express" />
+  {%- when 'apple_pay' -%}
+  <img src="{{ 'apple_pay' | payment_type_img_url }}" height="35" alt="apple pay" />
+  {%- when 'bitcoin' -%}
+  <img src="{{ 'bitcoin' | payment_type_img_url }}" height="35" alt="bitcoin" />
+  {%- when 'dankort' -%}
+  <img src="{{ 'dankort' | payment_type_img_url }}" height="35" alt="dankort" />
+  {%- when 'diners_club' -%}
+  <img src="{{ 'diners_club' | payment_type_img_url }}" height="35" alt="diners club" />
+  {%- when 'discover' -%}
+  <img src="{{ 'discover' | payment_type_img_url }}" height="35" alt="discover" />
+  {%- when 'dogecoin' -%}
+  <img src="{{ 'dogecoin' | payment_type_img_url }}" height="35" alt="dogecoin" />
+  {%- when 'dwolla' -%}
+  <img src="{{ 'dwolla' | payment_type_img_url }}" height="35" alt="dwolla" />
+  {%- when 'forbrugsforeningen' -%}
+  <img src="{{ 'forbrugsforeningen' | payment_type_img_url }}" height="35" alt="forbrugsforeningen" />
+  {%- when 'google_pay' -%}
+  <img src="{{ 'google_pay' | payment_type_img_url }}" height="35" alt="google pay" />
+  {%- when 'jcb' -%}
+  <img src="{{ 'jcb' | payment_type_img_url }}" height="35" alt="jcb" />
+  {%- when 'klarna' -%}
+  <img src="{{ 'klarna' | payment_type_img_url }}" height="35" alt="klarna" />
+  {%- when 'litecoin' -%}
+  <img src="{{ 'litecoin' | payment_type_img_url }}" height="35" alt="litecoin" />
+  {%- when 'maestro' -%}
+  <img src="{{ 'maestro' | payment_type_img_url }}" height="35" alt="maestro" />
+  {%- when 'master' -%}
+  <img src="{{ 'master' | payment_type_img_url }}" height="35" alt="master" />
+  {%- when 'paypal' -%}
+  <img src="{{ 'paypal' | payment_type_img_url }}" height="35" alt="paypal" />
+  {%- when 'shopify_pay' -%}
+  <img src="{{ 'shopify_pay' | payment_type_img_url }}" height="35" alt="shopify pay" />
+  {%- when 'sofort' -%}
+  <img src="{{ 'sofort' | payment_type_img_url }}" height="35" alt="sofort" />
+  {%- when 'visa' -%}
+  <img src="{{ 'visa' | payment_type_img_url }}" height="35" alt="visa" />
+  {%- endcase -%}
+  {%- endfor -%}
+</div>
+
+
+<style>
+  .methods-of-payment img { padding: 0.2em; }
+  .lt-ie9 .methods-of-payment, .ie8 .methods-of-payment, .oldie .methods-of-payment { display: none; }
+</style>

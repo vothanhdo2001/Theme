@@ -1,0 +1,37 @@
+<div class="vertical-menu-container-dark" id="vertical-menu-dark">
+  <nav>
+    <ul>
+      {% for link in linklists.main-menu.links %}
+      {% assign childlink_handle = link.title | handle %}
+      {% if linklists[childlink_handle] and linklists[childlink_handle].links.size > 0 %}
+      <li class="has-children"><a href="{{ link.url }}">{{ link.title }}</a>
+        <ul class="sub-menu">
+          {% for childlink in linklists[childlink_handle].links %}
+          {% assign grand_childlink_handle = childlink.title | handle %}
+          {% if linklists[grand_childlink_handle] and linklists[grand_childlink_handle].links.size > 0 %}
+          <li  class="has-children">
+            <a class="mega_title" href="{{ childlink.url }}">{{ childlink.title }}</a>
+            <ul class="multilevel-submenu">
+              {% for grand_childlink_handle in linklists[grand_childlink_handle].links %}
+              <li><a href="{{ grand_childlink_handle.url }}">{{ grand_childlink_handle.title }}</a></li>
+              {% endfor %}
+            </ul> 
+          </li> 
+          {% else %}
+          <li><a href="{{ childlink.url }}">{{ childlink.title }}</a></li>
+          {% endif %}
+          {% endfor %}
+        </ul>  
+      </li>
+      {% else %}
+      <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+  </nav>
+</div>
+
+<script>
+  $(".vertical-menu-container-dark nav > ul > li.has-children > ul li a img").remove();
+</script>
+

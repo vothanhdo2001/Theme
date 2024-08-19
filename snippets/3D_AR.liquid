@@ -1,0 +1,5 @@
+{% if section.settings.model_ar == "text"  %}
+{% render 'icon-3d-badge-full-color' %}<span class='product-single__view-in-space-text'>{{ section.settings.ar_3d_text }}</span>
+{%- elsif section.settings.model_ar == "icon"  -%}
+<i class="ti-fullscreen"></i>
+{%- endif -%}

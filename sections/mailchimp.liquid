@@ -1,0 +1,552 @@
+{%- capture html -%}
+{% if section.settings.section_enable %}
+{%- if section.settings.newsletter_system == 'by_shopify_form' -%}
+{% render 'shopify_newsletter_form' %}
+{%- elsif section.settings.newsletter_system == 'by_mailchimp' -%}
+{% if section.settings.mailchimp_type == "style1" %}
+<div class="mailchimp-newsletter-area mb-100 mb-sm-70 mt-100 mt-sm-70" id="section-{{ section.id }}">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="mc-newsletter-content-container text-center pt-15 pb-15 pl-15 pr-15 style1">
+          <div class="mc-newsletter-content pt-70 pb-70">
+            {% if section.settings.newsleter_icon != blank %}
+            <div class="icon">
+              <i class="{{ section.settings.newsleter_icon }}"></i>
+            </div>
+            {% endif %}
+            <div class="title mb-30">
+              {% if section.settings.newsletter_title != blank %}
+              <h3 class="mb-20">{{ section.settings.newsletter_title }}</h3>
+              {% endif %}
+              {% if section.settings.newsletter_subtitle != blank %}
+              <p>{{ section.settings.newsletter_subtitle }}</p>
+              {% endif %}
+            </div>
+            <div class="mc-newsletter-form subscription-form mb-50">
+              <form id="mc-form" class="mc-form">
+                <input type="email" placeholder="{{ section.settings.newsletter_input_placeholder }}" required>
+                <button type="submit">{{ section.settings.subscrib_submit_button }}</button>
+              </form>
+            </div>
+
+            <div class="mailchimp-alerts ">
+              <div class="mailchimp-submitting"></div><!-- mailchimp-submitting end -->
+              <div class="mailchimp-success"></div><!-- mailchimp-success end -->
+              <div class="mailchimp-error"></div><!-- mailchimp-error end -->
+            </div><!-- mailchimp-alerts end -->
+
+            {% if section.settings.newsletter_btn != blank %}
+            <div class="link">
+              <a href="{{ section.settings.newsletter_btn_link }}">{{ section.settings.newsletter_btn }}</a>
+            </div>
+            {% endif %}
+
+          </div>
+        </div>
+
+        <!--=======  End of newsletter content  =======-->
+      </div>
+    </div>
+  </div>
+</div>
+{% elsif section.settings.mailchimp_type == "style2" %}
+<div class="mailchimp-newsletter-area border-top-bottom mb-100" id="section-{{ section.id }}">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <!--=======  newsletter content  =======-->
+
+        <div class="mc-newsletter-content-container no-bg text-center">
+          <div class="mc-newsletter-content mc-newsletter-content--big-icon pt-70 pb-70">
+            {% if section.settings.newsleter_icon != blank %}
+            <div class="icon mb-30">
+              <i class="{{ section.settings.newsleter_icon }}"></i>
+            </div>
+            {% endif %}
+            <div class="title mb-30">
+              {% if section.settings.newsletter_title != blank %}
+              <h3 class="mb-20">{{ section.settings.newsletter_title }}</h3>
+              {% endif %}
+              {% if section.settings.newsletter_subtitle != blank %}
+              <p>{{ section.settings.newsletter_subtitle }}</p>
+              {% endif %}
+            </div>
+
+            <div class="mc-newsletter-form subscription-form mb-50">
+              <form id="mc-form" class="mc-form">
+                <input type="email" placeholder="{{ section.settings.newsletter_input_placeholder }}" required>
+                <button type="submit">{{ section.settings.subscrib_submit_button }}</button>
+              </form>
+            </div>
+
+            <!-- mailchimp-alerts Start -->
+
+            <div class="mailchimp-alerts">
+              <div class="mailchimp-submitting"></div><!-- mailchimp-submitting end -->
+              <div class="mailchimp-success"></div><!-- mailchimp-success end -->
+              <div class="mailchimp-error"></div><!-- mailchimp-error end -->
+            </div><!-- mailchimp-alerts end -->
+
+            {% if section.settings.newsletter_btn != blank %}
+            <div class="link">
+              <a href="{{ section.settings.newsletter_btn_link }}">{{ section.settings.newsletter_btn }}</a>
+            </div>
+            {% endif %}
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+{% elsif section.settings.mailchimp_type == "style3" %}
+<div class="mailchimp-newsletter-area mc-newsletter-blue-bg mb-100" id="section-{{ section.id }}">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <!--=======  newsletter content  =======-->
+
+        <div class="mc-newsletter-content-container no-bg text-center pt-15 pb-15 pl-15 pr-15">
+          <div class="mc-newsletter-content mc-newsletter-content--fullwidth pt-70 pb-70">
+
+            {% if section.settings.newsleter_icon != blank %}
+            <div class="icon mb-20">
+              <i class="{{ section.settings.newsleter_icon }}"></i>
+            </div>
+            {% endif %}
+
+            <div class="title mb-30">
+              {% if section.settings.newsletter_title != blank %}
+              <h3 class="mb-20">{{ section.settings.newsletter_title }}</h3>
+              {% endif %}
+              {% if section.settings.newsletter_subtitle != blank %}
+              <p>{{ section.settings.newsletter_subtitle }}</p>
+              {% endif %}
+            </div>
+
+            <div class="mc-newsletter-form subscription-form mb-50">
+              <form id="mc-form" class="mc-form">
+                <input type="email" placeholder="{{ section.settings.newsletter_input_placeholder }}" required>
+                <button type="submit">{{ section.settings.subscrib_submit_button }}</button>
+              </form>
+            </div>
+
+            <!-- mailchimp-alerts Start -->
+
+            <div class="mailchimp-alerts">
+              <div class="mailchimp-submitting"></div><!-- mailchimp-submitting end -->
+              <div class="mailchimp-success"></div><!-- mailchimp-success end -->
+              <div class="mailchimp-error"></div><!-- mailchimp-error end -->
+            </div><!-- mailchimp-alerts end -->
+
+            {% if section.settings.newsletter_btn != blank %}
+            <div class="link">
+              <a href="{{ section.settings.newsletter_btn_link }}">{{ section.settings.newsletter_btn }}</a>
+            </div>
+            {% endif %}
+
+          </div>
+        </div>
+
+        <!--=======  End of newsletter content  =======-->
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %} 
+{% endif %} 
+{% endif %}
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+
+{%- capture css -%}
+<style>
+  {% for block in section.blocks %} 
+
+  {% case block.type %}		
+  {% when 'mailchimp_style' %}
+      #section-{{ section.id }} .mc-newsletter-content-container.style1 {
+        background-color: {{ block.settings.background_color }};
+      }
+      #section-{{ section.id }} .mc-newsletter-content .title h3 {
+        color: {{ block.settings.title_color }};
+      }
+      #section-{{ section.id }} .mc-newsletter-content .icon i {
+        color:  {{ block.settings.icon_color }};
+      }
+
+      #section-{{ section.id }} .mc-newsletter-content .title p {
+        color: {{ block.settings.short_desc_color }};
+      }
+      #section-{{ section.id }} .mc-newsletter-content .link a {
+        color: {{ block.settings.btn_color }};
+      }
+      #section-{{ section.id }} .mc-newsletter-content .mc-newsletter-form input{
+		 border-bottom-color: {{ block.settings.input_border_color }};
+         color:  {{ block.settings.input_color }};
+      }
+      #section-{{ section.id }} .mc-newsletter-content .mc-newsletter-form input:focus {
+        border-bottom-color: {{ block.settings.input_focus_border_color }};
+      }
+      #section-{{ section.id }} .mc-newsletter-content .mc-newsletter-form button {
+        color: {{ block.settings.submit_btn_color }};
+      }
+  
+  {% endcase %}
+  {% endfor %}
+
+
+</style>
+{%- endcapture -%}
+
+{{ css | strip_newlines
+       | replace: '  ', '' 
+       | replace: ': ', ':'
+       | replace: ' {', '{'
+}}
+
+{% render 'section_typography' %}
+
+
+{% schema %}
+  {
+    "name": "Newsletter Subscription",
+    "settings": [
+		
+	    {
+		  "type": "header",
+          "content": "Section Enable"
+        },
+		{
+          "type": "checkbox",
+          "id": "section_enable",
+          "label": "Section Enable",  
+          "default": true
+      	},
+	    {
+          "type": "header",
+          "content": "Newsletter Type"
+        },
+        {
+          "type": "radio",
+          "id": "newsletter_system",
+          "label": "Newsletter Accept",
+          "options": [
+            {
+              "label": "Shopify Form",
+              "value": "by_shopify_form"
+            },
+            {
+              "label": "MailChimp",
+              "value": "by_mailchimp"
+            }
+          ],
+          "default": "by_shopify_form"
+        },
+		{
+          "type":  "radio",
+          "id":    "mailchimp_type",
+          "label": "Mailchimp Type",
+          "options": [
+            { "value": "style1", "label": "Container Inner" },
+            { "value": "style2", "label": "Without Background Color" },
+			{ "value": "style3", "label": "Fullwidth Background" }
+          ],
+          "default":   "style1"
+        },
+
+      {
+        "type": "text",
+        "id": "newsletter_title",
+        "label": "Newsletter Title",
+      	"default": "Newsletter."
+      },
+      {
+        "type": "textarea",
+        "id": "newsletter_subtitle",
+        "label": "Newsletter Subtitle",
+        "default": "Get the latest news & updates from phoone"
+      },
+      {
+        "type": "text",
+        "id": "newsleter_icon",
+        "label": "Newsletter Icon Name",
+        "default": "ion-ios-email-outline",
+        "info": "Themify Icon [See Icon](https:\/\/themify.me\/themify-icons) And Fontawesome Icon [See Icon](https:\/\/fontawesome.com\/v4.7.0\/icons\/) . FontAwesome Icon Use: fa fa-money  And Themify Icon Use: ti-mobile"
+      },
+      {
+        "type": "text",
+        "id": "newsletter_input_placeholder",
+        "label": "Placeholder Title",
+        "default": "Your email address."
+      },
+      {
+        "type": "text",
+        "id": "subscrib_submit_button",
+        "label": "Submit Button Text",
+        "default": "Subscribe"
+      },
+      {
+        "type": "header",
+        "content": "Newsletter Btn"
+      },
+      {
+        "type": "text",
+        "id": "newsletter_btn",
+        "label": "Newsletter Button",
+        "default": "Visit us on Facebook"
+      },
+      {
+        "type": "url",
+        "id": "newsletter_btn_link",
+        "label": "Newsletter Btn Link"
+      }
+	],
+    "blocks": [
+	  {
+          "type": "mailchimp_style",
+          "name": "Mailchimp Style",
+          "settings": [
+              {
+                "type": "color",
+                "id": "background_color",
+                "label": "Style 1  Bg color",
+                "default": "#D11830"
+              },
+			  {
+                "type": "color",
+                "id": "title_color",
+                "label": "Title Color",
+                "default": "#222"
+              },
+			  {
+                "type": "color",
+                "id": "short_desc_color",
+                "label": "Short Description Color",
+                "default": "#222"
+              },
+			  {
+                "type": "color",
+                "id": "icon_color",
+                "label": "Icon Color",
+                "default": "#222"
+              },
+			  {
+                "type": "color",
+                "id": "input_border_color",
+                "label": "Input Border color",
+                "default": "#333"
+              },
+			  {
+                "type": "color",
+                "id": "input_color",
+                "label": "Input Color",
+                "default": "#333"
+              },
+			   {
+                "type": "color",
+                "id": "input_focus_border_color",
+                "label": "Input Foucs Border color",
+                "default": "#333"
+              },
+			  {
+                "type": "color",
+                "id": "submit_btn_color",
+                "label": "Submit Color",
+                "default": "#333"
+              },
+			  {
+                "type": "color",
+                "id": "btn_color",
+                "label": "Button link Color",
+                "default": "#333"
+              }
+          ]
+		},
+      {
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#ffffff"
+			}
+          ]
+       }
+	],
+	"presets": [
+		{
+		  "name": "Newsletter Subscription",
+		  "category": "9.2 Theme Others"
+		}
+	]
+  }
+{% endschema %}

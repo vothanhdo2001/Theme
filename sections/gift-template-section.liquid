@@ -1,0 +1,40 @@
+{%- capture html -%}
+{%- assign logoSize = section.settings.logo_max_width | append: 'x' -%}
+<header class="giftcard-header" role="banner">
+  <div class="h1 header-logo" itemscope itemtype="http://schema.org/Organization">
+    {% if section.settings.logo != blank %}
+    <a href="{{ shop.url }}" itemprop="url">
+      <img src="{{ section.settings.logo | img_url: logoSize }}" alt="{{ shop.name }}" itemprop="logo">
+    </a>
+    {% else %}
+    <a href="{{ shop.url }}" itemprop="url">{{ shop.name }}</a>
+    {% endif %}
+  </div>
+  <div class="shop-url">{{ shop.url }}</div>
+</header>
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+
+{% schema %}
+  {
+    "name": "Logo",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Logo"
+      },
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo"
+      },
+      {
+        "type": "text",
+        "id": "logo_max_width",
+        "label": "Logo Width in pixels",
+		"info": "Please write Integer number",
+        "default": "185"
+      }
+    ]
+  }
+{% endschema %}

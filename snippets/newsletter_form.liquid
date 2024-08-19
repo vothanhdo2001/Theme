@@ -1,0 +1,17 @@
+<div class="mc-newsletter-form mc-newsletter-form--popup mb-90">
+  <form id="mc-form" class="mc-form">
+    <input type="email" required id="mail" value="{% if customer %}{{ customer.email }}{% endif %}" name="EMAIL" placeholder="{{ 'general.newsletter_form.newsletter_email'| t }}">
+    <button onload="checkCookie()" type="submit">{{ settings.newsletter_button_name }}</button>
+  </form>
+  {%- if settings.dont_show_again_enable -%}
+  <p class="dont_show_again"><input id="forgetMe" type="checkbox" name="forgetMe"> {{ settings.dont_show_again_text }}</p>
+  {%- endif -%}
+</div>
+
+<!-- mailchimp-alerts Start -->
+
+<div class="mailchimp-alerts">
+  <div class="mailchimp-submitting"></div><!-- mailchimp-submitting end -->
+  <div class="mailchimp-success"></div><!-- mailchimp-success end -->
+  <div class="mailchimp-error"></div><!-- mailchimp-error end -->
+</div><!-- mailchimp-alerts end -->

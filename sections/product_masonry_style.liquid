@@ -1,0 +1,388 @@
+{%- capture html -%}
+<div id="section-{{ section.id }}" data-section="BannerSection">
+
+  {% if section.settings.masonry_product_section_title %}
+
+  <div class="fashion-home-intro-area mb-100 mb-sm-80 mb-xs-60">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="fashion-home-intro">
+
+            {% if section.settings.masonry_subtitle != blank %}
+            <p class="label">{{ section.settings.masonry_subtitle }}</p>
+            {% endif %}
+
+            {% if section.settings.masonry_title != blank %}
+            <h2 class="title">{{ section.settings.masonry_title }}</h2>
+            {% endif %}
+
+            {% if section.settings.masonry_title_desc != blank %}
+            <p class="description">{{ section.settings.masonry_title_desc }}</p>
+            {% endif %}
+			 {% if section.settings.shop_collection_btn_text != blank %}
+            <a href="{{ section.settings.shop_collection_btn_link }}" class="phoone-shop-link">{{ section.settings.shop_collection_btn_text }}</a>
+            {% endif %}
+
+            {% if section.settings.masorny_opacity_title != blank %}
+            <p class="shadow-text">{{ section.settings.masorny_opacity_title }}</p>
+            {% endif %}
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% endif %}
+
+
+  <div class="fashion-home-product-area mb-sm-80 mb-xs-60">
+    <div class="container">
+      <div class="row ">
+
+        {%- assign product_handler = collections[section.settings.product_cat_handle_id] -%}
+        {%- assign product_limit = section.settings.product_limit_handle -%}
+
+        {% for product in product_handler.products limit:1 %}
+        <div class="col-lg-5 offset-lg-1 col-md-6 mb-100 mb-sm-80 mb-xs-60">
+          <div class="single-product single-product--large-size">
+            {%- render 'product-grid-item' with product as product -%}
+          </div>
+        </div>
+        {% endfor %}
+
+        {% for product in product_handler.products limit:1 offset: 1 %}
+        <div class="col-lg-4 col-md-6 mb-100 mb-sm-80 mb-xs-60">
+          <div class="single-product single-product--small-size">
+            {%- render 'product-grid-item' with product as product -%}
+          </div>
+        </div>
+        {% endfor %}
+
+        {% for product in product_handler.products limit:1 offset: 2 %}
+        <div class="col-lg-4 offset-lg-2 col-md-6 mb-100 mb-sm-80 mb-xs-60">
+          <div class="single-product single-product--small-size">
+            {%- render 'product-grid-item' with product as product -%}
+          </div>
+        </div>
+        {% endfor %}
+
+        {% for product in product_handler.products limit:1 offset: 3 %}
+        <div class="col-lg-5 col-md-6 mb-100 mb-sm-80 mb-xs-60">
+          <div class="single-product single-product--large-size">
+            {%- render 'product-grid-item' with product as product -%}
+          </div>
+        </div>
+        {% endfor %}
+        {% for product in product_handler.products limit:1 %}
+        <div class="col-lg-5 offset-lg-1 col-md-6 mb-100 mb-sm-80 mb-xs-60">
+          <div class="single-product single-product--large-size">
+            {%- render 'product-grid-item' with product as product -%}
+          </div>
+        </div>
+        {% endfor %}
+
+        {% for product in product_handler.products limit:1 offset: 1 %}
+        <div class="col-lg-4 col-md-6 mb-100 mb-sm-80 mb-xs-60">
+          <div class="single-product single-product--small-size">
+            {%- render 'product-grid-item' with product as product -%}
+          </div>
+        </div>
+        {% endfor %}
+
+      </div>
+
+
+      {% if section.settings.collection_btn %}
+      <div class="row">
+        <div class="col-lg-12 text-center ">
+          <a href="{{ section.settings.collection_btn_link }}" class="phoone-button phoone-button--medium phoone-button--icon--left"> <i class=" ion-{{ section.settings.button_icon }}"></i> {{ section.settings.collection_btn_text | default: 'Shop Store' }}</a>
+        </div>
+      </div>
+      {% endif %}
+      
+    </div>
+  </div>
+
+</div>
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+
+{% render 'section_typography' %}
+
+
+{% schema %}
+  {
+    "name": "Product Masonry Style",
+    "settings": [
+		{
+          "type": "header",
+          "content": "Masonry Product Header"
+        },
+		{
+          "type": "checkbox",
+          "id": "masonry_product_section_title",
+          "label": "Masonry Product Header Enable",
+		  "default": true
+        },
+		{
+          "type": "text",
+          "id": "masorny_opacity_title",
+          "label": "Section Opacity Title",
+		  "default": "ss-18"
+        },
+		{
+          "type": "text",
+          "id": "masonry_subtitle",
+          "label": "Section SubTitle",
+		  "default": "SS-2017"
+        },
+		{
+          "type": "text",
+          "id": "masonry_title",
+          "label": "Section Title",
+		  "default": "Basic instinct"
+        },
+		{
+          "type": "textarea",
+          "id": "masonry_title_desc",
+          "label": "Section Title Description",
+		  "default": "Lorem ipsum dolor sit amet, consectetur cing.."
+        },
+		{
+          "type": "text",
+          "id": "shop_collection_btn_text",
+          "label": "Collection Button Text",
+		  "default": "Shop Collection"
+        },
+        {
+          "type": "url",
+          "id": "shop_collection_btn_link",
+          "label": "Button Url"
+        },
+		{
+           "type": "header",
+           "content": "Product Collection"
+        },
+		{
+          "type": "collection",
+          "id": "product_cat_handle_id",
+          "label": "Select Your Collection"
+        },
+		{
+          "type": "header",
+          "content": "Collection Button"
+        },
+		{
+          "type": "checkbox",
+          "id": "collection_btn",
+          "label": "Collection Button Enable",
+		  "default": true
+        }, 
+		{
+          "type": "text",
+          "id": "collection_btn_text",
+          "label": "Collection Button",
+		  "default": "Online Store"
+        },
+		{
+          "type": "url",
+          "id": "collection_btn_link",
+          "label": "Button Url"
+        },
+        {
+          "type": "text",
+          "id": "button_icon",
+          "label": "Button Icon Name",
+          "default": "plus",
+          "info": "Ionicons Icon [See Icon](https:\/\/ionicons.com)"
+        }
+	],
+	"blocks":[
+	   {
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#ffffff"
+			}
+          ]
+       }
+	],
+	"presets": [
+      {
+        "category": "3. collections",
+        "name": "Product Masonry Style"
+
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,384 @@
+{%- capture html -%}
+<!-- Product Category area Start -->
+<div class="product-category-area" id="section-{{ section.id }}" data-section="featurCategory">
+  <div class="{% if section.settings.container_width == 'container' %} container {% elsif section.settings.container_width == 'fluid' %} container wide {% endif %}">
+    <div class="row">
+      <div class="col-12">
+        {% capture data_slick_activation %}
+        
+        data-slick='{
+        "slidesToShow": {{ section.settings.slide_items_show }},
+        "arrows": true,
+        "spaceBetween": 30,
+        {% if settings.rtl_enable %}                
+        "rtl": true,
+        {% endif %}
+        "autoplay": {{ section.settings.autoplay_true }},
+        "autoplaySpeed": 5000,
+        "speed": 1000,
+        "responsive":[
+            {"breakpoint":1501, "settings": {"slidesToShow": {{ section.settings.slide_items_show }}} },
+            {"breakpoint":1199, "settings": {"slidesToShow": {{ section.settings.items_more_than_1200 }}} },
+            {"breakpoint":991, "settings": {"slidesToShow": {{ section.settings.items_more_than_992 }}, "arrows": false} },
+            {"breakpoint":767, "settings": {"slidesToShow": {{ section.settings.items_more_than_768 }}, "arrows": false} },
+            {"breakpoint":575, "settings": {"slidesToShow": {{ section.settings.items_more_than_480 }}, "arrows": false} },
+            {"breakpoint":479, "settings": {"slidesToShow": {{ section.settings.items_more_than_320 }}, "arrows": false} }
+          ]                                                             
+        }'
+        
+        {% endcapture %}
+        <div class="feature_category_slider nav-vertical-center nav-style-1 slick-carousel-js" {{ data_slick_activation }}>
+
+
+          {% for block in section.blocks %}
+          {% case block.type %}
+          {% when 'category-banner' %}
+          <div class="product-category__item text-center">
+            <figure class="product-category__img">
+              <a href="{{ block.settings.url1 }}">
+                {%- if block.settings.banner_img != blank -%}
+              	{%- render 'lazyload_image_src',
+                	  image: block.settings.banner_img,
+              		  size: 'master' -%}
+                {%- else -%}
+                 <img class="lazyload" data-src="https://cdn.shopify.com/s/files/1/0255/6080/9506/files/m12-icon5.png">
+                {%- endif -%}
+              </a>
+              {% if block.settings.banner_title != '' %}
+              <figcaption>{{ block.settings.banner_title }}</figcaption>
+              {% endif %}
+            </figure>
+          </div>
+          {% endcase %}
+          {% endfor %}
+        </div>
+        <div class="product-category-carousel">
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Product Category area End -->
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+
+{%- render 'section_typography' -%}
+
+
+
+{% schema %}
+  {
+    "name": "Featured Category Banner",
+    "settings": [
+		{
+          "type": "header",
+          "content": "Container Style"
+        },
+		{
+          "type":  "radio",
+          "id":    "container_width",
+          "label": "Container Width",
+          "options": [
+            { "value": "container", "label": "Container" },
+            { "value": "fluid", "label": "Full Width" }
+          ],
+          "default":   "fluid"
+        },
+		{
+		  "type": "header",
+          "content": "Banner Carousel"
+        },
+		{
+          "type": "header",
+          "content": "Slider Autoplay"
+        },
+		{
+          "type": "checkbox",
+          "id": "autoplay_true",
+          "label": "Autoplay Enable",
+		  "default": false
+        },
+		{
+			"type": "header",
+            "content": "Product Category Item Show"
+        },
+		{
+            "type":      "range",
+            "id":        "slide_items_show",
+            "min":        1,
+            "max":        15,
+            "step":       1,
+            "label":     "Large Device Number Of Item Show",
+            "default":   3
+        },
+		{
+            "type":      "range",
+            "id":        "items_more_than_1200",
+            "min":        1,
+            "max":        15,
+            "step":       1,
+            "label": "More Than 1200px Number Of Item Show",
+            "default":   3
+        },
+		{
+            "type":      "range",
+            "id":        "items_more_than_992",
+            "min":        1,
+            "max":        15,
+            "step":       1,
+            "label": "More Than 992px Number Of Item Show",
+            "default":   2
+        },
+		{
+            "type":      "range",
+            "id":        "items_more_than_768",
+            "min":        1,
+            "max":        15,
+            "step":       1,
+            "label": "Tablet Item Show",
+            "default":  1
+        },
+		{
+            "type":      "range",
+            "id":        "items_more_than_480",
+            "min":        1,
+            "max":        15,
+            "step":       1,
+            "label": "Large Mobile Item Show",
+            "default":   1
+        },
+		{
+            "type":      "range",
+            "id":        "items_more_than_320",
+            "min":        1,
+            "max":        15,
+            "step":       1,
+            "label": "Small Mobile Item Show",
+            "default":   1
+        }
+	],
+	"blocks":[
+       {
+           "type": "category-banner",
+           "name": "Category Banner",
+           "settings": [
+              {
+                  "type": "image_picker",
+                  "id": "banner_img",
+                  "label": "Image",
+                  "info": "Recommended Size: 215 x 215"
+              },
+              {
+                  "type": "text",
+                  "id": "banner_title",
+                  "label": "Banner Title",
+                  "default": "Living Room"
+              },
+              {
+                  "type": "url",
+                  "id": "url1",
+                  "label": "URL",
+                  "default": "\/collections\/all"
+              }
+           ]
+       },
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#ffffff"
+			}
+          ]
+       }
+	],
+	"presets": [
+		{
+		  "name": "Featured Category Banner",
+		  "category": "5. Collection Banner",
+		  "blocks":[
+				{
+					"type": "category-banner"
+				},
+				{
+					"type": "category-banner"
+				},
+				{
+					"type": "category-banner"
+				},
+				{
+					"type": "category-banner"
+				}
+			]
+		}
+	]
+  }
+{% endschema %}

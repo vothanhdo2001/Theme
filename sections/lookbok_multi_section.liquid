@@ -1,0 +1,900 @@
+{%- capture html -%}
+<div class="home-content home-content--shoppable" id="section-{{ section.id }}" data-section="lookbooBanner">
+
+  <div class="row no-gutters">
+    {% for block in section.blocks %}
+    {%- case block.type -%}
+    {%- when 'lookbook_fullw_with_text' -%}
+    <div class="col-lg-12">
+      <div class="single-shoppable single-shoppable--width-full">
+        
+        {%- if block.settings.banner_img != blank -%}
+        {%- render 'lazyload_image_src',
+                	  image: block.settings.banner_img,
+        			  size: 'master' -%}
+        {%- else -%}
+        <img data-src="https://via.placeholder.com/1920x760" class="lazyload img-fluid" alt="">
+        {%- endif -%}
+
+        {% if block.settings.lookbook_banner_conetnt %}
+        <div class="shoppable-content text-center">
+          {% if block.settings.lookbook_content_tag != blank %}
+          <p class="tags">{{ block.settings.lookbook_content_tag }}</p>
+          {% endif %}
+
+          {% if block.settings.lookbook_content_title != blank %}
+          <h2 class="title">{{ block.settings.lookbook_content_title }}</h2>
+          {% endif %}
+
+          {% if block.settings.lookbook_content_desc != blank %}
+          <p>{{ block.settings.lookbook_content_desc }}</p>
+          {% endif %}
+          {%- if section.settings.scroll_btn_enable -%}
+          <a id="smooth-scroll-section" href="#scroll-position"><i class="icon-left ion-arrow-down-c"></i></a>
+          {%- endif -%}
+        </div>
+        {% endif %}
+        {%- render 'lookbook_bullet', block: block -%}
+      </div>
+    </div>
+   
+    {%- when 'lookbook_without_text' -%}
+    <div class="col-md-{{ block.settings.md_column }} col-lg-{{ block.settings.lg_column }} col-12">
+
+      <div class="single-shoppable single-shoppable--width-half">
+        {%- if block.settings.banner_img != blank -%}
+        {%- render 'lazyload_image_src',
+                	  image: block.settings.banner_img,
+        			  size: 'master' -%}
+        {%- else -%}
+        <img data-src="https://via.placeholder.com/1920x760" class="lazyload img-fluid" alt="">
+        {%- endif -%}
+		{% render 'lookbook_bullet' with block: block %}
+      </div>
+
+      <!--=======  End of single shoppable  =======-->
+    </div>
+	<div id="scroll-position"></div>
+    
+    
+     {%- when 'video_banner' -%}
+    <div class="col-lg-12">
+      <div class="about-video-bg-area about-video-bg-1 pt-300 pb-300 pt-sm-200 pb-sm-200" style="background-image: url('{% if block.settings.banner_img != blank %} {{ block.settings.banner_img | img_url: 'master' }}{% else %} https://via.placeholder.com/1920x800 {% endif %}');">
+        <div class="play-icon text-center">
+          <a href="{{ block.settings.video_link }}" class="popup-video">
+            <img data-src="{% if block.settings.video_banner_icon != blank %} {{ block.settings.video_banner_icon | img_url: 'small' }} {% else %}  https://cdn.shopify.com/s/files/1/0132/3116/1408/files/icon-play-100x100.png?3906524334719467033 {% endif %}" class="lazyload img-fluid" alt="{{ block.settings.video_banner_icon.alt }}">
+          </a>
+        </div>
+      </div>
+    </div>
+    {%- endcase -%}
+    {% endfor %}
+
+  </div>
+
+  {% if section.settings.lookbook_banner_btn_enable %}
+  <div class="shop-button text-center w-100 mt-80 mb-100">
+    <a class="phoone-button phoone-button--medium phoone-button--icon--left" href="{{ section.settings.lookbook_btn_link }}" > <i class="icon-left ion-plus"></i> {{ section.settings.lookbook_btn_text  }}</a>
+  </div>
+  {% endif %}
+</div>
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+{% render 'section_typography' %}
+
+
+
+{% schema %}
+  {
+    "name": "Lookook Multi Section",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "lookbook_banner_btn_enable",
+        "label": "LookBook Banner Button Enable",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "lookbook_btn_text",
+        "label": "Button Text",
+        "default": "Online Store"
+      },
+      {
+        "type": "url",
+        "id": "lookbook_btn_link",
+        "label": "Button url"
+      },
+	  {
+        "type": "header",
+        "content": "Smooth Scroll Button"
+      },
+      {
+        "type": "checkbox",
+        "id": "scroll_btn_enable",
+        "label": "Scroll Button Enable",
+        "default": true
+      }
+	],
+	"blocks": [
+       {
+        "type": "lookbook_fullw_with_text",
+        "name": "LookBook With Text",
+        "settings": [
+			{
+              "type": "image_picker",
+              "id": "banner_img",
+              "label": "Lookbook Banner Image",
+              "info": "Recommended Size: 1920 x 550 px"
+            },
+			{
+              "type": "header",
+              "content": "Banner Collection Header"
+            },
+			{
+              "type": "checkbox",
+              "id": "lookbook_banner_conetnt",
+              "label": "Banner Content Enable",
+              "default": true
+            },
+            {
+              "type": "textarea",
+              "id": "lookbook_content_tag",
+              "label": "LookBook Content Tag",
+              "default": "#NEW #WOMEN"
+            },
+            {
+              "type": "textarea",
+              "id": "lookbook_content_title",
+              "label": "Banner Title",
+              "default": "The Spring racing edition"
+            },
+            {
+              "type": "text",
+              "id": "lookbook_content_desc",
+              "label": "Banner Content",
+              "default": "SHOP THESE LOOKS"
+            },
+            {
+              "type": "header",
+              "content": "Lookbook Product#1"
+            },
+			{
+              "type": "checkbox",
+              "id": "bullet_lookbook_1",
+              "label": "LookBook Bullet#1",
+              "default": true
+            },
+			{
+               "type": "product",
+               "id": "product_handgle_id",
+               "label": "Add Product"
+            },
+            {
+              "type": "header",
+              "content": "Vertical Position"
+            },
+			{
+                "type": "range",
+                "id": "vertical_postion1",
+                "min": 1,
+                "max": 100,
+                "step": 1,
+                "label": "Top To Bottom",
+				"unit":  "%",
+                "default": 30
+            },
+			{
+              "type": "header",
+              "content": "Horizontal Position"
+            },
+			{
+                "type": "range",
+                "id": "horizontal_postion1",
+                "min": 1,
+                "max": 100,
+                "step": 1,
+                "label": "Left Top Right",
+				"unit":  "%",
+                "default": 30
+            },
+			{
+              "type": "header",
+              "content": "Lookbook Product#2"
+            },
+			{
+              "type": "checkbox",
+              "id": "bullet_lookbook_2",
+              "label": "LookBook Bullet#2",
+              "default": true
+            },
+			{
+               "type": "product",
+               "id": "product_handgle_id2",
+               "label": "Add Product"
+            },
+            {
+              "type": "header",
+              "content": "Vertical Position"
+            },
+			{
+                "type": "range",
+                "id": "vertical_postion2",
+                "min": 1,
+                "max": 100,
+                "step": 1,
+                "label": "Top To Bottom",
+				"unit":  "%",
+                "default": 20
+            },
+			{
+              "type": "header",
+              "content": "Horizontal Position"
+            },
+			{
+                "type": "range",
+                "id": "horizontal_postion2",
+                "min": 1,
+                "max": 100,
+                "step": 1,
+                "label": "Left Top Right",
+				"unit":  "%",
+                "default": 35
+            },
+			{
+              "type": "header",
+              "content": "Lookbook Product#3"
+            },
+			{
+              "type": "checkbox",
+              "id": "bullet_lookbook_3",
+              "label": "LookBook Bullet#3",
+              "default": false
+            },
+			{
+               "type": "product",
+               "id": "product_handgle_id3",
+               "label": "Add Product"
+            },
+            {
+              "type": "header",
+              "content": "Vertical Position"
+            },
+			{
+                "type": "range",
+                "id": "vertical_postion3",
+                "min": 1,
+                "max": 100,
+                "step": 1,
+                "label": "Top To Bottom",
+				"unit":  "%",
+                "default": 40
+            },
+			{
+              "type": "header",
+              "content": "Horizontal Position"
+            },
+			{
+                "type": "range",
+                "id": "horizontal_postion3",
+                "min": 1,
+                "max": 100,
+                "step": 1,
+                "label": "Left Top Right",
+				"unit":  "%",
+                "default": 38
+            },
+			{
+              "type": "header",
+              "content": "Lookbook Product#4"
+            },
+			{
+              "type": "checkbox",
+              "id": "bullet_lookbook_4",
+              "label": "LookBook Bullet#4",
+              "default": false
+            },
+			{
+               "type": "product",
+               "id": "product_handgle_id4",
+               "label": "Add Product"
+            },
+            {
+              "type": "header",
+              "content": "Vertical Position"
+            },
+			{
+                "type": "range",
+                "id": "vertical_postion4",
+                "min": 1,
+                "max": 100,
+                "step": 1,
+                "label": "Top To Bottom",
+				"unit":  "%",
+                "default": 45
+            },
+			{
+              "type": "header",
+              "content": "Horizontal Position"
+            },
+			{
+                "type": "range",
+                "id": "horizontal_postion4",
+                "min": 1,
+                "max": 100,
+                "step": 1,
+                "label": "Left Top Right",
+				"unit":  "%",
+                "default": 50
+            },
+			{
+              "type": "header",
+              "content": "Lookbook Product#5"
+            },
+			{
+              "type": "checkbox",
+              "id": "bullet_lookbook_5",
+              "label": "LookBook Bullet#5",
+              "default": false
+            },
+			{
+               "type": "product",
+               "id": "product_handgle_id5",
+               "label": "Add Product"
+            },
+            {
+              "type": "header",
+              "content": "Vertical Position"
+            },
+			{
+                "type": "range",
+                "id": "vertical_postion5",
+                "min": 1,
+                "max": 100,
+                "step": 1,
+                "label": "Top To Bottom",
+				"unit":  "%",
+                "default": 55
+            },
+			{
+              "type": "header",
+              "content": "Horizontal Position"
+            },
+			{
+                "type": "range",
+                "id": "horizontal_postion5",
+                "min": 1,
+                "max": 100,
+                "step": 1,
+                "label": "Left Top Right",
+				"unit":  "%",
+                "default": 60
+            },
+			{
+              "type": "header",
+              "content": "Title Limit Word"
+            },
+			{
+                "type": "range",
+                "id": "prouct_title_limit",
+                "min": 2,
+                "max": 50,
+                "step": 1,
+                "label": "Limit",
+				"default": 10
+            }
+          ]
+        },
+		{
+        "type": "lookbook_without_text",
+        "name": "LookBook Without Text",
+        "settings": [
+			{
+              "type": "image_picker",
+              "id": "banner_img",
+              "label": "Lookbook Banner Image",
+              "info": "Recommended Size: 1920 x 550 px"
+            },
+			{
+                "type": "header",
+                "content": "Banenr Column"
+            },
+            {
+              "type": "select",
+              "id": "lg_column",
+              "label": "Desktop",
+              "options":[
+					{
+                        "label": "1 Colmun",
+                        "value": "12"
+                    },
+                    {
+                        "label": "2 Colmun",
+                        "value": "6"
+                    },
+                    {
+                        "label": "3 Column",
+                        "value": "4"
+                    },
+                    {
+                        "label": "4 Column",
+                        "value": "3"
+                    }
+                ],
+                "default": "6"
+            },
+            {
+              "type": "select",
+              "id": "product_column_md",
+              "label": "Tablet",
+              "options":[
+					{
+                        "label": "1 Colmun",
+                        "value": "12"
+                    },
+                    {
+                        "label": "2 Column",
+                        "value": "6"
+                    },
+                    {
+                        "label": "3 Column",
+                        "value": "4"
+                    },
+                    {
+                        "label": "4 Column",
+                        "value": "3"
+                    }
+                ],
+                "default": "6"
+            },
+		    {
+              "type": "header",
+              "content": "Lookbook Product#1"
+            },
+			{
+              "type": "checkbox",
+              "id": "bullet_lookbook_1",
+              "label": "LookBook Bullet#1",
+              "default": true
+            },
+			{
+               "type": "product",
+               "id": "product_handgle_id",
+               "label": "Add Product"
+            },
+            {
+              "type": "header",
+              "content": "Vertical Position"
+            },
+			{
+                "type": "range",
+                "id": "vertical_postion1",
+                "min": 1,
+                "max": 100,
+                "step": 1,
+                "label": "Top To Bottom",
+				"unit":  "%",
+                "default": 30
+            },
+			{
+              "type": "header",
+              "content": "Horizontal Position"
+            },
+			{
+                "type": "range",
+                "id": "horizontal_postion1",
+                "min": 1,
+                "max": 100,
+                "step": 1,
+                "label": "Left Top Right",
+				"unit":  "%",
+                "default": 30
+            },
+			{
+              "type": "header",
+              "content": "Lookbook Product#2"
+            },
+			{
+              "type": "checkbox",
+              "id": "bullet_lookbook_2",
+              "label": "LookBook Bullet#2",
+              "default": true
+            },
+			{
+               "type": "product",
+               "id": "product_handgle_id2",
+               "label": "Add Product"
+            },
+            {
+              "type": "header",
+              "content": "Vertical Position"
+            },
+			{
+                "type": "range",
+                "id": "vertical_postion2",
+                "min": 1,
+                "max": 100,
+                "step": 1,
+                "label": "Top To Bottom",
+				"unit":  "%",
+                "default": 20
+            },
+			{
+              "type": "header",
+              "content": "Horizontal Position"
+            },
+			{
+                "type": "range",
+                "id": "horizontal_postion2",
+                "min": 1,
+                "max": 100,
+                "step": 1,
+                "label": "Left Top Right",
+				"unit":  "%",
+                "default": 35
+            },
+			{
+              "type": "header",
+              "content": "Lookbook Product#3"
+            },
+			{
+              "type": "checkbox",
+              "id": "bullet_lookbook_3",
+              "label": "LookBook Bullet#3",
+              "default": false
+            },
+			{
+               "type": "product",
+               "id": "product_handgle_id3",
+               "label": "Add Product"
+            },
+            {
+              "type": "header",
+              "content": "Vertical Position"
+            },
+			{
+                "type": "range",
+                "id": "vertical_postion3",
+                "min": 1,
+                "max": 100,
+                "step": 1,
+                "label": "Top To Bottom",
+				"unit":  "%",
+                "default": 40
+            },
+			{
+              "type": "header",
+              "content": "Horizontal Position"
+            },
+			{
+                "type": "range",
+                "id": "horizontal_postion3",
+                "min": 1,
+                "max": 100,
+                "step": 1,
+                "label": "Left Top Right",
+				"unit":  "%",
+                "default": 38
+            },
+			{
+              "type": "header",
+              "content": "Lookbook Product#4"
+            },
+			{
+              "type": "checkbox",
+              "id": "bullet_lookbook_4",
+              "label": "LookBook Bullet#4",
+              "default": false
+            },
+			{
+               "type": "product",
+               "id": "product_handgle_id4",
+               "label": "Add Product"
+            },
+            {
+              "type": "header",
+              "content": "Vertical Position"
+            },
+			{
+                "type": "range",
+                "id": "vertical_postion4",
+                "min": 1,
+                "max": 100,
+                "step": 1,
+                "label": "Top To Bottom",
+				"unit":  "%",
+                "default": 45
+            },
+			{
+              "type": "header",
+              "content": "Horizontal Position"
+            },
+			{
+                "type": "range",
+                "id": "horizontal_postion4",
+                "min": 1,
+                "max": 100,
+                "step": 1,
+                "label": "Left Top Right",
+				"unit":  "%",
+                "default": 50
+            },
+			{
+              "type": "header",
+              "content": "Lookbook Product#5"
+            },
+			{
+              "type": "checkbox",
+              "id": "bullet_lookbook_5",
+              "label": "LookBook Bullet#5",
+              "default": false
+            },
+			{
+               "type": "product",
+               "id": "product_handgle_id5",
+               "label": "Add Product"
+            },
+            {
+              "type": "header",
+              "content": "Vertical Position"
+            },
+			{
+                "type": "range",
+                "id": "vertical_postion5",
+                "min": 1,
+                "max": 100,
+                "step": 1,
+                "label": "Top To Bottom",
+				"unit":  "%",
+                "default": 55
+            },
+			{
+              "type": "header",
+              "content": "Horizontal Position"
+            },
+			{
+                "type": "range",
+                "id": "horizontal_postion5",
+                "min": 1,
+                "max": 100,
+                "step": 1,
+                "label": "Left Top Right",
+				"unit":  "%",
+                "default": 60
+            },
+			{
+              "type": "header",
+              "content": "Title Limit Word"
+            },
+			{
+                "type": "range",
+                "id": "prouct_title_limit",
+                "min": 2,
+                "max": 50,
+                "step": 1,
+                "label": "Limit",
+				"default": 10
+            }
+          ]
+        },
+		{
+        "type": "video_banner",
+        "name": "Video Banner",
+        "settings": [
+			{
+              "type": "image_picker",
+              "id": "banner_img",
+              "label": "Lookbook Banner Image",
+              "info": "Recommended Size: 1920 x 550 px"
+            },
+			{
+              "type": "image_picker",
+              "id": "video_banner_icon",
+              "label": "Video Icon Image",
+              "info": "Recommended Size: 100 x 100 px"
+            },	
+			{
+               "id": "video_link",
+               "type": "video_url",
+               "label": "Youtube Video url",
+               "accept": ["youtube"],
+               "default": "https://www.youtube.com/watch?v=8uFEVF6aTR4"
+            }
+          ]
+        },
+		{
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#ffffff"
+			}
+          ]
+       }
+	],
+	"presets": [
+		{
+		  "name": "LookBook Multi Section",
+		  "category": "6. Lookbook",
+			"blocks": [
+              {
+                "type": "lookbook_fullw_with_text"
+              },
+			  {
+                "type": "lookbook_without_text"
+              },
+			  {
+                "type": "lookbook_without_text"
+              }
+		  ]
+		}
+	]
+  }
+{% endschema %}

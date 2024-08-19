@@ -1,0 +1,291 @@
+{%- capture html -%}
+<!-- PRODUCT SECTION START -->
+<div class="featured-banner" id="section-{{ section.id }}" data-section="BannerSection">
+  <div class="container">
+    <div class="row featured-banner-align">
+      <div class="col-lg-7 col-md-6">
+        <div class="featured-banner-iamge">
+          {%- if section.settings.featured_banner_image != blank -%}
+          {%- render 'lazyload_image_src',
+                	  image: section.settings.featured_banner_image,
+          				size: 'grande' -%}
+          {%- else -%}
+          {%- render 'svg_placholder' with param: 'image', size: '828x707' -%}
+          {%- endif -%}
+        </div>
+      </div>
+      <div class="col-lg-5 col-md-6">
+        <div class="featured-banner-content">
+          {%- if section.settings.featured_banner_sub_title != '' -%}
+          <span class="sub-title">{{ section.settings.featured_banner_sub_title }}</span>
+          {%- endif -%}
+          {%- if section.settings.featured_banner_title != '' -%}
+          <h2>{{ section.settings.featured_banner_title }}</h2>
+          {%- endif -%}
+          {%- if section.settings.featured_banner_content != '' -%}
+          <div class="featured-banner-description">
+            <p>{{ section.settings.featured_banner_content }}</p>
+          </div>
+          {%- endif -%}
+          {%- if section.settings.button_title != '' -%}
+          <div class="featured-banner-button">
+            <a href="{{ section.settings.button_url }}">{{ section.settings.button_title }}</a>
+          </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- PRODUCT SECTION END -->
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+
+{%- render 'section_typography' -%}
+{%- capture css -%}
+{%- style -%}
+  @media (max-width: 767px) {
+    .featured-banner-content {
+      margin-top: 40px;
+    }
+  }
+{%- endstyle -%}
+{%- endcapture -%}
+
+{{ css | strip_newlines
+       | replace: '  ', '' 
+       | replace: ': ', ':'
+       | replace: ' {', '{'
+}}
+
+
+{% schema %}
+  {
+    "name": "Featured Banner",
+    "settings": [
+		{
+          "type": "image_picker",
+          "id": "featured_banner_image",
+          "label": "Banner Image"
+      	},
+		{
+          "type": "text",
+          "id": "featured_banner_sub_title",
+          "label": "Sub Title",
+          "default": "Sub Title"
+      	},
+		{
+          "type": "text",
+          "id": "featured_banner_title",
+          "label": "Banner Title",
+          "default": "Banner Title"
+      	},
+		{
+          "type": "textarea",
+          "id": "featured_banner_content",
+          "label": "Banner Content",
+          "default": "Banner content here"
+      	},
+		{
+          "type": "text",
+          "id": "button_title",
+          "label": "Button Title",
+          "default": "Shop Now"
+      	},
+		{
+          "type": "url",
+          "id": "button_url",
+          "label": "Button URL"
+      	}
+    ],
+	"blocks":[
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#ffffff"
+			}
+          ]
+       }
+	],
+	"presets": [
+		{
+		  "name": "Featured Banner",
+		  "category": "9.4 Single Product",
+		  "blocks":[
+				{
+					"type": "section_padding"
+				}
+			]
+		}
+	]
+  }
+{% endschema %}

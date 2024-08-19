@@ -1,0 +1,24 @@
+{%- unless template contains 'product' -%}
+{%- if sold_out -%}
+<span class="soldout-title">{{ settings.soldout_title }}</span>
+{%- else -%}
+
+{%- if on_sale -%}
+{%- if settings.sale_title != '' -%}
+<span class="onsale">{{ settings.sale_title }}</span>
+{%- endif -%}
+{%- if settings.sale_percent_enable -%}
+<span class="onsale percent-count">-{{ product.selected_or_first_available_variant.compare_at_price | minus: product.selected_or_first_available_variant.price | times: 100.0 | divided_by: product.selected_or_first_available_variant.compare_at_price | money_without_currency | replace: ',', '.' | times: 100 | remove: '.0'}}%</span>
+{%- endif -%}
+{%- endif -%}
+{%- endif -%}
+{%- endunless -%}
+
+{%- assign nweBadgeDate = product.metafields.meta.product_new_badge.value | date: '%s' -%}
+{%- assign today_date = 'now' | date: '%s' -%}
+
+{%- if product.metafields.meta.product_new_badge.value -%}
+{%- if today_date < nweBadgeDate -%}
+<span class="hot">{{ settings.new_title }}</span>
+{%- endif -%}
+{%- endif -%}

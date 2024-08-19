@@ -1,0 +1,93 @@
+{%- assign settings = section.settings -%}
+{%- capture layoutMode -%}
+{%- if settings.layout_mode == "slider" -%}
+slider-layout 
+{%- elsif settings.layout_mode == "grid" -%}
+grid-layout
+{%- endif -%}
+{%- endcapture -%}
+
+{%- capture itmeColumn -%}
+{%- assign column = settings.item_Column -%}
+{%- assign mdcolumn = settings.item_md_Column -%}
+{%- assign smcolumn = settings.item_sm_Column -%}
+{%- assign xscolumn = settings.item_xs_Column -%}
+
+{%- case column -%}
+  {% when '6' %}
+  column-6
+  {% when '5' %}
+  column-5 
+  {% when '4' %}
+  column-4 
+  {% when '3' %}
+  column-3 
+  {% when '2' %}
+  column-2 
+{%- endcase -%}
+
+{%- case mdcolumn -%}
+  {% when '6' %}
+  column-md-6
+  {% when '5' %}
+  column-md-5 
+  {% when '4' %}
+  column-md-4 
+  {% when '3' %}
+  column-md-3 
+  {% when '2' %}
+  column-md-2 
+{%- endcase -%}
+
+{%- case smcolumn -%}
+  {% when '6' %}
+  column-sm-6
+  {% when '5' %}
+  column-sm-5 
+  {% when '4' %}
+  column-sm-4 
+  {% when '3' %}
+  column-sm-3 
+  {% when '2' %}
+  column-sm-2 
+  {% when '1' %}
+  column-sm-1 
+{%- endcase -%}
+
+{%- case xscolumn -%}
+  {% when '6' %}
+  column-xs-6
+  {% when '5' %}
+  column-xs-5 
+  {% when '4' %}
+  column-xs-4 
+  {% when '3' %}
+  column-xs-3 
+  {% when '2' %}
+  column-xs-2 
+  {% when '1' %}
+  column-xs-1 
+{%- endcase -%}
+
+{%- endcapture -%}
+
+{%- capture instafeedblock -%}
+<div id="instafeed2-{{ section.id }}" data-username="{{ settings.username }}" data-limit="{{ settings.feed_limit }}" data-hashtag="{{ settings.instgram_hastag }}" data-size="{{ settings.image_size }}" data-slidetoshow="{{ section.settings.slide_item_show }}" data-slideautoplay="{{ section.settings.autoplay_true }}" data-slideshowtablet="{{ section.settings.tablet_slide_item_show }}" data-slideshowlgmobile="{{ section.settings.large_mobile_item_show }}" data-slideshowsmmobile="{{ section.settings.small_mobile_item_show }}" class="{% if settings.layout_mode == "slider" %} instagram-carousel {% endif %} slick-carousel-js"></div>
+{%- endcapture -%}
+
+{% if settings.instafeed_type == 'style1' or settings.instafeed_type == 'style3'  %} 
+<div class="instagram-image-slider-container {{ layoutMode }} {%- if settings.layout_mode == "grid" -%} {{ itmeColumn }} {%- endif -%}">
+  <div class="instagram-feed-thumb"> 
+      {{ instafeedblock }}
+  </div>
+</div>
+
+{% elsif settings.instafeed_type == 'style2' %} 
+
+<div class="instagram-image-slider-container {{ layoutMode }} {{ itmeColumn }}">
+  <div class="instagram-feed-thumb">
+     {{ instafeedblock }}
+  </div>
+</div>
+
+{% endif %}

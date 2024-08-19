@@ -1,0 +1,46 @@
+{% case media.media_type %}
+{% when 'image' %}
+<div class="pro_gallery_item filter-{{ media.alt | handle }}">
+  <div class="product-single__media" data-media-id="{{ media.id }}">
+    <a href="javascript:void(0)" >
+      <img src="{{ media | img_url: 'compact' }}" alt="{{ media.alt | escape }}">
+    </a>
+  </div>
+</div>
+{% when 'external_video' %}
+<div class="pro_gallery_item video_thumb">
+  <div class="product-single__media" data-media-id="{{ media.id }}">
+    <div class="video_image_inner">
+      <div class="Play__icon">
+        <i class="fa fa-play" aria-hidden="true"></i>
+      </div>
+      <img src="https://img.youtube.com/vi/{{ media | external_video_tag | split: 'embed/' | last | split: '?' | first }}/0.jpg" alt="{{ media.alt }}">
+
+    </div>
+  </div>
+</div>
+{% when 'video' %}
+{% assign videoNavImg = 'video-camera.svg' | asset_url %}
+<div class="pro_gallery_item video__media">
+  <div class="product-single__media" data-media-id="{{ media.id }}">
+      <img src="{{ videoNavImg }}" alt="{{ media.alt }}">
+  </div>
+</div>
+{% when 'model' %}
+<div class="pro_gallery_item model_viewer_nav">
+  <div class="product-single__media" data-media-id="{{ media.id }}">
+    {{ media | model_viewer_tag: image_size: '160x', reveal: 'interaction', toggleable: true, data-model-id: media.id, auto-rotate: true }}
+    
+    <div class="model_view_btn">
+      <svg viewBox="0 0 60 60"><path fill="none" d="M0 0h60v60H0z"></path><path fill="currentColor" d="M40.4 22.57l-8.8-5.14a3.19 3.19 0 00-3.21 0l-8.8 5.14A3.24 3.24 0 0018 25.36v10.28a3.23 3.23 0 001.6 2.79l8.8 5.14a3.2 3.2 0 003.21 0l8.8-5.14A3.23 3.23 0 0042 35.64V25.36a3.24 3.24 0 00-1.6-2.79zM20.6 36.7a1.23 1.23 0 01-.6-1.06V25.36a1.23 1.23 0 01.6-1.06l8.8-5.14a1.19 1.19 0 011.19 0l8.8 5.14a1.2 1.2 0 01.36.34l-9.51 4.89a2.23 2.23 0 00-1.25 2V41.6z"></path></svg>
+	</div>
+  </div>
+  
+</div>
+{% else %}
+<div class="pro_gallery_item">
+  <div class="product-single__media 4" data-media-id="{{ media.id }}">
+    {{ media | media_tag }}
+  </div>
+</div>
+{% endcase %}

@@ -1,0 +1,360 @@
+{%- capture html -%}
+{% if section.settings.section_enable %}
+<div class="cta-area pt-50 pb-50" id="section-{{ section.id }}">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="cta-content {% if section.settings.justifyContentCenter == "left" %} justify-content-start {% elsif section.settings.justifyContentCenter == "right" %} justify-content-end {% elsif section.settings.justifyContentCenter == "center" %} justify-content-center {% elsif section.settings.justifyContentCenter == "between" %} justify-content-between {% endif %}  ">
+          {% if section.settings.cta_title != blank %}
+          <div class="cta-title">
+            <h2>{{ section.settings.cta_title }}</h2>
+          </div>
+          {% endif %}
+
+          {% if section.settings.call_to_action_btn != blank %}
+          <div class="cta-button">
+            <a class="phoone-button phoone-button--medium phoone-cta-button" href="{{ section.settings.call_to_action_btn_link }}">{{ section.settings.call_to_action_btn }}</a>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+
+{%- capture css -%}
+<style>
+  {%- for block in section.blocks -%}
+  {%- case block.type -%}
+  {%- when 'call_to_action_style' -%}
+  #section-{{ section.id }} .cta-title h2 {
+    color: {{ block.settings.call_to_actin_Title_color }};
+  }
+
+  #section-{{ section.id }} .phoone-cta-button {
+    background-color: {{ block.settings.btn_Bg_color }};
+    color: {{ block.settings.btn_color }} !important;
+    border-color: {{ block.settings.btn_border_color }};
+  }	
+  #section-{{ section.id }} .phoone-cta-button:hover {
+    background-color: {{ block.settings.btn_hover_bg_color }};
+    color: {{ block.settings.btn_hover_color }} !important;
+    border-color: {{ block.settings.btn_hover_border_color }};
+  }	
+  {%- endcase -%}
+  {%- endfor -%}
+
+</style>
+{%- endcapture -%}
+
+{{ css | strip_newlines
+       | replace: '  ', '' 
+       | replace: ': ', ':'
+       | replace: ' {', '{'
+}}
+
+{% render 'section_typography' %}
+
+{% schema %}
+  {
+    "name": "Call To Action",
+    "settings": [		
+		{
+		  "type": "header",
+          "content": "Section Enable"
+        },
+		{
+          "type": "checkbox",
+          "id": "section_enable",
+          "label": "Section Enable",  
+          "default": true
+      	},
+		{
+         "type": "header",
+         "content": "Call To Action"
+        },		
+		{
+          "type": "textarea",
+          "id": "cta_title",
+          "label": "Call To Action Title",
+          "default": "Call To Action Title"
+        },
+		{
+          "type": "text",
+          "id": "call_to_action_btn",
+          "label": "Call To Action Btn",
+          "default": "Contact Us"
+        },
+		{
+          "type": "url",
+          "id": "call_to_action_btn_link",
+          "label": "URL"
+        },
+		{
+         "type": "header",
+         "content": "Alignment"
+        },
+		{
+          "type":  "radio",
+          "id":    "justifyContentCenter",
+          "label": "Content Align",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "right", "label": "Right" },
+			 { "value": "center", "label": "Center" },
+			 { "value": "between", "label": "Space Between" }
+          ],
+          "default":   "between"
+        }
+		
+	],
+	"blocks": [
+		{
+          "type": "call_to_action_style",
+          "name": "Section Style",
+		  "limit": 1,
+          "settings": [
+			{
+			  "type": "header",
+			  "content": "Call TO Action Content"
+			},
+			{
+			  "type": "color",
+			  "id": "call_to_actin_Title_color",
+			  "label": "Title Color",
+			  "default": "#fff"
+			},
+			{
+			  "type": "header",
+			  "content": "Call TO Action Button"
+			},
+			{
+			  "type": "color",
+			  "id": "btn_color",
+			  "label": "Button Color",
+			  "default": "#333"
+			},
+			{
+			  "type": "color",
+			  "id": "btn_Bg_color",
+			  "label": "Button Bg Color",
+			  "default": "#fff"
+			},
+			{
+			  "type": "color",
+			  "id": "btn_border_color",
+			  "label": "Button Border Color",
+			  "default": "#fff"
+			},
+			{
+			  "type": "paragraph",
+			  "content": "Button Hover"
+			},
+			{
+			  "type": "color",
+			  "id": "btn_hover_color",
+			  "label": "Button Hover Color",
+			  "default": "#fff"
+			},
+			{
+			  "type": "color",
+			  "id": "btn_hover_bg_color",
+			  "label": "Button Hover Bg Color",
+			  "default": "#333"
+			},
+			{
+			  "type": "color",
+			  "id": "btn_hover_border_color",
+			  "label": "Button Hover Border Color",
+			  "default": "#333"
+			}
+          ]
+       },
+		{
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#6D7F96"
+			}
+          ]
+       }
+	],
+	"presets": [
+		{
+		  "name": "Call To Action",
+		  "category": "9.2 Theme Others"
+		}
+	]
+  }
+{% endschema %}

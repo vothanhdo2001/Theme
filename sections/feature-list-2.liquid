@@ -1,0 +1,377 @@
+{%- capture html -%}
+<!-- PRODUCT SECTION START -->
+<div class="featured-list two" id="section-{{ section.id }}" data-section="BannerSection">
+  <div class="container">
+    <div class="row featured-banner-align">
+      <div class="col-lg-7 col-md-12">
+        <div class="featured-iamge text-left">
+            {%- if section.settings.feature_image != blank -%}
+            {%- render 'lazyload_image_src',
+                	  image: section.settings.feature_image,
+            		  size: '555x578' -%}
+            {%- else -%}
+            {%- render 'svg_placholder', param: 'image', size: '555x578' -%}
+            {%- endif -%}
+        </div>
+      </div>
+      
+      
+      <div class="col-lg-5 col-md-12">
+        {% for block in section.blocks %}
+        {% case block.type %}
+        {% when 'feature_list_right' %}
+        <div class="single-features-list text-left">
+          
+          {%- if block.settings.feature_icon_type == "img_icon" -%}
+          <div class="feature-list-icon">
+             {%- if block.settings.feature_icon != blank -%}
+              {%- render 'lazyload_image_src',
+                	  image: block.settings.feature_icon,
+              		  size: '50x50' -%}
+              {%- else -%}
+               <img class="lazyload" data-src="https://cdn.shopify.com/s/files/1/0081/2069/6885/files/icon-2_50x50.png?v=1558326457">
+              {%- endif -%}
+          </div>
+          {%- elsif block.settings.feature_icon_type == "font_icon" -%}
+          <div class="feature-list-icon">
+            <i class="{{ block.settings.icon_name }}"></i>
+          </div>
+          {%- elsif block.settings.feature_icon_type == "image" -%}
+           <div class="feature-image">
+             {%- if block.settings.feature_icon != blank -%}
+              {%- render 'lazyload_image_src',
+                	  image: block.settings.feature_icon,
+              		  size: '50x50' -%}
+              {%- else -%}
+               <img class="lazyload" data-src="https://cdn.shopify.com/s/files/1/0081/2069/6885/files/icon-2_50x50.png?v=1558326457">
+              {%- endif -%}
+          </div>
+           {%- elsif block.settings.feature_icon_type == "none" -%}
+
+          {%- endif -%}
+          
+          <div class="feature-list-text">
+            {%- if  block.settings.feature_title != blank -%}
+            <h3>{{ block.settings.feature_title }}</h3>
+            {%- endif -%}
+            {%- if block.settings.feature_content -%}
+            <p>{{ block.settings.feature_content }} </p>
+            {%- endif -%}
+          </div>
+        </div>
+        {% endcase %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+<!-- PRODUCT SECTION END -->
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+
+{%- render 'section_typography' -%}
+{%- capture css -%}
+<style>
+  {%- for block in section.blocks -%}
+  {%- case block.type -%}
+  {%- when 'section_typography' -%}
+  #section-{{ section.id }} .feature-list-icon {
+    background: {{ block.settings.icon_bg }};
+  }
+  #section-{{ section.id }} .feature-list-icon i {
+    color: {{ block.settings.icon_color }};
+  }
+   #section-{{ section.id }} .feature-list-text p, #section-{{ section.id }} .feature-list-text h3 {
+     color: {{ block.settings.feature_content_color }};
+  }
+  {%- endcase -%}
+  {%- endfor -%}
+</style>
+{%- endcapture -%}
+
+{{ css | strip_newlines
+       | replace: '  ', '' 
+       | replace: ': ', ':'
+       | replace: ' {', '{'
+}}
+
+{% schema %}
+  {
+    "name": "Feature List 2",
+    "settings": [
+		{
+          "type": "image_picker",
+          "id": "feature_image",
+          "label": "Banner Image",
+		  "info": "Recommended Size: 555 X 578px"
+      	}
+    ],
+	"blocks":[
+	   {
+          "type": "feature_list_right",
+          "name": "Feature List",
+		  "limit": 5,
+          "settings": [
+			{
+			  "type": "header",
+			  "content": "Icon"
+			},
+			{
+              "type":  "radio",
+              "id":    "feature_icon_type",
+              "label": "Icon Type",
+              "options": [
+                { "value": "img_icon", "label": "Image Icon" },
+                { "value": "font_icon", "label": "Font Icon" },
+				{ "value": "image", "label": "Image" },
+				{ "value": "none", "label": "None" }
+              ],
+              "default":   "img_icon"
+            },
+            {
+			  "type": "image_picker",
+			  "id": "feature_icon",
+			  "label": "Icon"
+			},
+			{
+                "type": "text",
+                "id": "icon_name",
+                "label": "Icon Name",
+                "default": "ti-mobile",
+                "info": "Themify Icon [See Icon](https:\/\/themify.me\/themify-icons) And Fontawesome Icon [See Icon](https:\/\/fontawesome.com\/v4.7.0\/icons\/) . FontAwesome Icon Use: fa fa-money  And Themify Icon Use: ti-mobile"
+            },
+			{
+			  "type": "text",
+			  "id": "feature_title",
+			  "label": "Title",
+			  "default": "PLAY MUSIC"
+			},
+			{
+			  "type": "textarea",
+			  "id": "feature_content",
+			  "label": "Content",
+			  "default": "Lorem Ipsum is simply dummy text of the typesetting industry."
+			}
+          ]
+       },
+	   {
+          "type": "section_typography",
+          "name": "Section Color Options",
+		  "limit": 1,
+          "settings": [
+			{
+			  "type": "color",
+			  "id": "icon_bg",
+			  "label": "Icon Bg Color Color",
+			  "default": "#262626"
+			},
+			{
+			  "type": "color",
+			  "id": "icon_color",
+			  "label": "Icon Color",
+			  "default": "#fff"
+			},
+			{
+			  "type": "color",
+			  "id": "feature_content_color",
+			  "label": "Feature Content Color",
+			  "default": "#333"
+			}
+          ]
+       },
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#ffffff"
+			}
+          ]
+       }
+	],
+	"presets": [
+		{
+		  "name": "Feature List 2",
+		  "category": "9.4 Single Product",
+		  "blocks":[
+				{
+					"type": "feature_list_right"
+				},
+				{
+					"type": "feature_list_right"
+				},
+				{
+					"type": "feature_list_right"
+				}
+			]
+		}
+	]
+  }
+{% endschema %}

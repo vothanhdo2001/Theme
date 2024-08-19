@@ -1,0 +1,340 @@
+{%- capture html -%}
+
+<div class="footer-banner-section-area mb-100 mb-md-80 mb-sm-80" data-section="BannerSection" id="section-{{ section.id }}">
+  <div class="{% if section.settings.container_width == 'container' %} container {% elsif section.settings.container_width == 'fluid' %} container wide {% endif %}">
+    <div class="row">
+      <div class="col-lg-8 offset-lg-2">
+        <!--=======  ad section  =======-->
+
+        <div class="footer-banner-section text-center">
+          <!--=======  ad section image  =======-->
+
+          <div class="footer-banner-section-image mb-35">
+            {%- if section.settings.banner_img != blank -%}
+              <a href="{{ section.settings.banner_url }}" class="img_rel"  style="padding-top:{{ 1 | divided_by: section.settings.banner_img.aspect_ratio | times: 100}}%;">
+              {%- render 'lazyload_aspect_ratio' with image: section.settings.banner_img -%}
+              </a>
+            {%- else -%}
+            {%- render 'svg_placholder', param: 'image', size: '922x329' -%}
+            {%- endif -%}
+          </div>
+          
+      	{%- if section.settings.banenr_tab_enable -%}
+          <div class="footer-banner-tags mb-35">
+            <ul>
+              {%- if section.settings.bannerTag1 != blank  -%}
+              <li><a href="{{ section.settings.bannerTag1_link }}">{{ section.settings.bannerTag1 }}</a></li>
+              {%- endif %}
+              
+              {%- if section.settings.bannerTag2 != blank  -%}
+              <li><a href="{{ section.settings.bannerTag2_link }}">{{ section.settings.bannerTag2  }}</a></li>
+              {%- endif %}
+              
+              {%- if section.settings.bannerTag3 != blank  -%}
+              <li><a href="{{ section.settings.bannerTag3_link }}">{{ section.settings.bannerTag3  }}</a></li>
+              {%- endif -%}
+              
+            </ul>
+          </div>
+          
+          {%- endif -%}
+
+          <!--=======  End of ad tags  =======-->
+
+          <!--=======  ad-content  =======-->
+
+          <div class="footer-banner-content">
+            
+            {%- if section.settings.banner_title != blank -%}
+            <h2 class="mb-30">{{ section.settings.banner_title }}</h2>
+            {%- endif -%}
+            
+            {%- if section.settings.banner_button_text != blank -%}
+            <a href="{{ section.settings.banner_url }}" class="phoone-button phoone-button--medium">{{ section.settings.banner_button_text }}</a>
+            {%- endif -%}
+            
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+
+{%- render 'section_typography' -%}
+
+{%- schema -%}
+  {
+    "name": "Banner With Text",
+    "settings": [
+	  {
+          "type":  "radio",
+          "id":    "container_width",
+          "label": "Container Width",
+          "options": [
+            { "value": "container", "label": "Container" },
+            { "value": "fluid", "label": "Full Width" }
+          ],
+          "default":   "container"
+        },
+	  {
+        "type": "header",
+        "content": "Banner"
+      },
+      {
+        "type": "image_picker",
+        "id": "banner_img",
+        "label": "Image",
+        "info": "Recommended Size: 922 x 329 px"
+      },
+      {
+        "type": "textarea",
+        "id": "banner_title",
+        "label": "Banner Title",
+		"default": "Up To 40% Off Final Sale Items. Caught in the moment!"
+      },
+	  {
+          "type": "text",
+          "id": "banner_button_text",
+          "label": "Banner Button Text",
+		  "default": "Show Now"
+        },
+		
+      {
+        "type": "url",
+        "id": "banner_url",
+        "label": "URL"
+      },
+	  {
+        "type": "header",
+        "content": "Banner Tag"
+      },
+		{
+          "type": "checkbox",
+          "id": "banenr_tab_enable",
+          "label": "Banner Tag Enable",
+		  "default": true
+        }, 
+	  {
+        "type": "text",
+        "id": "bannerTag1",
+        "label": "Banner Tag#1",
+		"default": "#summer"
+      },
+      {
+        "type": "url",
+        "id": "bannerTag1_link",
+        "label": "Banner Tag#1 Url"
+      },
+	  {
+        "type": "text",
+        "id": "bannerTag2",
+        "label": "Banner Tag#2",
+		"default": "#shelf"
+      },
+      {
+        "type": "url",
+        "id": "bannerTag2_link",
+        "label": "Banner Tag#2 Url"
+      },
+	  {
+        "type": "text",
+        "id": "bannerTag3",
+        "label": "Banner Tag#3",
+		"default": "#Sale"
+      },
+      {
+        "type": "url",
+        "id": "bannerTag3_link",
+        "label": "Banner Tag#3 Url"
+      }
+	],
+	"blocks":[
+	   {
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#ffffff"
+			}
+          ]
+       }
+	],
+	"presets": [
+		{
+		  "name": "Banner With Text",
+		  "category": "4. Banner"
+		}
+	]
+  }
+{%- endschema -%}

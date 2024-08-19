@@ -1,0 +1,934 @@
+{%- capture html -%}
+<div class="countdown_section nrb__x_count" data-section="CountDownBanner">
+{% if section.settings.section_title_enable %}
+<div class="section-title-container mb-40">
+  <div class="container">
+    <div class="row">
+      <div class="col-6">
+        {% if section.settings.collection_trend_name != blank %}
+        <div class="section-title__label section-title__label-style2 section-title__label--left section-title__label-style3--left">
+          <p>{{ section.settings.collection_trend_name }} <span class="line">{{ section.settings.collection_trend_count }}</span></p>
+        </div>
+        {% endif %}
+      </div>
+
+      <div class="col-6 text-right">
+        {% if section.settings.collection_banner_subtitle != blank %}
+        <div class="section-title__label  section-title__label-style2 section-title__label--right section-title__label-style3--right">
+          <p>{{ section.settings.collection_banner_subtitle }}</p>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+  
+<div id="section-{{ section.id }}" class="countdown-timer-area {% if section.settings.countdown_banner_type == "style1" %} countdown-background countdown-bg-3 pt-30 pb-30 pb-sm-80 {% endif %} mb-100 mb-md-80 mb-sm-80 ">
+  <div class="{% if section.settings.container_width == 'container' %} container {% elsif section.settings.container_width == 'fluid' %} container wide {% endif %}">
+    <div class="row">
+      
+      {%- capture bannerimg -%}
+      {%- if section.settings.banner_img != blank -%} {{ section.settings.banner_img | img_url: 'master' }}{%- else -%} https://via.placeholder.com/469x500 {%- endif -%}
+      {%- endcapture -%}
+    
+      
+      
+      {% if section.settings.countdown_banner_type == "style1" %}
+      <div class="col-lg-12">
+        <div class="{% if section.settings.row_reverse_enable %} flex-row-reverse {% endif %} row align-items-center">
+         {% if section.settings.banner_thumb_enable %}
+          <div class="col-lg-4 col-xl-5  {% if section.settings.row_reverse_enable %} mb-md-50 mb-sm-50 mb-xs-50 {% else %} mt-md-50 mt-sm-50 mt-xs-50 {% endif %}">
+            <div class="countdown-image text-center">
+              {%- if section.settings.banner_img != blank -%}
+                {%- render 'lazyload_image_src',
+                        image: section.settings.banner_img,
+                		size: 'master' -%}
+                {%- else -%}
+                {%- render 'svg_placholder', param: 'image', size: '469x500' -%}
+                {%- endif -%}
+            </div>
+          </div>
+          {% endif %}
+          
+          <div class="{% if section.settings.banner_thumb_enable %} col-xl-7 col-lg-8 {% endif %} col-12 ">
+            <div class="countdown-wrapper {% if section.settings.content_align == "left" %} text-left {% elsif section.settings.content_align == "right" %} text-right {% elsif section.settings.content_align == "center" %} text-center {% endif %}">
+              {% if section.settings.banner_title != blank %}
+              <h3>{{ section.settings.banner_title }}</h3>
+              {% endif %}
+              
+              {% if section.settings.countdown_timer != blank %}
+              <div class="deal-countdown" data-countdown2="{{ section.settings.countdown_timer | default: "2020/01/01" }}"></div>
+              {% endif %}
+              
+              {% if section.settings.banner_btn_text != blank %}
+              <a href="{{ section.settings.banner_btn_link }}" class="phoone-button phoone-button--medium phoone-button--icon--left">  {%- if section.settings.icon_enable -%}<i class="icon-left ion-ios-cart"></i> {% endif %}{{ section.settings.banner_btn_text }}</a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+       {% elsif section.settings.countdown_banner_type == "style2" %}
+      <div class="col-lg-12">
+        <div class="countdown-background countdown-bg-1  pt-100 pb-100" style="background-image: url('{% if section.settings.banner_bg_img != blank %} {{ section.settings.banner_bg_img | img_url: 'master' }}{% else %} https://via.placeholder.com/1720x500 {% endif %}');">
+          <div class="row">
+            <div class=" col-12 col-xl-{{ section.settings.xl_col }} offset-xl-{{ section.settings.xl_offset }} col-lg-{{ section.settings.lg_col }} offset-lg-{{ section.settings.lg_offset }} col-md-{{ section.settings.md_col }} offset-md-{{ section.settings.md_offset }} ">
+              <div class="countdown-wrapper {% if section.settings.content_align == "left" %} text-left {% elsif section.settings.content_align == "right" %} text-right {% elsif section.settings.content_align == "center" %} text-center {% endif %}">
+                {% if section.settings.banner_title != blank %}
+                <h3>{{ section.settings.banner_title }}</h3>
+                {% endif %}
+                {% if section.settings.countdown_timer != blank %}
+                <div class="deal-countdown" data-countdown2="{{ section.settings.countdown_timer | default: "2020/01/01" }}"></div>
+                {% endif %}
+
+                {% if section.settings.banner_btn_text != blank %}
+                <a href="{{ section.settings.banner_btn_link }}" class="phoone-button phoone-button--medium phoone-button--icon--left">  {%- if section.settings.icon_enable -%}<i class="icon-left ion-ios-cart"></i> {%- endif %}{{ section.settings.banner_btn_text }}</a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      {% elsif section.settings.countdown_banner_type == "style3" %}
+      <div class="col-lg-12">
+        <div class="countdown-background pt-30 pb-30">
+          <div class="row {% if section.settings.row_reverse_enable %} flex-row-reverse {% endif %} align-items-center">
+            {% if section.settings.banner_thumb_enable %}
+            <div class="col-12 col-xl-5 col-lg-3 {% if section.settings.row_reverse_enable %} mb-md-50 mb-sm-50 mb-xs-50 {% else %} mt-md-50 mt-sm-50 mt-xs-50 {% endif %}">
+              <div class="countdown-image text-center">
+                {%- if section.settings.banner_img != blank -%}
+                {%- render 'lazyload_image_src',
+                        image: section.settings.banner_img,
+                		size: 'master' -%}
+                {%- else -%}
+                {%- render 'svg_placholder', param: 'image', size: '607x775' -%}
+                {%- endif -%}
+              </div>
+            </div>
+            {% endif %}
+
+            <div class=" col-12  {% if section.settings.banner_thumb_enable %} col-xl-7 col-lg-9 {% endif %}">
+              <div class="countdown-wrapper {% if section.settings.content_align == "left" %} text-left {% elsif section.settings.content_align == "right" %} text-right {% elsif section.settings.content_align == "center" %} text-center {% endif %}">
+                {% if section.settings.banner_title != blank %}
+                <h3>{{ section.settings.banner_title }}</h3>
+                {% endif %}
+                {% if section.settings.countdown_timer != blank %}
+                <div class="deal-countdown" data-countdown2="{{ section.settings.countdown_timer | default: "2020/01/01" }}"></div>
+                {% endif %}
+                {% if section.settings.banner_btn_text != blank %}
+                <a href="{{ section.settings.banner_btn_link }}" class="phoone-button phoone-button--medium phoone-button--icon--left"> {%- if section.settings.icon_enable -%}<i class="icon-left ion-ios-cart"></i> {% endif %}  {{ section.settings.banner_btn_text }}</a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+    
+</div>
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+  
+{%- render 'section_typography' -%}
+  
+{%- capture css -%}
+<style>
+  {%- for block in section.blocks -%}
+  {%- case block.type -%}
+  {%- when 'section_content_style' -%}
+  #section-{{ section.id }} .countdown-wrapper h3 {
+    color: {{ block.settings.banner_title_color }};
+  }
+
+  #section-{{ section.id }} .phoone-button.phoone-button--medium {
+    background-color: {{ block.settings.banner_btn_bg_color }};
+    border-color: {{ block.settings.banner_btn_border_color }};
+    color: {{ block.settings.banner_btn_color }} !important;
+  }
+  
+  #section-{{ section.id }} .phoone-button.phoone-button--medium:hover {
+    background-color: {{ block.settings.banner_btn_hover_bg_color }};
+    border-color: {{ block.settings.banner_btn_hover_border_color }};
+    color: {{ block.settings.banner_btn_hover_color }} !important;
+  }
+
+  #section-{{ section.id }} .deal-countdown .single-countdown__time {
+    color: {{ block.settings.banner_btn_date_color }};
+  }
+
+  #section-{{ section.id }} .deal-countdown .single-countdown__text {
+    color: {{ block.settings.banner_btn_date_label_color }};
+  }
+  {% endcase %}
+  {% endfor %}
+</style>
+{%- endcapture -%}
+
+{{ css | strip_newlines
+       | replace: '  ', '' 
+       | replace: ': ', ':'
+       | replace: ' {', '{'
+}}
+  
+{% schema %}
+  {
+    "name": "Countdown Banner",
+    "settings": [
+		{
+          "type":  "radio",
+          "id":    "container_width",
+          "label": "Container Width",
+          "options": [
+            { "value": "container", "label": "Container" },
+            { "value": "fluid", "label": "Full Width" }
+          ],
+          "default":   "container"
+        },
+		{
+          "type":  "select",
+          "id":    "countdown_banner_type",
+          "label": "CountDown Banner Type",
+          "options": [
+            { "value": "style1", "label": "Style 1" },
+            { "value": "style2", "label": "Style 2" },
+		     { "value": "style3", "label": "Style 3" }
+          ],
+          "default":   "style1"
+        }, 
+		{
+          "type": "header",
+          "content": "Content Postion"
+        },
+		{
+          "type": "checkbox",
+          "id": "row_reverse_enable",
+          "label": "Columun Reverse For Style 1 & 3",
+		  "default": false
+        },
+		{
+          "type": "header",
+          "content": "Section Title"
+        },
+		{
+          "type": "checkbox",
+          "id": "section_title_enable",
+          "label": "Section Title Enable",
+		  "default": false
+        },
+		{
+          "type": "header",
+          "content": "Section Left Title"
+        },
+		{
+          "type": "text",
+          "id": "collection_trend_name",
+          "label": "Collection Trend Name",
+          "default": "SS-2018"
+        },
+		{
+          "type": "text",
+          "id": "collection_trend_count",
+          "label": "Collection Trend Count",
+          "default": "84"
+        },
+		{
+          "type": "header",
+          "content": "Section Right Title"
+        },
+		{
+          "type": "textarea",
+          "id": "collection_banner_subtitle",
+          "label": "Collection Banner Subtitle",
+          "default": "BASIC <br> MINIMALISM"
+        },
+		{
+          "type": "header",
+          "content": "Banner Image"
+        },
+		{
+          "type": "checkbox",
+          "id": "banner_thumb_enable",
+          "label": "Banner Thumb Enable",
+		  "default": true
+        },
+		{
+          "type": "image_picker",
+          "id": "banner_img",
+          "label": "Banner Caption Image",
+          "info": "Recommended Size: 469 x 500 px"
+        },
+		{
+          "type": "header",
+          "content": "Banner Bg Image For Style 2"
+        },
+		{
+          "type": "image_picker",
+          "id": "banner_bg_img",
+          "label": "Banner Content Innere Bg Image",
+          "info": "Recommended Size: 1720 x 500 px"
+        },
+		{
+          "type": "header",
+          "content": "Countdown Timer"
+        },
+		{
+          "type": "text",
+          "id": "countdown_timer",
+          "label": "Countdown Timer Date",
+		  "info": "Date Format: YYYY/MM/DD",
+		  "default": "2020/12/30"
+        }, 
+		{
+          "type": "header",
+          "content": "Banner Content"
+        },
+		{
+          "type": "textarea",
+          "id": "banner_title",
+          "label": "Banner Title Text",
+		  "default": "Deal of the day"
+        },
+		{
+          "type": "checkbox",
+          "id": "icon_enable",
+          "label": "Icon Enable",
+		  "default": true
+        },
+		{
+          "type": "text",
+          "id": "banner_btn_text",
+          "label": "Banner Button Text",
+		  "default": "only $39"
+        },
+        {
+          "type": "url",
+          "id": "banner_btn_link",
+          "label": "URL"
+        },
+		{
+          "type": "header",
+          "content": "Banner Content Align"
+        },
+		{
+                "type":  "radio",
+                "id":    "content_align",
+                "label": "Content Alignment",
+                "options": [
+                  { "value": "left", "label": "Left" },
+                  { "value": "center", "label": "Center" },
+				  { "value": "right", "label": "Right" }
+                ],
+                "default":   "center"
+              },
+		{
+          "type": "header",
+          "content": "Content Column For Style 2"
+        },
+		
+		{
+          "type": "header",
+          "content": "Large Desktop",
+		  "info": " More Than 1200px "
+        },
+		{
+                "type": "select",
+                "id": "xl_col",
+                "label": "Large Device Column",
+                "options":[
+                      {
+                          "label": "Gird 12",
+                          "value": "12"
+                      },
+					  {
+                          "label": "Gird 11",
+                          "value": "11"
+                      },
+                      {
+                          "label": "Gird 10",
+                          "value": "10"
+                      },
+					  {
+                          "label": "Gird 9",
+                          "value": "9"
+                      },
+                      {
+                          "label": "Gird 8",
+                          "value": "8"
+                      },
+					  {
+                          "label": "Gird 7",
+                          "value": "7"
+                      },
+					  {
+                          "label": "Gird 6",
+                          "value": "6"
+                      },
+					  {
+                          "label": "Gird 5",
+                          "value": "5"
+                      },
+					  {
+                          "label": "Gird 4",
+                          "value": "4"
+                      },
+					  {
+                          "label": "Gird 3",
+                          "value": "3"
+                      },
+					  {
+                          "label": "Gird 2",
+                          "value": "2"
+                      }
+                  ],
+                  "default": "7"
+              },
+			  {
+                "type": "select",
+                "id": "xl_offset",
+                "label": "Large Device Offset Column",
+                "options":[
+                      {
+                          "label": "Offset 12",
+                          "value": "12"
+                      },
+					  {
+                          "label": "Offset 11",
+                          "value": "11"
+                      },
+                      {
+                          "label": "Offset 10",
+                          "value": "10"
+                      },
+					  {
+                          "label": "Offset 9",
+                          "value": "9"
+                      },
+                      {
+                          "label": "Offset 8",
+                          "value": "8"
+                      },
+					  {
+                          "label": "Offset 7",
+                          "value": "7"
+                      },
+					  {
+                          "label": "Offset 6",
+                          "value": "6"
+                      },
+					  {
+                          "label": "Offset 5",
+                          "value": "5"
+                      },
+					  {
+                          "label": "Offset 4",
+                          "value": "4"
+                      },
+					  {
+                          "label": "Offset 3",
+                          "value": "3"
+                      },
+					  {
+                          "label": "Offset 2",
+                          "value": "2"
+                      },
+					  {
+                          "label": "Offset 1",
+                          "value": "1"
+                      },
+					  {
+                          "label": "Offset 0",
+                          "value": "0"
+                      }
+                  ],
+                  "default": "5"
+              },
+			  {
+                "type": "header",
+                "content": "Normal Desktop",
+			    "info": "More Than 992px And Less Than 1200px"
+              },
+			  {
+                "type": "select",
+                "id": "lg_col",
+                "label": "Normal Desktop Column",
+                "options":[
+                      {
+                          "label": "Gird 12",
+                          "value": "12"
+                      },
+					  {
+                          "label": "Gird 11",
+                          "value": "11"
+                      },
+                      {
+                          "label": "Gird 10",
+                          "value": "10"
+                      },
+					  {
+                          "label": "Gird 9",
+                          "value": "9"
+                      },
+                      {
+                          "label": "Gird 8",
+                          "value": "8"
+                      },
+					  {
+                          "label": "Gird 7",
+                          "value": "7"
+                      },
+					  {
+                          "label": "Gird 6",
+                          "value": "6"
+                      },
+					  {
+                          "label": "Gird 5",
+                          "value": "5"
+                      },
+					  {
+                          "label": "Gird 4",
+                          "value": "4"
+                      },
+					  {
+                          "label": "Gird 3",
+                          "value": "3"
+                      },
+					  {
+                          "label": "Gird 2",
+                          "value": "2"
+                      }
+                  ],
+                  "default": "12"
+              },
+			  {
+                "type": "select",
+                "id": "lg_offset",
+                "label": "Normal Desktop Offset Column",
+                "options":[
+                      {
+                          "label": "Offset 12",
+                          "value": "12"
+                      },
+					  {
+                          "label": "Offset 11",
+                          "value": "11"
+                      },
+                      {
+                          "label": "Offset 10",
+                          "value": "10"
+                      },
+					  {
+                          "label": "Offset 9",
+                          "value": "9"
+                      },
+                      {
+                          "label": "Offset 8",
+                          "value": "8"
+                      },
+					  {
+                          "label": "Offset 7",
+                          "value": "7"
+                      },
+					  {
+                          "label": "Offset 6",
+                          "value": "6"
+                      },
+					  {
+                          "label": "Offset 5",
+                          "value": "5"
+                      },
+					  {
+                          "label": "Offset 4",
+                          "value": "4"
+                      },
+					  {
+                          "label": "Offset 3",
+                          "value": "3"
+                      },
+					  {
+                          "label": "Offset 2",
+                          "value": "2"
+                      },
+					  {
+                          "label": "Offset 1",
+                          "value": "1"
+                      },
+					  {
+                          "label": "Offset 0",
+                          "value": "0"
+                      }
+                  ],
+                  "default": "0"
+              },
+			{
+                "type": "header",
+                "content": "Tablet",
+				"info": "Less Than 992px"
+              },
+			{
+                "type": "select",
+                "id": "md_col",
+                "label": "Tablet Column",
+                "options":[
+                      {
+                          "label": "Gird 12",
+                          "value": "12"
+                      },
+					  {
+                          "label": "Gird 11",
+                          "value": "11"
+                      },
+                      {
+                          "label": "Gird 10",
+                          "value": "10"
+                      },
+					  {
+                          "label": "Gird 9",
+                          "value": "9"
+                      },
+                      {
+                          "label": "Gird 8",
+                          "value": "8"
+                      },
+					  {
+                          "label": "Gird 7",
+                          "value": "7"
+                      },
+					  {
+                          "label": "Gird 6",
+                          "value": "6"
+                      },
+					  {
+                          "label": "Gird 5",
+                          "value": "5"
+                      },
+					  {
+                          "label": "Gird 4",
+                          "value": "4"
+                      },
+					  {
+                          "label": "Gird 3",
+                          "value": "3"
+                      },
+					  {
+                          "label": "Gird 2",
+                          "value": "2"
+                      }
+                  ],
+                  "default": "12"
+              },
+			  {
+                "type": "select",
+                "id": "md_offset",
+                "label": "Tablet Offset Column",
+                "options":[
+                      {
+                          "label": "Offset 12",
+                          "value": "12"
+                      },
+					  {
+                          "label": "Offset 11",
+                          "value": "11"
+                      },
+                      {
+                          "label": "Offset 10",
+                          "value": "10"
+                      },
+					  {
+                          "label": "Offset 9",
+                          "value": "9"
+                      },
+                      {
+                          "label": "Offset 8",
+                          "value": "8"
+                      },
+					  {
+                          "label": "Offset 7",
+                          "value": "7"
+                      },
+					  {
+                          "label": "Offset 6",
+                          "value": "6"
+                      },
+					  {
+                          "label": "Offset 5",
+                          "value": "5"
+                      },
+					  {
+                          "label": "Offset 4",
+                          "value": "4"
+                      },
+					  {
+                          "label": "Offset 3",
+                          "value": "3"
+                      },
+					  {
+                          "label": "Offset 2",
+                          "value": "2"
+                      },
+					  {
+                          "label": "Offset 1",
+                          "value": "1"
+                      },
+					  {
+                          "label": "Offset 0",
+                          "value": "0"
+                      }
+                  ],
+                  "default": "0"
+              }
+	],
+	"blocks": [
+		{
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#F9F9F9"
+			}
+          ]
+       },
+	   {
+          "type": "section_content_style",
+          "name": "Section Content Style",
+		  "limit": 1,
+          "settings": [
+			{
+			  "type": "color",
+			  "id": "banner_title_color",
+			  "label": "Banner Title Color",
+			  "default": "#333"
+			},
+			{
+			  "type": "color",
+			  "id": "banner_btn_date_color",
+			  "label": "Countdown Date Color",
+			  "default": "#7e7e7e"
+			},
+			{
+			  "type": "color",
+			  "id": "banner_btn_date_label_color",
+			  "label": "Countdown Label Color",
+			  "default": "#9b9b9b"
+			},
+			{
+			  "type": "header",
+			  "content": "Banner Button"
+			},
+			{
+			  "type": "color",
+			  "id": "banner_btn_bg_color",
+			  "label": "Banner Button Bg Color",
+			  "default": "#333"
+			},
+			{
+			  "type": "color",
+			  "id": "banner_btn_border_color",
+			  "label": "Banner Button border Color",
+			  "default": "#333"
+			},
+			{
+			  "type": "color",
+			  "id": "banner_btn_color",
+			  "label": "Banner Button Color",
+			  "default": "#fff"
+			},
+			{
+			  "type": "color",
+			  "id": "banner_btn_hover_bg_color",
+			  "label": "Banner Button hover Bg Color",
+			  "default": "#F9F9F9"
+			},
+			{
+			  "type": "color",
+			  "id": "banner_btn_hover_border_color",
+			  "label": "Banner Button hover border Color",
+			  "default": "#333"
+			},
+			{
+			  "type": "color",
+			  "id": "banner_btn_hover_color",
+			  "label": "Banner Button hover Color",
+			  "default": "#333"
+			}
+          ]
+       }
+	],
+	"presets": [
+		{
+		  "name": "Countdown Banner",
+		  "category": "4. Banner"
+		}
+	]
+  }
+{% endschema %}

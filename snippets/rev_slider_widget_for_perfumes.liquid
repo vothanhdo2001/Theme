@@ -1,0 +1,263 @@
+{% for block in section.blocks %}
+
+{% assign img_loader = 'dummy.png' | asset_img_url: 'master' %}
+{% assign img_lazy_loader = 'transparent.png' | asset_img_url: 'master' %}
+
+{% case block.type %}
+{% when 'slide1' %}
+<li id="block-{{ block.id }}" data-index="rs-33-{{ forloop.index }}" data-transition="parallaxtoright,parallaxtoleft,parallaxtotop,parallaxtobottom,parallaxhorizontal,parallaxvertical,fadefromright,fadefromleft,fadefromtop,fadefrombottom" data-slotamount="default,default,default,default,default,default,default,default,default,default" data-hideafterloop="0" data-hideslideonmobile="off"  data-easein="default,default,default,default,default,default,default,default,default,default" data-easeout="default,default,default,default,default,default,default,default,default,default" data-masterspeed="700,default,default,default,default,default,default,default,default,default"  data-thumb="{% if block.settings.slider_thubnail != blank %}{{ block.settings.slider_thubnail | img_url: '100x50', crop: 'center' }} {% else %} https://via.placeholder.com/100x50 {% endif %}"  data-rotate="0,0,0,0,0,0,0,0,0,0"  data-saveperformance="off"  data-title="Slide" data-param1="" data-param2="" data-param3="" data-param4="" data-param5="" data-param6="" data-param7="" data-param8="" data-param9="" data-param10="" data-description="">
+  <!-- MAIN IMAGE -->
+  <img src="{{ img_loader }}"  alt=""  data-lazyload="{% if block.settings.slider_thubnail != blank %}{{ block.settings.slider_thubnail | img_url: 'master' }} {% else %} https://via.placeholder.com/845x830 {% endif %}" data-bgposition="center center" data-kenburns="on" data-duration="10000" data-ease="Linear.easeNone" data-scalestart="100" data-scaleend="110" data-rotatestart="0" data-rotateend="0" data-blurstart="0" data-blurend="0" data-offsetstart="0 0" data-offsetend="0 0" class="rev-slidebg" data-no-retina>
+  <!-- LAYERS -->
+
+  <!-- LAYER NR. 1 -->
+  <div class="tp-caption   tp-resizeme" 
+       id="slide-33-layer-13" 
+       data-x="['left','center','left','left']" data-hoffset="['71','-342','65','38']" 
+       data-y="['middle','top','top','top']" data-voffset="['183','194','612','460']" 
+       data-fontsize="['24','24','24','20']"
+       data-color="['{{ block.settings.slide_title1_color }}','rgb(105,105,105)','rgb(105,105,105)','rgb(105,105,105)']"
+       data-width="none"
+       data-height="none"
+       data-whitespace="nowrap"
+
+       data-type="text" 
+       data-responsive_offset="on" 
+
+       data-frames='[{"delay":1020,"speed":1790,"frame":"0","from":"x:[-175%];y:0px;z:0;rX:0;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:1;","mask":"x:[100%];y:0;s:inherit;e:inherit;","to":"o:1;","ease":"Power3.easeOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+       data-textAlign="['inherit','inherit','inherit','inherit']"
+       data-paddingtop="[0,0,0,0]"
+       data-paddingright="[0,0,0,0]"
+       data-paddingbottom="[0,0,0,0]"
+       data-paddingleft="[0,0,0,0]"
+
+       style="z-index: 5; white-space: nowrap; font-size: 24px; line-height: 36px; font-weight: 600; color: {{ block.settings.slide_title1_color }}; letter-spacing: 5px;font-family:Work Sans;">{{ block.settings.layer_caption_title1 }}</div>
+
+  <!-- LAYER NR. 2 -->
+  <div class="tp-caption   tp-resizeme" 
+       id="slide-33-layer-3" 
+       data-x="['left','center','center','left']" data-hoffset="['69','-224','-111','36']" 
+       data-y="['top','middle','middle','top']" data-voffset="['630','-103','215','508']" 
+       data-fontsize="['56','56','56','40']"
+       data-lineheight="['70','60','60','60']"
+       data-width="none"
+       data-height="none"
+       data-whitespace="nowrap"
+
+       data-type="text" 
+       data-responsive_offset="on" 
+
+       data-frames='[{"delay":720,"split":"chars","splitdelay":0.05,"speed":2140,"split_direction":"forward","frame":"0","from":"x:[105%];z:0;rX:45deg;rY:0deg;rZ:90deg;sX:1;sY:1;skX:0;skY:0;","mask":"x:0px;y:0px;s:inherit;e:inherit;","to":"o:1;","ease":"Power4.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+       data-textAlign="['inherit','inherit','inherit','inherit']"
+       data-paddingtop="[0,0,0,0]"
+       data-paddingright="[0,0,0,0]"
+       data-paddingbottom="[0,0,0,0]"
+       data-paddingleft="[0,0,0,0]"
+
+       style="z-index: 6; white-space: nowrap; font-size: 56px; line-height: 70px; font-weight: 300; color: {{ block.settings.slide_title2_color }}; letter-spacing: 0px;font-family:Work Sans;">{{ block.settings.layer_caption_title2 }} </div>
+
+  <!-- LAYER NR. 3 -->
+  <div class="tp-caption button-under-line rev-btn  tp-resizeme" 
+       id="slide-33-layer-20" 
+       data-x="['left','center','center','left']" data-hoffset="['75','-369','-246','39']" 
+       data-y="['top','top','top','top']" data-voffset="['726','362','781','607']" 
+       data-width="none"
+       data-height="none"
+       data-whitespace="nowrap"
+
+       data-type="button" 
+       data-actions=''
+       data-responsive_offset="on" 
+
+       data-frames='[{"delay":1280,"speed":1790,"frame":"0","from":"y:[-100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;","mask":"x:0px;y:0px;s:inherit;e:inherit;","to":"o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"},{"frame":"hover","speed":"300","ease":"Linear.easeNone","to":"o:1;rX:0;rY:0;rZ:0;z:0;","style":"c:rgb(211,18,42);bc:rgb(211,18,42);"}]'
+       data-textAlign="['inherit','inherit','inherit','inherit']"
+       data-paddingtop="[0,0,0,0]"
+       data-paddingright="[0,0,0,0]"
+       data-paddingbottom="[3,3,3,3]"
+       data-paddingleft="[0,0,0,0]"
+
+       style="z-index: 7; white-space: nowrap; letter-spacing: 1px;border-color:rgb(51,51,51);outline:none;box-shadow:none;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;cursor:pointer;"><a class="revslider-button-red" href="{{ block.settings.rev_slide1_btn_link }}"> {{ block.settings.rev_slide1_btn }}</a> </div>
+
+  <style>
+    #block-{{ block.id }} .tp-caption.button-under-line.rev-btn {
+      border-color: {{ block.settings.rev_slide_caption_btn_color }} !important;
+      color: {{ block.settings.rev_slide_caption_btn_color }} !important;
+    }
+    #block-{{ block.id }} .tp-caption.button-under-line.rev-btn:hover {
+      color: {{ block.settings.rev_slide_caption_btn_hover_color }} !important;
+      border-color: {{ block.settings.rev_slide_caption_btn_hover_color }} !important;
+    }
+</style>
+</li>
+<!-- SLIDE  -->
+{% when 'slide2' %}
+<li id="block-{{ block.id }}"  data-index="rs-34-{{ forloop.index }}" data-transition="fadefromright,fadefromleft,fadefromtop,fadefrombottom,fadetoleftfadefromright,fadetorightfadefromleft,fadetotopfadefrombottom,fadetobottomfadefromtop" data-slotamount="default,default,default,default,default,default,default,default" data-hideafterloop="0" data-hideslideonmobile="off"  data-easein="default,default,default,default,default,default,default,default" data-easeout="default,default,default,default,default,default,default,default" data-masterspeed="700,default,default,default,default,default,default,default"  data-thumb="{% if block.settings.slider_thubnail != blank %}{{ block.settings.slider_thubnail | img_url: '100x50', crop: 'center' }} {% else %} https://via.placeholder.com/100x50 {% endif %}"  data-rotate="0,0,0,0,0,0,0,0"  data-saveperformance="off"  data-title="Slide" data-param1="" data-param2="" data-param3="" data-param4="" data-param5="" data-param6="" data-param7="" data-param8="" data-param9="" data-param10="" data-description="">
+  <!-- MAIN IMAGE -->
+  <img src="{{ img_loader }}"  alt=""  data-lazyload="{% if block.settings.slider_thubnail != blank %}{{ block.settings.slider_thubnail | img_url: 'master' }} {% else %} https://via.placeholder.com/845x830 {% endif %}" data-bgposition="center center" data-kenburns="on" data-duration="10000" data-ease="Linear.easeNone" data-scalestart="100" data-scaleend="110" data-rotatestart="0" data-rotateend="0" data-blurstart="0" data-blurend="0" data-offsetstart="0 0" data-offsetend="0 0" class="rev-slidebg" data-no-retina>
+  <!-- LAYERS -->
+
+  <!-- LAYER NR. 4 -->
+  <div class="tp-caption   tp-resizeme" 
+       id="slide-34-layer-13" 
+       data-x="['left','center','left','left']" data-hoffset="['71','-339','65','38']" 
+       data-y="['middle','top','top','top']" data-voffset="['183','461','612','460']" 
+       data-fontsize="['24','24','24','20']"
+       data-color="['{{ block.settings.slide_title1_color }}','rgb(105,105,105)','rgb(105,105,105)','rgb(105,105,105)']"
+       data-width="none"
+       data-height="none"
+       data-whitespace="nowrap"
+
+       data-type="text" 
+       data-responsive_offset="on" 
+
+       data-frames='[{"delay":440,"speed":1790,"frame":"0","from":"y:[-100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;","mask":"x:0px;y:0px;s:inherit;e:inherit;","to":"o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+       data-textAlign="['inherit','inherit','inherit','inherit']"
+       data-paddingtop="[0,0,0,0]"
+       data-paddingright="[0,0,0,0]"
+       data-paddingbottom="[0,0,0,0]"
+       data-paddingleft="[0,0,0,0]"
+
+       style="z-index: 5; white-space: nowrap; font-size: 24px; line-height: 36px; font-weight: 600; color: #333333; letter-spacing: 5px;font-family:Work Sans;">{{ block.settings.layer_caption_title1 }}</div>
+
+  <!-- LAYER NR. 5 -->
+  <div class="tp-caption   tp-resizeme" 
+       id="slide-34-layer-3" 
+       data-x="['left','center','center','left']" data-hoffset="['69','-234','-145','36']" 
+       data-y="['top','middle','middle','top']" data-voffset="['630','153','216','508']" 
+       data-fontsize="['56','56','56','40']"
+       data-lineheight="['70','60','60','60']"
+       data-width="none"
+       data-height="none"
+       data-whitespace="nowrap"
+
+       data-type="text" 
+       data-responsive_offset="on" 
+
+       data-frames='[{"delay":290,"split":"chars","splitdelay":0.1,"speed":1640,"split_direction":"forward","frame":"0","from":"x:[-105%];z:0;rX:0deg;rY:0deg;rZ:-90deg;sX:1;sY:1;skX:0;skY:0;","mask":"x:0px;y:0px;s:inherit;e:inherit;","to":"o:1;","ease":"Power4.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+       data-textAlign="['inherit','inherit','inherit','inherit']"
+       data-paddingtop="[0,0,0,0]"
+       data-paddingright="[0,0,0,0]"
+       data-paddingbottom="[0,0,0,0]"
+       data-paddingleft="[0,0,0,0]"
+
+       style="z-index: 6; white-space: nowrap; font-size: 56px; line-height: 70px; font-weight: 300; color: {{ block.settings.slide_title2_color }}; letter-spacing: 0px;font-family:Work Sans;">{{ block.settings.layer_caption_title2 }}</div>
+
+  <!-- LAYER NR. 6 -->
+  <div class="tp-caption button-under-line rev-btn  tp-resizeme" 
+       id="slide-34-layer-20" 
+       data-x="['left','center','center','left']" data-hoffset="['75','-345','-246','39']" 
+       data-y="['top','top','top','top']" data-voffset="['726','619','781','607']" 
+       data-width="none"
+       data-height="none"
+       data-whitespace="nowrap"
+
+       data-type="button" 
+       data-actions=''
+       data-responsive_offset="on" 
+
+       data-frames='[{"delay":830,"speed":1790,"frame":"0","from":"y:[-100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;","mask":"x:0px;y:0px;s:inherit;e:inherit;","to":"o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"},{"frame":"hover","speed":"300","ease":"Linear.easeNone","to":"o:1;rX:0;rY:0;rZ:0;z:0;","style":"c:rgb(211,18,42);bc:rgb(211,18,42);"}]'
+       data-textAlign="['inherit','inherit','inherit','inherit']"
+       data-paddingtop="[0,0,0,0]"
+       data-paddingright="[0,0,0,0]"
+       data-paddingbottom="[3,3,3,3]"
+       data-paddingleft="[0,0,0,0]"
+
+       style="z-index: 7; white-space: nowrap; letter-spacing: 1px;border-color:rgb(51,51,51);outline:none;box-shadow:none;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;cursor:pointer;"><a class="revslider-button-red" href="{{ block.settings.rev_slide1_btn_link }}"> {{ block.settings.rev_slide1_btn }}</a> </div>
+    <style>
+ #block-{{ block.id }} .tp-caption.button-under-line.rev-btn {
+  border-color: {{ block.settings.rev_slide_caption_btn_color }} !important;
+   color: {{ block.settings.rev_slide_caption_btn_color }} !important;
+}
+  #block-{{ block.id }} .tp-caption.button-under-line.rev-btn:hover {
+  	color: {{ block.settings.rev_slide_caption_btn_hover_color }} !important;
+    border-color: {{ block.settings.rev_slide_caption_btn_hover_color }} !important;
+  }
+</style>
+</li>
+<!-- SLIDE  -->
+{% when 'slide3' %}
+<li id="block-{{ block.id }}" data-index="rs-35-{{ forloop.index }}" data-transition="curtain-1,curtain-2,curtain-3,slideremoveup,slideremovedown,slideremoveright,slideremoveleft,slideremovehorizontal,slideremovevertical" data-slotamount="default,default,default,default,default,default,default,default,default" data-hideafterloop="0" data-hideslideonmobile="off"  data-easein="default,default,default,default,default,default,default,default,default" data-easeout="default,default,default,default,default,default,default,default,default" data-masterspeed="700,default,default,default,default,default,default,default,default"  data-thumb="{% if block.settings.slider_thubnail != blank %}{{ block.settings.slider_thubnail | img_url: '100x50', crop: 'center' }} {% else %} https://via.placeholder.com/100x50 {% endif %}"  data-rotate="0,0,0,0,0,0,0,0,0"  data-saveperformance="off"  data-title="Slide" data-param1="" data-param2="" data-param3="" data-param4="" data-param5="" data-param6="" data-param7="" data-param8="" data-param9="" data-param10="" data-description="">
+  <!-- MAIN IMAGE -->
+  <img src="{{ img_loader }}"  alt=""  data-lazyload="{% if block.settings.slider_thubnail != blank %}{{ block.settings.slider_thubnail | img_url: 'master' }} {% else %} https://via.placeholder.com/845x830 {% endif %}" data-bgposition="center center" data-kenburns="on" data-duration="10000" data-ease="Linear.easeNone" data-scalestart="100" data-scaleend="110" data-rotatestart="0" data-rotateend="0" data-blurstart="0" data-blurend="0" data-offsetstart="0 0" data-offsetend="0 0" class="rev-slidebg" data-no-retina>
+  <!-- LAYERS -->
+
+  <!-- LAYER NR. 7 -->
+  <div class="tp-caption   tp-resizeme" 
+       id="slide-35-layer-13" 
+       data-x="['left','center','left','left']" data-hoffset="['71','-339','65','38']" 
+       data-y="['middle','top','top','top']" data-voffset="['183','461','612','460']" 
+       data-fontsize="['24','24','24','20']"
+       data-color="['{{ block.settings.slide_title1_color }}','rgb(105,105,105)','rgb(105,105,105)','rgb(105,105,105)']"
+       data-width="none"
+       data-height="none"
+       data-whitespace="nowrap"
+
+       data-type="text" 
+       data-responsive_offset="on" 
+
+       data-frames='[{"delay":500,"speed":1790,"frame":"0","from":"y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;","mask":"x:0px;y:[100%];s:inherit;e:inherit;","to":"o:1;","ease":"Power2.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+       data-textAlign="['inherit','inherit','inherit','inherit']"
+       data-paddingtop="[0,0,0,0]"
+       data-paddingright="[0,0,0,0]"
+       data-paddingbottom="[0,0,0,0]"
+       data-paddingleft="[0,0,0,0]"
+
+       style="z-index: 5; white-space: nowrap; font-size: 24px; line-height: 36px; font-weight: 600; color: #333333; letter-spacing: 5px;font-family:Work Sans;">{{ block.settings.layer_caption_title1 }} </div>
+
+  <!-- LAYER NR. 8 -->
+  <div class="tp-caption   tp-resizeme" 
+       id="slide-35-layer-3" 
+       data-x="['left','center','center','left']" data-hoffset="['69','-234','-145','36']" 
+       data-y="['top','middle','middle','top']" data-voffset="['630','153','216','508']" 
+       data-fontsize="['56','56','56','40']"
+       data-lineheight="['70','60','60','60']"
+       data-width="none"
+       data-height="none"
+       data-whitespace="nowrap"
+
+       data-type="text" 
+       data-responsive_offset="on" 
+
+       data-frames='[{"delay":500,"split":"chars","splitdelay":0.05,"speed":2000,"split_direction":"forward","frame":"0","from":"y:[-100%];z:0;rZ:35deg;sX:1;sY:1;skX:0;skY:0;","mask":"x:0px;y:0px;s:inherit;e:inherit;","to":"o:1;","ease":"Power4.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+       data-textAlign="['inherit','inherit','inherit','inherit']"
+       data-paddingtop="[0,0,0,0]"
+       data-paddingright="[0,0,0,0]"
+       data-paddingbottom="[0,0,0,0]"
+       data-paddingleft="[0,0,0,0]"
+
+       style="z-index: 6; white-space: nowrap; font-size: 56px; line-height: 70px; font-weight: 300; color: {{ block.settings.slide_title2_color }}; letter-spacing: 0px;font-family:Work Sans;">{{ block.settings.layer_caption_title2 }}</div>
+
+  <!-- LAYER NR. 9 -->
+  <div class="tp-caption button-under-line rev-btn  tp-resizeme" 
+       id="slide-35-layer-20" 
+       data-x="['left','center','center','left']" data-hoffset="['75','-345','-246','39']" 
+       data-y="['top','top','top','top']" data-voffset="['726','619','781','607']" 
+       data-width="none"
+       data-height="none"
+       data-whitespace="nowrap"
+
+       data-type="button" 
+       data-actions=''
+       data-responsive_offset="on" 
+
+       data-frames='[{"delay":920,"speed":1790,"frame":"0","from":"y:[-100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;","mask":"x:0px;y:0px;s:inherit;e:inherit;","to":"o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"},{"frame":"hover","speed":"300","ease":"Linear.easeNone","to":"o:1;rX:0;rY:0;rZ:0;z:0;","style":"c:rgb(211,18,42);bc:rgb(211,18,42);"}]'
+       data-textAlign="['inherit','inherit','inherit','inherit']"
+       data-paddingtop="[0,0,0,0]"
+       data-paddingright="[0,0,0,0]"
+       data-paddingbottom="[3,3,3,3]"
+       data-paddingleft="[0,0,0,0]"
+
+       style="z-index: 7; white-space: nowrap; letter-spacing: 1px;border-color:rgb(51,51,51);outline:none;box-shadow:none;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;cursor:pointer;"><a class="revslider-button-red" href="{{ block.settings.rev_slide1_btn_link }}"> {{ block.settings.rev_slide1_btn }}</a> </div>
+    <style>
+ #block-{{ block.id }} .tp-caption.button-under-line.rev-btn {
+  border-color: {{ block.settings.rev_slide_caption_btn_color }} !important;
+   color: {{ block.settings.rev_slide_caption_btn_color }} !important;
+}
+  #block-{{ block.id }} .tp-caption.button-under-line.rev-btn:hover {
+  	color: {{ block.settings.rev_slide_caption_btn_hover_color }} !important;
+    border-color: {{ block.settings.rev_slide_caption_btn_hover_color }} !important;
+  }
+</style>
+</li>
+{% endcase %}
+{% endfor %}

@@ -1,0 +1,192 @@
+{% comment %} for new curancy  {% endcomment %}
+{{ 'localization.css' | asset_url | stylesheet_tag }}
+
+{% if settings.footer_style == "default" %}
+{% section 'footer' %}
+{% elsif settings.footer_style == "default2" %}
+{% section 'footer_3' %}
+{% elsif settings.footer_style == "copyright" %}
+{% section 'footer_2' %}
+{% endif %}
+
+
+
+<style>
+/* localization */
+button.dropdown__open_label {
+    background: none;
+    border: 1px solid rgba(var(--color-foreground),.15);
+    padding: 0.8rem 1.5rem;
+    border-radius: 5px;
+}
+button.dropdown__open_label svg {
+    height: 10px;
+    padding-left: 5px;
+    width: 1.5rem;
+}
+a.dropdown__list__item {
+    padding: 5px 10px;
+    display: block;
+    border-radius: 5px;
+    font-size: 1.3rem;
+}
+.dropdown__open_list {
+    position: absolute;
+    bottom: 120%;
+    background: #fff;
+    left: 0;
+    width: 200px;
+    z-index: 99;
+    box-shadow: 0 -5px 21px #0000001f;
+    border-radius: 5px;
+    max-height: 290px;
+    overflow-y: auto;
+}
+  .dropdown__list__item:hover, .dropdown__list__item.active {
+    background: #f5f5f5;
+  }
+  .header__topbar {
+    padding: 1rem 0;
+  }
+  .disclosure {
+    position: relative;
+  }
+.localization__store.d-flex{
+	flex-wrap: wrap;
+    gap: 2rem;
+}
+.gap-20{
+	gap: 20px;
+}
+.footer__widget_inner .newsletter-form__field-wrapper input[type="email"] {
+    padding-right: 3.5rem;
+}
+@media only screen and (max-width: 767px){
+  .footer__bottom .row {
+    flex-direction: column-reverse;
+    gap: 2rem;
+  }
+  .footer__bottom .list-payment {
+    justify-content: center;
+  }
+  .footer__bottom localization-form + localization-form .dropdown__open_list{
+    left: -30%;
+  }
+  .footer__bottom  .localization__store.d-flex {
+    justify-content: center;
+  }
+  .footer__bottom  .localization__store.d-flex {
+    gap: 1.5rem;
+    margin-bottom: .5em;
+  }
+}
+
+.localization-selector.link {
+    padding-right: 50px;
+    padding-bottom: 15px;
+}
+.localization-selector {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+.disclosure svg.icon.icon-caret {
+    width: 12px;
+    height: 12px;
+    display: inline-block;
+    position: absolute;
+    top: 12px;
+    right: 15px;
+    color: #aaa;
+}
+.disclosure__list {
+    border: 1px solid #777;
+    font-size: 14px;
+    margin-top: 0px;
+    min-height: 85px;
+    max-height: 207px;
+    max-width: 220px;
+    min-width: 120px;
+    width: max-content;
+    overflow-y: auto;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    position: absolute;
+    bottom: 100%;
+    transform: translateY(-3px);
+    z-index: 2;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 0;
+}
+.localization-selector+.disclosure__list {
+    margin-left: 10px;
+    opacity: 1;
+    animation: none;
+}
+.footer__localization {
+    justify-content: left;
+}
+@media only screen and (max-width: 575px) {
+  .localization-selector.link {
+      padding-right: 35px;
+      padding-bottom: 15px;
+      margin-right: 0 !important;
+  }
+}
+
+
+  
+</style>
+
+
+<script>
+  class LocalizationForm extends HTMLElement {
+    constructor() {
+      super();
+      this.elements = {
+        input: this.querySelector('input[name="locale_code"], input[name="country_code"]'),
+        button: this.querySelector('button'),
+        panel: this.querySelector('ul'),
+      };
+      this.elements.button.addEventListener('click', this.openSelector.bind(this));
+      this.elements.button.addEventListener('focusout', this.closeSelector.bind(this));
+      this.addEventListener('keyup', this.onContainerKeyUp.bind(this));
+
+      this.querySelectorAll('a').forEach(item => item.addEventListener('click', this.onItemClick.bind(this)));
+    }
+
+    hidePanel() {
+      this.elements.button.setAttribute('aria-expanded', 'false');
+      this.elements.panel.setAttribute('hidden', true);
+    }
+
+    onContainerKeyUp(event) {
+      if (event.code.toUpperCase() !== 'ESCAPE') return;
+
+      this.hidePanel();
+      this.elements.button.focus();
+    }
+
+    onItemClick(event) {
+      event.preventDefault();
+      const form = this.querySelector('form');
+      this.elements.input.value = event.currentTarget.dataset.value;
+      if (form) form.submit();
+    }
+
+    openSelector() {
+      this.elements.button.focus();
+      this.elements.panel.toggleAttribute('hidden');
+      this.elements.button.setAttribute('aria-expanded', (this.elements.button.getAttribute('aria-expanded') === 'false').toString());
+    }
+
+    closeSelector(event) {
+      const shouldClose = event.relatedTarget && event.relatedTarget.nodeName === 'BUTTON';
+      if (event.relatedTarget === null || shouldClose) {
+        this.hidePanel();
+      }
+    }
+  }
+
+  customElements.define('localization-form', LocalizationForm);
+</script>

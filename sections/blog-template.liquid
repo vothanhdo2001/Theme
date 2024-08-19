@@ -1,0 +1,406 @@
+{%- capture html -%}
+<div class="blog-page-wrapper mb-100 mb-sm-50 mb-md-60 {% if settings.breadcrumb_banner_enable -%}mt-100 mt-xs-80 {%- endif -%}">
+  <div class="{% if section.settings.container_width == 'container' %} container {% elsif section.settings.container_width == 'fluid' %} container-fluid  {%- endif -%}  ">
+    <div class="row {% if section.settings.sidebar_handle == 'right_sidebar_handle' %}flex-row-reverse{% endif %}">
+      
+     {%- unless section.settings.sidebar_handle == 'without_sidebar' -%}
+      <div class="col-lg-3 order-2 order-lg-1">
+        {% render 'blog-sidebar' %}
+      </div>
+       {%- endunless -%}
+      
+      <div class="{% if section.settings.sidebar_handle == 'without_sidebar' %}col-lg-12{% else %} col-lg-9{% endif %} order-1 order-lg-2 mb-md-70 mb-sm-70">
+        {%- assign blogs_limit = section.settings.blog_limit_handle -%}
+        {%- paginate blog.articles by blogs_limit -%} 
+        
+        <div class="row {% if section.settings.blog_layout == 'masonry' %}  blog-post-wrapper blog-post-wrapper--masonry {% endif %}">
+          {% for article in blog.articles %}
+          <div class="col-lg-{{ section.settings.blog_column }} col-md-{{ section.settings.blog_md_column }} col-sm-{{ section.settings.product_column_xs }} col-12 {% if section.settings.blog_layout == 'masonry' %}  single-slider-post grid-item {% endif %}  mb-60">
+            {% if section.settings.blog_layout == 'grid' or section.settings.blog_layout == 'masonry' %} 
+            {% render 'blog-grid-item' with article as article %}
+            {% elsif section.settings.blog_layout == 'list' %} 
+            {% render 'blog-list-item' with article as article %}
+          	{% endif %}
+          </div>
+          {% endfor %}
+        </div>
+        
+        <div class="row blog_nrb_pg">
+          <div class="col-lg-12">
+            {%- if paginate.pages > 1 -%}
+            {% render 'pagination' with paginate as paginate %}
+            {%- endif -%}	
+          </div>
+        </div>
+        {%- endpaginate -%}
+      </div>
+    </div>
+  </div>
+</div>
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+
+
+{% schema %}
+  {
+    "name": "Blog Page",
+    "settings": [
+		{
+             "type":  "radio",
+             "id":    "container_width",
+             "label": "Container Width",
+             "options": [
+               { "value": "container", "label": "Container" },
+               { "value": "fluid", "label": "Full Width" }
+             ],
+             "default":   "container"
+          },
+		{
+			"type": "header",
+            "content": "Blog"
+        },
+		{
+            "type": "range",
+            "id": "blog_limit_handle",
+            "min": 2,
+            "max": 100,
+            "step": 1,
+            "label": "Post Limit",
+            "default": 9,
+			"info": "How many products are displayed on each page"
+        },
+		{
+              "type": "radio",
+              "id": "blog_layout",
+              "label": "Blog Grid Layout Select -",
+              "options": [
+                  {
+                      "label": "Vertical View",
+                      "value": "grid"
+                  },
+                  {
+                      "label": "Horizontal View",
+                      "value": "list"
+                  },
+				  {
+                      "label": "Masonry view",
+                      "value": "masonry"
+                  }
+              ],
+              "default": "grid"
+          },
+		{
+          "type": "header",
+          "content": "Grid Thumb"
+        },
+        {
+          "type": "checkbox",
+          "id": "blog_layout_grid",
+          "label": "Grid Thumb(370x200)",
+          "default": false
+        },
+		{
+			"type": "header",
+			"content": "Blog Sidebar"
+		},
+		{
+			"type": "radio",
+			"id": "sidebar_handle",
+			"label": "Sidebar Position -",
+			"options": [
+				{
+					"label": "Left Sidebar",
+					"value": "left_sidebar_handle"
+				},
+				{
+					"label": "Right Sidebar",
+					"value": "right_sidebar_handle"
+				},
+				{
+					"label": "Without Sidebar",
+					"value": "without_sidebar"
+				}
+			],
+			"default": "left_sidebar_handle"
+		},
+		{
+			"type": "header",
+            "content": "Blog Column"
+        },
+		{
+          "type": "select",
+          "id": "blog_column",
+          "label": "Dekstop Product Column",
+		  "options":[
+				{
+					"label": "1 Column",
+					"value": "12"
+				},
+				{
+					"label": "2 Column",
+					"value": "6"
+				},
+				{
+					"label": "3 Column",
+					"value": "4"
+				},
+				{
+					"label": "4 Column",
+					"value": "3"
+				},
+				{
+					"label": "6 Column",
+					"value": "2"
+				}
+			],
+			"default": "12"
+      	},
+		
+        {
+            "type": "select",
+            "id": "blog_md_column",
+            "label": "Tablet Product Column",
+            "options":[
+                  {
+					"label": "1 Column",
+					"value": "12"
+				},
+				{
+					"label": "2 Column",
+					"value": "6"
+				},
+				{
+					"label": "3 Column",
+					"value": "4"
+				}
+              ],
+              "default": "12"
+          },
+          {
+            "type": "select",
+            "id": "product_column_xs",
+            "label": "Large Mobile Product Column",
+            "options":[
+                  {
+                      "label": "1 Column",
+                      "value": "12"
+                  },
+                  {
+                      "label": "2 Column",
+                      "value": "6"
+                  }
+              ],
+              "default": "6"
+          },
+		{
+          "type": "header",
+          "content": "Post Thumbnail Enable"
+        },
+        {
+          "type": "checkbox",
+          "id": "post_thumbnail_enable",
+          "label": "Post Thumbnail Enable",
+          "default": true
+        },
+		{
+          "type": "header",
+          "content": "Post Meta"
+        },
+        {
+          "type": "checkbox",
+          "id": "post_author_enable",
+          "label": "Post Author Enable",
+          "default": true
+        },
+		{
+          "type": "checkbox",
+          "id": "post_publish_time_enable",
+          "label": "Post Publish Date Enable",
+          "default": true
+        },
+		{
+          "type": "checkbox",
+          "id": "post_comment_enbale",
+          "label": "Post Comment Enable",
+          "default": true
+        },
+		{
+          "type": "header",
+          "content": "Post Title Enable"
+        },
+        {
+          "type": "checkbox",
+          "id": "post_title_enable",
+          "label": "Post Title Enable",
+          "default": true
+        },
+		{
+          "type": "header",
+          "content": "Post Content Enable"
+        },
+        {
+          "type": "checkbox",
+          "id": "post_content_enbale",
+          "label": "Post Content Enable",
+          "default": true
+        },
+		{
+            "type": "range",
+            "id": "post_content_len",
+            "min": 2,
+            "max": 100,
+            "step": 1,
+            "label": "Post Limit",
+            "default": 30,
+			"info": "How many content are displayed on each Post"
+        },
+		{
+          "type": "header",
+          "content": "Post Read More Button"
+        },
+        {
+          "type": "checkbox",
+          "id": "post_readmore_btn_enbale",
+          "label": "Post Read More Button Enable",
+          "default": true
+        },
+		{
+          "type": "text",
+          "id": "read_more_button",
+          "label": "Read More Text",
+          "default": "Read More"
+        },
+		{
+          "type": "header",
+          "content": "Blog Author"
+        },
+        {
+          "type": "text",
+          "id": "author_title",
+          "label": "Author Title Label",
+          "default": "By :"
+        }
+		
+	 ],
+	 "blocks":[
+		{
+          "type": "search",
+          "name": "Search",
+		  "limit": 1,
+          "settings": [
+            {
+              "type": "text",
+              "id": "wedget_title",
+              "label": "Title",
+              "default": "Search"
+            }
+          ]
+       },
+	   {
+          "type": "recent_post",
+          "name": "Recent Post",
+		  "limit": 1,
+          "settings": [
+            {
+              "type": "text",
+              "id": "wedget_title",
+              "label": "Recent Post Title",
+              "default": "Recent Post"
+			},
+            {
+              "type": "range",
+              "id": "recent_post_limit_handle",
+              "min": 2,
+              "max": 10,
+              "step": 1,
+              "label": "Post Limit",
+              "default": 3
+            },
+			{
+              "type": "range",
+              "id": "post_title_len",
+              "min": 2,
+              "max": 100,
+              "step": 1,
+              "label": "Post Title Length",
+              "default": 3
+            }
+          ]
+       },
+	   {
+          "type": "archive",
+          "name": "Archive",
+		  "limit": 1,
+          "settings": [
+            {
+              "type": "text",
+              "id": "wedget_title",
+              "label": "Archive Title",
+              "default": "Archive"
+            }
+          ]
+       },
+	   {
+          "type": "tag",
+          "name": "Tag",
+		  "limit": 1,
+          "settings": [
+            {
+              "type": "text",
+              "id": "wedget_title",
+              "label": "Tags Title",
+              "default": "Tags"
+			},
+            {
+              "type": "range",
+              "id": "blog_tags_list_limit_handle",
+              "min": 5,
+              "max": 20,
+              "step": 1,
+              "label": "Tag Limit",
+              "default": 10
+            }
+          ]
+       },
+	   {
+          "type": "banner",
+          "name": "Banner",
+          "settings": [
+            {
+              "type": "text",
+              "id": "wedget_title",
+              "label": "Title",
+              "default": "Banner"
+            },
+            {
+              "type": "image_picker",
+              "id": "banner_image",
+              "label": "Image"
+            },
+			{
+              "type": "url",
+              "id": "banner_image_url",
+              "label": "URL"
+            }
+		]
+	   },
+	   {
+          "type": "menu",
+          "name": "Menu",
+          "settings": [
+            {
+              "type": "text",
+              "id": "wedget_title",
+              "label": "Menu Title",
+              "default": "Custom Menu"
+            },
+			{
+              "type": "link_list",
+              "id": "menu_handle",
+              "label": "Menu"
+            }
+          ]
+       }
+	]
+  }
+{% endschema %}

@@ -1,0 +1,559 @@
+{% if section.settings.section_enable %}
+
+<div class="phoone-testimonial single-item-testimonial-area testimonial-bg testimonial-bg-1 mb-100 mb-sm-80 pt-135 pb-135 pt-sm-80  pb-sm-80  slick-carousel-js" id="section-{{ section.id }}" data-section="TestmonialSlider">
+  
+{%- if section.settings.section_title_enable -%}
+<div class="section-title-container mb-50 mb-md-30 mb-sm-30">
+  <div class="{% if section.settings.container_width == 'container' %} container {% elsif section.settings.container_width == 'fluid' %} container wide {% endif %}">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="section-title section-title--one {% if section.settings.text_align == "left" %}text-left {% elsif section.settings.text_align == "right" %} text-right {% elsif section.settings.text_align == "center" %} text-center {% endif %}">
+          {% if section.settings.section_title != blank %}
+          <h1>{{ section.settings.section_title }}</h1>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{%- endif -%}
+
+
+<div class="phoone-testimonial multi-item-testimonial-area {% if section.settings.testmonial_design2 -%} testmonail_design2 {%- endif -%}">
+  <div class="{% if section.settings.container_width == 'container' %} container {% elsif section.settings.container_width == 'fluid' %} container wide {% endif %}">
+    <div class="row">
+      <div class="col-lg-12">
+        <!--=======  testmonial slider container  =======-->
+
+        {% capture data_slick_activation %}
+        
+        data-slick='{
+        "slidesToShow": {{ section.settings.slide_items_show }},
+        "slidesToScroll": {{ section.settings.slide_items_show }},
+        "arrows": {{ section.settings.navigation_enable }},
+        {% if settings.rtl_enable %}                
+        "rtl": true,
+        {% endif %}
+        "autoplay": {{ section.settings.autoplay_true }},
+        "autoplaySpeed": 5000,
+        "speed": 1000,
+        "responsive":[
+        {"breakpoint":1501, "settings": {"slidesToShow": {{ section.settings.slide_items_show }}} },
+        {"breakpoint":1199, "settings": {"slidesToShow": {{ section.settings.items_more_than_1200 }}} },
+        {"breakpoint":991, "settings": {"slidesToShow": {{ section.settings.items_more_than_992 }}, "arrows": false} },
+        {"breakpoint":767, "settings": {"slidesToShow": {{ section.settings.items_more_than_768 }}, "arrows": false} },
+        {"breakpoint":575, "settings": {"slidesToShow": {{ section.settings.items_more_than_480 }}, "arrows": false} },
+        {"breakpoint":479, "settings": {"slidesToShow": {{ section.settings.items_more_than_320 }}, "arrows": false} }
+        ]}'
+        
+        {% endcapture %}
+        
+        <div class="multi-testimonial-slider-container testmonialSliderOne" {{ data_slick_activation }}>
+          {% for block in section.blocks %}
+    
+          {%- case block.type -%}
+          {% when 'single_testmonial' %}
+          <div class="col">
+            <div class="testimonial-item multi-testimonial-single-item">
+              {% if block.settings.testmonial_description != blank %}
+              <div class="multi-testimonial-single-item__text">
+                {{ block.settings.testmonial_description }}
+              </div>
+              {% endif %}
+              
+              <div class="multi-testimonial-single-item__author-info">
+                <div class="image">
+                  {%- if block.settings.custom_collection_img != blank  -%}            
+                  {%- render 'lazyload_image_src',
+                	  image: block.settings.custom_collection_img,
+                  	  size: 'master' -%}
+                  {%- else -%}
+                  <img data-src=" https://via.placeholder.com/80x80" class="lazyload img-fluid" alt="Testmonial Image">
+                  {%- endif -%}
+                </div>
+                <div class="content">
+                  {% if block.settings.testmonial_name != blank %}
+                  <p class="name">{{ block.settings.testmonial_name }}</p>
+                  {% endif %}
+                  {% if block.settings.testmonial_designation != blank %}
+                  <span class="designation">{{ block.settings.testmonial_designation }}</span>
+                  {% endif %} 
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endcase %}
+          {% endfor %}
+        </div>
+        <!--=======  End of testmonial slider container  =======-->
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+  
+{% if section.settings.section_seperator %}
+<div class="small-separator">
+  <span></span>
+</div>
+{% endif %}
+{% endif %}
+
+{%- capture css -%}
+
+
+<style>
+  {%- for block in section.blocks -%}
+  {%- case block.type -%}
+  {%- when 'section_content_style' -%}
+  #section-{{ section.id }} .multi-testimonial-single-item__text {
+    color: {{ block.settings.testmonial_content_color }};
+  }
+  #section-{{ section.id }} .multi-testimonial-single-item__author-info .content .name {
+    color: {{ block.settings.testmonial_name_color }};
+  }
+  #section-{{ section.id }} .multi-testimonial-single-item__author-info .content .designation {
+    color: {{ block.settings.testmonial_content_color }};
+  }
+  #section-{{ section.id }} .section-title h1 {
+    color: {{ block.settings.section_title_color }};
+  }
+  
+  {%- endcase -%}
+  {%- endfor -%}
+  
+  
+  #section-{{ section.id }} .multi-testimonial-slider-container .slick-arrow {
+    color: {{ section.settings.arrow_icon_color }};
+  }
+</style>
+{%- endcapture -%}
+
+{{ css | strip_newlines
+       | replace: '  ', '' 
+       | replace: ': ', ':'
+       | replace: ' {', '{'
+}}
+
+{%- render 'section_typography' -%}
+{% schema %}
+  {
+    "name": "Testmonial Style 1",
+    "settings": [
+		{
+		  "type": "header",
+          "content": "Section Enable"
+        },
+		{
+          "type": "checkbox",
+          "id": "section_enable",
+          "label": "Section Enable",  
+          "default": true
+      	},
+		{
+		  "type": "header",
+          "content": "Column Wrapper"
+        },
+		{
+          "type":  "radio",
+          "id":    "container_width",
+          "label": "Container Width",
+          "options": [
+            { "value": "container", "label": "Container" },
+            { "value": "fluid", "label": "Full Width" }
+          ],
+          "default":   "container"
+        },
+		{
+          "type": "header",
+          "content": "Section Title"
+        },
+		{
+          "type": "checkbox",
+          "id": "section_title_enable",
+          "label": "Section Title Enable",
+		  "default": true
+        }, 
+		{
+          "type": "text",
+          "id": "section_title",
+          "label": "Section Title Label",
+		  "default": "Section Title"
+        },
+		{
+          "type":  "radio",
+          "id":    "text_align",
+          "label": "Section Title Align",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "right", "label": "Right" },
+			 { "value": "center", "label": "Center" }
+          ],
+          "default":   "center"
+        },
+		{
+          "type": "header",
+          "content": "Design 2",
+		  "info": "Navigation Position On Top"
+        },
+		{
+          "type": "checkbox",
+          "id": "testmonial_design2",
+          "label": "Design 2 For Top Navigation",
+		  "default": false
+        }, 
+        {
+          "type": "color",
+          "id": "arrow_icon_color",
+          "label": "Naviation Arrow Icon Color",
+          "default": "#e7e7e7"
+        },
+		{
+          "type": "header",
+          "content": "Section Separator"
+        },
+		{
+          "type": "checkbox",
+          "id": "section_seperator",
+          "label": "Section Separator",
+		  "default": false
+        }, 
+		{
+          "type": "header",
+          "content": "Slider Autoplay"
+        },
+		{
+          "type": "checkbox",
+          "id": "autoplay_true",
+          "label": "Autoplay Enable",
+		  "default": false
+        },
+		{
+           "type": "header",
+           "content": "Navigation/Arrows"
+        },
+		{
+          "type": "checkbox",
+          "id": "navigation_enable",
+          "label": "Navigation Enable",
+		  "default": true
+        },
+		{
+			"type": "header",
+            "content": "Testimonial Item Show"
+        },
+		{
+            "type":      "range",
+            "id":        "slide_items_show",
+            "min":        1,
+            "max":        15,
+            "step":       1,
+            "label":     "Large Device Number Of Item Show",
+            "default":   3
+        },
+		{
+            "type":      "range",
+            "id":        "items_more_than_1200",
+            "min":        1,
+            "max":        15,
+            "step":       1,
+            "label": "More Than 1200px Number Of Item Show",
+            "default":   3
+        },
+		{
+            "type":      "range",
+            "id":        "items_more_than_992",
+            "min":        1,
+            "max":        15,
+            "step":       1,
+            "label": "More Than 992px Number Of Item Show",
+            "default":   2
+        },
+		{
+            "type":      "range",
+            "id":        "items_more_than_768",
+            "min":        1,
+            "max":        15,
+            "step":       1,
+            "label": "Tablet Item Show",
+            "default":  1
+        },
+		{
+            "type":      "range",
+            "id":        "items_more_than_480",
+            "min":        1,
+            "max":        15,
+            "step":       1,
+            "label": "Large Mobile Item Show",
+            "default":   1
+        },
+		{
+            "type":      "range",
+            "id":        "items_more_than_320",
+            "min":        1,
+            "max":        15,
+            "step":       1,
+            "label": "Small Mobile Item Show",
+            "default":   1
+        }
+
+	],	
+	"blocks":[
+	   {
+          "type": "single_testmonial",
+          "name": "Single Testmonial",
+		   "settings": [
+            {
+              "type": "image_picker",
+              "id": "custom_collection_img",
+              "label": "Testmonial Thumbnail",
+              "info": "Recommended Size: 80 x 80 px"
+              },
+              {
+                  "type": "textarea",
+                  "id": "testmonial_description",
+                  "label": "Testimonial Description",
+                  "default": "There's nothing would satisfy me much more than a worry-free clean and responsive theme for my high-traffic site."
+              },
+			  {
+                "type": "text",
+                "id": "testmonial_name",
+                "label": "Testimonial Name",
+                "default": "Willie Bradley"
+              },
+			  {
+                "type": "text",
+                "id": "testmonial_designation",
+                "label": "Testimonial Designation",
+                "default": "/ Reporter"
+              }
+          ]
+       },
+		{
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#f5f5f5"
+			}
+          ]
+       },
+		{
+          "type": "section_content_style",
+          "name": "Section Content Style",
+		  "limit": 1,
+          "settings": [
+			{
+			  "type": "color",
+			  "id": "testmonial_content_color",
+			  "label": "Testmonial Content Color",
+			  "default": "#777"
+			},
+			{
+			  "type": "color",
+			  "id": "testmonial_name_color",
+			  "label": "Testmonial Name Color",
+			  "default": "#333"
+			},
+			{
+			  "type": "color",
+			  "id": "section_title_color",
+			  "label": "Section Title Color",
+			  "default": "#333"
+			}
+          ]
+       }
+	],
+	"presets": [
+		{
+		  "name": "Testmonial style 1",
+		  "category": "8. Testmonial",
+		  "blocks":[
+            {
+            	"type": "single_testmonial"
+            },
+			{
+            	"type": "single_testmonial"
+            },
+			{
+            	"type": "single_testmonial"
+            },
+			{
+            	"type": "single_testmonial"
+            },
+			{
+				 "type": "section_background"
+			}
+          ]
+		}
+	]
+  }
+{% endschema %}

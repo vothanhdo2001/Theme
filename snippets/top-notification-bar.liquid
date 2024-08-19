@@ -1,0 +1,18 @@
+<div class="top-notification-bar {% if settings.notification_snow_effect %}snow--section-effect {% endif %} {%- if settings.notify_overlay_enable %}notify_overlay{%- endif -%}">
+  <div class="container">
+    <div class="row">
+      <div class="notification-entry text-center col-12">
+        <p>{{ settings.notification_text }} {%- if settings.notification_button_name != '' -%}<a href="{{ settings.notification_button_url }}">{{ settings.notification_button_name }}</a>{%- endif -%}</p>
+        <button class="notification-close-btn"><i class="ti-close"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script async>
+  var nToggle = $('.notification-close-btn');
+  nToggle.on('click', function(){
+    $('.top-notification-bar').slideToggle();
+  })
+</script>

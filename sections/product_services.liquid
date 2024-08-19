@@ -1,0 +1,298 @@
+{%- capture html -%}
+<div class="footer-top mb-50 mb-md-80 mb-sm-60" id="section-{{ section.id }}">
+  <div class="{%- if section.settings.container_width == 'container' -%} container {%- elsif section.settings.container_width == 'fluid' -%} container wide {%- endif -%}">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="footer-top-container">
+          {%- for block in section.blocks -%}
+          {%- case block.type -%}
+          {%- when 'services_content' -%}
+          <div class="footer-top-single-widget nrb_srv_area">
+              <span class="img_icon_srvs">
+                {%- if block.settings.services_img != blank  -%}            
+                   {%- render 'lazyload_image_src',
+                	  image: block.settings.services_img,
+                      size: 'medium' -%}
+                {%- endif -%}
+              </span>
+            <span class="cntnt_srvs">
+              {%- if block.settings.services_title != blank -%}
+              <h4 class="footer-top-widget-title">{{ block.settings.services_title }}</h4>
+              {%- endif -%}
+            </span>
+            
+          </div>
+          {%- when 'services_with_img' -%}
+          <div class="footer-top-single-widget">
+            {%- if block.settings.services_title != blank -%}
+            <h4 class="footer-top-widget-title">{{ block.settings.services_title }}</h4>
+            {%- endif -%}
+            <div class="content img_rel" style="padding-top:{{ 1 | divided_by: block.settings.services_img.aspect_ratio | times: 100}}%;">
+              {%- if block.settings.services_img != blank  -%}            
+              {%- render 'lazyload_aspect_ratio' with image: block.settings.services_img -%}
+            {%- else -%}
+            <img data-src="https://via.placeholder.com/224x32" class="lazyload img-fluid" alt="{{ block.settings.services_img.alt | escape }}">
+            {%- endif -%}
+            </div>
+          </div>
+          {%- endcase -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+
+{% render 'section_typography' %}
+
+{% schema %}
+  {
+    "name": "Services",
+    "settings": [
+		{
+          "type":  "radio",
+          "id":    "container_width",
+          "label": "Container Width",
+          "options": [
+            { "value": "container", "label": "Container" },
+            { "value": "fluid", "label": "Full Width" }
+          ],
+          "default":   "container"
+        }
+	],
+	"blocks":[
+	   {
+          "type": "services_content",
+          "name": "Services With Content",
+		   "settings": [
+              {
+                "type": "image_picker",
+                "id": "services_img",
+                "label": "Services Image"
+              },
+              {
+                "type": "text",
+                "id": "services_title",
+                "label": "Services Title",
+                "default": "FREE SHIPPING"
+              }
+          ]
+       },
+	   {
+          "type": "services_with_img",
+          "name": "Banner With Img",
+		   "settings": [
+			{
+                "type": "text",
+                "id": "services_title",
+                "label": "Services Title",
+                "default": "FREE RETURNS"
+              },
+            {
+              "type": "image_picker",
+              "id": "services_img",
+              "label": "Services Image",
+              "info": "Recommended Size: 224 x 32 px"
+              }
+              
+          ]
+       },
+	   {
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#ffffff"
+			}
+          ]
+       }
+		
+	],
+	"presets": [
+		{
+		  "name": "Services",
+		  "category": "9.1 services",
+		  "blocks":[
+				{
+					"type": "services_content"
+				},
+				{
+					"type": "services_content"
+				},
+				{
+					"type": "services_with_img"
+				}
+			]
+		}
+	]
+  }
+{% endschema %}

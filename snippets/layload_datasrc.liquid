@@ -1,0 +1,4 @@
+{%- assign imagesrc = datascrc -%}
+{%- assign imagesize = dataimgsize -%}
+
+{{ imagesrc | img_url: imagesize }} 320w, {{ imagesrc | img_url: imagesize }} 575w, {{ imagesrc | img_url: imagesize }} 767w, {{ imagesrc | img_url: imagesize }} 1024w

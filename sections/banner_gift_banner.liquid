@@ -1,0 +1,263 @@
+{%- capture html -%}
+{%- assign isset = section.settings -%}
+<div class="black-amazing-deal" id="section-{{ section.id }}">
+  <div class="container-fluid">
+    <div class="black-collection-content text-center">
+      {%- if isset.gift_banner_content != blank -%}
+      <h4>{{ isset.gift_banner_content }}</h4>
+      {%- endif -%}
+
+      {%- if isset.gift_banner_btn != blank -%}
+      <a class="collection-btn" href="{{ isset.gift_banner_btn_link }}">{{ isset.gift_banner_btn }}</a>
+      {%- endif -%}
+    </div>  
+  </div>
+</div>
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+
+{%- render 'section_typography' -%}
+
+{%- capture css -%}
+{%- if isset.html_content_css != '' -%}
+<style>
+  {{ isset.html_content_css }}
+</style>
+{%- endif -%}
+{%- endcapture -%}
+
+{{ css | strip_newlines
+       | replace: '  ', '' 
+       | replace: ': ', ':'
+       | replace: ' {', '{'
+}}
+
+
+{% schema %}
+  {
+    "name": "Gift Banner",
+    "settings": [
+		{
+          "type": "header",
+          "content": "Countdown Banner"
+        },
+		{
+            "type": "textarea",
+            "id": "gift_banner_content",
+            "label": "Gift Banner Content",
+            "default": "NEW ARRIVALS 2019 <br> BEST QUALITY T-SHIRT COLLECTION"
+        },
+		{
+            "type": "textarea",
+            "id": "gift_banner_btn",
+            "label": "Gift Banner Btn text",
+            "default": "Don’t miss the amazing deal"
+        },
+		{
+          "type": "url",
+          "id": "gift_banner_btn_link",
+          "label": "URL",
+          "default": "\/collections\/all"
+        },
+		{
+          "type": "html",
+          "id": "html_content_css",
+          "label": "HTML Content CSS",
+          "default": ".black-collection-content .collection-btn {font-family: anton;}"
+        }
+
+	],
+	"blocks":[
+	   {
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 300,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 300,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 300,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 300,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 300,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 60
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 300,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#000"
+			}
+          ]
+       }
+	],
+  	"presets": [
+		{
+		  "name": "Gift Banner",
+		  "category": "4. Banner",
+		  "blocks": [
+			{
+            	"type": "section_background"
+            },
+			{
+            	"type": "section_padding"
+            }
+		 ]
+	    }
+	]
+  }
+{% endschema %}

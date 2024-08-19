@@ -1,0 +1,17 @@
+{%- if product.featured_image.src != blank -%}
+<a class="image-wrap pr_custom__ratio img_rel" href="{{ product.url | within: collection }}" {% if settings.proudct_image_ratio == "default" %} style="padding-top:{{ 1 | divided_by: product.featured_image.aspect_ratio | times: 100}}%;" {% endif %}>
+  {%- if product.images.size > 1 and settings.product_dual_thumb_enable == true -%}
+  {%- render 'responsive-image' with image: product.featured_image, image_class: "popup_cart_image pr_img_custom_attr", wrapper_class: "image-wrapper" -%}
+  {%- for image in product.images limit: 1 offset: 1 -%}
+  {%- render 'responsive-image' with image: image, image_class: "popup_cart_image secondary__img pr_img_custom_attr", wrapper_class: "image-wrapper" -%}
+  {%- endfor -%}
+  {%- else -%}
+  {%- render 'responsive-image' with image: product.featured_image, image_class: "popup_cart_image pr_img_custom_attr", wrapper_class: "image-wrapper" -%}
+  {%- endif -%} </a>
+{%- else -%}
+<a class="image-wrap xxx" href="{{ product.url | within: collection }}" >
+  {%- capture current -%}{%- cycle 1, 2, 3 -%}{%- endcapture -%}
+  <div style="padding: 6px 0;">
+    {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+  </div></a>
+{%- endif -%}

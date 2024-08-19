@@ -1,0 +1,240 @@
+{%- capture html -%}
+<header data-section="HeaderSection" id="section-{{ section.id }}" class="header header-box-topbar essen_tial {% if section.settings.header_sticky_enable %}header-sticky {% endif %}  {% unless settings.currency_enable %} no_currency {% endunless %}">
+
+
+  <!--=======  header bottom  =======-->
+
+  <div class="header-bottom pt-40 pt-md-20 pb-md-20 pt-sm-20  pb-sm-20">
+    <div class="container">
+
+      <!--=======  header bottom container  =======-->
+
+      <div class="header-bottom-container {% unless settings.currency_enable %} no_currency {% endunless %}">
+
+        <!--=======  language and currency change  =======-->
+
+        {% if settings.currency_enable or section.settings.gtranslate_enable %}
+        <div class="language-currency-change-container">
+
+          {%- if settings.currency_enable -%}
+          <div class="currency-change change-dropdown">
+            {% render 'currency-picker' %}
+          </div>
+          {%- endif -%}
+		  {%- if section.settings.gtranslate_enable -%} 
+          <span class="header-separator d-none d-sm-block">|</span>
+          {%- endif -%}
+
+          {%- if section.settings.gtranslate_enable -%}
+          {%- render 'gtranslate' -%}
+          {%- endif -%}
+        </div>
+        {% endif %}
+
+        
+        
+
+        <!--=======  End of language and currency change  =======-->
+
+        <!--=======  logo with off canvas  =======-->
+
+        <div class="logo-with-offcanvas">
+          <!--=======  logo   =======-->
+
+          <div class="logo">
+            {% render 'header-logo' %}
+          </div>
+
+          <!--=======  End of logo   =======-->
+        </div>
+        
+        <!--=======  End of header bottom navigation  =======-->
+        {% if section.settings.header_right_info %}
+        <div class="header-right-container">
+          <div class="header-right-icons d-flex justify-content-end align-items-center h-100">
+            <!--=======  single-icon  =======-->
+
+            {% if section.settings.search_bar_enable %}
+            <div class="single-icon search">
+              <a href="javascript:void(0)" id="search-icon">
+                <i class="ion-ios-search-strong"></i>
+              </a>
+            </div>
+            {% endif %}
+            
+            {% if section.settings.account_icon %}
+            <div class="single-icon user-login">
+              {% if customer and shop.customer_accounts_enabled %}
+              <a href="{{ routes.account_url }}">
+               <i class="ion-person-add"></i>
+              </a>
+              {% else %}
+               <a href="{{ routes.account_login_url }}">
+                 <i class="ion-android-person"></i>
+              </a>
+             {% endif %}
+            </div>
+            {% endif %}
+
+            <!--=======  End of single-icon  =======-->
+            <!--=======  single-icon  =======-->
+
+            {% if section.settings.wishlist_enable %}
+            <div class="single-icon wishlist">
+              <a href="/pages/wishlist" id="offcanvas-wishlist-icon">
+                <i class="ion-android-favorite-outline"></i>
+              </a>
+            </div>
+            {% endif %}
+
+            <!--=======  End of single-icon  =======-->
+            <!--=======  single-icon  =======-->
+            
+            {% if section.settings.mini_cart_enable %}
+            <div class="single-icon cart">
+              {%- assign item_count = cart.item_count -%}
+              <a href="javascript:void(0)" id="offcanvas-cart-icon">
+                <i class="ion-ios-cart"></i>
+                <span class="count bigcounter">{{ item_count }}</span>
+              </a>
+            </div>
+            {% endif %}
+            <!--=======  End of single-icon  =======-->
+          </div>
+          <!--=======  End of header right icons  =======-->
+
+        </div>
+        {% endif %}
+        
+
+        <!--=======  End of headeer right container  =======-->
+
+        <!--=======  header bottom navigation  =======-->
+
+        <div class="header-bottom-navigation">
+          <div class="site-main-nav d-none d-lg-block">
+            <nav class="site-nav center-menu">
+              {% render 'main-menu' %}
+            </nav>
+          </div>
+        </div>
+
+        <!--=======  End of header bottom navigation  =======-->
+
+      </div>
+
+      <!--=======  End of header bottom container  =======-->
+
+      <!-- Mobile Navigation Start Here -->
+
+      <div class="site-mobile-navigation d-block d-lg-none">
+        {%- if section.settings.mobile_menu == "default" -%}
+        <div id="dl-menu" class="dl-menuwrapper site-mobile-nav">
+          <!--Site Mobile Menu Toggle Start-->
+          <button class="dl-trigger hamburger hamburger--spin">
+            <span class="hamburger-box">
+              <span class="hamburger-inner"></span>
+            </span>
+          </button><!--Site Mobile Menu Toggle End-->
+          {% render 'mobile_nav' %}
+        </div>
+        {%- elsif section.settings.mobile_menu == "offcanvas" -%}
+        <div class="mobile-navigation-icon" id="mobile-menu-trigger">
+          <i></i>
+        </div>
+        {%- render 'offcanvas_menu' -%}
+        {%- endif -%}
+      </div>
+
+      <!-- Mobile Navigation End Here -->
+
+    </div>
+  </div>
+
+  <!--=======  End of header bottom  =======-->
+</header>
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+
+
+{%- capture headerCss -%}
+<style>
+  @media (max-width: 480px){
+    .essen_tial .justify-content-end {
+      justify-content: flex-start !important;
+    }
+    .essen_tial .header-right-container {
+      padding-left: 0;
+    } 
+    .header-box-topbar .header-bottom-container.no_currency .header-right-container {
+      -ms-flex-preferred-size: unset;
+      flex-basis: unset;
+      margin-top: 0;
+    }
+    .header-box-topbar .header-bottom-container.no_currency .logo-with-offcanvas {
+      margin-left: 0;
+      -ms-flex-preferred-size: 100%;
+      flex-basis: unset;
+      text-align: unset;
+    }
+    .header-box-topbar .header-bottom-container.no_currency {
+      justify-content: space-between;
+    }
+    .essen_tial.no_currency .site-mobile-nav .dl-trigger, .essen_tial.no_currency .site-mobile-navigation #mobile-menu-trigger {
+      top: -50px;
+    }
+    .no_currency .header-bottom.pt-sm-20.pb-sm-20 {
+      padding-bottom: 5px !important;
+      padding-top: 5px !important;
+    }
+  }
+
+
+  @media only screen and (min-width: 480px) and (max-width: 767px){
+    .header-box-topbar .header-bottom-container .language-currency-change-container {
+      flex: unset;
+    }
+    .header-box-topbar .header-bottom-container .header-right-container, .header-box-topbar .header-bottom-container .logo-with-offcanvas {
+      flex-basis: unset;
+    }
+    .header-box-topbar .header-bottom-container .header-right-container, .header-box-topbar .header-bottom-container .language-currency-change-container {
+      margin-top: 0;
+    }
+    .essen_tial .site-mobile-nav .dl-trigger, .essen_tial .site-mobile-navigation #mobile-menu-trigger {
+      top: -50px;
+    }
+    .header-right-icons {
+      margin-right: 0;
+    }
+    .header-box-topbar .header-bottom-container {
+      justify-content: space-between;
+    }
+    .header-box-topbar .header-bottom-container .language-currency-change-container {
+      padding-right: 50px;
+    }
+    .header-bottom.pt-sm-20.pb-sm-20 {
+      padding-bottom: 5px !important;
+      padding-top: 5px !important;
+    }
+    .header-box-topbar .header-bottom-container.no_currency .header-right-container {
+      padding-right: 55px;
+    }
+  }
+  @media only screen and (min-width: 768px) and (max-width: 991px){
+    .header-bottom.pt-md-20.pb-md-20 {
+      padding-bottom: 5px !important;
+      padding-top: 5px !important;
+    }
+    .header-box-topbar .header-bottom-container.no_currency .header-right-container {
+      padding-right: 55px;
+    }
+  }
+  
+</style>
+{%- endcapture -%}
+
+{{ headerCss | strip_newlines
+       | replace: '  ', '' 
+       | replace: ': ', ':'
+       | replace: ' {', '{'
+}}

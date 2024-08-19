@@ -1,0 +1,596 @@
+{%- capture html -%}
+{% if section.settings.section_enable %}
+<div class="icon-box-area mb-100 mb-sm-70 mt-100 mt-sm-70" id="section-{{ section.id }}">
+  <div class="{% if section.settings.container_width == 'container' %} container {% elsif section.settings.container_width == 'fluid' %} container wide {% endif %}">
+    <div class="row {% if section.settings.no_gutters %} no-gutters {% endif %} ">
+
+      {% for block in section.blocks %}
+      {%- case block.type -%}
+      {% when 'icon_box' %}
+      {% if block.settings.icon_box_type == "style1" %}
+      <div  id="block-{{ block.id }}"class="col-lg-{{ block.settings.lg_banner_col }} col-md-{{ block.settings.md_banner_col }} mb-sm-30">
+        <div class="single-icon-box single-icon-box--grey-center-iconbox">
+          {% if block.settings.icon_name != blank %}
+          <div class="icon-box-icon">
+            <i class="{{ block.settings.icon_name }}"></i>
+          </div>
+          {% endif %}
+          <div class="icon-box-content">
+            {% if block.settings.icon_box_title != blank %}
+            <h3 class="title">{{ block.settings.icon_box_title }}</h3>
+            {% endif %}
+            {% if block.settings.icon_box_desc != blank %}
+            <p class="content">{{ block.settings.icon_box_desc }}</p>
+            {% endif %}
+          </div>
+        </div>	
+        <style>
+          #block-{{ block.id }} .single-icon-box--grey-center-iconbox .icon-box-icon {
+            color: {{ block.settings.icon_color }};
+          }
+          #block-{{ block.id }} .single-icon-box--grey-center-iconbox .icon-box-content h3 {
+            color: {{ block.settings.title_color }};
+          }
+           #block-{{ block.id }} .single-icon-box--grey-center-iconbox .icon-box-content p {
+            color: {{ block.settings.content_color }};
+          }
+        </style>
+      </div>
+       {% elsif block.settings.icon_box_type == "style2" %}
+      <div id="block-{{ block.id }}" class="col-lg-{{ block.settings.lg_banner_col }} col-md-{{ block.settings.md_banner_col }} mb-md-30 mb-sm-30">
+        <div class="single-icon-box single-icon-box--feature-icon">
+          {% if block.settings.icon_name != blank %}
+          <div class="icon-box-icon">
+            <i class="{{ block.settings.icon_name }}"></i>
+          </div>
+          {% endif %}
+          <div class="icon-box-content">
+            {% if block.settings.icon_box_title != blank %}
+            <h3 class="title">{{ block.settings.icon_box_title }}</h3>
+            {% endif %}
+            {% if block.settings.icon_box_desc != blank %}
+            <p class="content">{{ block.settings.icon_box_desc }}</p>
+            {% endif %}
+          </div>
+        </div>
+        <style>
+          #block-{{ block.id }} .single-icon-box--feature-icon .icon-box-icon {
+            color: {{ block.settings.icon_color }};
+          }
+          #block-{{ block.id }} .single-icon-box--feature-icon .icon-box-content .title {
+            color: {{ block.settings.title_color }};
+          }
+           #block-{{ block.id }} .single-icon-box--feature-icon .icon-box-content .content {
+            color: {{ block.settings.content_color }};
+          }
+        </style>
+      </div>
+     {% elsif block.settings.icon_box_type == "style3" %}
+      <div id="block-{{ block.id }}"  class="col-lg-{{ block.settings.lg_banner_col }} col-md-{{ block.settings.md_banner_col }}">
+        <div class="single-icon-box single-icon-box--color-center-iconbox  single-icon-box--color-center-iconbox--green">
+             {% if block.settings.icon_name != blank %}
+          <div class="icon-box-icon">
+            <i class="{{ block.settings.icon_name }}"></i>
+          </div>
+          {% endif %}
+          <div class="icon-box-content">
+            {% if block.settings.icon_box_title != blank %}
+            <h3 class="title">{{ block.settings.icon_box_title }}</h3>
+            {% endif %}
+            {% if block.settings.icon_box_desc != blank %}
+            <p class="content">{{ block.settings.icon_box_desc }}</p>
+            {% endif %}
+          </div>
+        </div>
+        
+        <style>
+          #block-{{ block.id }} .single-icon-box--color-center-iconbox--green {
+            background-color: {{ block.settings.icon_box_bg_color }};
+          }
+          #block-{{ block.id }} .single-icon-box--color-center-iconbox--green .icon-box-icon {
+            color: {{ block.settings.icon_color }};
+          }
+           #block-{{ block.id }} .single-icon-box--color-center-iconbox .icon-box-content h3 {
+            color: {{ block.settings.title_color }};
+          }
+           #block-{{ block.id }} .single-icon-box--color-center-iconbox .icon-box-content p {
+            color: {{ block.settings.content_color }};
+          }
+        </style>
+        
+      </div>
+      {% elsif block.settings.icon_box_type == "style4" %}
+      <div  id="block-{{ block.id }}"class="col-lg-{{ block.settings.lg_banner_col }} col-md-{{ block.settings.md_banner_col }} mb-sm-30">
+        <div class="single-icon-box single-icon-box--grey-center-iconbox nrb_srvs_style4">
+          {% if block.settings.icon_name != blank %}
+          <div class="icon-box-icon">
+            <i class="{{ block.settings.icon_name }}"></i>
+          </div>
+          {% endif %}
+          <div class="icon-box-content">
+            {% if block.settings.icon_box_title != blank %}
+            <h3 class="title">{{ block.settings.icon_box_title }}</h3>
+            {% endif %}
+            {% if block.settings.icon_box_desc != blank %}
+            <p class="content">{{ block.settings.icon_box_desc }}</p>
+            {% endif %}
+          </div>
+        </div>	
+        <style>
+          #block-{{ block.id }} .single-icon-box--grey-center-iconbox .icon-box-icon {
+            color: {{ block.settings.icon_color }};
+          }
+          #block-{{ block.id }} .single-icon-box--grey-center-iconbox .icon-box-content h3 {
+            color: {{ block.settings.title_color }};
+          }
+           #block-{{ block.id }} .single-icon-box--grey-center-iconbox .icon-box-content p {
+            color: {{ block.settings.content_color }};
+          }
+        </style>
+      </div>
+      {% endif %}
+      {% endcase %}
+      {% endfor %}
+
+    </div>
+  </div>
+</div>
+{% endif %}
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+
+{%- capture css -%}
+<style>
+  
+  
+  #section-{{ section.id }} .single-icon-box{
+
+    margin-top: {{ section.settings.team_margin_top }}px !important;
+    margin-bottom: {{ section.settings.team_margin_bottom }}px !important;
+  }
+  @media (min-width: 768px) and (max-width: 991px) {
+    #section-{{ section.id }} .single-icon-box{
+
+      margin-top: {{ section.settings.team_margin_top_md }}px !important;
+      margin-bottom: {{ section.settings.team_margin_bottom_md }}px !important;
+
+    }
+  }
+  @media (max-width: 767px) {
+    #section-{{ section.id }} .single-icon-box{
+
+      margin-top: {{ section.settings.team_margin_top_xs }}px !important;
+      margin-bottom: {{ section.settings.team_margin_bottom_xs }}px !important;
+
+    }
+  }
+</style>
+{%- endcapture -%}
+
+{{ css | strip_newlines
+       | replace: '  ', '' 
+       | replace: ': ', ':'
+       | replace: ' {', '{'
+}}
+{% render 'section_typography' %}
+
+{% schema %}
+  {
+    "name": "Icon Box",
+    "settings": [
+		{
+		  "type": "header",
+          "content": "Section Enable"
+        },
+		{
+          "type": "checkbox",
+          "id": "section_enable",
+          "label": "Section Enable",  
+          "default": true
+      	},
+		{
+          "type":  "radio",
+          "id":    "container_width",
+          "label": "Container Width",
+          "options": [
+            { "value": "container", "label": "Container" },
+            { "value": "fluid", "label": "Full Width" }
+          ],
+          "default":   "fluid"
+        },
+		{
+		  "type": "header",
+          "content": "Column Gutter"
+        },
+		{
+          "type": "checkbox",
+          "id": "no_gutters",
+          "label": "No Gutters",  
+          "default": false
+      	},
+		{
+		  "type": "header",
+          "content": "Single Icon Box Spacing"
+        },
+		{
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "team_margin_top",
+			  "min": 0,
+			  "max": 50,
+			  "step": 2,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 30
+			},
+			{
+			  "type": "range",
+			  "id": "team_margin_bottom",
+			  "min": 0,
+			  "max": 50,
+			  "step": 2,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 30
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "team_margin_top_md",
+			  "min": 0,
+			  "max": 50,
+			  "step": 2,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 30
+			},
+			{
+			  "type": "range",
+			  "id": "team_margin_bottom_md",
+			  "min": 0,
+			  "max": 50,
+			  "step": 2,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 30
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "team_margin_top_xs",
+			  "min": 0,
+			  "max": 50,
+			  "step": 2,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 30
+			},
+			{
+			  "type": "range",
+			  "id": "team_margin_bottom_xs",
+			  "min": 0,
+			  "max": 50,
+			  "step": 2,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 30
+			}
+
+	],
+	"blocks":[
+	   {
+          "type": "icon_box",
+          "name": "Icon Box",
+		   "settings": [
+			  {
+                "type":  "radio",
+                "id":    "icon_box_type",
+                "label": "Icon Box Type",
+                "options": [
+                  { "value": "style1", "label": "Style 1" },
+                  { "value": "style2", "label": "Style 2" },
+                  { "value": "style3", "label": "Style 3" },
+                  { "value": "style4", "label": "Style 4" }
+                  
+                ],
+                "default":   "style1"
+              },
+              {
+                "type": "text",
+                "id": "icon_name",
+                "label": "Icon Name",
+                "default": "ti-mobile",
+                "info": "Themify Icon [See Icon](https:\/\/themify.me\/themify-icons) And Fontawesome Icon [See Icon](https:\/\/fontawesome.com\/v4.7.0\/icons\/) . FontAwesome Icon Use: fa fa-money  And Themify Icon Use: ti-mobile"
+              },
+              {
+                  "type": "textarea",
+                  "id": "icon_box_title",
+                  "label": "Icon Box Title",
+                  "default": "Title"
+              },
+              {
+                  "type": "textarea",
+                  "id": "icon_box_desc",
+                  "label": "Icon Box Content",
+                  "default": "Icon Box Description"
+              },
+			  {
+                "type": "select",
+                "id": "lg_banner_col",
+                "label": "Desktop",
+                "options":[
+                      {
+                          "label": "Gird 6",
+                          "value": "6"
+                      },
+                      {
+                          "label": "Gird 4",
+                          "value": "4"
+                      },
+                      {
+                          "label": "Gird 3",
+                          "value": "3"
+                      }
+                  ],
+                  "default": "4"
+              },
+              {
+                "type": "select",
+                "id": "md_banner_col",
+                "label": "Tablet",
+                "options":[
+                      {
+                          "label": "Gird 6",
+                          "value": "6"
+                      },
+                      {
+                          "label": "Gird 4",
+                          "value": "4"
+                      },
+                      {
+                          "label": "Gird 3",
+                          "value": "3"
+                      }
+                  ],
+                  "default": "4"
+              },
+			  {
+                "type": "header",
+                "content": "Icon Box Style"
+              },
+			  {
+                "type": "color",
+                "id": "icon_color",
+                "label": "Icon Color",
+                "default": "#cccccc"
+              },
+			  {
+                "type": "color",
+                "id": "title_color",
+                "label": "Icon Box Title Color",
+                "default": "#222222"
+              },
+			  {
+                "type": "color",
+                "id": "content_color",
+                "label": "Content Color",
+                "default": "#878787"
+              },
+			  {
+                "type": "header",
+                "content": "Stlyle 3 Icon Box"
+              },
+			  {
+                "type": "color",
+                "id": "icon_box_bg_color",
+                "label": "Icon Box Bg Color",
+                "default": "#EDF6EB"
+              }
+			  
+          ]
+       },
+		{
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#ffffff"
+			}
+          ]
+       }
+	],
+	"presets": [
+		{
+		  "name": "Icon Box",
+		  "category": "9.2 Theme Others",
+		  "blocks":[
+            {
+            	"type": "icon_box"
+            },
+			 {
+            	"type": "icon_box"
+            },
+			 {
+            	"type": "icon_box"
+            }
+          ]
+		}
+	]
+  }
+{% endschema %}

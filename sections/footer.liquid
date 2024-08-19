@@ -1,0 +1,831 @@
+{%- capture html -%}
+{%- if section.settings.footer_section_enable == true -%}
+<div class="{% if section.settings.section_snow_effect %}snow--section-effect {% endif %} footer-container footer-one pt-100 pb-50 pt-sm-80 pb-sm-30 {% if section.settings.footer_overlay %} footer_overlay {% endif %}" id="section-{{ section.id }}">
+   <div class="{% if section.settings.container_width == 'container' %} container {% elsif section.settings.container_width == 'fluid' %} container wide {% endif %}">
+    <div class="row">
+      {%- for block in section.blocks -%} 
+      {%- case block.type -%}	
+      {%- when 'copyright_logo' -%}
+      <div class="col footer-single-widget">
+        <div class="logo">
+          {%- if block.settings.logo -%}
+          <a href="{{ routes.root_url }}" class="theme-logo">
+            <img src="{{ block.settings.logo | img_url: '300x300' }}" alt="{{ block.settings.logo.alt | default: shop.name }}">
+		  </a>
+          {%- else -%}
+          <a href="{{ routes.root_url }}">
+            {{ shop.name }}
+          </a>
+          {%- endif -%}
+        </div>
+        <div class="copyright-text">
+           {{ block.settings.copy_right_text }}
+        </div>
+      </div>
+      {%- when 'widget_menu' -%}
+      <div class="col footer-single-widget">
+        {%- if block.settings.footer_widget_title != blank -%}
+        <h5 class="widget-title">{{ block.settings.footer_widget_title }}</h5>
+        {%- endif -%}
+        <div class="footer-nav-container">
+          <nav>
+            <ul>
+              {%- assign footer_menu = block.settings.footer_menu_handle -%}
+              {%- for link in linklists[footer_menu].links -%}
+              <li><a href="{{ link.url }}"> {{ link.title }}</a></li>
+              {%- endfor -%}
+            </ul>
+          </nav>
+        </div>
+      </div>
+      {%- when 'social_icon' -%}
+      <div class="col footer-single-widget">
+        {%- if block.settings.footer_widget_title != blank -%}
+        <h5 class="widget-title">{{ block.settings.footer_widget_title }}</h5>
+        {%- endif -%}
+        <div class="footer-nav-container footer-social-links">
+          <nav>
+            <ul>
+              {%- if block.settings.social_icon_1_name != blank -%}
+              <li><a href="{{ block.settings.social_icon_1_link }}"><i class="{{ block.settings.social_icon_1_name }}"></i> {{ block.settings.social_icon_1_title }}</a></li>        
+              {%- endif -%}
+              {%- if block.settings.social_icon_2_name != blank -%}
+              <li><a  href="{{ block.settings.social_icon_2_link }}"><i class="{{ block.settings.social_icon_2_name }}"></i> {{ block.settings.social_icon_2_title }} </a></li>        
+              {%- endif -%}   
+              {%- if block.settings.social_icon_3_name != blank -%}
+              <li><a  href="{{ block.settings.social_icon_3_link }}"><i class="{{ block.settings.social_icon_3_name }}"></i> {{ block.settings.social_icon_3_title }} </a></li>        
+              {%- endif -%}
+              {%- if block.settings.social_icon_4_name != blank -%}
+              <li><a href="{{ block.settings.social_icon_4_link }}"><i class="{{ block.settings.social_icon_4_name }}"></i> {{ block.settings.social_icon_4_title }} </a></li>        
+              {%- endif -%}
+              
+              {%- if block.settings.social_icon_5_name != blank -%}
+              <li><a href="{{ block.settings.social_icon_5_link }}"><i class="{{ block.settings.social_icon_5_name }}"></i> {{ block.settings.social_icon_5_title }} </a></li>        
+              {%- endif -%}
+            </ul>
+          </nav>
+        </div>
+      </div>
+      {%- when 'newsletter' -%}
+      <div class="col footer-single-widget">
+        <div class="footer-subscription-widget">
+          {%- if block.settings.newsletter_title != blank -%}
+          <h2 class="footer-subscription-title">{{ block.settings.newsletter_title }}</h2>
+          {%- endif -%}
+          {%- if block.settings.newsletter_description != blank -%}
+          <p class="subscription-subtitle">{{ block.settings.newsletter_description }}</p>
+          {%- endif -%}
+          
+          {%- if block.settings.newsletter_system == 'by_shopify_form' -%}
+          {%- assign formId = 'Contact_' | append: section.id -%}
+          {%- form 'customer', id: formId, class: "shopify_newsletter__form" -%}
+          {%- if form.posted_successfully? -%}
+          <p class="form-message form-success">{{ 'general.newsletter_form.confirmation'| t }} </p>
+          {%- else -%}
+          <div class="subscription-form">
+            {%- if form.errors -%}
+            <div class="form-message form-message--error">
+              {{ form.errors | default_errors }}
+            </div>
+            {%- endif -%}
+            <div class="form__inner">
+              <input type="hidden" name="contact[tags]" value="newsletter">
+              <input type="email" name="contact[email]" id="Email" value="{%- if customer -%}{{ customer.email }}{%- endif -%}"
+                     placeholder="{{ block.settings.newsletter_input_placeholder }}" aria-label="{{ 'general.newsletter_form.newsletter_email'| t }}" {% if form.errors %}aria-invalid="true"{% endif %} autocorrect="off" autocapitalize="off">
+              <button type="submit"  name="commit" id="Subscribe"><i class="ion-ios-arrow-thin-right"></i></button>
+            </div>
+          </div>
+          {%- endif -%}
+          {%- endform -%}
+          {%- elsif block.settings.newsletter_system == 'by_mailchimp' -%}
+          <div class="subscription-form">
+            <form id="mc-form" class="mc-form">
+              <input type="email" placeholder="{{ block.settings.newsletter_input_placeholder }}" required>
+              <button type="submit"><i class="ion-ios-arrow-thin-right"></i></button>
+            </form>
+          </div>
+          <div class="mailchimp-alerts">
+            <div class="mailchimp-submitting"></div><!-- mailchimp-submitting end -->
+            <div class="mailchimp-success"></div><!-- mailchimp-success end -->
+            <div class="mailchimp-error"></div><!-- mailchimp-error end -->
+          </div><!-- mailchimp-alerts end -->
+          {%- endif -%}
+        </div>
+
+            {%- comment -%} ------- country and currancy start ---------- {%- endcomment -%}
+          
+            {%- liquid
+              assign enable_country = block.settings.enable_country_selector
+              assign language_enable = block.settings.enable_language_selector
+            -%}
+            {%- if enable_country == true or language_enable == true  -%}
+            <div class="footer-single-widget-curncy">
+              <div class="footer__column footer__localization">
+              {%- if block.settings.enable_country_selector and localization.available_countries.size > 1 -%}
+                <noscript>
+                  {%- form 'localization', id: 'FooterCountryFormNoScript', class: 'localization-form' -%}
+                    <div class="localization-form__select">
+                      <select class="localization-selector link" name="country_code" aria-labelledby="FooterCountryLabelNoScript">
+                        {%- for country in localization.available_countries -%}
+                          <option value="{{ country.iso_code }}" {%- if country.iso_code == localization.country.iso_code %} selected{% endif %}>
+                            {{ country.name }} ({{ country.currency.iso_code }} {{ country.currency.symbol }})
+                          </option>
+                        {%- endfor -%}
+                      </select>
+                      {% render 'icon-caret' %}
+                    </div>
+                    <button class="button button--tertiary">{{ 'localization.update_country' | t }}</button>
+                  {%- endform -%}
+                </noscript>
+                <localization-form>
+                  {%- form 'localization', id: 'FooterCountryForm', class: 'localization-form' -%}
+                    <div class="no-js-hidden">
+                      <div class="disclosure">
+                        <button type="button" class="disclosure__button localization-form__select localization-selector link link--text caption-large" aria-expanded="false" aria-controls="FooterCountryList" aria-describedby="FooterCountryLabel">
+                           {{ localization.country.currency.iso_code }} {{ localization.country.currency.symbol }}
+                          {% render 'icon-caret' %}
+                        </button>
+                        <ul id="FooterCountryList" role="list" class="disclosure__list list-unstyled" hidden>
+                          {%- for country in localization.available_countries -%}
+                            <li class="disclosure__item" tabindex="-1">
+                              <a class="link link--text disclosure__link caption-large{% if country.iso_code == localization.country.iso_code %} disclosure__link--active{% endif %} focus-inset" href="#"{% if country.iso_code == localization.country.iso_code %} aria-current="true"{% endif %} data-value="{{ country.iso_code }}">
+                               <span class="localization-form__currency">{{ country.currency.iso_code }} {{ country.currency.symbol }}</span>
+                              </a>
+                            </li>
+                          {%- endfor -%}
+                        </ul>
+                      </div>
+                      <input type="hidden" name="country_code" value="{{ localization.country.iso_code }}">
+                    </div>
+                  {%- endform -%}
+                </localization-form>
+              {%- endif -%}
+              {%- if block.settings.enable_language_selector and  localization.available_languages.size > 1 -%}
+                <noscript>
+                  {%- form 'localization', id: 'FooterLanguageFormNoScript', class: 'localization-form' -%}
+                    <div class="localization-form__select">
+                       <select class="localization-selector link" name="locale_code" aria-labelledby="FooterLanguageLabelNoScript">
+                        {%- for language in localization.available_languages -%}
+                          <option value="{{ language.iso_code }}" lang="{{ language.iso_code }}" {%- if language.iso_code == localization.language.iso_code %} selected{% endif %}>
+                            {{ language.endonym_name | capitalize }}
+                          </option>
+                        {%- endfor -%}
+                      </select>
+                      {% render 'icon-caret' %}
+                    </div>
+                    <button class="button button--tertiary">{{ 'localization.update_language' | t }}</button>
+                  {%- endform -%}
+                </noscript>
+                <localization-form>
+                  {%- form 'localization', id: 'FooterLanguageForm', class: 'localization-form' -%}
+                    <div class="no-js-hidden">
+                      <div class="disclosure">
+                        <button type="button" class="disclosure__button localization-form__select localization-selector link link--text caption-large" aria-expanded="false" aria-controls="FooterLanguageList" aria-describedby="FooterLanguageLabel">
+                          {{ localization.language.endonym_name | capitalize }}
+                          {% render 'icon-caret' %}
+                        </button>
+                        <ul id="FooterLanguageList" role="list" class="disclosure__list list-unstyled" hidden>
+                          {%- for language in localization.available_languages -%}
+                            <li class="disclosure__item" tabindex="-1">
+                              <a class="link link--text disclosure__link caption-large{% if language.iso_code == localization.language.iso_code %} disclosure__link--active{% endif %} focus-inset" href="#" hreflang="{{ language.iso_code }}" lang="{{ language.iso_code }}"{% if language.iso_code == localization.language.iso_code %} aria-current="true"{% endif %} data-value="{{ language.iso_code }}">
+                                {{ language.endonym_name | capitalize }}
+                              </a>
+                            </li>
+                          {%- endfor -%}
+                        </ul>
+                      </div>
+                      <input type="hidden" name="locale_code" value="{{ localization.language.iso_code }}">
+                    </div>
+                  {%- endform -%}
+                </localization-form>
+              {%- endif -%}
+            </div>
+          </div>
+          {% endif %}
+          {%- comment -%} country and currancy end {%- endcomment -%}
+        
+      </div>
+      {%- endcase -%}
+      {%- endfor -%}
+    </div>
+    {% if section.settings.footer_bottom_enable == true %}
+    <div class="row nrb_ftrb_c align-items-center mt-50 mt-sm-0 mt-xs-0 pb-15">
+      
+      {% assign copyright_text = section.settings.copyright_text_enable %}
+      {% assign copyright_logo = section.settings.copyright_logo_enable %}
+      {% assign payment_icon = section.settings.payment_icon_enable %}
+      
+      
+      {% if copyright_text == true %}
+      <div class="{% if copyright_logo == true and payment_icon == true %} col-lg-4 col-md-4 text-left {% elsif copyright_logo == true or payment_icon == true %}  col-lg-6 col-md-6 text-left {% else %}col-12 text-center {% endif %} col-sm-12 footer-single-widget mb-0 mb-sm-30">
+        <div class="copyright-text">
+          {{ section.settings.copy_right_text }}
+        </div>
+
+      </div>
+      {% endif %}
+      
+
+      {% if copyright_logo == true %}
+      <div class="{% if copyright_text == true and payment_icon == true %} col-lg-4 col-md-4 text-left text-md-center {% elsif copyright_text == true or payment_icon == true %}  col-lg-6 col-md-6 text-left {% else %}col-12 text-center {% endif %} col-sm-12 footer-single-widget  mb-0 mb-sm-30">
+        <!--=======  logo  =======-->
+
+        <div class="logo mb-0">
+          {%- if section.settings.logo -%}
+          <a href="{{ routes.root_url }}">
+            <img src="{{ section.settings.logo | img_url: '300x300' }}" alt="{{ section.settings.logo.alt | default: shop.name }}">
+
+          </a>
+          {%- else -%}
+          <a href="{{ routes.root_url }}">
+            {{ shop.name }}
+          </a>
+          {%- endif -%}
+        </div>
+
+        <!--=======  End of logo  =======-->
+      </div>
+      {% endif %}
+      
+      {% if payment_icon == true %}
+
+      <div class="{% if copyright_text == true and copyright_logo == true %} col-lg-4 col-md-4 text-left text-md-right{% elsif copyright_text == true or copyright_logo == true %}  col-lg-6 col-md-6 text-right text-md-right {% else %}col-12 text-center {% endif %}  col-sm-12 footer-single-widget mb-0 mb-sm-20 ">
+        <!--=======  payment icon  =======-->
+
+         
+          <div class="payment-icon">
+            {% for block in section.blocks %}
+            {% case block.type %}
+            {% when 'amazon_payments' %}
+  			{{ 'amazon_payments' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'american_express' %}
+            {{ 'american_express' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'apple_pay' %}
+            {{ 'apple_pay' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'bitcoin' %}
+            {{ 'bitcoin' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'dankort' %}
+            {{ 'dankort' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'diners_club' %}
+            {{ 'diners_club' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'discover' %}
+            {{ 'discover' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'dogecoin' %}
+            {{ 'dogecoin' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'dwolla' %}
+            {{ 'dwolla' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'forbrugsforeningen' %}
+            {{ 'forbrugsforeningen' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'google_pay' %}
+            {{ 'google_pay' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'jcb' %}
+            {{ 'jcb' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'klarna' %}
+            {{ 'klarna' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'litecoin' %}
+            {{ 'litecoin' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'maestro' %}
+            {{ 'maestro' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'master' %}
+            {{ 'master' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'paypal' %}
+            {{ 'paypal' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'shopify_pay' %}
+            {{ 'shopify_pay' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'sofort' %}
+            {{ 'sofort' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'visa' %}
+            {{ 'visa' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% endcase %}
+            {% endfor %}
+          </div>
+          
+
+        <!--=======  End of payment icon  =======-->
+      </div>
+      
+      {% endif %}
+      
+    </div>
+    {% endif %} 
+  </div>
+</div>
+{%- endif -%}
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+
+{%- capture css -%}
+<style>
+  {%- for block in section.blocks -%} 
+  	{%- case block.type -%}		
+      {% when 'footer_typography' %}
+         #section-{{ section.id }}.footer-container.footer-one {background: {{ block.settings.footer_bg_color }} {%- if block.settings.footer_bg_image -%}url("{{ block.settings.footer_bg_image | img_url: 'master' }}"){%- endif -%} no-repeat scroll center center / cover;}#section-{{ section.id }} .footer-single-widget h5.widget-title,#section-{{ section.id }} .footer-subscription-widget .footer-subscription-title{color: {{ block.settings.widget_title_color }};}#section-{{ section.id }} .footer-single-widget .copyright-text p,.footer-nav-container nav ul li a,.footer-subscription-widget .subscription-subtitle,.localization-selector.link {color: {{ block.settings.footer_body_color }};}#section-{{ section.id }} .footer-social-links ul li a i {color: {{ block.settings.social_icon_color }};}#section-{{ section.id }}  .mailchimp-success{color: {{ block.settings.mail_sucess_color }};}#section-{{ section.id }}  .footer-nav-container nav ul li a:hover,.footer-subscription-widget .subscription-form button:hover{color: {{ block.settings.footer_body_hover_color }};}.footer-subscription-widget .subscription-form input,.footer-subscription-widget .subscription-form input:focus {border-color: {{ block.settings.input_border_color }};}.footer-subscription-widget .subscription-form button {color: {{ block.settings.newsletter_submit_button_color }};}.footer-subscription-widget .subscription-form input {color: {{ block.settings.newsletter_placholder_color }}}.footer-subscription-widget .subscription-form input::-webkit-input-placeholder {color: {{ block.settings.newsletter_placholder_color }};}.footer-subscription-widget .subscription-form input:-ms-input-placeholder {color: {{ block.settings.newsletter_placholder_color }};}.footer-subscription-widget .subscription-form input::placeholder {color: {{ block.settings.newsletter_placholder_color }};}
+     {%- endcase -%}
+  {%- endfor -%}
+  #section-{{ section.id }}.footer_overlay::before  {background: {{ section.settings.footer_overlay_color }};opacity: {{ section.settings.footer_overlay_opacity }};}
+</style>
+{%- endcapture -%}
+
+{{ css | strip_newlines
+       | replace: '  ', '' 
+       | replace: ': ', ':'
+       | replace: ' {', '{'
+}} 
+
+{%- schema -%}
+  {
+  "name": "Footer",
+    "settings": [
+		{
+             "type":  "radio",
+             "id":    "container_width",
+             "label": "Container Width",
+             "options": [
+               { "value": "container", "label": "Container" },
+               { "value": "fluid", "label": "Full Width" }
+             ],
+             "default":   "fluid"
+          },
+		{
+          "type": "header",
+          "content": "Footer Enable"
+        },
+        {
+          "type": "checkbox",
+          "id": "footer_section_enable",
+          "label": "Footer Section Enable",
+          "default": true
+        },
+		{
+          "type": "header",
+          "content": "Footer Bottom"
+        },
+		{
+          "type": "checkbox",
+          "id": "footer_bottom_enable",
+          "label": "Footer Bottom Enable",
+          "default": true
+        },
+		{
+          "type": "paragraph",
+          "content": "Copyright"
+        },
+		{
+          "type": "checkbox",
+          "id": "copyright_text_enable",
+          "label": "Copyright Enable",
+          "default": true
+      	},
+        {
+          "type": "richtext",
+          "id": "copy_right_text",
+          "label": "CopyRight Text",
+          "default": "<p>Copyright © Phoone Shopify All Right Reserved.</p>"
+        },
+		{
+          "type": "paragraph",
+          "content": "Footer Bottom Logo"
+        },
+		{
+          "type": "checkbox",
+          "id": "copyright_logo_enable",
+          "label": "Copyright Logo Enable",
+          "default": true
+      	},
+		{
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Logo"
+        },
+		{
+          "type": "paragraph",
+          "content": "Payment Icon"
+        },
+		{
+          "type": "checkbox",
+          "id": "payment_icon_enable",
+          "label": "Show Payment icon",
+          "default": true
+      	},
+		{
+                "type": "header",
+                "content": "Footer Overlay"
+              },
+              {
+                "type": "checkbox",
+                "id": "footer_overlay",
+                "label": "Footer Overlay Enable",
+                "default": false
+              },
+              {
+                "type": "color",
+                "id": "footer_overlay_color",
+                "label": "Overlay Color",
+                "default": "#000"
+              },
+              {
+                "type": "range",
+                "id": "footer_overlay_opacity",
+                "min": 0,
+                "max": 1,
+                "step": 0.1,
+                "label": "Overlay Color Opacity",
+                "default": 0.5
+              },
+		{
+          "type": "header",
+          "content": "Snow Effect"
+        },
+        {
+          "type": "checkbox",
+          "id": "section_snow_effect",
+          "label": "Snow Effect Enable",
+          "default": false
+        }
+    ],
+	"blocks":[
+		{
+          "type": "footer_typography",
+          "name": "Footer Color Options",
+		  "limit": 1,
+          "settings": [
+              {
+                "type": "color",
+                "id": "footer_bg_color",
+                "label": "Footer  Bg color",
+                "default": "#f8f8f8"
+              },
+			  {
+                "type": "image_picker",
+                "id": "footer_bg_image",
+                "label": "BG Image"
+              },
+			  {
+                "type": "color",
+                "id": "widget_title_color",
+                "label": "Widget Title Color",
+                "default": "#333"
+              },
+			  {
+                "type": "color",
+                "id": "footer_body_color",
+                "label": "Footer Body color",
+                "default": "#999999"
+              },
+			  {
+                "type": "color",
+                "id": "footer_body_hover_color",
+                "label": "Footer Body Hover color",
+                "default": "#333"
+              },
+			  {
+                "type": "color",
+                "id": "social_icon_color",
+                "label": "Social Icon color",
+                "default": "#333"
+              },
+			  {
+                "type": "color",
+                "id": "input_border_color",
+                "label": "Newsletter Input Boder Color",
+                "default": "#ccc"
+              },
+			  {
+                "type": "color",
+                "id": "newsletter_placholder_color",
+                "label": "Newsletter Placeholder Color",
+                "default": "#777"
+              },
+			  {
+                "type": "color",
+                "id": "newsletter_submit_button_color",
+                "label": "Newsletter Submit Button Color",
+                "default": "#ccc"
+              }
+          ]
+		},
+		{
+          "type": "newsletter",
+          "name": "Newsletter",
+          "settings": [
+			  {
+                "type": "text",
+                "id": "newsletter_title",
+                "label": "Newsletter Widget Title",
+                "default": "Subscribe."
+              },
+		      {
+                "type": "header",
+                "content": "Newsletter Type"
+              },
+              {
+                "type": "radio",
+                "id": "newsletter_system",
+                "label": "Newsletter Accept",
+                "options": [
+                  {
+                    "label": "Shopify Form",
+                    "value": "by_shopify_form"
+                  },
+                  {
+                    "label": "MailChimp",
+                    "value": "by_mailchimp"
+                  }
+                ],
+                "default": "by_shopify_form"
+              },
+		 	  {
+                "type": "textarea",
+                "id": "newsletter_description",
+                "label": "Newsletter Widget Desc",
+                "default": "Subscribe to our newsletter to receive news on update."
+              },
+			  {
+                "type": "text",
+                "id": "newsletter_input_placeholder",
+                "label": "Placeholder Title",
+                "default": "Your email address."
+              },
+        	  {
+               "type": "header",
+               "content": "Country\/region selector",
+               "info": "To add a country\/region, go to your [payment settings.](\/admin\/settings\/payments)"
+             },
+             {
+               "type": "checkbox",
+               "id": "enable_country_selector",
+               "default": true,
+               "label": "Enable country\/region selector"
+             },
+             {
+               "type": "header",
+               "content": "Language selector",
+               "info": "To add a language, go to your [language settings.](\/admin\/settings\/languages)"
+             },
+             {
+               "type": "checkbox",
+               "id": "enable_language_selector",
+               "default": true,
+               "label": "Enable language selector"
+             }
+          ]
+       },
+		{
+          "type": "social_icon",
+          "name": "Social Media",
+          "settings": [
+			  {
+                "type": "text",
+                "id": "footer_widget_title",
+                "label": "Footer Widget Title",
+                "default": "Widget TItle"
+              },
+			  {
+                "type": "header",
+                "content": "Icon With Link"
+              },
+			  {
+                "type": "text",
+                "id": "social_icon_1_name",
+                "label": "Social Icon Name",
+                "default": "ion-social-twitter",
+                "info": "Ionicons Icon [See Icon](https://ionicons.com/v2/cheatsheet.html)"
+              },
+			  {
+                "type": "text",
+                "id": "social_icon_1_title",
+                "label": "Social Icon Title",
+				"default": "Twitter"
+              },
+              {
+                "type": "url",
+                "id": "social_icon_1_link",
+                "label": "Link"
+              },
+              {
+                "type": "header",
+                "content": "Icon With Link"
+              },
+              {
+                "type": "text",
+                "id": "social_icon_2_name",
+                "label": "Social Icon Name",
+                "default": "ion-social-instagram",
+                "info": "Ionicons Icon [See Icon](https://ionicons.com/v2/cheatsheet.html)"
+              },
+			  {
+                "type": "text",
+                "id": "social_icon_2_title",
+                "label": "Social Icon Title",
+				"default": "instagram"
+              },
+              {
+                "type": "url",
+                "id": "social_icon_2_link",
+                "label": "Link"
+              },
+              {
+                "type": "header",
+                "content": "Icon With Link"
+              },
+              {
+                "type": "text",
+                "id": "social_icon_3_name",
+                "label": "Social Icon Name",
+                "default": "ion-social-google",
+                "info": "Ionicons Icon [See Icon](https://ionicons.com/v2/cheatsheet.html)"
+              },
+			  {
+                "type": "text",
+                "id": "social_icon_3_title",
+                "label": "Social Icon Title",
+				"default": "Google"
+              },
+              {
+                "type": "url",
+                "id": "social_icon_3_link",
+                "label": "Link"
+              },
+              {
+                "type": "header",
+                "content": "Icon With Link"
+              },
+              {
+                "type": "text",
+                "id": "social_icon_4_name",
+                "label": "Social Icon Name",
+                "default": "ion-social-linkedin",
+                "info": "Ionicons Icon [See Icon](https://ionicons.com/v2/cheatsheet.html)"
+              },
+			   {
+                "type": "text",
+                "id": "social_icon_4_title",
+                "label": "Social Icon Title",
+				"default": "Linkedin"
+              },
+              {
+                "type": "url",
+                "id": "social_icon_4_link",
+                "label": "Link"
+              },
+              {
+                "type": "header",
+                "content": "Icon With Link"
+              },
+              {
+                "type": "text",
+                "id": "social_icon_5_name",
+                "label": "Social Icon Name",
+                "default": "ion-social-pinterest",
+                "info": "Ionicons Icon [See Icon](https://ionicons.com/v2/cheatsheet.html)"
+              },
+			  {
+                "type": "text",
+                "id": "social_icon_5_title",
+                "label": "Social Icon Title",
+				"default": "Pinterest"
+              },
+              {
+                "type": "url",
+                "id": "social_icon_5_link",
+                "label": "Link"
+              }
+          ]
+       },
+		{
+          "type": "copyright_logo",
+          "name": "Logo With Copyright",
+          "settings": [
+			  {
+                "type": "image_picker",
+                "id": "logo",
+                "label": "Logo"
+              },
+		      {
+                "type": "richtext",
+                "id": "copy_right_text",
+                "label": "CopyRight Text",
+                "default": "<p>Copyright © Phoone Shopify All Right Reserved.</p>"
+              }
+          ]
+       },
+		{
+          "type": "widget_menu",
+          "name": "Footer Widget Menu",
+          "settings": [
+			  {
+                "type": "text",
+                "id": "footer_widget_title",
+                "label": "Footer Widget Title",
+                "default": "Widget TItle"
+              },
+			  {
+                  "type": "link_list",
+                  "id": "footer_menu_handle",
+                  "label": "Select Menu"
+              }
+          ]
+       },
+	   {
+          "type": "amazon_payments",
+          "name": "Amazon Payments",
+		  "limit": 1
+        },
+	   {
+          "type": "american_express",
+          "name": "American Express",
+		  "limit": 1
+        },
+		{
+          "type": "apple_pay",
+          "name": "Apple Pay",
+		  "limit": 1
+        },
+		{
+          "type": "bitcoin",
+          "name": "Bitcoin",
+		  "limit": 1
+        },
+		{
+          "type": "dankort",
+          "name": "Dankort",
+		  "limit": 1
+        },
+		{
+          "type": "diners_club",
+          "name": "Diners Club",
+		  "limit": 1
+        },
+		{
+          "type": "discover",
+          "name": "Discover",
+		  "limit": 1
+        },
+		{
+          "type": "dogecoin",
+          "name": "Dogecoin",
+		  "limit": 1
+        },
+		{
+          "type": "dwolla",
+          "name": "Dwolla",
+		  "limit": 1
+        },
+		{
+          "type": "forbrugsforeningen",
+          "name": "Forbrugsforeningen",
+		  "limit": 1
+        },
+		{
+          "type": "google_pay",
+          "name": "Google Pay",
+		  "limit": 1
+        },
+		{
+          "type": "jcb",
+          "name": "Jcb",
+		  "limit": 1
+        },
+		{
+          "type": "klarna",
+          "name": "Klarna",
+		  "limit": 1
+        },
+		{
+          "type": "litecoin",
+          "name": "Litecoin",
+		  "limit": 1
+        },
+		{
+          "type": "maestro",
+          "name": "Maestro",
+		  "limit": 1
+        },
+		{
+          "type": "master",
+          "name": "Master",
+		  "limit": 1
+        },
+		{
+          "type": "paypal",
+          "name": "Paypal",
+		  "limit": 1
+        },
+		{
+          "type": "shopify_pay",
+          "name": "Shopify Pay",
+		  "limit": 1
+        },
+		{
+          "type": "sofort",
+          "name": "Sofort",
+		  "limit": 1
+        },
+		{
+          "type": "visa",
+          "name": "Visa",
+		  "limit": 1
+        }
+	]
+  }
+{%- endschema -%}

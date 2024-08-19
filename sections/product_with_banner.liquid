@@ -1,0 +1,453 @@
+{% capture html %}
+<div class="banner-with-product-area mb-30 mb-sm-10" id="section-{{ section.id }}" data-section="BannerSection">
+  {%- if section.settings.section_title_enable -%}
+  <div class="{% if section.settings.container_width == 'container' %} container {% elsif section.settings.container_width == 'fluid' %} container wide {% endif %}">
+    <div class="row">
+      <div class="col-lg-12 mb-80 mb-md-60 mb-sm-40">
+        <div class="section-title section-title--one {%- if section.settings.text_align == "left" -%}text-left {%- elsif section.settings.text_align == "right" -%} text-right {%- elsif section.settings.text_align == "center" -%} text-center {%- endif -%}">
+          {% if section.settings.section_title != blank %}
+          <h1>{{ section.settings.section_title }}</h1>
+          {% endif %}
+          {% if section.settings.section_title_paragraph != blank %}
+          <p class="subtitle subtitle--deep subtitle--trending-home">{{ section.settings.section_title_paragraph }}</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+  {%- endif -%}
+    
+  <div class="{% if section.settings.container_width == 'container' %} container {% elsif section.settings.container_width == 'fluid' %} container wide {% endif %}">
+    <div class="row">
+      <div class="{% if section.settings.banner_enable %} col-lg-8 {% else %} col-12 {% endif %} {% if section.settings.product_banner_Post == 'left' %} order-2 {% elsif section.settings.product_banner_Post == 'right' %} order-1 {% endif %}">
+        <div class="row">
+          {%- assign product_handler = collections[section.settings.product_cat_handle_id] -%}
+          {%- assign product_limit = section.settings.product_limit_handle -%}
+          {%- if product_handler == empty -%}
+          {% for i in (1..product_limit) %}
+          {% capture a %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+          <div class="col-12 col-xl-{{ section.settings.product_column }} col-lg-{{ section.settings.product_desktop_col }} col-md-{{ section.settings.product_column_md }} col-sm-{{ section.settings.product_column_xs }}" style="margin-bottom: 30px;">
+            <div>
+              <div style="background: #f2f2f2;">
+                {% assign product_item = "product-" | append: a  %}
+                {{ product_item | placeholder_svg_tag: 'my-custom-class' }}
+              </div>
+              <br>
+              <h6>
+                Product Title
+              </h6>
+              <div class="">
+                <span>$99.99</span>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+          {% else %}
+          {% for product in product_handler.products limit:product_limit %}
+          <div class="col-12 col-xl-{{ section.settings.product_column }} col-lg-{{ section.settings.product_desktop_col }} col-md-{{ section.settings.product_column_md }} col-sm-{{ section.settings.product_column_xs }} mb-45">
+            {%- render 'product-grid-item' with product as product -%}
+          </div>
+          {% endfor %}
+          {% endif %}
+
+        </div>
+      </div>
+	  {% if section.settings.banner_enable %}
+      <div class="col-lg-4 col-12 {% if section.settings.product_banner_Post == 'left' %} order-1 {% elsif section.settings.product_banner_Post == 'right' %} order-2 {% endif %} mb-md-50 mb-sm-50">
+        <div class="product-side-banner">
+          <a href="{{ section.settings.banner_url }}">
+            {%- if section.settings.banner_img != blank  -%}            
+              {%- render 'lazyload_image_src',
+                	  image: section.settings.banner_img,
+                      size: 'master' -%}
+            {%- else -%}
+            {%- render 'svg_placholder' with param: 'image', size: '518x600' -%}
+            {%- endif -%}
+           </a>
+          <a href="{{ section.settings.banner_url }}" class="product-side-banner--link">{{ section.settings.banner_button_text }}</a>
+        </div>
+      </div>
+      {% endif %}
+      
+    </div>
+  </div>
+</div>
+{% endcapture %}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+
+{% render "section_typography" %}
+
+
+{% schema %}
+  {
+    "name": "Product With Banner",
+    "settings": [
+	   {
+          "type":  "radio",
+          "id":    "container_width",
+          "label": "Container Width",
+          "options": [
+            { "value": "container", "label": "Container" },
+            { "value": "fluid", "label": "Full Width" }
+          ],
+          "default":   "container"
+      },
+	  {
+          "type": "header",
+          "content": "Section Title"
+        },
+		{
+          "type": "checkbox",
+          "id": "section_title_enable",
+          "label": "Section Title Enable",
+		  "default": false
+        }, 
+		{
+          "type": "text",
+          "id": "section_title",
+          "label": "Section Title Label",
+		  "default": "Section Title"
+        },
+		{
+          "type": "textarea",
+          "id": "section_title_paragraph",
+          "label": "Section Title Description",
+		  "default": "Section Title Description"
+        },
+		{
+          "type":  "radio",
+          "id":    "text_align",
+          "label": "Section Title Align",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "right", "label": "Right" },
+			 { "value": "center", "label": "Center" }
+          ],
+          "default":   "center"
+        },
+	  {
+        "type": "header",
+        "content": "Product Banner Position"
+      },
+	  {
+          "type":  "radio",
+          "id":    "product_banner_Post",
+          "label": "Content Position",
+          "options": [
+            { "value": "left", "label": "Left Banner" },
+            { "value": "right", "label": "Right Banner" }
+          ],
+          "default":   "left"
+      },
+      {
+        "type": "header",
+        "content": "Banner"
+      },
+	  {
+          "type": "checkbox",
+          "id": "banner_enable",
+          "label": "Banner Enable",
+		  "default": true
+        }, 
+      {
+        "type": "image_picker",
+        "id": "banner_img",
+        "label": "Image",
+        "info": "Recommended Size: 518 x 877 px"
+      },
+      {
+        "type": "url",
+        "id": "banner_url",
+        "label": "URL"
+      },
+      {
+        "type": "header",
+        "content": "Product Collection"
+      },
+      {
+        "type": "collection",
+        "id": "product_cat_handle_id",
+        "label": "Select Your Collection"
+      },
+	  {
+			"type": "header",
+            "content": "Product Limit"
+        },
+		{
+            "type": "range",
+            "id": "product_limit_handle",
+            "min": 2,
+            "max": 20,
+            "step": 1,
+            "label": "Limit",
+            "default": 6
+        },
+		{
+			"type": "header",
+            "content": "Product Column"
+        },
+		 
+		{
+          "type": "select",
+          "id": "product_column",
+          "label": "Desktop",
+		  "options":[
+				{
+                    "label": "2 Column",
+                    "value": "6"
+                },
+                {
+                    "label": "3 Column",
+                    "value": "4"
+                },
+                {
+                    "label": "4 Column",
+                    "value": "3"
+                }
+			],
+			"default": "4"
+      	},
+		{
+          "type": "select",
+          "id": "product_desktop_col",
+          "label": "Normal Desktop",
+		  "options":[
+				{
+                    "label": "2 Column",
+                    "value": "6"
+                },
+                {
+                    "label": "3 Column",
+                    "value": "4"
+                },
+                {
+                    "label": "4 Column",
+                    "value": "3"
+                }
+			],
+			"default": "6"
+      	},
+		{
+          "type": "select",
+          "id": "product_column_md",
+          "label": "Tablet",
+		  "options":[
+				{
+                    "label": "2 Column",
+                    "value": "6"
+                },
+                {
+                    "label": "3 Column",
+                    "value": "4"
+                },
+                {
+                    "label": "4 Column",
+                    "value": "3"
+                }
+			],
+			"default": "6"
+      	},
+		{
+          "type": "select",
+          "id": "product_column_xs",
+          "label": "Large Mobile",
+		  "options":[
+				{
+                    "label": "1 Column",
+                    "value": "12"
+                },
+                {
+                    "label": "2 Column",
+                    "value": "6"
+                }
+			],
+			"default": "6"
+      	}
+	],
+	"blocks":[
+		{
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#ffffff"
+			}
+          ]
+       }
+	],
+	"presets": [
+      {
+        "category": "3. collections",
+        "name": "Product With Banner"
+
+      }
+    ]
+  }
+{% endschema %}

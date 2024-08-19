@@ -1,0 +1,45 @@
+<div class="overlay-navigation-menu overlay-navigation-inactive" id="overlay-navigation-menu">
+  <span class="close-icon overlay-menu-close-icon">
+    <a href="javascript:void(0)" id="overlay-menu-close-icon">
+      <i class="ti-close"></i>
+    </a>
+  </span>
+  <div class="overlay-navigation-menu-container">
+    <nav>
+      <ul id="vertical-collapsible-menu">
+        {% for link in section.settings.menu.links %}
+        {% assign childlink_handle = link.title | handle %}
+        {% if linklists[childlink_handle] and linklists[childlink_handle].links.size > 0 %}
+        <li class="has-children"><a href="{{ link.url }}">{{ link.title }} </a>
+          <ul class="sub-menu">
+            {% for childlink in linklists[childlink_handle].links %}
+            {% assign grand_childlink_handle = childlink.title | handle %}
+            {% if linklists[grand_childlink_handle] and linklists[grand_childlink_handle].links.size > 0 %}
+            <li class="has-children-submenu">
+              <a href="{{ childlink.url }}">{{ childlink.title }}</a>
+              <ul class="sub-menu">
+                {% for grand_childlink_handle in linklists[grand_childlink_handle].links %}
+                <li><a href="{{ grand_childlink_handle.url }}">{{ grand_childlink_handle.title }}</a></li>
+                {% endfor %}
+              </ul> 
+            </li> 
+            {% else %}
+            <li><a href="{{ childlink.url }}">{{ childlink.title }}</a></li>
+            {% endif %}
+            {% endfor %}
+          </ul>  
+        </li>
+        {% else %}
+        <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+        {% endif %}
+        {% endfor %}
+      </ul>
+    </nav>
+  </div>
+</div>
+
+
+<script>
+  $(".overlay-navigation-menu .overlay-navigation-menu-container nav ul li a img").remove();
+</script>
+

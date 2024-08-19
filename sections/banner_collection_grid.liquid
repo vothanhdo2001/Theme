@@ -1,0 +1,416 @@
+{%- capture html -%}
+<div class="product-category-container mb-100 mb-md-80 mb-sm-70" id="section-{{ section.id }}" data-section="BannerSection">
+  <div class="{% if section.settings.container_width == 'container' %} container {% elsif section.settings.container_width == 'fluid' %} container wide {% endif %}">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="product-category-container--collectionhome-wrapper">
+          <div class="row">
+            {% for block in section.blocks %}            
+            {% assign cat_collection = collections[block.settings.categegory_handle] %}
+            
+            
+            
+            {%- case block.type -%}
+            {%- when 'bottom_content_collection' -%}
+            <div class="col-lg-3 col-md-6 col-12 mb-60 mb-sm-20">
+              <div class="single-category single-category--one ">
+                <div class="single-category__image single-category__image--one">
+                 <a href="{{ cat_collection.url }}">
+                   {%- if block.settings.collection_img == 'default' -%}
+                   	{%- if  cat_collection.image.src != blank -%}
+                   {%- render 'lazyload_image_src',
+                	  image: cat_collection.image.src,
+                   size: '2048x2048' -%}
+                   {%- else -%}
+                   {%- render 'svg_placholder', param: 'collection', size: '385x520' -%}
+                   {%- endif -%}
+                   {%- elsif block.settings.collection_img == 'custom' -%}
+                     {%- if block.settings.custom_collection_img != blank -%}
+                      {%- render 'lazyload_image_src',
+                        image: block.settings.custom_collection_img,
+                        size: '2048x2048' -%}
+                    {%- else -%}
+                    {%- render 'svg_placholder' with param: 'collection', size: '385x520' -%}
+                    {%- endif -%}
+                   {%- endif -%}
+                 </a>
+                </div>
+                <div class="single-category__content single-category__content--one mt-25 mb-25">
+                  <div class="title">
+                    <p>{{ cat_collection.title | default: 'Collection Title' }}</p>
+                    <a href="{{ cat_collection.url }}">{{ block.settings.collection_hover_title | default: '+ Online store' }}</a>
+                  </div>
+                  <p class="product-count">{{ cat_collection.all_products_count }}</p>
+                </div>
+              </div>
+            </div>
+            {%- when 'top_content_collection' -%}
+            <div class="col-lg-3 col-md-6 col-12 mb-60">
+              <div class="single-category single-category--one ">
+                <div class="single-category__content single-category__content--one mt-25 mb-25">
+                   <div class="title">
+                    <p>{{ cat_collection.title | default: 'Collection Title'  }}</p>
+                    <a href="{{ cat_collection.url }}">{{ block.settings.collection_hover_title | default: '+ Online store' }}</a>
+                  </div>
+                  <p class="product-count">{{ cat_collection.all_products_count }}</p>
+                </div>
+
+                <div class="single-category__image single-category__image--one">
+                  <a href="{{ cat_collection.url }}">
+                   {%- if block.settings.collection_img == 'default' -%}
+                   	{%- if  cat_collection.image.src != blank -%}
+                   {%- render 'lazyload_image_src',
+                	  image: cat_collection.image.src,
+                   size: '2048x2048' -%}
+                   {%- else -%}
+                   {%- render 'svg_placholder', param: 'collection', size: '385x520' -%}
+                   {%- endif -%}
+                   {%- elsif block.settings.collection_img == 'custom' -%}
+                     {%- if block.settings.custom_collection_img != blank -%}
+                      {%- render 'lazyload_image_src',
+                        image: block.settings.custom_collection_img,
+                        size: '2048x2048' -%}
+                    {%- else -%}
+                    {%- render 'svg_placholder' with param: 'collection', size: '385x520' -%}
+                    {%- endif -%}
+                   {%- endif -%}
+                  </a>
+                </div>
+              </div>
+            </div>
+            {%- when 'collection_banner' -%}
+            <div class="col-lg-3 col-md-6 col-12 mb-60">
+              <div class="single-category single-category--one ">
+
+                <div class="single-category__content single-category__content--textbanner">
+                   <a href="{{ block.settings.collection_banner_link }}">{{ block.settings.collection_banner_btn_text | default: '+ store' }}</a>
+                  
+                  {% if block.settings.collection_banner_text != blank  %}
+                  <p class="text">
+                    <span>
+                    	{{ block.settings.collection_banner_text }}
+                    </span>
+                  </p>
+                  {% endif %}
+                  
+                  <a href="{{ block.settings.collection_banner_link }}" class="banner-link"></a>
+                </div>
+              </div>
+            </div>
+            {%- endcase -%}
+           {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+
+
+{% render 'section_typography' %}
+
+{% schema %}
+  {
+    "name": "Collection Banner Grid",
+    "settings": [
+		{
+          "type":  "radio",
+          "id":    "container_width",
+          "label": "Container Width",
+          "options": [
+            { "value": "container", "label": "Container" },
+            { "value": "fluid", "label": "Full Width" }
+          ],
+          "default":   "fluid"
+        }
+	],
+	"blocks": [
+       {
+        "type": "bottom_content_collection",
+        "name": "Bottom Content Collection",
+        "settings": [
+            {
+              "type": "collection",
+              "id": "categegory_handle",
+              "label": "Select Collection"
+            },
+			{
+              "type":  "radio",
+              "id":    "collection_img",
+              "label": "Collection Image",
+              "options": [
+                { "value": "default", "label": "Default Collection Thumb" },
+                { "value": "custom", "label": "Custom Collection Thumb" }
+              ],
+              "default":   "default"
+            },
+			{
+              "type": "image_picker",
+              "id": "custom_collection_img",
+              "label": "Custom Collection Image",
+              "info": "Recommended Size: 385 x 520 px"
+            },
+			{
+              "type": "text",
+              "id": "collection_hover_title",
+              "label": "Collection Hover Title",
+              "default": "+ Online Store"
+            }
+          ]
+        },
+	   {
+        "type": "top_content_collection",
+        "name": "Top Content Collection",
+        "settings": [
+            {
+              "type": "collection",
+              "id": "categegory_handle",
+              "label": "Select Collection"
+            },
+			{
+              "type":  "radio",
+              "id":    "collection_img",
+              "label": "Collection Image",
+              "options": [
+                { "value": "default", "label": "Default Collection Thumb" },
+                { "value": "custom", "label": "Custom Collection Thumb" }
+              ],
+              "default":   "default"
+            },
+			{
+              "type": "image_picker",
+              "id": "custom_collection_img",
+              "label": "Custom Collection Image",
+              "info": "Recommended Size: 385 x 520 px"
+            },
+			{
+              "type": "text",
+              "id": "collection_hover_title",
+              "label": "Collection Hover Title",
+              "default": "+ Online Store"
+            }
+          ]
+        },
+	   {
+        "type": "collection_banner",
+        "name": "Banner Collection",
+        "settings": [
+            {
+              "type": "textarea",
+              "id": "collection_banner_text",
+              "label": "Collection Banner Title",
+              "default": "brand <br>made<br>with love"
+            },
+			{
+              "type": "text",
+              "id": "collection_banner_btn_text",
+              "label": "Collection Banner ",
+              "default": "+ Store"
+            },
+			{
+              "type": "url",
+              "id": "collection_banner_link",
+              "label": "Banner Collection Link"
+            }
+          ]
+        },
+		{
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#ffffff"
+			}
+          ]
+       }
+	
+	],
+	"presets": [
+		{
+		  "name": "Collection Banner Grid",
+		  "category": "5. Collection Banner",
+			"blocks":[
+				{
+					"type": "bottom_content_collection"
+				},
+				{
+					"type": "top_content_collection"
+				},
+				{
+					"type": "collection_banner"
+				}
+			]
+		}
+	]
+  }
+{% endschema %}

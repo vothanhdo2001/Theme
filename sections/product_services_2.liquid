@@ -1,0 +1,384 @@
+{%- capture html -%}
+<section class="method-area" id="section-{{ section.id }}">
+  <div class="container{% if section.settings.section_width == 'full' %}-fluid{% endif %}">
+    <div class="row">
+      {%- for block in section.blocks -%}{%- case block.type -%}
+      {%- when 'service' -%}
+      <div class="col-lg-{{ block.settings.ban_col }} col-md-{{ block.settings.product_column_md }} col-{{ block.settings.product_column_xs }} mb-md--30">
+        <div class="method-box{% if section.settings.style == 'style_1' %} text-center{% else %} method-box-2{% endif %}">              
+          {%- if block.settings.show_img -%}             
+          {%- if block.settings.ban1_img -%}
+            {%- render 'lazyload_image_src',
+                	  image: block.settings.ban1_img,
+                      size: 'medium' -%}
+          
+          {%- else -%}
+          <img data-src="https://cdn.shopify.com/s/files/1/0159/0355/5638/files/icon-1_medium_3ca4cdf7-6cb2-4cea-b511-9eec74e5fc00.png?16033" class="lazyload" alt="Banner">
+          {%- endif -%}
+          {%- endif -%}
+
+          {%- if block.settings.section_title != '' -%}
+          <h4 class="mt--20" style="color: {{ section.settings.section_title_color }};">{{ block.settings.section_title }}</h4>
+          {%- endif -%}
+
+          {%- if block.settings.section_sub_title != '' -%}
+          <p style="color: {{ section.settings.section_sub_title_color }};">{{ block.settings.section_sub_title }}</p>
+          {%- endif -%}
+        </div>
+      </div>
+      {%- endcase -%}{%- endfor -%}
+    </div>
+  </div>
+</section>
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+
+{% render 'section_typography' %}
+
+
+{% schema %}
+  {
+    "name": "Service",
+    "settings": [
+		{
+            "type": "radio",
+            "id": "style",
+            "label": "Service Style",
+            "options": [
+				{
+					"label": "Style 1",
+					"value": "style_1"
+				},
+				{
+					"label": "Style 2",
+					"value": "style_2"
+				}
+			],
+            "default": "style_1"
+        },
+		{
+            "type": "radio",
+            "id": "section_width",
+            "label": "Section Width",
+            "options": [
+				{
+					"label": "Default",
+					"value": "default"
+				},
+				{
+					"label": "Full",
+					"value": "full"
+				}
+			],
+            "default": "default"
+        },
+		{
+			"type": "header",
+            "content": "Color"
+        },
+		{
+            "type": "color",
+            "id": "section_title_color",
+            "label": "Title Color",
+            "default": "#181818"
+        },
+		{
+            "type": "color",
+            "id": "section_sub_title_color",
+            "label": "Subtitle Color",
+            "default": "#737373"
+        }
+    ],
+	"blocks":[
+	   {
+          "type": "service",
+          "name": "Service",
+          "settings": [
+              {
+                "type": "select",
+                "id": "ban_col",
+                "label": "Select Column",
+                "options":[
+                      {
+                          "label": "1",
+                          "value": "12"
+                      },
+                      {
+                          "label": "2",
+                          "value": "6"
+                      },
+                      {
+                          "label": "3",
+                          "value": "4"
+                      },
+                      {
+                          "label": "4",
+                          "value": "3"
+                      }
+                  ],
+                  "default": "3"
+              },
+			  {
+                "type": "select",
+                "id": "product_column_md",
+                "label": "Tablet",
+                "options":[
+                      {
+                          "label": "2",
+                          "value": "6"
+                      },
+                      {
+                          "label": "3",
+                          "value": "4"
+                      },
+                      {
+                          "label": "4",
+                          "value": "3"
+                      }
+                  ],
+                  "default": "4"
+              },
+              {
+                "type": "select",
+                "id": "product_column_xs",
+                "label": "Mobile",
+                "options":[
+                      {
+                          "label": "1",
+                          "value": "12"
+                      },
+                      {
+                          "label": "2",
+                          "value": "6"
+                      },
+					  {
+                          "label": "3",
+                          "value": "4"
+                      }
+                  ],
+                  "default": "6"
+              },
+              {
+                  "type": "checkbox",
+                  "id": "show_img",
+                  "label": "Show Image/Icon",
+                  "default": true
+              },
+              {
+                  "type": "image_picker",
+                  "id": "ban1_img",
+                  "label": "Image/Icon"
+              },
+              {
+                  "type": "textarea",
+                  "id": "section_title",
+                  "label": "Title",
+                  "default": "Free Worldwide Shipping"
+              },
+              {
+                  "type": "textarea",
+                  "id": "section_sub_title",
+                  "label": "Subtitle",
+                  "default": "On all orders over $75.00"
+              }
+          ]
+       },
+	   {
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 300,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 300,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 300,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 300,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 300,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 300,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#ffffff"
+			}
+          ]
+       }
+	],
+	"presets": [
+		{
+		  "name": "Service Style Two",
+		  "category": "9.1 services",
+		  "blocks":[
+				{
+					"type": "service"
+				},
+				{
+					"type": "service"
+				},
+				{
+					"type": "service"
+				},
+				{
+					"type": "service"
+				}
+			]
+		}
+	]
+  }
+{% endschema %}

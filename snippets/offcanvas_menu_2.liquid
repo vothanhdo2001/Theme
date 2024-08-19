@@ -1,0 +1,101 @@
+<!--=======  offcanvas mobile menu  =======-->
+<div class="menu_offcanvas_overlay"></div>
+<div class="offcanvas-mobile-menu" id="mobile-menu-overlay">
+  <a href="javascript:void(0)" class="offcanvas-menu-close" id="mobile-menu-close-trigger">
+    <i class="ti-close"></i>
+  </a>
+  <div class="offcanvas-wrapper">
+    <div class="offcanvas-inner-content">
+      {%- if section.settings.mobile_search_field_enable -%}
+      <div class="offcanvas-mobile-search-area">
+        <form action="/search" method="get" class="input-group search-bar" role="search">
+          {% comment %}<input type="hidden" name="type" value="product">{% endcomment %}
+          <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search.placeholder' | t }}" aria-label="{{ 'general.search.placeholder' | t }}">
+          <button type="submit">
+            <i class="ion-ios-search-strong"></i>
+          </button>
+        </form>
+      </div>
+      {%- endif -%}
+      <nav class="offcanvas-navigation" id="offcanvas__main--menu">
+        <ul>
+          {% for link in section.settings.menu.links %}
+          {% assign childlink_handle = link.title | handle %}
+          {% if linklists[childlink_handle] and linklists[childlink_handle].links.size > 0 %}
+          <li class="menu-item-has-children">
+            <a href="{{ link.url }}">{{ link.title }}</a>
+            <ul class="sub-menu">
+              {% for childlink in linklists[childlink_handle].links %}
+              {% assign grand_childlink_handle = childlink.title | handle %}
+              {% if linklists[grand_childlink_handle] and linklists[grand_childlink_handle].links.size > 0 %}
+              <li class="menu-item-has-children">
+                <a href="{{ childlink.url }}">{{ childlink.title }}</a>
+                <ul class="sub-menu">
+                  {% for grand_childlink in linklists[grand_childlink_handle].links %}
+                  <li><a href="{{ grand_childlink.url }}">{{ grand_childlink.title }}</a></li>
+                  {% endfor %}
+                </ul>
+              </li>
+              {% else %}
+              <li><a href="{{ childlink.url }}">{{ childlink.title }}</a></li>
+              {% endif %}  
+              {% endfor %}
+            </ul>
+          </li>
+          {% else %}
+          <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {% endif %}
+          {% endfor %}
+        </ul>
+      </nav>
+      <div class="offcanvas-settings">
+        <nav class="offcanvas-navigation">
+          <ul>
+            {%- if section.settings.user_menu_enable -%}
+            <li class="menu-item-has-children"><a href="#">{{ section.settings.user_menu_title }} </a>
+              <ul class="sub-menu">
+                {%- assign user_menu = section.settings.user_menu_handle -%}
+                {%- for link in linklists[user_menu].links -%}
+                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+                {%- endfor -%}
+
+                {%- if shop.customer_accounts_enabled and customer and section.settings.logout_title != '' -%}
+                <li>
+                  <a href="{{ routes.account_logout_url }}">{{ section.settings.logout_title }}</a>
+                </li>
+                {%- elsif section.settings.login_title != '' -%}
+                <li>
+                  <a href="{{ routes.account_login_url }}">{{ section.settings.login_title }}</a>
+                </li>
+                {%- endif -%}
+              </ul>
+            </li>    
+            {%- endif -%}
+            {%- if section.settings.mobile_header_currency_enable -%}
+            <li class="menu-item-has-children currency"><a href="#">{{ section.settings.currency_title }} <span class="current-currency">{{ shop.currency }}</span> </a>             
+              {% assign currency = settings.supported_currencies | split: '|' %}
+              <ul class="sub-menu switcher-dropdown" id="currencies">
+                {% for value in currency %}
+                {% assign array = value | split: ',' %}
+                {% assign iso_4217 = array[0] | upcase | strip %}
+                {% assign name = array[1] | strip %}
+                <li data-currency="{{ iso_4217 }}" class="currency__item"><a style="cursor: pointer">{{ name }}</a></li>
+                {% endfor %}
+              </ul>
+            </li> 
+            {%- endif -%}
+          </ul>
+        </nav>
+      </div>
+      <div class="offcanvas-widget-area">
+        <!--Off Canvas Widget Social Start-->
+        {%- if section.settings.mobile_social_midea_enable -%}
+        <div class="off-canvas-widget-social social-icons--footer">
+          {% render 'social-midea' %}
+        </div>
+        {%- endif -%}
+        <!--Off Canvas Widget Social End-->
+      </div>
+    </div>
+  </div>
+</div>

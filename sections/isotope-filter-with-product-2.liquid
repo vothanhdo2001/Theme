@@ -1,0 +1,570 @@
+{%- capture html -%}
+<div class="wearable-home-content" id="section-{{ section.id }}" data-section="IsotopCollectionProduct">
+  <div class="{% if section.settings.container_width == 'container' %} container {% elsif section.settings.container_width == 'fluid' %} container wide {% endif %}">
+    <div class="row pt-30 pb-30">
+
+      <div class="{% if section.settings.collection_btn != blank %} col-lg-10 {% else %} col-12 {% endif %}">
+        <!--=======  fitler titles  =======-->
+        <div class="filter-title filter-title--type-two">
+          <ul class="product-filter-menu">
+            {%- assign i = 1 -%}
+            <li class="active" data-filter = "*" > {{ section.settings.data_filter_all | default: 'All' }} </li>
+            {% for block in section.blocks %}
+            {%- case block.type -%}
+            {%- when 'tab_with_product' -%}
+            {%- assign tab_product = collections[block.settings.tab_product_handle] -%}
+
+            {%- if tab_product == empty -%}
+            <li data-filter = ".product-tab-{{ i }}" > Tab-{{ i }} </li>
+            {%- assign i = i | plus: 1 -%}
+            {%- else -%}
+            <li data-filter = ".tab-{{ block.id }}-{{ tab_product.title | handle }}"> {% if block.settings.tab_title == "custom" %}{{ block.settings.custom_tab_name }} {% elsif block.settings.tab_title == "default_tab"  %} {{ tab_product.title }} {% endif %} </li>
+            {%- endif -%}
+            {% endcase %}
+            {% endfor %}
+          </ul>
+        </div>
+        <!--=======  End of fitler titles  =======-->
+      </div>
+
+      {% if section.settings.collection_btn %}
+      <div class="col-lg-2 text-right d-none d-xl-block">
+        <a href="{{ section.settings.collection_btn_link }}" class="phoone-shopping-more-button"> {{ section.settings.collection_btn_text | default: 'Shopping More' }} </a>
+      </div>
+      {% endif %}
+
+    </div>
+  </div>
+  <div class="{% if section.settings.container_width == 'container' %} container {% elsif section.settings.container_width == 'fluid' %} container-fluid {% endif %} {% if section.settings.col_gutters %} p-0 {% endif %}">
+    <div class="row {% if section.settings.col_gutters %} no-gutters {% endif %} product-isotope">
+      {%- assign i = 1 -%}
+      {% for block in section.blocks %}
+      {%- case block.type -%}
+      {%- when 'tab_with_product' -%}
+      {%- assign tab_product = collections[block.settings.tab_product_handle] -%}
+      {%- assign product_limit = block.settings.product_limit_handle -%}
+
+      {%- if tab_product == empty -%}
+      {% for i in (1..product_limit) %}
+      {% capture a %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+      <div class="col-12 col-lg-{{ section.settings.product_column }} col-md-{{ section.settings.product_column_md }} col-sm-{{ section.settings.product_column_xs }}  product-tab-{{ i }} mb-30" >
+        <div>
+          <div style="background: #f2f2f2;">
+            {% assign product_item = "product-" | append: a  %}
+            {{ product_item | placeholder_svg_tag: 'my-custom-class' }}
+          </div>
+          <br>
+          <h6>
+            Product Title
+          </h6>
+          <div class="">
+            <span>$99.99</span>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+      {%- assign i = i | plus: 1 -%}
+      {%- else -%}
+      {% assign product_column = section.settings.product_column_handle %}
+      {% for product in tab_product.products limit: product_limit %}
+      <div class="col-12 col-lg-{{ section.settings.product_column }} col-md-{{ section.settings.product_column_md }} col-sm-{{ section.settings.product_column_xs }}  tab-{{ block.id }}-{{ tab_product.title | handle }} {% unless section.settings.col_gutters %}mb-30 {% endunless %}" >
+        {%- render 'product-grid-item-3' with product as product -%}
+      </div>
+      {% endfor %}
+      {%- endif -%}
+      {% endcase %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+
+{% render 'section_typography' %}
+
+{%- capture css -%}
+<style>
+  
+  {%- for block in section.blocks -%}
+  {%- case block.type -%}
+  {%- when 'product_content_color' -%}
+
+  #section-{{ section.id }} .single-product__content .title h3 a {
+    color: {{ block.settings.product_title_color }}
+  }
+  #section-{{ section.id }} .product-cart-action button,#section-{{ section.id }} .single-product__content .title .product-cart-action a,#section-{{ section.id }} .single-product--wearablehome .single-product__floating-cart span.title a {
+    color: {{ block.settings.cart_action_button_color }};
+  }
+  #section-{{ section.id }} .single-product__content .price .discounted-price {
+    color: {{ block.settings.product_currenct_price_color }};
+  }
+  #section-{{ section.id }} .single-product__content .price .main-price.discounted {
+    color: {{ block.settings.product_old_price_color }};
+  }
+  {%- when 'tab_font_style' -%}
+  #section-{{ section.id }} .filter-title--type-two .product-filter-menu li {
+    font-size: {{ block.settings.tab_title_font_size_lg }}px;
+  }
+  @media (min-width: 768px) and (max-width: 991px) {
+    #section-{{ section.id }} .filter-title--type-two .product-filter-menu li {
+      font-size: {{ block.settings.tab_title_font_size_sm }}px;
+    }
+  }
+  @media (max-width: 767px) {
+    #section-{{ section.id }} .filter-title--type-two .product-filter-menu li {
+      font-size: {{ block.settings.tab_title_font_size_xs }}px;
+    }
+  }
+  {%- endcase -%}
+  {%- endfor -%}
+  
+
+</style>
+{%- endcapture -%}
+
+{{ css | strip_newlines
+       | replace: '  ', '' 
+       | replace: ': ', ':'
+       | replace: ' {', '{'
+}}
+{% schema %}
+  {
+    "name": "Isotope Filter Product 2",
+    "settings": [
+        {
+          "type":  "radio",
+          "id":    "container_width",
+          "label": "Container Width",
+          "options": [
+            { "value": "container", "label": "Container" },
+            { "value": "fluid", "label": "Full Width" }
+          ],
+          "default":   "container"
+        },
+		{
+          "type": "select",
+          "id": "product_column",
+          "label": "Desktop",
+		  "options":[
+				{
+                    "label": "2 Column",
+                    "value": "6"
+                },
+                {
+                    "label": "3 Column",
+                    "value": "4"
+                },
+                {
+                    "label": "4 Column",
+                    "value": "3"
+                }
+			],
+			"default": "4"
+      	},
+		{
+          "type": "select",
+          "id": "product_column_md",
+          "label": "Tablet",
+		  "options":[
+				{
+                    "label": "2 Column",
+                    "value": "6"
+                },
+                {
+                    "label": "3 Column",
+                    "value": "4"
+                },
+                {
+                    "label": "4 Column",
+                    "value": "3"
+                }
+			],
+			"default": "4"
+      	},
+		{
+          "type": "select",
+          "id": "product_column_xs",
+          "label": "Large Mobile",
+		  "options":[
+				{
+                    "label": "1 Column",
+                    "value": "12"
+                },
+                {
+                    "label": "2 Column",
+                    "value": "6"
+                }
+			],
+			"default": "6"
+      	},
+		{
+          "type": "checkbox",
+          "id": "col_gutters",
+          "label": "Column Gutters",
+		  "default": true
+        }, 
+		{
+          "type": "header",
+          "content": "Filter All Select"
+        },
+		{
+          "type": "text",
+          "id": "data_filter_all",
+          "label": "Fillter All Select Label",
+		  "default": "All"
+        },
+		{
+          "type": "header",
+          "content": "Collection Button"
+        },
+		{
+          "type": "checkbox",
+          "id": "collection_btn",
+          "label": "Collection Button Enable",
+		  "default": true
+        }, 
+		{
+          "type": "text",
+          "id": "collection_btn_text",
+          "label": "Collection Button",
+		  "default": "Online Store"
+        },
+		{
+          "type": "url",
+          "id": "collection_btn_link",
+          "label": "Button Url"
+        },
+        {
+          "type": "text",
+          "id": "button_icon",
+          "label": "Button Icon Name",
+          "default": "plus",
+          "info": "Ionicons Icon [See Icon](https:\/\/ionicons.com)"
+        }
+    ],
+	"blocks":[
+	   {
+          "type": "tab_with_product",
+          "name": "Filter with product",
+          "settings": [
+			{
+              "type":  "radio",
+              "id":    "tab_title",
+              "label": "Container Width",
+              "options": [
+                { "value": "custom", "label": "Custom Collection Name" },
+                { "value": "default_tab", "label": "Default Collection Name" }
+              ],
+              "default":   "default_tab"
+            },
+			{
+              "type": "text",
+              "id": "custom_tab_name",
+              "label": "Custom Tab Name",
+              "default": "Tab Title"
+            },
+			{
+			  "type": "collection",
+			  "id": "tab_product_handle",
+			  "label": "Tab With Product"
+			},
+			{
+			"type": "header",
+            "content": "Product"
+        	},
+			{
+              "type": "range",
+              "id": "product_limit_handle",
+              "min": 1,
+              "max": 20,
+              "step": 1,
+              "label": "Limit",
+              "default": 3
+          	}
+          ]
+       },
+	    {
+          "type": "tab_font_style",
+          "name": "Filter Title Font Style",
+          "settings": [
+			{
+              "type": "header",
+              "content": "Desktop Font Size"
+           },
+			{
+			  "type": "range",
+			  "id": "tab_title_font_size_lg",
+			  "min": 10,
+			  "max": 100,
+			  "step": 1,
+			  "label": "Desktop Font Size",
+			  "unit": "px",
+			  "default": 14
+			},
+			{
+              "type": "header",
+              "content": "Tablet Font Size"
+            },
+			{
+			  "type": "range",
+			  "id": "tab_title_font_size_sm",
+			  "min": 10,
+			  "max": 100,
+			  "step": 1,
+			  "label": "Tablet Font Size",
+			  "unit": "px",
+			  "default": 14
+			},
+			{
+              "type": "header",
+              "content": "Mobile Font Size"
+            },
+			{
+			  "type": "range",
+			  "id": "tab_title_font_size_xs",
+			  "min": 10,
+			  "max": 100,
+			  "step": 1,
+			  "label": "Mobile Font Size",
+			  "unit": "px",
+			  "default": 14
+			}
+          ]
+       },
+	   {
+          "type": "product_content_color",
+          "name": "Product Content Color",
+		  "limit": 1,
+          "settings": [
+			{
+			  "type": "header",
+			  "content": "Product Title"
+			},
+			{
+			  "type": "color",
+			  "id": "product_title_color",
+			  "label": "Product Title Color",
+			  "default": "#333"
+			},
+			{
+			  "type": "header",
+			  "content": "Add Cart Title"
+			},
+			 {
+			  "type": "color",
+			  "id": "cart_action_button_color",
+			  "label": "Cart Action Button Color",
+			  "default": "#d3122a"
+			},
+		    {
+			  "type": "header",
+			  "content": "Product Price"
+			},
+			{
+			  "type": "color",
+			  "id": "product_currenct_price_color",
+			  "label": "Current Pirce Color",
+			  "default": "#333"
+			},
+		    {
+			  "type": "color",
+			  "id": "product_old_price_color",
+			  "label": "Old Pirce Color",
+			  "default": "#333"
+			}
+          ]
+       },
+	   {
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#ffffff"
+			}
+          ]
+       }
+	],
+	"presets": [
+		{
+		  "name": "Isotope Filter Product 2",
+		  "category": "3. collections",
+		  "blocks":[
+				{
+					"type": "tab_with_product"
+				},
+				{
+					"type": "tab_with_product"
+				}
+			]
+		}
+	]
+  }
+{% endschema %}
+

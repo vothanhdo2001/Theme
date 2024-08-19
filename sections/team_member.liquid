@@ -1,0 +1,500 @@
+{%- capture html -%}
+{% if section.settings.section_enable %}
+<div id="section-{{ section.id }}" class="mb-100 mt-100 mb-xs-80 mb-sm-80 mt-xs-80 mt-sm-80" data-section="BannerSection">
+  {% if section.settings.section_title_enable %}
+  <div class="section-title-container mb-60">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="section-title section-title--one text-center">
+            {% if section.settings.section_subtitle != blank %}
+            <p class="subtitle subtitle--deep">{{ section.settings.section_subtitle }}</p>
+            {% endif %}
+            {% if section.settings.section_title != blank %}
+            <h1>{{ section.settings.section_title }}</h1>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  <div class="team-member-area">
+    <div class="{% if section.settings.container_width == 'container' %} container {% elsif section.settings.container_width == 'fluid' %} container wide {% endif %}">
+      <div class="row">
+        {% for block in section.blocks %}
+        
+        {%- case block.type -%}
+        {% when 'team_member' %}
+        <div class="col-lg-{{ block.settings.lg_banner_col }} col-md-{{ block.settings.md_banner_col }} mb-30">
+          
+          {% if block.settings.team_type == "style1" %}
+          <div class="single-team-member text-center">
+            <div class="member-image">
+              {%- if block.settings.team_member_img != blank  -%}            
+              {%- render 'lazyload_image_src',
+                	  image: block.settings.team_member_img,
+                      size: '442x442' -%}
+            {%- else -%}
+            {%- render 'svg_placholder' with param: 'image', size: '200x200' -%}
+            {%- endif -%}
+              {% if block.settings.member_social_enable %}
+              <div class="social-inside">
+                <ul class="social-list">
+                  {% if block.settings.social_icon_1 != blank %}
+                  <li class="social-list__item"><a href="{{ block.settings.social_icon_1_link }}"><i class="fa fa-{{ block.settings.social_icon_1 }}"></i></a></li>
+                  {% endif %}
+                  {% if block.settings.social_icon_2 != blank %}
+                  <li class="social-list__item"><a href="{{ block.settings.social_icon_2_link }}"><i class="fa fa-{{ block.settings.social_icon_2 }}"></i></a></li>
+                  {% endif %}
+                  {% if block.settings.social_icon_3 != blank %}
+                  <li class="social-list__item"><a href="{{ block.settings.social_icon_3_link }}"><i class="fa fa-{{ block.settings.social_icon_3 }}"></i></a></li>
+                  {% endif %}
+                </ul>
+              </div>
+              {% endif %}
+              
+            </div>
+            <div class="member-caption">
+              {% if block.settings.member_title != blank %}
+              <h2 class="name">{{ block.settings.member_title }}</h2>
+              {% endif %}
+              {% if block.settings.member_designation != blank %}
+              <span class="subtext">{{ block.settings.member_designation }}</span>
+              {% endif %}
+            </div>
+          </div>
+          {% elsif block.settings.team_type == "style2" %}
+          <div class="single-team-member single-team-member--style-square">
+            <div class="member-image">
+              {%- if block.settings.team_member_img != blank  -%}            
+              {%- render 'lazyload_image_src',
+                	  image: block.settings.team_member_img,
+                      size: '442x442' -%}
+              {%- else -%}
+              {%- render 'svg_placholder' with param: 'image', size: '442x442' -%}
+              {%- endif -%}
+
+              
+              {% if block.settings.member_social_enable %}
+              <div class="social-inside">
+                <ul class="social-list">
+                  {% if block.settings.social_icon_1 != blank %}
+                  <li class="social-list__item"><a href="{{ block.settings.social_icon_1_link }}"><i class="fa fa-{{ block.settings.social_icon_1 }}"></i></a></li>
+                  {% endif %}
+                  {% if block.settings.social_icon_2 != blank %}
+                  <li class="social-list__item"><a href="{{ block.settings.social_icon_2_link }}"><i class="fa fa-{{ block.settings.social_icon_2 }}"></i></a></li>
+                  {% endif %}
+                  {% if block.settings.social_icon_3 != blank %}
+                  <li class="social-list__item"><a href="{{ block.settings.social_icon_3_link }}"><i class="fa fa-{{ block.settings.social_icon_3 }}"></i></a></li>
+                  {% endif %}
+                </ul>
+              </div>
+              {% endif %}
+            </div>
+            <div class="member-caption">
+               {% if block.settings.member_title != blank %}
+              <h2 class="name">{{ block.settings.member_title }}</h2>
+              {% endif %}
+               {% if block.settings.member_designation != blank %}
+              <span class="subtext">{{ block.settings.member_designation }}</span>
+              {% endif %}
+            </div>
+          </div>
+          {% endif %}
+          
+        </div>
+        {% endcase %}
+        {% endfor %}
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+
+{%- render 'section_typography' -%}
+
+{% schema %}
+  {
+    "name": "Team Member",
+    "settings": [
+		{
+             "type":  "radio",
+             "id":    "container_width",
+             "label": "Container Width",
+             "options": [
+               { "value": "container", "label": "Container" },
+               { "value": "fluid", "label": "Full Width" }
+             ],
+             "default":   "container"
+          },
+		{
+		  "type": "header",
+          "content": "Section Enable"
+        },
+		{
+          "type": "checkbox",
+          "id": "section_enable",
+          "label": "Section Enable",  
+          "default": true
+      	},
+		{
+		  "type": "header",
+          "content": "Section Heading"
+        },
+		{
+          "type": "checkbox",
+          "id": "section_title_enable",
+          "label": "Section Title Enable",  
+          "default": true
+      	},
+		{
+          "type": "text",
+          "id": "section_subtitle",
+          "label": "Section SubTitle",
+          "default": "Subtitle"
+      	},
+		{
+          "type": "text",
+          "id": "section_title",
+          "label": "Section Title",
+          "default": "Creative team"
+      	}
+	],
+	"blocks": [
+       {
+        "type": "team_member",
+        "name": "Add Team Member",
+        "settings": [
+			{
+                "type":  "radio",
+                "id":    "team_type",
+                "label": "Team Type",
+                "options": [
+                  { "value": "style1", "label": "Style 1" },
+                  { "value": "style2", "label": "Style 2" }
+                ],
+                "default":   "style1"
+            },
+			{
+              "type": "image_picker",
+              "id": "team_member_img",
+              "label": "Team Member",
+              "info": "Recommended Size: 442 x 442 px"
+            },
+			{
+              "type": "text",
+              "id": "member_title",
+              "label": "Member Title",
+              "default": "Name"
+            },
+			{
+              "type": "text",
+              "id": "member_designation",
+              "label": "Member Designation",
+              "default": "Designation"
+            },
+			{
+              "type": "header",
+              "content": "Social Icon"
+            },
+            {
+              "type": "checkbox",
+              "id": "member_social_enable",
+              "label": "Social Icon Enable",  
+              "default": true
+            },
+			 {
+                "type": "header",
+                "content": "Icon#1"
+              },
+              {
+                "type": "text",
+                "id": "social_icon_1",
+                "label": "Social Icon Name",
+                "default": "facebook",
+                "info": "Fontawesome Icon [See Icon](https:\/\/fontawesome.com\/v4.7.0\/icons\/)"
+              },
+              {
+                "type": "url",
+                "id": "social_icon_1_link",
+                "label": "Link",
+			    "default": "\/"
+              },
+			  {
+                "type": "header",
+                "content": "Icon#2"
+              },
+              {
+                "type": "text",
+                "id": "social_icon_2",
+                "label": "Social Icon Name",
+                "default": "twitter",
+                "info": "Fontawesome Icon [See Icon](https:\/\/fontawesome.com\/v4.7.0\/icons\/)"
+              },
+              {
+                "type": "url",
+                "id": "social_icon_2_link",
+                "label": "Link"
+              },
+			  {
+                "type": "header",
+                "content": "Icon#2"
+              },
+              {
+                "type": "text",
+                "id": "social_icon_3",
+                "label": "Social Icon Name",
+                "default": "linkedin",
+                "info": "Fontawesome Icon [See Icon](https:\/\/fontawesome.com\/v4.7.0\/icons\/)"
+              },
+              {
+                "type": "url",
+                "id": "social_icon_3_link",
+                "label": "Link"
+              },
+			  {
+                "type": "select",
+                "id": "lg_banner_col",
+                "label": "Desktop",
+                "options":[
+                      {
+                          "label": "Gird 6",
+                          "value": "6"
+                      },
+                      {
+                          "label": "Gird 4",
+                          "value": "4"
+                      },
+                      {
+                          "label": "Gird 3",
+                          "value": "3"
+                      }
+                  ],
+                  "default": "3"
+              },
+              {
+                "type": "select",
+                "id": "md_banner_col",
+                "label": "Tablet",
+                "options":[
+                      {
+                          "label": "Gird 6",
+                          "value": "6"
+                      },
+                      {
+                          "label": "Gird 4",
+                          "value": "4"
+                      },
+                      {
+                          "label": "Gird 3",
+                          "value": "3"
+                      }
+                  ],
+                  "default": "3"
+              }
+            
+          ]
+        },
+		{
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#ffffff"
+			}
+          ]
+       }
+	],
+	"presets": [
+		{
+		  "name": "Team Member",
+		  "category": "9.2 Theme Others",
+		  "blocks":[
+			  {
+                 "type": "team_member"
+              },
+		      {
+                 "type": "team_member"
+              },
+			  {
+                 "type": "team_member"
+              },
+			  {
+                 "type": "team_member"
+              }
+          ]
+		}
+	]
+  }
+{% endschema %}

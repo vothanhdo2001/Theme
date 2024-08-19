@@ -1,0 +1,956 @@
+{% capture html %}
+<div class="slider-area mb-50 mb-md-30 revolution-js" id="section-{{ section.id }}" data-section2="RevolutionSlider">
+  <div id="rev_slider_7_1_wrapper" class="rev_slider_wrapper fullwidthbanner-container" data-alias="homepage-1" data-source="gallery" style="margin:0px auto;background:transparent;padding:0px;margin-top:0px;margin-bottom:0px;">
+    <!-- START REVOLUTION SLIDER 5.4.7 fullwidth mode -->
+    <div id="rev_slider_7_1" class="rev_slider fullwidthabanner" style="display:none;" data-version="5.4.7">
+      <ul>	<!-- SLIDE  -->
+        
+        {% render 'revoultion_trending' %}
+        
+      </ul>
+      <div class="tp-bannertimer tp-bottom" style="visibility: hidden !important;"></div>	</div>
+  </div><!-- END REVOLUTION SLIDER -->
+</div>
+{% endcapture %}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+
+
+{%- capture css -%}
+<style>
+  
+  #section-{{ section.id }}{
+    margin-top: {{ section.settings.section_margin_top }}px !important;
+    margin-bottom: {{ section.settings.section_margin_bottom }}px !important;
+  }
+  
+  @media (min-width: 768px) and (max-width: 991px) {
+    #section-{{ section.id }}{
+      margin-top: {{ section.settings.section_margin_top_md }}px !important;
+      margin-bottom: {{ section.settings.section_margin_bottom_md }}px !important;
+    }
+  }
+  @media (max-width: 767px) {
+    #section-{{ section.id }}{
+      margin-top: {{ section.settings.section_margin_top_xs }}px !important;
+      margin-bottom: {{ section.settings.section_margin_bottom_xs }}px !important;
+    }
+  }
+  
+  
+  #section-{{ section.id }} #rev_slider_7_1_wrapper .metis.tparrows{
+    background: {{ section.settings.rev_arrow_bg_color}};
+  }; 
+
+  #section-{{ section.id }} #rev_slider_7_1_wrapper .metis.tparrows:before {
+    color: {{ section.setttings.arrow_text_color }};
+  }
+
+  
+</style>
+{%- endcapture -%}
+
+{{ css | strip_newlines
+       | replace: '  ', '' 
+       | replace: ': ', ':'
+       | replace: ' {', '{'
+}} 
+
+
+{% schema %}
+  {
+    "name": "Revolution Trending",
+    "settings": [
+        {
+          "type": "header",
+          "content": "Slider Arrow Style"
+        },
+        {
+          "type": "color",
+          "id": "rev_arrow_bg_color",
+          "label": "Arrow Bg Color",
+          "default": "#fff"	
+        },
+		{
+          "type": "color",
+          "id": "arrow_text_color",
+          "label": "Arrow Text Color",
+          "default": "#000"	
+        },
+		{
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 50
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 30
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 30
+			}
+
+	],
+	"blocks":[
+      {
+          "type": "slide1",
+          "name": "Slideshow 1",
+          "settings": [
+			  {
+                "type": "header",
+                "content": "Slide Title 1",
+				"info": "----------"
+              },
+			  {
+                "type": "textarea",
+                "id": "rev_slide1_title1",
+                "label": "Caption Title 1",
+				"default": "WOMEN COLLECTION"
+			  },
+              {
+                "type": "font_picker",
+                "label": "Slider font select",
+                "id": "slider_title1_font_handle",
+                "default": "work_sans_n6"
+              },
+			  {
+                "type": "header",
+                "content": "Slide Title 2",
+				"info": "----------"
+              },
+			  {
+                "type": "textarea",
+                "id": "rev_slide1_title2",
+                "label": "Caption Title 2",
+				"default": "Behind the desert <br> Gifts for girls"
+			  },
+			  {
+                "type": "font_picker",
+                "label": "Slider font select",
+                "id": "slider_title2_font_handle",
+                "default": "work_sans_n4"
+              },
+			  {
+                "type": "header",
+                "content": "Slide Button",
+				"info": "----------"
+              },
+			  {
+                  "type": "text",
+                  "id": "rev_slide1_btn",
+                  "label": "Caption Button",
+					"default": "SHOP NOW"
+                },
+                {
+                  "type": "url",
+                  "id": "rev_slide1_btn_link",
+                  "label": "Caption Button Url"
+                },
+				{
+                "type": "font_picker",
+                  "label": "Slider font select",
+                  "id": "slider_btn_font_handle",
+                  "default": "work_sans_n4"
+                },
+			  {
+                "type": "header",
+                "content": "Layer Image"
+              }, 
+              {
+                  "type": "image_picker",
+                  "id": "slide_img_layer1",
+                  "label": "Layer Img 1",
+                  "info": "Recommended Size: 745 x 632px"
+              },
+			  {
+                  "type": "image_picker",
+                  "id": "slide_img_layer2",
+                  "label": "Layer Img 2",
+                  "info": "Recommended Size: 286 x 292px"
+              },
+			  {
+                  "type": "image_picker",
+                  "id": "slide_img_layer3",
+                  "label": "Layer Img 3",
+                  "info": "Recommended Size: 555 x 426px"
+              },
+			  {
+                "type": "header",
+                "content": "Caption Image"
+              }, 
+			  {
+                "type": "checkbox",
+                "id": "slide1_caption_image_enable",
+                "label": "Caption  Image Enable",
+                "default": true
+              },
+			  {
+                  "type": "image_picker",
+                  "id": "slide_img_layer4",
+                  "label": "Layer Man Img 4",
+                  "info": "Recommended Size: 991 x 871px"
+              },
+			  {
+                  "type": "header",
+                  "content": "Slide Layer Background Color"
+              },
+              {
+                "type": "color",
+                "id": "slide_Layer_bg_color",
+                "label": "Single slide Layer Bg Color",
+                "default": "#faf7ee"	
+              },
+			  {
+                "type": "header",
+                "content": "Slider Caption style"
+              },
+			  {
+                "type": "color",
+                "id": "slide_title1_color",
+                "label": "Slide Title Color",
+                "default": "#333333"	
+              },
+			  {
+                "type": "color",
+                "id": "slide_title2_color",
+                "label": "Slide Title 2 Color",
+                "default": "#333333"	
+              },
+			  {
+                "type": "paragraph",
+                "content": "Slider Caption Button"
+              },
+			  {
+                "type": "color",
+                "id": "rev_slide_caption_btn_bg_color",
+                "label": "Button Bg Color",
+                "default": "#333333"	
+              },
+			  {
+                "type": "color",
+                "id": "rev_slide_caption_btn_color",
+                "label": "Caption Button Color",
+                "default": "#fff"	
+              },
+			  {
+                "type": "color",
+                "id": "rev_slide_caption_btn_hover_bg_color",
+                "label": "Button Hover Bg Color",
+                "default": "#fff"	
+              },
+			  {
+                "type": "color",
+                "id": "rev_slide_caption_btn_hover_border_bg_color",
+                "label": "Button Hover Border Color",
+                "default": "#333"	
+              },
+			  {
+                "type": "color",
+                "id": "rev_slide_caption_btn_hover_color",
+                "label": "Caption Button Hover Color",
+                "default": "#333"	
+              },
+			  {
+                "type": "header",
+                "content": "Slider Paginate"
+              },
+              {
+                "type": "color",
+                "id": "pgainate_active_color",
+                "label": "Paginate Active Color",
+                "default": "#333333"	
+              },
+			  {
+                "type": "color",
+                "id": "pgainate_prev_color",
+                "label": "Paginate Color",
+                "default": "#cccccc"	
+              },
+			  {
+                "type": "header",
+                "content": "Divider Color Options"
+              },
+			  {
+                "type": "color",
+                "id": "divider_color",
+                "label": "Divider Bg Color",
+                "default": "#000000"
+              },
+              {
+                "type": "range",
+                "id": "divider_color_opacity",
+                "min": 0,
+                "max": 1,
+                "step": 0.1,
+                "label": "Divider Color Opacity",
+                "default": 0.5
+              }
+          ]
+        },
+		{
+          "type": "slide2",
+          "name": "Slideshow 2",
+          "settings": [
+			  {
+                "type": "header",
+                "content": "Slide Title 1",
+				"info": "----------"
+              },
+			  {
+                "type": "textarea",
+                "id": "slide2_tlitle1",
+                "label": "Caption Title 1",
+				"default": "Men COLLECTION"
+			  },
+			  {
+                "type": "font_picker",
+                "label": "Slider font select",
+                "id": "slider_title1_font_handle",
+                "default": "work_sans_n6"
+              },
+			  {
+                "type": "header",
+                "content": "Slide Title 2",
+				"info": "----------"
+              },
+			  {
+                "type": "textarea",
+                "id": "slide2_tlitle2",
+                "label": "Caption Title 2",
+				"default": "Feeling relax day, <br> enjoy weekend"
+			  },
+			  {
+                "type": "font_picker",
+                "label": "Slider font select",
+                "id": "slider_title2_font_handle",
+                "default": "work_sans_n4"
+              },
+			  {
+                "type": "header",
+                "content": "Slide Button",
+				"info": "----------"
+              },
+			  {
+                  "type": "text",
+                  "id": "rev_slide2_btn",
+                  "label": "Caption Button",
+					"default": "SHOP NOW"
+                },
+                {
+                  "type": "url",
+                  "id": "rev_slide2_btn_link",
+                  "label": "Caption Button Url"
+                },
+				{
+                "type": "font_picker",
+                  "label": "Slider font select",
+                  "id": "slider_btn_font_handle",
+                  "default": "work_sans_n4"
+                },
+			  {
+                "type": "header",
+                "content": "Layer Shape Image"
+              },
+              {
+                  "type": "image_picker",
+                  "id": "slide2_img_layer1",
+                  "label": "Layer Img 1",
+                  "info": "Recommended Size: 799 x 689px"
+              },
+			  {
+                  "type": "image_picker",
+                  "id": "slide2_img_layer2",
+                  "label": "Layer Img 2",
+                  "info": "Recommended Size: 492 x 359px"
+              },
+			  {
+                "type": "header",
+                "content": "Caption Image"
+              }, 
+			  {
+                "type": "checkbox",
+                "id": "slide2_caption_image_enable",
+                "label": "Caption Image Enable",
+                "default": true
+              },
+			  {
+                  "type": "image_picker",
+                  "id": "slide2_img_layer3",
+                  "label": "Layer Img 3",
+                  "info": "Recommended Size: 822 x 900px"
+              },
+			  {
+                  "type": "header",
+                  "content": "Slide Layer Background Color"
+              },
+              {
+                "type": "color",
+                "id": "slide_Layer_bg_color",
+                "label": "Single slide Layer Bg Color",
+                "default": "#ebf4f2"	
+              },
+			  {
+                "type": "header",
+                "content": "Slider Caption style"
+              },
+			  {
+                "type": "color",
+                "id": "slide_title1_color",
+                "label": "Slide Title Color",
+                "default": "#333333"	
+              },
+			  {
+                "type": "color",
+                "id": "slide_title2_color",
+                "label": "Slide Title 2 Color",
+                "default": "#333333"	
+              },
+			  {
+                "type": "paragraph",
+                "content": "Slider Caption Button"
+              },
+			  {
+                "type": "color",
+                "id": "rev_slide_caption_btn_bg_color",
+                "label": "Button Bg Color",
+                "default": "#333333"	
+              },
+			  {
+                "type": "color",
+                "id": "rev_slide_caption_btn_color",
+                "label": "Caption Button Color",
+                "default": "#fff"	
+              },
+			  {
+                "type": "color",
+                "id": "rev_slide_caption_btn_hover_bg_color",
+                "label": "Button Hover Bg Color",
+                "default": "#fff"	
+              },
+			  {
+                "type": "color",
+                "id": "rev_slide_caption_btn_hover_border_bg_color",
+                "label": "Button Hover Border Color",
+                "default": "#333"	
+              },
+			  {
+                "type": "color",
+                "id": "rev_slide_caption_btn_hover_color",
+                "label": "Caption Button Hover Color",
+                "default": "#333"	
+              },
+			  {
+                "type": "header",
+                "content": "Slider Paginate"
+              },
+              {
+                "type": "color",
+                "id": "pgainate_active_color",
+                "label": "Paginate Active Color",
+                "default": "#333333"	
+              },
+			  {
+                "type": "color",
+                "id": "pgainate_prev_color",
+                "label": "Paginate Color",
+                "default": "#cccccc"	
+              },
+			  {
+                "type": "header",
+                "content": "Divider Color Options"
+              },
+			  {
+                "type": "color",
+                "id": "divider_color",
+                "label": "Divider Bg Color",
+                "default": "#000000"
+              },
+              {
+                "type": "range",
+                "id": "divider_color_opacity",
+                "min": 0,
+                "max": 1,
+                "step": 0.1,
+                "label": "Divider Color Opacity",
+                "default": 0.5
+              }
+			  
+			  
+          ]
+        },
+		
+		{
+          "type": "slide3",
+          "name": "Slideshow 3",
+          "settings": [
+			  {
+                "type": "header",
+                "content": "Slide Title 1",
+				"info": "----------"
+              },
+			  {
+                "type": "textarea",
+                "id": "slide3_title1",
+                "label": "Caption Title 1",
+				"default": "NEW ARRIVALS"
+			  },
+			  {
+                "type": "font_picker",
+                "label": "Slider font select",
+                "id": "slider_title1_font_handle",
+                "default": "work_sans_n6"
+              },
+			  {
+                "type": "header",
+                "content": "Slide Title 2",
+				"info": "----------"
+              },
+			  {
+                "type": "textarea",
+                "id": "slide3_title2",
+                "label": "Caption Title 2",
+				"default": "Shoes collection <br> ss-2018"
+			  },
+			  {
+                "type": "font_picker",
+                "label": "Slider font select",
+                "id": "slider_title2_font_handle",
+                "default": "work_sans_n4"
+              },
+			  {
+                "type": "header",
+                "content": "Slide Button",
+				"info": "----------"
+              },
+			  {
+                  "type": "text",
+                  "id": "rev_slide3_btn",
+                  "label": "Caption Button",
+					"default": "SHOP NOW"
+                },
+                {
+                  "type": "url",
+                  "id": "rev_slide3_btn_link",
+                  "label": "Caption Button Url"
+                },
+			   {
+                "type": "font_picker",
+                  "label": "Slider font select",
+                  "id": "slider_btn_font_handle",
+                  "default": "work_sans_n4"
+                },
+			  {
+                "type": "header",
+                "content": "Layer Image"
+              },
+			  {
+                "type": "checkbox",
+                "id": "slide3_caption_image_enable",
+                "label": "Caption Image Enable",
+                "default": true
+              },
+              {
+                  "type": "image_picker",
+                  "id": "slide3_img_layer1",
+                  "label": "Layer Img 1",
+                  "info": "Recommended Size: 794 x 664px"
+              },
+			  {
+                  "type": "header",
+                  "content": "Slide Layer Background Color"
+              },
+              {
+                "type": "color",
+                "id": "slide_Layer_bg_color",
+                "label": "Single slide Layer Bg Color",
+                "default": "#f4ede7"	
+              },
+			  {
+                "type": "header",
+                "content": "Slider Caption style"
+              },
+			  {
+                "type": "color",
+                "id": "slide_title1_color",
+                "label": "Slide Title Color",
+                "default": "#333333"	
+              },
+			  {
+                "type": "color",
+                "id": "slide_title2_color",
+                "label": "Slide Title 2 Color",
+                "default": "#333333"	
+              },
+			  {
+                "type": "paragraph",
+                "content": "Slider Caption Button"
+              },
+			  {
+                "type": "color",
+                "id": "rev_slide_caption_btn_bg_color",
+                "label": "Button Bg Color",
+                "default": "#333333"	
+              },
+			  {
+                "type": "color",
+                "id": "rev_slide_caption_btn_color",
+                "label": "Caption Button Color",
+                "default": "#fff"	
+              },
+			  {
+                "type": "color",
+                "id": "rev_slide_caption_btn_hover_bg_color",
+                "label": "Button Hover Bg Color",
+                "default": "#fff"	
+              },
+			  {
+                "type": "color",
+                "id": "rev_slide_caption_btn_hover_border_bg_color",
+                "label": "Button Hover Border Color",
+                "default": "#333"	
+              },
+			  {
+                "type": "color",
+                "id": "rev_slide_caption_btn_hover_color",
+                "label": "Caption Button Hover Color",
+                "default": "#333"	
+              },
+			  {
+                "type": "header",
+                "content": "Slider Paginate"
+              },
+              {
+                "type": "color",
+                "id": "pgainate_active_color",
+                "label": "Paginate Active Color",
+                "default": "#333333"	
+              },
+			  {
+                "type": "color",
+                "id": "pgainate_prev_color",
+                "label": "Paginate Color",
+                "default": "#cccccc"	
+              },
+			  {
+                "type": "header",
+                "content": "Divider Color Options"
+              },
+			  {
+                "type": "color",
+                "id": "divider_color",
+                "label": "Divider Bg Color",
+                "default": "#000000"
+              },
+              {
+                "type": "range",
+                "id": "divider_color_opacity",
+                "min": 0,
+                "max": 1,
+                "step": 0.1,
+                "label": "Divider Color Opacity",
+                "default": 0.5
+              }
+			  
+			  
+          ]
+        },
+		{
+          "type": "video_slide",
+          "name": "Video Slide",
+          "settings": [
+			  {
+                "type": "header",
+                "content": "Youtube Video Id"
+              },
+              {
+                  "type": "text",
+                  "id": "yotube_video_id",
+                  "label": "Youtube Video Id",
+				   "default": "BVMsRltq2yU",
+                  "info": "Please Put Here Youtube Video Id"
+              },
+			  {
+                "type": "header",
+                "content": "Video Thumbnail"
+              },
+              {
+                  "type": "image_picker",
+                  "id": "video_thumbnail",
+                  "label": "Video Thumbnail",
+                  "info": "Recommended Size: 1920 x 790px"
+              },
+			  {
+                  "type": "header",
+                  "content": "Video Mute"
+              },
+			  {
+                 "type":  "select",
+                 "id":    "video_mute",
+                 "label": "Video Sound Off/On",
+                 "options": [
+                   { "value": "on", "label": "Off" },
+                   { "value": "off", "label": "On" }
+                 ],
+                 "default":   "off"
+              },
+			  {
+                  "type": "header",
+                  "content": "Video Volume"
+              },
+			  {
+                "type": "range",
+                "id": "video_volume",
+                "min": 0,
+                "max": 100,
+                "step": 1,
+                "label": "Video Sound Volume",
+                "default": 50
+              },
+			  {
+                  "type": "header",
+                  "content": "Video Loop"
+              },
+			  {
+                 "type":  "select",
+                 "id":    "video_loop",
+                 "label": "Video Loop Off/On",
+                 "options": [
+                   { "value": "on", "label": "Off" },
+                   { "value": "off", "label": "On" }
+                 ],
+                 "default":   "off"
+              },
+			  {
+                "type": "header",
+                "content": "Slide Caption"
+              },
+			  {
+                "type": "checkbox",
+                "id": "video_content_enable",
+                "label": "Video Content Enable",  
+                "default": true
+              },
+			  {
+                "type": "header",
+                "content": "Slide Title 1",
+				"info": "----------"
+              },
+			  {
+                "type": "textarea",
+                "id": "rev_slide1_title1",
+                "label": "Caption Title 1",
+				"default": "WOMEN COLLECTION"
+			  },
+			  {
+                "type": "font_picker",
+                "label": "Slider font select",
+                "id": "slider_title1_font_handle",
+                "default": "work_sans_n6"
+              },
+			  {
+                "type": "header",
+                "content": "Slide Title 2",
+				"info": "----------"
+              },
+			  {
+                "type": "textarea",
+                "id": "rev_slide1_title2",
+                "label": "Caption Title 2",
+				"default": "Behind the desert <br> Gifts for girls"
+			  },
+			  {
+                "type": "font_picker",
+                "label": "Slider font select",
+                "id": "slider_title2_font_handle",
+                "default": "work_sans_n4"
+              },
+			  {
+                "type": "header",
+                "content": "Slide Button",
+				"info": "----------"
+              },
+			  {
+                  "type": "text",
+                  "id": "rev_slide1_btn",
+                  "label": "Caption Button",
+					"default": "SHOP NOW"
+                },
+                {
+                  "type": "url",
+                  "id": "rev_slide1_btn_link",
+                  "label": "Caption Button Url"
+                },
+				{
+                "type": "font_picker",
+                  "label": "Slider font select",
+                  "id": "slider_btn_font_handle",
+                  "default": "work_sans_n4"
+                },
+			     {
+                "type": "header",
+                "content": "Slider Caption style"
+              },
+			  {
+                "type": "color",
+                "id": "slide_title1_color",
+                "label": "Slide Title Color",
+                "default": "#333333"	
+              },
+			  {
+                "type": "color",
+                "id": "slide_title2_color",
+                "label": "Slide Title 2 Color",
+                "default": "#333333"	
+              },
+			  {
+                "type": "paragraph",
+                "content": "Slider Caption Button"
+              },
+			  {
+                "type": "color",
+                "id": "rev_slide_caption_btn_bg_color",
+                "label": "Button Bg Color",
+                "default": "#333333"	
+              },
+			  {
+                "type": "color",
+                "id": "rev_slide_caption_btn_color",
+                "label": "Caption Button Color",
+                "default": "#fff"	
+              },
+			  {
+                "type": "color",
+                "id": "rev_slide_caption_btn_hover_bg_color",
+                "label": "Button Hover Bg Color",
+                "default": "#fff"	
+              },
+			  {
+                "type": "color",
+                "id": "rev_slide_caption_btn_hover_border_bg_color",
+                "label": "Button Hover Border Color",
+                "default": "#333"	
+              },
+			  {
+                "type": "color",
+                "id": "rev_slide_caption_btn_hover_color",
+                "label": "Caption Button Hover Color",
+                "default": "#333"	
+              },
+			  {
+                "type": "header",
+                "content": "Slider Paginate"
+              },
+              {
+                "type": "color",
+                "id": "pgainate_active_color",
+                "label": "Paginate Active Color",
+                "default": "#333333"	
+              },
+			  {
+                "type": "color",
+                "id": "pgainate_prev_color",
+                "label": "Paginate Color",
+                "default": "#cccccc"	
+              },
+			  {
+                "type": "header",
+                "content": "Divider Color Options"
+              },
+			  {
+                "type": "color",
+                "id": "divider_color",
+                "label": "Divider Bg Color",
+                "default": "#000000"
+              },
+              {
+                "type": "range",
+                "id": "divider_color_opacity",
+                "min": 0,
+                "max": 1,
+                "step": 0.1,
+                "label": "Divider Color Opacity",
+                "default": 0.5
+              }
+			  
+          ]
+        }
+     ],
+	"presets": [
+        {
+          "category": "1. Revolution Slider",
+          "name": "1. Slider - Trending",
+		  "blocks":[
+				{
+					"type": "slide1"
+				},
+				{
+					"type": "slide2"
+				},
+				{
+					"type": "slide3"
+				}
+			]
+           
+        }
+     ]
+  }
+{% endschema %}

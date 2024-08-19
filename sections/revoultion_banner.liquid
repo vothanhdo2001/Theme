@@ -1,0 +1,324 @@
+{%- capture html -%}
+{% if section.settings.revoultion_banner == "style1" %}
+{% render 'rev_banner_1' %}
+{% elsif section.settings.revoultion_banner == "style2" %}
+{% render 'rev_banner_2' %}
+{% endif %}
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+
+{%- render 'section_typography' -%}
+{% schema %}
+  {
+    "name": "Revoultion Banner",
+    "settings": [
+		{
+          "type":  "radio",
+          "id":    "revoultion_banner",
+          "label": "Revoultion Banner Type",
+          "options": [
+            { "value": "style1", "label": "Style 1" },
+            { "value": "style2", "label": "Style 2" }
+          ],
+          "default":   "style1"
+        }
+	],
+		"blocks": [
+		{
+        "type": "rev_banner",
+        "name": "Rvoultion banner",
+		"limit": 1,
+        "settings": [
+			  
+              {
+                "type": "image_picker",
+                "id": "rev_banner_img",
+                "label": "Layer Banner Iamge",
+                "info": "Recommended Size: 788 x 402 px"
+              },
+			  {
+                "type": "header",
+                "content": "Banner Content"
+              },
+			  {
+                "type": "text",
+                "id": "rev_banner_subtitle",
+                "label": "Banner SubTitle",
+                "default": "Featured product"
+              },
+			  {
+                "type": "textarea",
+                "id": "rev_banner_title",
+                "label": "Banner bTitle",
+                "default": "Wood Cloth Sofa"
+              },
+			  {
+                "type": "textarea",
+                "id": "rev_banner_desc",
+                "label": "Banner Desription",
+                "default": "Lorem ipsum dolor sit amet, consectetur cing elit. Suspe ndisse"
+              },
+			  {
+                "type": "text",
+                "id": "rev_banner_btn",
+                "label": "Section Btn Text",
+                "default": "Only $39"
+              },
+              {
+                "type": "url",
+                "id": "rev_banner_btn_link",
+                "label": "Section Button Link"
+              },
+			  {
+                "type": "header",
+                "content": "Banner Rotate Text"
+              },
+			  {
+                "type": "text",
+                "id": "banner_rotate_text",
+                "label": "Banner Rotate Text",
+                "default": "SS-18"
+              },
+              {
+                "type": "header",
+                "content": "Background Content"
+              },
+			  {
+                "type": "text",
+                "id": "bacground_fixed_text",
+                "label": "Background fixed text",
+                "default": "Minimal"
+              },
+              {
+                "type": "color",
+                "id": "background_color",
+                "label": "Background Color",
+                "default": "#ecf4f6"	
+              },
+			  {
+                "type": "header",
+                "content": "Banner Badge"
+              },
+			  {
+                  "type": "checkbox",
+                  "id": "banner_badge_enable",
+                  "label": "Banner Badge Enable",
+                  "default": true
+              },
+			  {
+                "type": "text",
+                "id": "badge_price",
+                "label": "Badge Price",
+                "default": "$39"
+              },
+			  {
+                "type": "text",
+                "id": "badge_label",
+                "label": "Badge Price",
+                "default": "only"
+              },
+			  {
+                "type": "color",
+                "id": "badge_bg_color",
+                "label": "Badge Bg Color",
+                "default": "#333"	
+              },
+			  {
+                "type": "color",
+                "id": "badge_content_color",
+                "label": "Badge Content Color",
+                "default": "#fff"	
+              }
+			
+          ]
+        },
+		{
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#ffffff"
+			}
+          ]
+       }
+	],
+	"presets": [
+		{
+		  "name": "Revoultion Banner",
+		  "category": "4. Banner",
+		  "blocks": [
+            {
+            	"type": "rev_banner"
+            }
+          ]
+		}
+	]
+  }
+{% endschema %}

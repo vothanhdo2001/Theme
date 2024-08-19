@@ -1,0 +1,181 @@
+{%- assign on_sale = false -%}
+{%- if product.compare_at_price > product.price -%}
+{%- assign on_sale = true -%}
+{%- endif -%}
+
+{%- assign sold_out = true -%}
+{%- if product.available -%}
+{%- assign sold_out = false -%}
+{%- endif -%}
+
+{%- assign variant = product.selected_or_first_available_variant -%}
+
+{%- if product.available -%}
+{%- assign func = "Shopify.addItem(" | append: variant.id | append: ", 1)" -%}
+{%- endif -%} 
+
+
+{%- comment -%} "{{ variant.id }}" this Class is needed for Ajax popup cart {%- endcomment -%}
+
+<div class="single-product single-product--wearablehome {{ variant.id }} {% if settings.countdown_timer_enable == true and product.description contains '[countdown]' %} countdownprod {% endif %} {% if sold_out %} sold_out_prod {% endif %} ">
+  <div class="single-product__image">
+    {%- render 'product-image-src' with product as product -%} 
+    <div class="single-product__floating-badges">
+      {%- render 'product-badge', product: product, sold_out: sold_out,on_sale: on_sale -%}
+    </div>
+    {%- if settings.product_cart_action_enable -%}
+    <div class="single-product__floating-cart">
+      <span class="title">
+        <div class="product-cart-action">
+          {% if product.available %}
+          {% assign affiliate_link_first = product.description | split:'[/affiliate_link]' | first %}
+          {% assign affiliate_link_final = affiliate_link_first | split:'[affiliate_link]' | last %}
+
+          {%- if product.description contains '[affiliate_link]' -%}
+          <a title="{{ settings.affiliate_cart_button_title }}" href="{{ affiliate_link_final }}" class="">
+            <span class="cart-text">{{ settings.affiliate_cart_button_title }}</span>
+          </a>
+          {%- else -%}
+          {%- if settings.product_cart_type == 'ajax_spin_cart' -%}
+          {% if product.variants.size > 1  %}
+          <a href="{{ product.url | within: collection }}" class="">
+            <span>
+              <span class="cart-title">{{ settings.select_options }}</span>
+            </span>
+          </a>
+          {% else %}
+          <a href="javascript:void(0);" onclick="{{ func }}; return false;" class="ajax-spin-cart">
+            <span>
+              {% if variant.inventory_policy == "continue" and variant.inventory_quantity <= 0 %}
+              <span class="cart-title">{{ settings.preorder_button_title }}</span>
+              {%- else -%}
+              <span class="cart-title">{{ settings.cart_button_title }}</span>
+              {%- endif -%}
+              <span class="cart-loading">{{ settings.wait_title }}</span>
+              <span class="cart-added">{{ settings.added_title }}</span>
+              <span class="cart-unavailable">{{ settings.unavailable_title }}</span>
+            </span>
+          </a>
+          {% endif %}
+
+          {%- elsif settings.product_cart_type == 'ajax_popup_cart' -%}
+          {% if product.variants.size > 1 %}
+          <a href="{{ product.url | within: collection }}" class="">
+            <span>
+              <span class="cart-title">{{ settings.select_options }}</span>
+            </span>
+          </a>
+          {% else %}
+          <a href="javascript:void(0);" onclick="{{ func }}; return false;" class="">
+            <span>
+              {% if variant.inventory_policy == "continue" and variant.inventory_quantity <= 0 %}
+              <span class="cart-title">{{ settings.preorder_button_title }}</span>
+              {%- else -%}
+              <span class="cart-title">{{ settings.cart_button_title }}</span>
+              {% endif %}
+            </span>
+          </a>
+          {% endif %}
+
+          {%- elsif settings.product_cart_type == 'without_ajax_cart' -%}
+          {% if product.variants.size > 1 %}
+          <a href="{{ product.url | within: collection }}">
+            <span>
+              <span class="cart-title">{{ settings.select_options }}</span>
+            </span>
+          </a>
+          {% else %}
+          <form action="/cart/add" method="post" enctype="multipart/form-data">
+            <select name="id" style="display:none;">
+              {% for variant in product.variants %}
+              <option value="{{ variant.id }}">{{ variant.title | escape }} - {{ variant.price | money }}</option>
+              {% endfor %}
+            </select>
+            <button type="submit" class="">
+              <span>
+                {% if variant.inventory_policy == "continue" and variant.inventory_quantity <= 0 %}
+                <span class="cart-title">{{ settings.preorder_button_title }}</span>
+                {%- else -%}
+                <span class="cart-title">{{ settings.cart_button_title }}</span>
+                {%- endif -%}
+              </span>
+            </button>
+          </form>
+          {% endif %}
+          {%- endif -%}
+          {%- endif -%}
+          {%- else -%}
+          <button class="cart-disable">
+            <span class="cart-text">{{ settings.soldout_button_title }}</span>
+          </button>
+          {%- endif -%}
+        </div>
+      </span>
+    </div>
+    {%- endif -%}
+
+    <div class="single-product__floating-icons">
+
+      {%- if settings.product_wishlist_enable -%}
+      <span class="wishlist_inner">
+        {%- render 'wishlist-button' with product as product -%}
+      </span>
+      {%- endif -%}
+
+      {%- if settings.product_compare_enable -%}
+      <span class="compare"><a  href="#" data-tippy-content="{{ settings.compare_product_title }}" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme = "sharpborder" data-tippy-placement = "left"  class="compare" data-pid="{{ product.handle  }}"><i class="ion-ios-shuffle-strong"></i></a> </span>
+      {%- endif -%}
+
+
+      {%- unless product.description contains '[affiliate_link]' -%}
+      {%- if settings.product_quickview_enalbe -%}
+      <span class="quickview"><a data-toggle="modal" data-target="#quickViewModal" href="javascript:void(0);" 
+                                 onclick="quiqview('{{ product.handle | handleize }}')"  data-tippy-content="{{ settings.product_quick_view_title }}" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme = "sharpborder" data-tippy-placement = "left"  ><i class="ion-ios-search-strong"></i></a></span>
+      {%- endif -%}
+      {%- endunless -%}
+
+    </div>
+
+    {% if product.description contains '[countdown]' and settings.countdown_timer_enable %}
+    {% assign count_down_first = product.description | split:'[/countdown]' | first %}
+    {% assign count_down_final = count_down_first | split:'[countdown]' | last %}
+    <div class="product_timer">
+      <div data-countdown="{{ count_down_final }}"></div> 
+    </div>
+    {% endif %}
+  </div>
+  {% if product.variants.size > 1 and settings.product_variants_show %}
+  <div class="single-product__variations">
+    {% render 'product-size-variant' with product as product %}
+    {% render 'product-color-variant' with product as product %}
+  </div>
+  {% endif %}
+
+  <div class="single-product__content">
+    <div class="title">
+      <h3 class="popup_cart_title">  <a href="{{ product.url | within: collection }}">{{ product.title }}</a></h3>
+    </div>
+    <div class="price">
+      <span id="product_current_price" class="discounted-price">{{ product.variants.first.price | money }}</span>
+      {% if product.variants.first.compare_at_price > product.variants.first.price %}
+      <span class="main-price discounted ">{{ product.variants.first.compare_at_price | money }}</span>
+      {% endif %}
+      <small class="unit_price_box caption {% if available == false or product.selected_or_first_available_variant.unit_price_measurement == nil %} hidden{% endif %}">
+        <dd>
+          <span id="product__unit_price">{{- product.selected_or_first_available_variant.unit_price | money -}}</span>
+          <span aria-hidden="true">/</span>
+          <span id="product__unit_price_value">
+            {%- if product.selected_or_first_available_variant.unit_price_measurement.reference_value != 1 -%}
+            {{- product.selected_or_first_available_variant.unit_price_measurement.reference_value -}}
+            {%- endif -%}
+
+            {{ product.selected_or_first_available_variant.unit_price_measurement.reference_unit }}
+          </span>
+        </dd>
+      </small>
+    </div>
+  </div>
+
+
+  <!--=======  End of single product content  =======-->
+</div>

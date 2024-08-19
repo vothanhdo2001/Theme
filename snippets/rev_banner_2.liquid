@@ -1,0 +1,267 @@
+<div class="cabinet-revslider-area revolution-js mt-50 mt-md-30 mt-sm-30 mb-100 mb-md-80 mb-sm-80" data-section2="RevolutionSliderBanner">
+  <div class="container wide">
+    <div class="row">
+      <div class="col-lg-12">
+        <div id="rev_slider_6_1_wrapper" class="rev_slider_wrapper fullwidthbanner-container" data-alias="banner-cabinet" data-source="gallery" style="margin:0px auto;background:transparent;padding:0px;margin-top:0px;margin-bottom:0px;">
+          <!-- START REVOLUTION SLIDER 5.4.7 fullwidth mode -->
+          <div id="rev_slider_6_1" class="rev_slider fullwidthabanner" style="display:none;" data-version="5.4.7">
+            <ul>	<!-- SLIDE  -->
+              {% for block in section.blocks %}
+              {% assign img_loader = 'dummy.png' | asset_img_url: 'master' %}
+              {% assign img_lazy_loader = 'transparent.png' | asset_img_url: 'master' %}
+              {%- case block.type -%}
+              {% when 'rev_banner' %}
+              <li data-index="rs-14" data-transition="fade" data-slotamount="default" data-hideafterloop="0" data-hideslideonmobile="off"  data-easein="default" data-easeout="default" data-masterspeed="470"  data-rotate="0"  data-saveperformance="off"  data-title="Slide" data-param1="" data-param2="" data-param3="" data-param4="" data-param5="" data-param6="" data-param7="" data-param8="" data-param9="" data-param10="" data-description="">
+                <!-- MAIN IMAGE -->
+                <img src="{{ img_lazy_loader }}" data-bgcolor='#ffffff' style='background:#ffffff' alt=""  data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" data-bgparallax="off" class="rev-slidebg" data-no-retina>
+                <!-- LAYERS -->
+
+                <!-- LAYER NR. 1 -->
+                <div class="tp-caption tp-shape tp-shapewrapper  tp-resizeme" 
+                     id="slide-14-layer-1" 
+                     data-x="['right','right','right','right']" data-hoffset="['681','0','0','11']" 
+                     data-y="['top','top','top','top']" data-voffset="['82','70','70','209']" 
+                     data-width="['560','560','560','320']"
+                     data-height="['560','560','560','320']"
+                     data-whitespace="nowrap"
+
+                     data-type="shape" 
+                     data-responsive_offset="on" 
+
+                     data-frames='[{"delay":410,"speed":1000,"frame":"0","from":"x:50px;opacity:0;","to":"o:1;","ease":"Power2.easeOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+                     data-textAlign="['inherit','inherit','inherit','inherit']"
+                     data-paddingtop="[0,0,0,0]"
+                     data-paddingright="[0,0,0,0]"
+                     data-paddingbottom="[0,0,0,0]"
+                     data-paddingleft="[0,0,0,0]"
+
+                     style="z-index: 5;background-color: {{ block.settings.background_color }};border-radius:280px 280px 280px 280px;">
+                  <div class="rs-looped rs-pulse"  data-easing="" data-speed="5" data-zoomstart="0.8" data-zoomend="1.1"> </div></div>
+
+                <!-- LAYER NR. 2 -->
+                <div class="tp-caption   tp-resizeme rs-parallaxlevel-1" 
+                     id="slide-14-layer-4" 
+                     data-x="['left','left','left','left']" data-hoffset="['836','132','84','33']" 
+                     data-y="['top','top','top','top']" data-voffset="['351','414','464','469']" 
+                     data-width="none"
+                     data-height="none"
+                     data-whitespace="nowrap"
+
+                     data-type="image" 
+                     data-responsive_offset="on" 
+
+                     data-frames='[{"delay":610,"speed":2170,"frame":"0","from":"z:0;rX:0;rY:0;rZ:0;sX:0.9;sY:0.9;skX:0;skY:0;opacity:0;","to":"o:1;","ease":"Power2.easeOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+                     data-textAlign="['inherit','inherit','inherit','inherit']"
+                     data-paddingtop="[0,0,0,0]"
+                     data-paddingright="[0,0,0,0]"
+                     data-paddingbottom="[0,0,0,0]"
+                     data-paddingleft="[0,0,0,0]"
+
+                     style="z-index: 6;"><img src="{% if block.settings.rev_banner_img != blank %}{{ block.settings.rev_banner_img | img_url: '788x402'  }} {% else %}  https://via.placeholder.com/788x402 {% endif %}" alt="" data-ww="['788auto','762px','593px','422px']" data-hh="['402px','325px','253px','180px']" data-no-retina> </div>
+
+                {% if block.settings.banner_rotate_text != blank %}
+                <!-- LAYER NR. 3 -->
+                <div class="tp-caption   tp-resizeme" 
+                     id="slide-14-layer-5" 
+                     data-x="['right','right','right','right']" data-hoffset="['480','-41','-32','613']" 
+                     data-y="['top','top','top','top']" data-voffset="['313','322','302','297']" 
+                     data-fontsize="['77','70','70','130']"
+                     data-lineheight="['80','80','80','130']"
+                     data-fontweight="['700','600','600','600']"
+                     data-color="['rgb(51,51,51)','rgb(51,51,51)','rgb(51,51,51)','rgb(255,255,255)']"
+                     data-width="none"
+                     data-height="none"
+                     data-whitespace="nowrap"
+
+                     data-type="text" 
+                     data-responsive_offset="on" 
+
+                     data-frames='[{"delay":410,"speed":2020,"frame":"0","from":"x:50px;opacity:0;","to":"o:1;rZ:90;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+                     data-textAlign="['inherit','inherit','inherit','inherit']"
+                     data-paddingtop="[0,0,0,0]"
+                     data-paddingright="[0,0,0,0]"
+                     data-paddingbottom="[0,0,0,0]"
+                     data-paddingleft="[0,0,0,0]"
+
+                     style="z-index: 7; white-space: nowrap; font-size: 77px; line-height: 80px; font-weight: 700; color: #333333; letter-spacing: 0px;font-family:Work Sans;">{{ block.settings.banner_rotate_text }}</div>
+				{% endif %}
+                
+                
+                <!-- LAYER NR. 4 -->
+                {% if block.settings.banner_badge_enable %}  
+                
+                <div class="tp-caption tp-shape tp-shapewrapper  tp-resizeme rs-parallaxlevel-1" 
+                     id="slide-14-layer-6" 
+                     data-x="['left','left','left','left']" data-hoffset="['1583','794','549','330']" 
+                     data-y="['top','top','top','top']" data-voffset="['315','406','407','394']" 
+                     data-width="100"
+                     data-height="100"
+                     data-whitespace="nowrap"
+
+                     data-type="shape" 
+                     data-responsive_offset="on" 
+
+                     data-frames='[{"delay":800,"speed":1000,"frame":"0","from":"z:0;rX:0;rY:0;rZ:0;sX:0.9;sY:0.9;skX:0;skY:0;opacity:0;","to":"o:1;","ease":"Power2.easeOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+                     data-textAlign="['inherit','inherit','inherit','inherit']"
+                     data-paddingtop="[0,0,0,0]"
+                     data-paddingright="[0,0,0,0]"
+                     data-paddingbottom="[0,0,0,0]"
+                     data-paddingleft="[0,0,0,0]"
+
+                     style="z-index: 8;background-color: {{ block.settings.badge_bg_color }};border-radius:50px 50px 50px 50px;"> </div>
+
+                <!-- LAYER NR. 5 -->
+                <div class="tp-caption   tp-resizeme rs-parallaxlevel-1" 
+                     id="slide-14-layer-7" 
+                     data-x="['right','right','right','right']" data-hoffset="['263','156','156','76']" 
+                     data-y="['middle','middle','middle','middle']" data-voffset="['-49','41','41','29']" 
+                     data-width="none"
+                     data-height="none"
+                     data-whitespace="nowrap"
+
+                     data-type="text" 
+                     data-responsive_offset="on" 
+
+                     data-frames='[{"delay":970,"speed":1400,"frame":"0","from":"y:-50px;opacity:0;","to":"o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+                     data-textAlign="['inherit','inherit','inherit','inherit']"
+                     data-paddingtop="[0,0,0,0]"
+                     data-paddingright="[0,0,0,0]"
+                     data-paddingbottom="[0,0,0,0]"
+                     data-paddingleft="[0,0,0,0]"
+
+                     style="z-index: 9; white-space: nowrap; font-size: 16px; line-height: 25px; font-weight: 400; color: {{ block.settings.badge_content_color }}; letter-spacing: 1px;font-family:Work Sans;">{{ block.settings.badge_label }} </div>
+
+                <!-- LAYER NR. 6 -->
+                <div class="tp-caption   tp-resizeme rs-parallaxlevel-1" 
+                     id="slide-14-layer-8" 
+                     data-x="['right','right','right','right']" data-hoffset="['265','158','158','80']" 
+                     data-y="['middle','middle','middle','middle']" data-voffset="['-22','72','72','60']" 
+                     data-width="none"
+                     data-height="none"
+                     data-whitespace="nowrap"
+
+                     data-type="text" 
+                     data-responsive_offset="on" 
+
+                     data-frames='[{"delay":970,"speed":1410,"frame":"0","from":"y:50px;opacity:0;","to":"o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+                     data-textAlign="['inherit','inherit','inherit','inherit']"
+                     data-paddingtop="[0,0,0,0]"
+                     data-paddingright="[0,0,0,0]"
+                     data-paddingbottom="[0,0,0,0]"
+                     data-paddingleft="[0,0,0,0]"
+
+                     style="z-index: 10; white-space: nowrap; font-size: 20px; line-height: 25px; font-weight: 700; color: {{ block.settings.badge_content_color }}; letter-spacing: 1px;font-family:Work Sans;">{{ block.settings.badge_price }} </div>
+
+                {% endif %}
+                
+                {% if block.settings.rev_banner_subtitle != blank %}
+                <!-- LAYER NR. 7 -->
+                <div class="tp-caption   tp-resizeme" 
+                     id="slide-14-layer-9" 
+                     data-x="['left','left','left','left']" data-hoffset="['287','93','89','21']" 
+                     data-y="['top','top','top','top']" data-voffset="['170','73','58','108']" 
+                     data-width="none"
+                     data-height="none"
+                     data-whitespace="nowrap"
+
+                     data-type="text" 
+                     data-responsive_offset="on" 
+
+                     data-frames='[{"delay":660,"speed":1280,"frame":"0","from":"y:50px;opacity:0;","to":"o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+                     data-textAlign="['inherit','inherit','inherit','inherit']"
+                     data-paddingtop="[0,0,0,0]"
+                     data-paddingright="[0,0,0,0]"
+                     data-paddingbottom="[0,0,0,0]"
+                     data-paddingleft="[0,0,0,0]"
+
+                     style="z-index: 11; white-space: nowrap; font-size: 16px; line-height: 22px; font-weight: 500; color: #333333; letter-spacing: 2px;font-family:Work Sans;">{{ block.settings.rev_banner_subtitle }}</div>
+				{% endif %}
+                
+                
+                {% if block.settings.rev_banner_title != blank %}
+                <!-- LAYER NR. 8 -->
+                <div class="tp-caption   tp-resizeme" 
+                     id="slide-14-layer-10" 
+                     data-x="['left','left','left','left']" data-hoffset="['281','91','88','21']" 
+                     data-y="['top','top','top','top']" data-voffset="['208','116','97','142']" 
+                     data-fontsize="['48','48','48','40']"
+                     data-lineheight="['64','64','64','45']"
+                     data-width="none"
+                     data-height="none"
+                     data-whitespace="nowrap"
+
+                     data-type="text" 
+                     data-responsive_offset="on" 
+
+                     data-frames='[{"delay":1050,"speed":1230,"frame":"0","from":"y:50px;opacity:0;","to":"o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+                     data-textAlign="['inherit','inherit','inherit','inherit']"
+                     data-paddingtop="[0,0,0,0]"
+                     data-paddingright="[0,0,0,0]"
+                     data-paddingbottom="[0,0,0,0]"
+                     data-paddingleft="[0,0,0,0]"
+
+                     style="z-index: 12; white-space: nowrap; font-size: 48px; line-height: 64px; font-weight: 400; color: #333333; letter-spacing: 0px;font-family:Work Sans;">{{ block.settings.rev_banner_title }}</div>
+
+                {% endif %}
+                
+                
+                {% if block.settings.rev_banner_desc != blank %}
+                <div class="tp-caption   tp-resizeme" 
+                     id="slide-14-layer-11" 
+                     data-x="['left','left','left','left']" data-hoffset="['282','90','90','23']" 
+                     data-y="['top','top','top','top']" data-voffset="['368','283','262','250']" 
+                     data-fontsize="['15','15','15','14']"
+                     data-width="none"
+                     data-height="none"
+                     data-whitespace="nowrap"
+
+                     data-type="text" 
+                     data-responsive_offset="on" 
+
+                     data-frames='[{"delay":1300,"speed":1180,"frame":"0","from":"y:50px;opacity:0;","to":"o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+                     data-textAlign="['inherit','inherit','inherit','inherit']"
+                     data-paddingtop="[0,0,0,0]"
+                     data-paddingright="[0,0,0,0]"
+                     data-paddingbottom="[0,0,0,0]"
+                     data-paddingleft="[0,0,0,0]"
+
+                     style="z-index: 13; white-space: nowrap; font-size: 15px; line-height: 26px; font-weight: 400; color: #7e7e7e; letter-spacing: 0.5px;font-family:Work Sans;">{{ block.settings.rev_banner_desc }}</div>
+				{% endif %}
+                
+                {% if block.settings.rev_banner_btn != blank %}
+                <!-- LAYER NR. 10 -->
+                <div class="tp-caption Slider-button-alt rev-btn " 
+                     id="slide-14-layer-12" 
+                     data-x="['left','left','left','left']" data-hoffset="['282','91','89','29']" 
+                     data-y="['top','top','top','top']" data-voffset="['478','384','364','349']" 
+                     data-width="none"
+                     data-height="none"
+                     data-whitespace="nowrap"
+
+                     data-type="button" 
+                     data-responsive_offset="on" 
+                     data-responsive="off"
+                     data-frames='[{"delay":1580,"speed":1270,"frame":"0","from":"y:50px;opacity:0;","to":"o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"},{"frame":"hover","speed":"300","ease":"Linear.easeNone","to":"o:1;rX:0;rY:0;rZ:0;z:0;","style":"c:rgb(51,51,51);bg:transparent;"}]'
+                     data-textAlign="['inherit','inherit','inherit','inherit']"
+                     data-paddingtop="[12,12,12,12]"
+                     data-paddingright="[35,35,35,35]"
+                     data-paddingbottom="[12,12,12,12]"
+                     data-paddingleft="[35,35,35,35]"
+
+                     style="z-index: 14; white-space: nowrap; letter-spacing: 1px;border-color:rgba(0,0,0,1);outline:none;box-shadow:none;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;cursor:pointer;"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                  <a class="revslider-button"  href="{{ block.settings.rev_banner_btn_link }}"> {{ block.settings.rev_banner_btn }}</a> </div>
+                
+                {% endif %}
+                
+                
+              </li>
+              {%- endcase -%}
+              {% endfor %}
+            
+            </ul>
+            <div class="tp-bannertimer tp-bottom" style="visibility: hidden !important;"></div>	</div>
+        </div><!-- END REVOLUTION SLIDER -->
+      </div>
+    </div>
+  </div>
+</div>

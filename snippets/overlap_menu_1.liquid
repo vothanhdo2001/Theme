@@ -1,0 +1,144 @@
+<header data-section="HeaderSection" id="section-{{ section.id }}" class="header header-nontransparent-overlay-menu {% if section.settings.header_transparent == true and template == 'index'  %}header-transparent-background {% endif %} {% unless section.settings.header_transparent == true and template == 'index' %} static-header {% endunless %} {% if section.settings.header_sticky_enable == true %} header-sticky {% endif %} header_overlap">
+
+  <!--=======  header bottom  =======-->
+
+  <div class="header-bottom pt-30 pb-30 pt-xs-20 pb-xs-20">
+    <div class="container wide">
+
+      <!--=======  header bottom container  =======-->
+
+      <div class="header-bottom-container">
+
+        <!--=======  logo with off canvas  =======-->
+
+        <div class="logo-with-offcanvas d-flex">
+
+          <!--=======  overlay menu icon  =======-->
+
+          <div class="overlay-menu-icon mr-20 d-none d-lg-block">
+            <a href="javascript:void(0)" id="overlay-menu-icon">
+              <i class="ion-navicon"></i>
+            </a>
+          </div>
+
+          <!--=======  End of overlay menu icon  =======-->
+
+
+        </div>
+
+        <!--=======  End of logo with off canvas  =======-->
+
+        <!--=======  header bottom navigation  =======-->
+
+        <div class="header-bottom-navigation">
+          <div class="site-main-nav d-none d-lg-block">
+            <nav class="site-nav center-menu">
+              {% render 'main-menu' %}
+            </nav>
+          </div>
+        </div>
+
+        <!--=======  End of header bottom navigation  =======-->
+
+        <!--=======  logo   =======-->
+
+        <div class="logo">
+          {% render 'header-logo' %}
+        </div>
+
+        <!--=======  End of logo   =======-->
+
+        <!--=======  headeer right container  =======-->
+		{% if section.settings.header_right_info %}
+        <div class="header-right-container">
+
+          <!--=======  header right icons  =======-->
+
+          <div class="header-right-icons d-flex justify-content-end align-items-center h-100">
+            
+            {% if section.settings.search_bar_enable %}
+            <div class="single-icon search">
+              <a href="javascript:void(0)" id="search-icon">
+                <i class="ion-ios-search-strong"></i>
+              </a>
+            </div>
+            {% endif %}
+
+            {% if section.settings.account_icon %}
+            <div class="single-icon user-login">
+              {% if customer and shop.customer_accounts_enabled %}
+              <a href="{{ routes.account_url }}">
+                <i class="ion-person-add"></i>
+              </a>
+              {% else %}
+              <a href="{{ routes.account_login_url }}">
+                <i class="ion-android-person"></i>
+              </a>
+              {% endif %}
+            </div>
+            {% endif %}
+
+
+             {% if section.settings.wishlist_enable %}
+            <div class="single-icon wishlist">
+              <a href="/pages/wishlist" id="offcanvas-wishlist-icon">
+                <i class="ion-android-favorite-outline"></i>
+              </a>
+            </div>
+            {% endif %}
+
+            <!--=======  End of single-icon  =======-->
+            <!--=======  single-icon  =======-->
+            
+            {% if section.settings.mini_cart_enable %}
+            <div class="single-icon cart">
+              {%- assign item_count = cart.item_count -%}
+              <a href="javascript:void(0)" id="offcanvas-cart-icon">
+                <i class="ion-ios-cart"></i>
+                <span class="count bigcounter">{{ item_count }}</span>
+              </a>
+            </div>
+            {% endif %}
+            
+            <!--=======  End of single-icon  =======-->
+          </div>
+          <!--=======  End of header right icons  =======-->
+
+        </div>
+	   {% endif %}
+        <!--=======  End of headeer right container  =======-->
+
+
+      </div>
+
+      <!--=======  End of header bottom container  =======-->
+
+      <!-- Mobile Navigation Start Here -->
+
+      <div class="site-mobile-navigation d-block d-lg-none">
+        {%- if section.settings.mobile_menu == "default" -%}
+        <div id="dl-menu" class="dl-menuwrapper site-mobile-nav">
+          <!--Site Mobile Menu Toggle Start-->
+          <button class="dl-trigger hamburger hamburger--spin">
+            <span class="hamburger-box">
+              <span class="hamburger-inner"></span>
+            </span>
+          </button><!--Site Mobile Menu Toggle End-->
+          {% render 'mobile_nav_2' %}
+        </div>
+        {%- elsif section.settings.mobile_menu == "offcanvas" -%}
+        <div class="mobile-navigation-icon" id="mobile-menu-trigger">
+          <i></i>
+        </div>
+        {%- render 'offcanvas_menu_2' -%}
+        {%- endif -%}
+      </div>
+
+      <!-- Mobile Navigation End Here -->
+
+
+    </div>
+  </div>
+
+  <!--=======  End of header bottom  =======-->
+</header>

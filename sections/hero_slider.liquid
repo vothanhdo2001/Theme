@@ -1,0 +1,296 @@
+{%- capture html -%}
+<div class="slider-area mb-80 mb-md-60 mb-sm-60" data-section="heroSlickSlider" id="section-{{ section.id }}">
+   <div class="phoone-slick-slider decor-slider-wrapper" data-slick='{
+            "slidesToShow": 1,
+            "slidesToScroll": 1,
+            "arrows": {{ section.settings.slider_arrow_enable }},
+            "dots": false,
+            {% if settings.rtl_enable %}                
+            "rtl": true,
+            {% endif %}
+            {% if section.settings.slider_fulld_width %}                
+            "centerMode": false,
+            "centerPadding": "0",
+            {% else %}
+            "centerMode": true,
+            "centerPadding": "360px",                                                         
+            {% endif %}
+            "autoplay": {{ section.settings.slider_autoplay_enable }},
+            "autoplaySpeed": 5000,
+            "speed": 1000,
+            "responsive":[
+              {"breakpoint":1501, "settings": { {%- unless section.settings.slider_fulld_width -%}"centerPadding": "160px" {%- endunless -%}} },
+              {"breakpoint":1199, "settings": { "centerMode": false} },
+              {"breakpoint":991, "settings": { "centerMode": false} },
+              {"breakpoint":767, "settings": { "centerMode": false} },
+              {"breakpoint":575, "settings": { "centerMode": false} },
+              {"breakpoint":479, "settings": { "centerMode": false} }   
+             ]                                                             
+        }'>
+     
+		{%- for block in section.blocks -%}
+          <div class="phoone-slick-slider decor-single-slider" dataid="block-{{ block.id }}">
+            <div class="decor-single-slider-content">
+              <div class="slider-image">
+                {%- if block.settings.slider_img != blank -%}
+                <span class="slider__img_block img_rel d-none d-md-block" style="padding-top:{{ 1 | divided_by: block.settings.slider_img.aspect_ratio | times: 100}}%;">
+                  {%- render 'responsive-image' with image: block.settings.slider_img, image_class: 'w-100' -%}
+                </span>
+                {%- if block.settings.slider_sm_img != blank -%}
+                <span class="slider__img_block img_rel d-block d-md-none" style="padding-top:{{ 1 | divided_by: block.settings.slider_sm_img.aspect_ratio | times: 100}}%;">
+                  {%- render 'responsive-image' with image: block.settings.slider_sm_img, image_class: 'w-100' -%}
+                </span>
+                {%- else -%}
+                <span class="slider__img_block img_rel d-block d-md-none" style="padding-top:{{ 1 | divided_by: block.settings.slider_img.aspect_ratio | times: 100}}%;">
+                  {%- render 'responsive-image' with image: block.settings.slider_img, image_class: 'w-100' -%}
+                </span>
+                {%- endif -%}
+                {%- else -%}
+                {%- render 'svg_placholder', param: 'image', size: '1170x500' -%}
+                {%- endif -%}
+			 </div>
+              <div class="slider-content {% if block.settings.text_align == "left" %}text-left {% elsif block.settings.text_align == "right" %} text-right {% elsif block.settings.text_align == "center" %} text-center {% endif %}">
+                {% if block.settings.slider_caption_title_1 != blank %}
+                <div class="color-title color-name">
+                  {{ block.settings.slider_caption_title_1 }}
+                </div>
+                {% endif %}
+                
+                 {% if block.settings.slider_caption_title_2 != blank %}
+                <div class="main-title">
+                  {{ block.settings.slider_caption_title_2 }}
+                </div>
+                {% endif %}
+                
+                {% if block.settings.slider_caption_btn != blank %}
+                <a href="{{ block.settings.slider_caption_btn_link }}" class="phoone-button phoone-button--medium">{{ block.settings.slider_caption_btn }}</a>
+                {% endif %}
+              </div>
+            </div>
+            <style>
+              [dataid="block-{{ block.id }}"] .decor-single-slider-content .color-title.color-name {
+                color: {{ block.settings.caption_title1_color }};
+              }	
+              [dataid="block-{{ block.id }}"] .decor-single-slider-content .main-title {
+                color: {{ block.settings.caption_title2_color }};
+              } 
+              [dataid="block-{{ block.id }}"] .slider-content a.phoone-button {
+                background: {{ block.settings.slide_caption_btn_bg_color }} !important;
+                 border-color: {{ block.settings.slide_caption_btn_bg_color }} !important;
+                 color: {{ block.settings.slide_caption_btn_color }} !important;
+              }
+              [dataid="block-{{ block.id }}"] .slider-content a.phoone-button:hover {
+				 background: transparent !important;
+                 border-color: {{ block.settings.slide_caption_btn_border_color }} !important;
+                 color: {{ block.settings.slide_caption_btn_hover_color }} !important;
+              }
+           </style>
+          </div>
+     	{%- endfor  -%}
+      </div>
+</div>
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+
+{%- capture css -%}
+<style>
+  #section-{{ section.id }} .decor-slider-wrapper .slick-arrow {
+    color: {{ section.settings.arrow_btn_color }};
+  }
+   #section-{{ section.id }} .decor-slider-wrapper .slick-arrow:hover {
+    color: {{ section.settings.arrow_btn_hover_color }};
+  }
+  
+  {%- unless section.settings.slider_fulld_width -%}      
+  .decor-single-slider{padding:0 100px}@media only screen and (min-width:992px) and (max-width:1199px){.decor-single-slider{padding:0}}@media only screen and (min-width:768px) and (max-width:991px){.decor-single-slider{padding:0}}@media only screen and (max-width:767px){.decor-single-slider{padding:0}}
+  {%- endunless -%}
+</style>
+{%- endcapture -%}
+
+{{ css | strip_newlines
+       | replace: '  ', '' 
+       | replace: ': ', ':'
+       | replace: ' {', '{'
+}}
+
+
+{% schema %}
+  {
+    "name": "Hero Slider",
+    "settings": [
+		{
+			"type": "header",
+            "content": "Slider Autoplay"
+		},
+		{
+          "type": "checkbox",
+          "id": "slider_autoplay_enable",
+          "label": "Slider Autoplay True/False",
+		  "default":  false
+        },
+		{
+			"type": "header",
+            "content": "Slider Full Width"
+		},
+	    {
+          "type": "checkbox",
+          "id": "slider_fulld_width",
+          "label": "Slider Fullwidth Enable",
+		  "default":  false
+        },
+        {
+			"type": "header",
+            "content": "Slider Nav arrow"
+        },
+		{
+          "type": "checkbox",
+          "id": "slider_arrow_enable",
+          "label": "Slider Arrow Enable",
+		  "default":  true
+        },
+		{
+          "type": "color",
+          "id": "arrow_btn_color",
+          "label": "Arrow Button Color",
+          "default": "#e7e7e7"	
+      	},
+		{
+          "type": "color",
+          "id": "arrow_btn_hover_color",
+          "label": "Arrow Button Hover Color",
+          "default": "#333"	
+      	}
+	],
+	"blocks":[
+      {
+          "type": "slide",
+          "name": "Slide",
+          "settings": [
+              {
+                  "type": "image_picker",
+                  "id": "slider_img",
+                  "label": "Desktop Slider Image",
+                  "info": "Recommended Size: 1170 x 620px"
+              },
+			  {
+                  "type": "image_picker",
+                  "id": "slider_sm_img",
+                  "label": "Mobile Slider Image",
+                  "info": "Recommended Size: 767 x 380px"
+              },
+			  {
+                "type": "text",
+                "id": "slider_caption_title_1",
+                "label": "Slide Title 1",
+				"default": "SUB TITLE"
+			  },
+			  {
+                "type": "textarea",
+                "id": "slider_caption_title_2",
+                "default": "Welcome to, <br> Phoone",
+				"info": "For DefaulT Title: Content <br> Content ..",
+                "label": "Slide Title 2"
+			  },
+			  {
+                "type": "text",
+                "id": "slider_caption_btn",
+                "default": "shop now",
+                "label": "Slider Button"
+			  },
+			  {
+                "id": "slider_caption_btn_link",
+                "type": "url",
+                "label": "Slider Btn Url"
+              },
+			  {
+                "type":      "header",
+                "content":   "Content Alignment" 
+              },
+              {
+                  "type":  "radio",
+                  "id":    "text_align",
+                  "label": "Slider Content Align",
+                  "options": [
+                    { "value": "left", "label": "Left" },
+                    { "value": "right", "label": "Right" },
+                     { "value": "center", "label": "Center" }
+                  ],
+                  "default":   "left"
+              },
+			  {
+                "type":      "header",
+                "content":   "Slider Title#1" 
+              },
+			  {
+                "type": "color",
+                "id": "caption_title1_color",
+                "label": "Slider Caption Title#1",
+                "default": "#68aaeb"	
+              },
+			  {
+                "type":      "header",
+                "content":   "Slider Title#2" 
+              },
+			  {
+                "type": "color",
+                "id": "caption_title2_color",
+                "label": "Slider Caption Title#2",
+                "default": "#333333"	
+              },
+			  {
+                "type":      "header",
+                "content":   "Slider Button" 
+              },
+			  {
+                "type": "color",
+                "id": "slide_caption_btn_bg_color",
+                "label": "Slider Button Bg",
+                "default": "#333333"	
+              },
+			  {
+                "type": "color",
+                "id": "slide_caption_btn_color",
+                "label": "Slider Button Color",
+                "default": "#fff"	
+              },
+			  {
+                "type":      "paragraph",
+                "content":   "Slider Button Hover" 
+              },
+			  {
+                "type": "color",
+                "id": "slide_caption_btn_border_color",
+                "label": "Slider Button Hover Border Color",
+                "default": "#333333"	
+              },
+			  {
+                "type": "color",
+                "id": "slide_caption_btn_hover_color",
+                "label": "Slider Button Hover Color",
+                "default": "#333"	
+              }
+			  
+          ]
+        }
+     ],
+	"presets": [
+        {
+          "category": "2. SlideShow",
+          "name": "HeroSlider",
+          "blocks":[
+				{
+					"type": "slide"
+				},
+				{
+					"type": "slide"
+				},
+				{
+					"type": "slide"
+				}
+			] 
+        }
+      ]
+  }
+{% endschema %}
+
+

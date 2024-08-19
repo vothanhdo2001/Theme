@@ -1,0 +1,177 @@
+{%- capture html -%}
+<header data-section="HeaderSection" id="section-{{ section.id }}" class="header {% unless section.settings.header_top_enable == true  %} header-without-topbar {% endunless %} {% if section.settings.header_sticky_enable and  section.settings.header_transparent == true %}header-sticky {% endif %} header_2 new_header_index">
+  {% if section.settings.header_top_enable == true  %}
+  <div class="header-top pt-10 pb-10 d-none d-lg-block">
+    <div class="{% if section.settings.container_width == 'container' %} container {% elsif section.settings.container_width == 'fluid' %} container wide {% endif %}">
+      <div class="header-top-container">
+        <div class="header-top-left {% if section.settings.gtranslate_enable -%} lang_translate {%- endif -%}">
+          {% if settings.currency_enable %}
+          <div class="currency-change change-dropdown">
+            {% render 'currency-picker' %}
+          </div>
+          <span class="header-separator">|</span>
+          {% endif %}
+          
+          {%- if section.settings.gtranslate_enable -%}
+          <div class="translator_lang">
+          	{%- render 'gtranslate' -%}
+          </div>
+          <span class="header-separator">|</span>
+          {%- endif -%}
+          
+          <div class="order-online-text">
+            {{ section.settings.welcome_text_msg }} <a href="tel:{{ section.settings.phone_number_link }}"><span class="number"> {{ section.settings.welcome_text_phone_number}}</span></a>
+          </div>
+        </div>
+        
+        <div class="header-top-right  {% unless section.settings.social_media_enable == true %} without_social {% endunless %} ">
+
+          <div class="topbar_account_info">
+            {%- if customer and shop.customer_accounts_enabled -%}
+            <a href="{{ routes.account_logout_url }}">{{ section.settings.logout_text }}</a>
+            {{ section.settings.or_text | default:'or' }}
+            <a href="{{ routes.account_url }}">{{ section.settings.account_text }}</a>
+
+            {%- else -%}
+            <a href="{{ routes.account_login_url }}">{{ section.settings.login_text }}</a>
+            {{ section.settings.or_text | default:'or' }}
+            <a href="{{ routes.account_register_url }}">{{ section.settings.register_text }}</a>
+            {%- endif -%}
+          </div>
+          
+          {%- if section.settings.social_media_enable -%}
+            <span class="header-separator">|</span>
+            <div class="top-social-icons ">
+              {% render 'social-midea' %}
+            </div>
+          {%- endif -%}
+          
+        </div>	
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  {%- if section.settings.header_middle_enable -%}
+  <div class="header_middle">
+    <div class="{% if section.settings.container_width == 'container' %} container {% elsif section.settings.container_width == 'fluid' %} container wide {% endif %}">
+      <div class="row">
+        <div class="col-12">
+          <div class="header_middle_inner d-flex justify-content-between align-items-center pt-30 pb-30">
+
+            <div class="logo-with-offcanvas">
+              <div class="logo">
+                {%- render 'header-logo' -%}
+              </div>
+            </div>
+
+            {%- if section.settings.search_bar_enable -%}
+            <div class="new_header_search d-none d-lg-block">
+              <div class="new_header_search_bar">
+                {%- render 'search-bar-2' -%}
+              </div>
+            </div>
+            {%- endif -%}
+
+            {% if section.settings.header_right_info %}
+            <div class="header-right-container">
+              <div class="header-right-icons d-flex justify-content-end align-items-center">
+                
+                {%- if section.settings.search_bar_enable -%}
+                <div class="single-icon search d-lg-none wishlist_icon">
+                  <a href="javascript:void(0)" id="search-icon">
+                    <i class="ion-ios-search-strong"></i>
+                  </a>
+                </div>
+                {%- endif -%}
+                
+                {%- if section.settings.wishlist_enable -%}
+                <div class="wishlist_icon nrb-mx">
+                  <a href="/pages/wishlist">
+                    <i class="ionx">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    </i> {%- if section.settings.wishlist_text != blank -%}  <span class="icon_text"> {{ section.settings.wishlist_text }} </span> {%- endif -%}
+                  </a>
+                </div>
+                {%- endif -%}
+     
+            <div class="user-loginx nrb-mx">
+              {% if customer and shop.customer_accounts_enabled %}
+              <a href="{{ routes.account_url }}">
+               <i class="ionx">
+                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+               </i>
+              </a>
+              {% else %}
+               <a href="{{ routes.account_login_url }}">
+                 <i class="ionx">
+                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                 </i>
+              </a>
+             {% endif %}
+            </div>
+      
+                {%- if section.settings.mini_cart_enable -%}
+                <div class="mini_cart">
+                  {%- assign item_count = cart.item_count -%}
+                  <a href="javascript:void(0)" id="offcanvas-cart-icon">
+                    <span class="my__cart_icon"> <span class="count bigcounter">{{ item_count }}</span>
+                      <i class="iconx ">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-bag"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                      </i> </span> {%- if section.settings.mini_cart_text != blank -%} <span class="icon_text"> {{ section.settings.mini_cart_text }} </span> {%- endif -%}
+                  </a>
+                </div>
+                {%- endif -%}
+                
+                <div class="mobile_bar_info d-block d-lg-none" id="mobile_bar_info_trigger">
+                  <a href="#"><i class=" ti-more "></i></a>
+                </div>
+              </div>
+            </div>
+            {% endif %}
+
+          </div>
+        </div>
+      </div>
+      <!-- Mobile Navigation Start Here -->
+      <div class="site-mobile-navigation d-block d-lg-none">
+        {%- if section.settings.mobile_menu == "default" -%}
+        <div id="dl-menu" class="dl-menuwrapper site-mobile-nav">
+          <!--Site Mobile Menu Toggle Start-->
+          <button class="dl-trigger hamburger hamburger--spin">
+            <span class="hamburger-box">
+              <span class="hamburger-inner"></span>
+            </span>
+          </button><!--Site Mobile Menu Toggle End-->
+          {% render 'mobile_nav' %}
+        </div>
+        {%- elsif section.settings.mobile_menu == "offcanvas" -%}
+        <div class="mobile-navigation-icon" id="mobile-menu-trigger">
+          <i></i>
+        </div>
+        {%- render 'offcanvas_menu' -%}
+        {%- endif -%}
+      </div>
+      <!-- Mobile Navigation End Here -->
+
+    </div>
+  </div>
+  {%- endif -%}
+  
+  {%- if section.settings.menu_enable -%}  
+  <div class="header-bottom header_index_new {% if section.settings.header_sticky_enable %} header-sticky {% endif %} pt-md-20 pb-md-20 d-none d-lg-block">
+    <div class="{% if section.settings.container_width == 'container' %} container {% elsif section.settings.container_width == 'fluid' %} container wide {% endif %}">
+      <div class="header_new_index_container">
+        <div class="site-main-nav">
+          <nav class="site-nav center-menu">
+            {% render 'main-menu' %}
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+  {%- endif -%} 
+  
+</header>
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}

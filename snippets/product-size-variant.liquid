@@ -1,0 +1,26 @@
+<div class="size-container">
+  {%- for option in product.options -%}
+  {%- if option == 'Size' -%}
+  {%- assign index = forloop.index0 -%}
+  {%- assign sizelist = '' -%}
+  {%- assign size = '' -%}
+  {%- for variant in product.variants -%}
+  {%- capture size -%}
+  {{ variant.options[index] }}
+  {%- endcapture -%}
+  {%- unless sizelist contains size -%}
+  {%- assign text = size | handleize -%}
+  <span class="size__exit">{{ size }}</span>
+
+  {%- capture tempList -%}
+  {{ sizelist | append: size | append: ' ' }}
+  {%- endcapture -%}
+
+  {%- assign sizelist = tempList -%}
+  {%- endunless -%}
+
+  {%- endfor -%}
+  {%- endif -%}
+  {%- endfor -%}
+</div>
+<script>$('.size__exit').parent('div').addClass('size__parent');$('.size__parent').parent('div').addClass('size_variant_conatiner');</script>

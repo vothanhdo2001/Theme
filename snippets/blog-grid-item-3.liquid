@@ -1,0 +1,42 @@
+<div class="item">
+  <article class="blog blog-style-2">
+    {% if article.image and section.settings.post_thumbnail_enable %}
+    <div class="blog-media">
+      <div class="image">
+        <a href="{{ article.url }}">
+          {{ article | img_url: '685x' | img_tag: article.title }}
+        </a>
+      </div>
+    </div>
+    {% endif %}
+    
+    <div class="blog-info">
+      <div class="blog-entry-meta">
+        {%- if section.settings.post_publish_time_enable -%}
+        <a href="{{ article.url }}" class="posted-on">{{ article.published_at | date: '%B %d, %Y' }}</a>
+        {%- endif -%}
+        
+        {%- if section.settings.post_publish_time_enable and section.settings.post_author_enable -%}
+        <span class="meta-separator">-</span>
+        {%- endif -%}
+        
+        {%- if section.settings.post_author_enable -%}
+        <a href="{{ article.url }}" class="posted-by">{{ article.author }}</a>
+        {%- endif -%}
+      </div>
+      {%- if section.settings.post_title_enable -%}
+      <h3 class="blog-title">
+        <a href="{{ article.url }}">{{ article.title }}</a>
+      </h3>
+      {%- endif -%}
+      {% assign contentlen = section.settings.post_content_len %}
+      {% if section.settings.post_content_enbale %}
+      {% if article.excerpt.size > 0 %}
+      {{ article.excerpt }}
+      {% else %}
+      <p class="post-excerpt blog__excerpt">{{ article.content | strip_html | truncatewords: contentlen }}</p>
+      {% endif %}
+      {% endif %}
+    </div>
+  </article>
+</div>

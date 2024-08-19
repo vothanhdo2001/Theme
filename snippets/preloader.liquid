@@ -1,0 +1,292 @@
+{% assign n = settings.preloader_style %}
+{%- case n -%}
+{%- when 'image' -%}
+<div id="preloader_active">
+  <div id="loading-center">
+    <div id="loading-center-absolute">
+      <div id="object"><img src="{%- if settings.preloader_image != blank -%}{{ settings.preloader_image | img_url: 'master' }}{%- else -%} https://via.placeholder.com/200x60{%- endif -%}" alt=""></div>
+    </div>
+  </div>
+</div> 
+{%- when 'Style_1' -%}
+<div id="preloader_active">
+  <div id="loading-center">
+    <div id="loading-center-absolute">
+      <div id="object"></div>
+    </div>
+  </div>
+</div> 
+{%- when 'Style_2' -%}
+<div id="preloader_active">
+  <div id="loading-center">
+    <div id="loading-center-absolute">
+      <div class="object" id="object_one"></div>
+      <div class="object" id="object_two"></div>
+      <div class="object" id="object_three"></div>
+      <div class="object" id="object_four"></div>
+      <div class="object" id="object_five"></div>
+      <div class="object" id="object_six"></div>
+      <div class="object" id="object_seven"></div>
+      <div class="object" id="object_eight"></div>
+      <div class="object" id="object_big"></div>
+    </div>
+  </div>
+</div>
+{%- when 'Style_3' -%}
+<div id="preloader_active">
+  <div id="loading-center">
+    <div id="loading-center-absolute">
+      <div class="object" id="first_object"></div>
+      <div class="object" id="second_object"></div>
+      <div class="object" id="third_object"></div>
+
+    </div>
+  </div>
+</div>
+{%- when 'Style_4' -%}
+<div id="preloader_active">
+  <div id="loading-center">
+    <div id="loading-center-absolute">
+      <div class="object" id="first_object"></div>
+      <div class="object" id="second_object"></div>
+      <div class="object" id="third_object"></div>
+      <div class="object" id="forth_object"></div>
+    </div>
+  </div>
+</div>
+{%- when 'Style_5' -%}
+<div id="preloader_active">
+  <div id="loading-center">
+    <div id="loading-center-absolute">
+      <div class="object" id="object_one"></div>
+      <div class="object" id="object_two"></div>
+      <div class="object" id="object_three"></div>
+      <div class="object" id="object_four"></div>
+    </div>
+  </div>
+</div>
+{%- when 'Style_6' -%}
+<div id="preloader_active">
+  <div id="loading-center">
+    <div id="loading-center-absolute">
+      <div class="object" id="object_one"></div>
+      <div class="object" id="object_two"></div>
+      <div class="object" id="object_three"></div>
+      <div class="object" id="object_four"></div>
+    </div>
+  </div>  
+</div>
+{%- when 'Style_7' -%}
+<div id="preloader_active">
+  <div id="loading-center">
+    <div id="loading-center-absolute-one">
+      <div class="object-one"></div>
+      <div class="object-one"></div>
+      <div class="object-one"></div>
+      <div class="object-one"></div>
+      <div class="object-one"></div>
+      <div class="object-one"></div>
+    </div>
+    <div id="loading-center-absolute-two">
+      <div class="object-two"></div>
+      <div class="object-two"></div>
+      <div class="object-two"></div>
+      <div class="object-two"></div>
+      <div class="object-two"></div>
+      <div class="object-two"></div>
+    </div>
+  </div>
+</div>
+{%- when 'Style_8' -%}
+<div id="preloader_active">
+  <div id="loading-center">
+    <div id="loading-center-absolute">
+      <div class="object" id="object_one"></div>
+      <div class="object" id="object_two"></div>
+      <div class="object" id="object_three"></div>
+
+    </div>
+  </div>
+</div>
+{%- when 'Style_9' -%}
+<div id="preloader_active">
+  <div id="loading-center">
+    <div id="loading-center-absolute">
+      <div class="object"></div>
+      <div class="object"></div>
+      <div class="object"></div>
+      <div class="object"></div>
+      <div class="object"></div>
+      <div class="object"></div>
+      <div class="object"></div>
+      <div class="object"></div>
+      <div class="object"></div>
+    </div>
+  </div>
+</div>
+{%- when 'Style_10' -%}
+<div id="preloader_active">
+  <div id="loading-center">
+    <div id="loading-center-absolute-one">
+      <div class="object-one"></div>
+      <div class="object-one"></div>
+      <div class="object-one"></div>
+      <div class="object-one"></div>
+      <div class="object-one"></div>
+      <div class="object-one"></div>
+      <div class="object-one"></div>
+      <div class="object-one"></div>
+      <div class="object-one"></div>
+    </div>
+    <div id="loading-center-absolute-two">
+      <div class="object-two"></div>
+      <div class="object-two"></div>
+      <div class="object-two"></div>
+      <div class="object-two"></div>
+      <div class="object-two"></div>
+      <div class="object-two"></div>
+      <div class="object-two"></div>
+      <div class="object-two"></div>
+      <div class="object-two"></div>
+    </div>
+  </div>
+</div>
+{%- when 'Style_11' -%}
+<div id="preloader_active">
+  <div id="loading-center">
+    <div id="loading-center-absolute">
+      <div class="object" id="object_one"></div>
+      <div class="object" id="object_two"></div>
+      <div class="object" id="object_three"></div>
+      <div class="object" id="object_four"></div>
+
+    </div>
+  </div>
+</div>
+{%- when 'Style_12' -%}
+<div id="preloader_active">
+  <div id="loading-center">
+    <div id="loading-center-absolute">
+      <div class="object" id="object_one"></div>
+      <div class="object" id="object_two"></div>
+      <div class="object" id="object_three"></div>
+      <div class="object" id="object_four"></div>
+      <div class="object" id="object_five"></div>
+      <div class="object" id="object_six"></div>
+      <div class="object" id="object_seven"></div>
+      <div class="object" id="object_eight"></div>
+
+    </div>
+  </div> 
+</div>
+{%- when 'Style_13' -%}
+<div id="preloader_active">
+  <div id="loading-center">
+    <div id="loading-center-absolute">
+      <div class="object" id="object_one"></div>
+      <div class="object" id="object_two"></div>
+      <div class="object" id="object_three"></div>
+    </div>
+  </div>
+</div>
+{%- when 'Style_14' -%}
+<div id="preloader_active">
+  <div id="loading-center">
+    <div id="loading-center-absolute">
+      <div class="object" id="object_one"></div>
+    </div>
+  </div>
+</div>
+{%- when 'Style_15' -%}
+<div id="preloader_active">
+  <div id="loading-center">
+    <div id="loading-center-absolute">
+      <div class="object"></div>
+      <div class="object"></div>
+      <div class="object"></div>
+      <div class="object"></div>
+      <div class="object"></div>
+      <div class="object"></div>
+      <div class="object"></div>
+      <div class="object"></div>
+      <div class="object"></div>
+      <div class="object"></div>
+    </div>
+  </div>
+</div>
+{%- when 'Style_16' -%}
+<div id="preloader_active">
+  <div id="loading-center">
+    <div id="loading-center-absolute">
+      <div class="object"></div>
+      <div class="object"></div>
+      <div class="object"></div>
+      <div class="object"></div>
+      <div class="object"></div>
+      <div class="object"></div>
+      <div class="object"></div>
+      <div class="object"></div>
+      <div class="object"></div>
+      <div class="object"></div>
+    </div>
+  </div>
+</div>
+{%- when 'Style_17' -%}
+<div id="preloader_active">
+  <div id="loading-center">
+    <div id="loading-center-absolute">
+      <div class="object" id="object_four"></div>
+      <div class="object" id="object_three"></div>
+      <div class="object" id="object_two"></div>
+      <div class="object" id="object_one"></div>
+
+    </div>
+  </div>
+</div>
+{%- when 'Style_18' -%}
+<div id="preloader_active">
+  <div id="loading-center">
+    <div id="loading-center-absolute">
+      <div class="object" id="object_four"></div>
+      <div class="object" id="object_three"></div>
+      <div class="object" id="object_two"></div>
+      <div class="object" id="object_one"></div>
+    </div>
+  </div>
+</div>
+{%- when 'Style_19' -%}
+<div id="preloader_active">
+  <div id="loading-center">
+    <div id="loading-center-absolute">
+      <div class="object"></div>
+      <div class="object"></div>
+      <div class="object"></div>
+      <div class="object"></div>
+      <div class="object"></div>
+      <div class="object"></div>
+      <div class="object"></div>
+      <div class="object"></div>
+      <div class="object"></div>
+      <div class="object"></div>
+      <div class="object"></div>
+      <div class="object"></div>
+      <div class="object"></div>
+      <div class="object"></div>
+      <div class="object"></div>
+      <div class="object"></div>
+      <div class="object"></div>
+      <div class="object"></div>
+      <div class="object"></div>
+      <div class="object"></div>
+    </div>
+  </div>
+</div>
+{% else %}
+{%- endcase -%}
+
+
+<script>
+  $(window).on('load', function() {
+    $('#preloader_active').fadeOut('slow');
+  }); 
+</script>

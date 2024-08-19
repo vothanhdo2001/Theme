@@ -1,0 +1,386 @@
+{% capture html %}
+<!-- PRODUCT SECTION START -->
+{% assign related_product_limit_count = section.settings.related_product_limit_handle %}
+{% assign related_product_limit = related_product_limit_count | plus: 1 %}
+
+{% if collection == null or collection.handle == 'frontpage' or collection.handle == 'all' %}
+{% assign product_found = false %}
+
+{% for c in product.collections %}
+{% if product_found == false and c.handle != 'frontpage' and c.handle != 'all' and c.all_products_count > 1 %}
+{% assign product_found = true %}
+{% assign collection = c %}
+{% endif %}
+{% endfor %}
+
+{% endif %}
+
+{% if collection and collection.products_count > 1 and section.settings.related_products_enable %}
+<div class="related-product mb-100 mb-sm-70" id="section-{{ section.id }}" data-section="RelatedProudct">
+  {% if section.settings.section_title != '' %}
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="section-title mb-30 text-center">
+          <h2>{{ section.settings.section_title }}</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  
+  
+  {% capture data_slick_activation %}
+  data-slick='{
+  "slidesToShow": {{ section.settings.slide_items_show }},
+  "slidesToScroll": {{ section.settings.slide_items_show }},
+  {% if settings.rtl_enable %}                
+  "rtl": true,
+  {% endif %}
+  "autoplay": {{ section.settings.autoplay_true }},
+  "autoplaySpeed": 5000,
+  "speed": 1000,
+  "responsive":[
+  {"breakpoint":1501, "settings": {"slidesToShow": {{ section.settings.slide_items_show }}} },
+  {"breakpoint":1199, "settings": {"slidesToShow": {{ section.settings.items_more_than_1200 }}} },
+  {"breakpoint":991, "settings": {"slidesToShow": {{ section.settings.items_more_than_992 }},"slidesToScroll": {{ section.settings.items_more_than_1200 }}}},
+  {"breakpoint":767, "settings": {"slidesToShow": {{ section.settings.items_more_than_768 }}, "slidesToScroll": {{ section.settings.items_more_than_768 }}}},
+  {"breakpoint":575, "settings": {"slidesToShow": {{ section.settings.items_more_than_480 }}, "slidesToScroll": {{ section.settings.items_more_than_480 }}}},
+  {"breakpoint":479, "settings": {"slidesToShow": {{ section.settings.items_more_than_320 }}, "slidesToScroll": {{ section.settings.items_more_than_320 }}}}	
+  ]}'
+
+  {% endcapture %}
+  
+  <div class="{% if section.settings.container_width == 'container' %} container {% elsif section.settings.container_width == 'fluid' %} container wide {% endif %}">
+    <div class="row related_product_slide" {{ data_slick_activation }}>
+     
+        {% assign current_product = product %}
+        {% assign current_product_count = false %}
+        {% for product in collection.products limit: related_product_limit %}
+        {% if product.handle == current_product.handle %}
+        {% assign current_product_count = false %}
+        {% else %}
+        {% unless current_product_count == true and forloop.last %}
+        <div class="col-md-3">
+          {%- render 'product-grid-item' with product as product -%}
+        </div>
+        {% endunless %}
+        {% endif %}     
+        {% endfor %}
+      </div>
+    
+  </div>
+</div>
+{% endif %}
+<!-- PRODUCT SECTION END -->
+
+{% endcapture %}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+{%- render 'section_typography' -%}
+
+<style>
+  .related_product_slide small.unit_price_box.caption {
+    display: none;
+  }
+</style>
+{% schema %}
+  {
+    "name": "Related Product",
+    "settings": [
+		{
+		  "type": "header",
+          "content": "Section Enable"
+        },
+		{
+            "type": "checkbox",
+            "id": "related_products_enable",
+            "label": "Show Related Product",
+            "default": true
+        },
+		{
+              "type": "header",
+              "content": "Container Width"
+          },
+		  {
+             "type":  "radio",
+             "id":    "container_width",
+             "label": "Container Width",
+             "options": [
+               { "value": "container", "label": "Container" },
+               { "value": "fluid", "label": "Full Width" }
+             ],
+             "default":   "container"
+          },
+		
+		{
+		  "type": "header",
+          "content": "Section Heading"
+        },
+		{
+          "type": "text",
+          "id": "section_title",
+          "label": "Section Title",
+          "default": "Section Title Here"
+      	},
+		{
+            "type": "header",
+            "content": "Product Options"
+        },
+		{
+            "type": "range",
+            "id": "related_product_limit_handle",
+            "min": 1,
+            "max": 20,
+            "step": 1,
+            "label": "Product Limit",
+            "default": 10
+        },
+		{
+          "type": "header",
+          "content": "Slider Autoplay"
+        },
+		{
+          "type": "checkbox",
+          "id": "autoplay_true",
+          "label": "Autoplay Enable",
+		  "default": false
+        },
+		{
+			"type": "header",
+            "content": "Product Item Show"
+        },
+		{
+            "type":      "range",
+            "id":        "slide_items_show",
+            "min":        1,
+            "max":        15,
+            "step":       1,
+            "label":     "Large Device Number Of Item Show",
+            "default":   4
+        },
+		{
+            "type":      "range",
+            "id":        "items_more_than_1200",
+            "min":        1,
+            "max":        15,
+            "step":       1,
+            "label": "More Than 1200px Number Of Item Show",
+            "default":   4
+        },
+		{
+            "type":      "range",
+            "id":        "items_more_than_992",
+            "min":        1,
+            "max":        15,
+            "step":       1,
+            "label": "More Than 992px Number Of Item Show",
+            "default":   3
+        },
+		{
+            "type":      "range",
+            "id":        "items_more_than_768",
+            "min":        1,
+            "max":        15,
+            "step":       1,
+            "label": "Tablet Item Show",
+            "default":  2
+        },
+		{
+            "type":      "range",
+            "id":        "items_more_than_480",
+            "min":        1,
+            "max":        15,
+            "step":       1,
+            "label": "Large Mobile Item Show",
+            "default":   2
+        },
+		{
+            "type":      "range",
+            "id":        "items_more_than_320",
+            "min":        1,
+            "max":        15,
+            "step":       1,
+            "label": "Small Mobile Item Show",
+            "default":   1
+        }
+	],
+	"blocks":[
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#ffffff"
+			}
+          ]
+       }
+	]
+  }
+{% endschema %}

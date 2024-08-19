@@ -1,0 +1,56 @@
+{% case media.media_type %}
+{% when 'image' %}
+<div class="thumb filter-{{ media.alt | handle }}">
+  {% if section.settings.product_popup_enable %}
+  <div class="shop-product-rightside-icons {% if product.description contains '[product_video]' and section.settings.product_video_enable %}top__space{% endif %}">
+    <span class="enlarge-icon">
+      <a class="fancybox" href="{{ media | img_url: 'original' }}" rel="gallery1" data-fancybox="images" data-tippy-content="{{ section.settings.popup_tooltip_content }}" data-tippy-placement="left" data-tippy-inertia="true" data-tippy-animation="shift-away" data-tippy-delay="50" data-tippy-arrow="true" data-tippy-theme = "sharpborder" >
+        <i class="ion-android-expand"></i>
+        <img class="d-none" src="{{ media | img_url: '1024x1024' }}" alt="{{ media.alt | escape }}">
+      </a>
+    </span>
+  </div>
+  {% endif %}
+  <a data-image="{{ media | img_url: 'original' }}" class="{% if section.settings.product_zoom_enable %}product-zoom{% endif %}" href="javascript: void(0)">
+    <img id="product-featured-image-{{media.id}}" alt="{{ media.alt | escape }}"
+         class="lazyload product_variant_image"
+         src="{{ media | img_url: '300x300' }}"
+         data-src="{{ media | img_url: '1024x1024' }}"
+         data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+         data-aspectratio="{{ media | img_url: '1024x1024' }}"
+         data-sizes="auto">
+  </a>
+</div>
+
+{% when 'external_video' %}
+<div class="thumb filter-{{ media.alt | handle }}">
+  <div class="product-single__media" data-media-id="{{ media.id }}" style="padding-top: 130%">
+    {{ media | external_video_tag }}
+  </div>
+</div>
+{% when 'video' %}
+<div class="thumb">
+  <div class="product-single__media" data-media-id="{{ media.id }}" style="padding-top: {{ 1 | divided_by: media.aspect_ratio | times: 100 }}%;">
+    {{ media | video_tag: controls: true }}
+  </div>
+</div>
+
+{% when 'model' %}
+<div class="thumb">
+  <div class="product-single__media model-viewer-click" data-media-id="{{ media.id }}" style="padding-top: 130%"> 
+    {{ media | model_viewer_tag: image_size: '500x', 
+                                reveal: 'interaction', 
+    toggleable: true, 
+    data-model-id: media.id, 
+    auto-rotate: true,
+    id: 'paused-change-demo'
+    }}
+  </div>
+</div>
+{% else %}
+<div class="thumb filter-{{ media.alt | handle }}">
+  <div class="product-single__media" data-media-id="{{ media.id }}" style="padding-top: {{ 1 | divided_by: media.aspect_ratio | times: 100 }}%;">
+    {{ media | media_tag }}
+  </div>
+</div>
+{% endcase %}

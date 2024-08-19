@@ -1,0 +1,42 @@
+<script src="{{ 'plugins.js' | asset_url }}"></script>
+<script src="{{ 'theme.plugins.js' | asset_url }}" defer="defer"></script>
+{%- if content_for_layout contains 'phoone-slick-slider' or content_for_layout contains 'shop-product__small-image-gallery-slider--vertical' or content_for_layout  contains 'slick-carousel-js' or content_for_layout contains 'related_product_slide' -%} 
+<script src="{{ 'slick.min.js' | asset_url }}" defer="defer"></script>
+{%- endif -%} 
+<script src="{{ 'Wishlist.js' | asset_url }}" defer="defer"></script>
+
+<script async>
+  window.money_format = '{{ shop.money_with_currency_format }}';
+  window.newsletter = { 
+    mailchimUrl: `{{ settings.newsletter_action }}`,
+    newsletterStyle: `{{ settings.newsletter_style_handle }}`,
+    newsletteDisplay: {{ settings.newsletter_Show }},
+    newsletterDelay: {{ settings.popup_delay }}
+  }; 
+  window.compare = {
+    cpaction: `{{ 'products.product.compare.product_action' | t }}`,
+    cpname: `{{ 'products.product.compare.product_name' | t }}`,
+    cpimage: `{{ 'products.product.compare.product_image_label' | t }}`,
+    cpview: `{{ 'products.product.compare.view_product' | t }}`,
+    cpdescription: `{{ 'products.product.compare.description' | t }}`,
+    cpavailability: `{{ 'products.product.compare.availability' | t }}`,
+    cpinstock: `{{ 'products.product.in_stock' | t }}`,
+    cpoutstock: `{{ 'products.product.unavailable' | t }}`
+  };
+  window.coutdown = {
+    days: `{{ settings.cdown_days }}`,
+    hours: `{{ settings.cdown_hours }}`,
+    minutes: `{{ settings.cdown_minutes }}`,
+    seconds: `{{ settings.cdown_seconds }}`
+  };
+  window.wishlist = {{ settings.wishlist_enable }}; 
+  window.proudctAddCart = `{{ settings.product_cart_type }}`;
+  window.themeRTL = {{ settings.rtl_enable }};
+  window.AddTocart = {
+    CartTitle: {{ settings.cart_button_title | json }},
+    preorder: `{{ settings.preorder_button_title }}`,
+    soldout: {{ settings.soldout_button_title | json }}
+  };
+  window.productCompareat = {{ 'products.product.compare_at' | t | json }};
+  window.productUnavailable = {{ 'products.product.unavailable' | t | json }};
+</script>

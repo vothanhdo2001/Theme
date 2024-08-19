@@ -1,0 +1,300 @@
+{%- capture html -%}
+<section class="video-area video_style_3" id="section-{{ section.id }}">        
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center">
+        {% if section.settings.section_title1 != '' %}
+        <p class="tag__color">{{ section.settings.section_title1 }}</p>
+        {% endif %}
+
+        {% if section.settings.section_title2 != '' %}
+        <h3 class="title_color">{{ section.settings.section_title2 }}</h3>
+        {% endif %}
+
+        {% if section.settings.video_url != '' %}
+        <a href="{{ section.settings.video_url }}" class="video-btn popup-video video-popup">video</a>
+        {% endif %}        
+      </div>
+    </div>
+  </div>
+</section>
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+
+{%- capture css -%}
+{%- style -%}
+  .video_style_3  .video-btn:after {
+  	background-image: url( {% if section.settings.video_icon_img != blank %} {{ section.settings.video_icon_img | img_url: '100x100' }}{% else %}https://cdn.shopify.com/s/files/1/0159/0355/5638/files/aaa.png?16137{% endif %});
+  }
+ 
+
+  {%- for block in section.blocks -%}
+  {%- case block.type -%}
+  {%- when 'item_style' -%}
+
+    #section-{{ section.id }} .tag__color {
+        color: {{ block.settings.tag_title_color }};
+    }
+    #section-{{ section.id }} .title_color {
+        color: {{ block.settings.main_title_color }};
+    }
+  {%- endcase -%}
+  {%- endfor -%}
+
+{%- endstyle -%}
+{%- endcapture -%}
+
+{{ css | strip_newlines
+       | replace: '  ', '' 
+       | replace: ': ', ':'
+       | replace: ' {', '{'
+}}
+
+{%- render 'section_typography' -%}
+
+
+
+{% schema %}
+  {
+    "name": "Video Section 2",
+    "settings": [
+		{
+          "type": "textarea",
+          "id": "section_title1",
+          "label": "Tag Title",
+          "default": "#Women #Man #Autumn"
+      	},
+		{
+          "type": "textarea",
+          "id": "section_title2",
+          "label": "Main Title",
+          "default": "Back to school"
+      	},
+		{
+              "type": "image_picker",
+              "id": "video_icon_img",
+              "label": "Video Icon Image",
+              "info": "Recommended Size: 100 x 100 px"
+        },
+		{
+           "id": "video_url",
+           "type": "video_url",
+           "label": "Video URL",
+           "accept": ["youtube"],
+           "default": "https://www.youtube.com/watch?v=8uFEVF6aTR4"
+        }
+	],
+	"blocks":[
+	   {
+          "type": "item_style",
+          "name": "Video Section Style",
+		  "limit": 1,
+          "settings": [
+              {
+                "type": "color",
+                "id": "tag_title_color",
+                "label": "Tag Title Color",
+                "default": "#fff"
+              },
+              {
+                "type": "color",
+                "id": "main_title_color",
+                "label": "Main Tiotle Color",
+                "default": "#fff"
+              }
+
+          ]
+       },
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 300,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 200
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 300,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 200
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 300,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 300,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 300,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 300,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#000"
+			}
+          ]
+       }
+	],
+	"presets": [
+		{
+		  "name": "Video Section 2",
+		  "category": "9.5 Video",
+		  "blocks":[
+				{
+					"type": "section_padding"
+				},
+				{
+					"type": "section_background"
+				}
+			]
+		}
+	]
+  }
+{% endschema %}

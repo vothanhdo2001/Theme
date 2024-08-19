@@ -1,0 +1,1084 @@
+{% capture html %}
+<div class="slider-area" id="section-{{ section.id }}" data-section="heroOwlSlider">
+  <div class="hero-slider-wrapper  {% if section.settings.slider_content_type == "with_image" %} caption_with_image {% endif %} {% if section.settings.section_snow_effect %}snow--section-effect {% endif %} {% if section.settings.navigation_style2 %} nav--two {% endif %} owl-carousel" data-owl-carousel='{
+    "margin":0,
+    "loop": {{ section.settings.loop_true }},
+    "nav":{{ section.settings.navigation_true }},
+    "autoplay": {{ section.settings.slider_autoplay_enable }},
+    "autoplayTimeout": 5000,
+    "smartSpeed":1000,
+    "dots": {{ section.settings.pagination_true }},
+    "items":1,
+    {%- if settings.rtl_enable -%}
+    "rtl": true, 
+    {%- endif -%}
+    "navText": ["<i class=&#x27;ti-angle-left&#x27;></i>","<i class=&#x27;ti-angle-right&#x27;></i>"],
+    "responsive":{
+      "540":{ "items": 1 },
+      "991":{ "items": 1 },
+      "1199":{ "items": 1 }
+    }}'> 
+    {%- for block in section.blocks -%}
+    {%- case block.type -%}
+    {%- when "slide" -%}
+    <div class="hero-single-slider data-img" id="block-{{ block.id }}">
+      
+      {%- if block.settings.slider_img != blank -%}
+      <div class="slider__image_ratio img_rel d-none d-md-block" style="padding-top:{{ 1 | divided_by: block.settings.slider_img.aspect_ratio | times: 100}}%;">
+        {%- render 'lazyload_aspect_ratio' with image: block.settings.slider_img -%}
+      </div>
+      {%- if block.settings.slider_sm_img != blank -%}
+      <div class="slider__image_ratio img_rel d-block d-md-none" style="padding-top:{{ 1 | divided_by: block.settings.slider_sm_img.aspect_ratio | times: 100}}%;">
+        {%- render 'lazyload_aspect_ratio' with image: block.settings.slider_sm_img -%}
+      </div>
+      {%- else -%}
+      <div class="slider__image_ratio img_rel d-block d-md-none" style="padding-top:{{ 1 | divided_by: block.settings.slider_img.aspect_ratio | times: 100}}%;">
+        {%- render 'lazyload_aspect_ratio' with image: block.settings.slider_img -%}
+      </div>
+      {%- endif -%}
+      {%- else -%}
+      <div class="placeholder_Svg d-none d-md-block" style="height: 700px; ">
+        {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+        <span> 1920x700 </span>
+
+      </div>
+       <div class="placeholder_Svg d-block d-md-none" style="height: 350px; ">
+        {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+        <span> 750x350 </span>
+
+      </div>
+      {%- endif -%}
+      
+      
+      <div class="slide_content__position">
+          {%- if section.settings.slider_content_type == "without_image" -%}
+          <div class="row {% if block.settings.justify_content == "start" %} justify-content-start {% elsif block.settings.justify_content == "center" %}  justify-content-center {% elsif block.settings.justify_content == "end" %} justify-content-end {% endif %} ">
+            <div class="hero-slider-content {% if block.settings.content_align == "left" %} text-left {% elsif block.settings.content_align == "right" %} text-right {% elsif block.settings.content_align == "center" %} text-center {% endif %}">
+              {%- if block.settings.slider_caption_title_1 != blank -%}
+              <h5>
+                {{ block.settings.slider_caption_title_1 }}
+              </h5>
+              {%- endif -%}
+
+              {%- if block.settings.slider_caption_title_2 != blank -%}
+              <div class="main-title">
+                <h2>{{ block.settings.slider_caption_title_2 }} </h2>
+              </div>
+              {%- endif -%}
+
+              {%- if block.settings.slider_caption_btn != blank -%}
+              <a href="{{ block.settings.slider_caption_btn_link }}" class="phoone-button phoone-button--medium">{{ block.settings.slider_caption_btn }}</a>
+              {%- endif -%}
+            </div>
+          </div>
+          {%- elsif section.settings.slider_content_type == "with_image" -%}
+          <div class="row {% if block.settings.row_reverse %} flex-row-reverse {% endif %} ">
+            <div class="col-12 col-lg-{{ block.settings.lg_col }} offset-lg-{{ block.settings.lg_offset }} col-md-{{ block.settings.md_col }} offset-md-{{ block.settings.md_offset }} ">
+              <div class="slider_caption_image">
+                <img data-src="{% if block.settings.slide_caption_img != blank %} {{ block.settings.slide_caption_img | img_url: 'master' }}{% else %} https://via.placeholder.com/440x600 {% endif %}" class="lazyload img-fluid" alt="{{ block.settings.banner_img.alt }}">
+              </div>
+            </div>
+
+            <div class="col-12 col-lg-{{ block.settings.content_lg_col }} offset-lg-{{ block.settings.content_lg_offset }} col-md-{{ block.settings.content_md_col }} offset-md-{{ block.settings.content_md_offset }} ">
+              <div class="hero-slider-content {% if block.settings.content_align == "left" %} text-left {% elsif block.settings.content_align == "right" %} text-right {% elsif block.settings.content_align == "center" %} text-center {% endif %}">
+                {%- if block.settings.slider_caption_title_1 != blank -%}
+                <h5>
+                  {{ block.settings.slider_caption_title_1 }}
+                </h5>
+                {%- endif -%}
+
+                {%- if block.settings.slider_caption_title_2 != blank -%}
+                <div class="main-title">
+                  <h2>{{ block.settings.slider_caption_title_2 }} </h2>
+                </div>
+                {%- endif -%}
+
+                {%- if block.settings.slider_caption_btn != blank -%}
+                <a href="{{ block.settings.slider_caption_btn_link }}" class="phoone-button phoone-button--medium">{{ block.settings.slider_caption_btn }}</a>
+                {%- endif -%}
+              </div>
+            </div>
+          </div>
+          {%- endif -%}
+      </div>
+      {%- capture singleSlideCss -%}
+      <style>
+        {%- assign subtitle = block.settings.Subtitle_font -%}
+        {%- assign maintitle = block.settings.main_title_font -%}
+        {{ subtitle | font_face: font_display: 'swap' }}
+        {{ maintitle | font_face: font_display: 'swap' }}
+
+        #block-{{ block.id }} .hero-slider-content > h5 {
+          color: {{ block.settings.caption_title1_color }};
+          font-family: {{ subtitle.family }}, {{ subtitle.fallback_families }};
+          font-weight: {{ subtitle.weight }};
+          font-style: {{ subtitle.style }};
+        }	
+        #block-{{ block.id }} .hero-slider-content .main-title h2{
+          color: {{ block.settings.caption_title2_color }};
+          font-family: {{ maintitle.family }}, {{ maintitle.fallback_families }};
+          font-weight: {{ maintitle.weight }};
+          font-style: {{ maintitle.style }};
+        } 
+        #block-{{ block.id }} .hero-slider-content a.phoone-button {
+          background: {{ block.settings.slide_caption_btn_bg_color }};
+          border-color: {{ block.settings.slide_caption_btn_bg_color }};
+          color: {{ block.settings.slide_caption_btn_color }} !important;
+        }
+        #block-{{ block.id }} .hero-slider-content a.phoone-button:hover {
+          background: {{ block.settings.slide_caption_btn_border_color }};
+          border-color: {{ block.settings.slide_caption_btn_border_color }};
+          color: {{ block.settings.slide_caption_btn_hover_color }} !important;
+        }
+      </style>
+      {%- endcapture -%}
+      {{ singleSlideCss | strip_newlines
+       | replace: '  ', '' 
+       | replace: ': ', ':'
+       | replace: ' {', '{'
+	  }}
+
+    </div>
+    {%- endcase -%}
+    {%- endfor  -%}
+  </div>
+
+  <noscript>
+    <div class="hero-single-slider" style="background-image: url('{% if block.settings.slider_img %}{{ block.settings.slider_img | img_url: 'master' }} {% else %} https://via.placeholder.com/1920x710{% endif %}');"  id="block-{{ block.id }}">
+    </div>
+  </noscript>
+</div>
+{% endcapture %}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+{%- capture Slidercss -%}
+<style>
+  {%- for block in section.blocks -%}
+  {%- case block.type -%}
+  {%- when "section_padding" -%}
+  #section-{{ section.id }} .hero-single-slider {
+    padding-top: {{ block.settings.section_padding_top }}px !important;
+    padding-bottom: {{ block.settings.section_padding_bottom }}px !important;
+  }
+  @media (min-width: 768px) and (max-width: 991px) {
+    #section-{{ section.id }} .hero-single-slider {
+      padding-top: {{ block.settings.section_padding_top_md }}px !important;
+      padding-bottom: {{ block.settings.section_padding_bottom_md }}px !important;
+    }
+  }
+  @media (max-width: 767px) {
+    #section-{{ section.id }} .hero-single-slider {
+      padding-top: {{ block.settings.section_padding_top_xs }}px !important;
+      padding-bottom: {{ block.settings.section_padding_bottom_xs }}px !important;
+    }
+  }
+  {%- endcase -%}
+  {%- endfor -%}
+  
+  #section-{{ section.id }} .hero-slider-wrapper.owl-carousel .owl-nav > div {
+    background: {{ section.settings.navigation_bg_color }};
+    color: {{ section.settings.navigation_color }};
+  }
+  
+  #section-{{ section.id }} .hero-slider-wrapper.owl-carousel .owl-nav > div:hover {
+    background: {{ section.settings.navigation_hover_bg_color }};
+    color: {{ section.settings.navigation_hover_color }};
+  }
+
+  
+  #section-{{ section.id }} .hero-slider-wrapper.owl-carousel .owl-dots .owl-dot {
+    background: {{ section.settings.slider_paginate_color }};
+  }
+  #section-{{ section.id }} .hero-slider-wrapper.owl-carousel .owl-dots .owl-dot.active {
+    border-color:  {{ section.settings.slider_active_paginate_color }};
+    background: transparent;
+  }
+  #section-{{ section.id }} .hero-single-slider::before {
+    background: {{ section.settings.slider_overlay_color }};
+    opacity: {{ section.settings.slider_overlay_opacity }};
+  }
+</style>
+{%- endcapture -%}
+
+{{ Slidercss | strip_newlines
+       | replace: '  ', '' 
+       | replace: ': ', ':'
+       | replace: ' {', '{'
+}} 
+{% schema %}
+  {
+    "name": "Fluid Hero Slider", 
+    "settings": [
+		{
+			"type": "header",
+            "content": "Slider Autoplay"
+		},
+		{
+          "type": "checkbox",
+          "id": "slider_autoplay_enable",
+          "label": "Slider Autoplay True/False",
+		  "default":  false
+        },
+		{
+			"type": "header",
+            "content": "Slider Content Type"
+		},
+		{
+          "type":  "radio",
+          "id":    "slider_content_type",
+          "label": "Slide Content Style",
+          "options": [
+            { "value": "without_image", "label": "Without Caption Image" },
+            { "value": "with_image", "label": "With Caption Image" }
+          ],
+          "default":   "without_image"
+        },
+		{
+			"type": "header",
+            "content": "Slide Loop"
+		},
+		{
+          "type": "checkbox",
+          "id": "loop_true",
+          "label": "Loop True/False",
+		  "default":  true
+        },
+		{
+			"type": "header",
+            "content": "Pagination/Bullet"
+		},
+		{
+          "type": "checkbox",
+          "id": "pagination_true",
+          "label": "Pagination True/False",
+		  "default":  false
+        },
+		{
+          "type": "color",
+          "id": "slider_paginate_color",
+          "label": "Paginate Color",
+          "default": "#999"	
+      	},
+		{
+          "type": "color",
+          "id": "slider_active_paginate_color",
+          "label": "Paginate Active Color",
+          "default": "#333"	
+      	},
+		{
+			"type": "header",
+            "content": "Navigation"
+		},
+		{
+          "type": "checkbox",
+          "id": "navigation_true",
+          "label": "Navigation True/False",
+		  "default":  true
+        },
+		{
+			"type": "paragraph",
+            "content": "Nav Style Two"
+		},
+		{
+          "type": "checkbox",
+          "id": "navigation_style2",
+          "label": "Navigation Style Two",
+		  "default":  false
+        },
+		{
+          "type": "color",
+          "id": "navigation_bg_color",
+          "label": "Navigation Bg Color Color",
+          "default": "#fff"	
+      	},
+		{
+          "type": "color",
+          "id": "navigation_color",
+          "label": "Navigation Text Color",
+          "default": "#999"	
+      	},
+		{
+          "type": "color",
+          "id": "navigation_hover_bg_color",
+          "label": "Navigation Hover Bg Color",
+          "default": "#222"	
+      	},
+		{
+          "type": "color",
+          "id": "navigation_hover_color",
+          "label": "Navigation Hover Text Color",
+          "default": "#fff"	
+      	},
+		{
+          "type": "header",
+          "content": "Snow Effect"
+        },
+        {
+          "type": "checkbox",
+          "id": "section_snow_effect",
+          "label": "Snow Effect Enable",
+          "default": false
+        },
+			
+        {
+			"type": "header",
+            "content": "Slider Overlay"
+		},
+		{
+          "type": "color",
+          "id": "slider_overlay_color",
+          "label": "Overlay Color",
+          "default": "#fff"
+        },
+        {
+          "type": "range",
+          "id": "slider_overlay_opacity",
+          "min": 0,
+          "max": 1,
+          "step": 0.1,
+          "label": "Overlay Color Opacity",
+          "default": 0.2
+        }	
+	],
+	"blocks":[
+      {
+          "type": "slide",
+          "name": "Slide",
+          "settings": [
+			  {
+                  "type": "header",
+                  "content": "Slider Image"
+              },
+              {
+                  "type": "image_picker",
+                  "id": "slider_img",
+                  "label": "Desktop Slider Image",
+                  "info": "Recommended Size: 1920 x 600px"
+              },
+              {
+                  "type": "image_picker",
+                  "id": "slider_sm_img",
+                  "label": "Mobile Slider Image",
+                  "info": "Recommended Size: 767 x 380px"
+              },
+			  {
+                "type": "text",
+                "id": "slider_caption_title_1",
+                "label": "Slide Title 1",
+				"default": "accessories"
+			  },
+			  {
+                "type": "textarea",
+                "id": "slider_caption_title_2",
+                "default": "Bottle Grinder, <br> Small, 2-Piecehe",
+				"info": "For DefaulT Title: Content <br> Content ..",
+                "label": "Slide Title 2"
+			  },
+			  {
+                "type": "text",
+                "id": "slider_caption_btn",
+                "default": "shop now",
+                "label": "Slider Button"
+			  },
+			  {
+                "id": "slider_caption_btn_link",
+                "type": "url",
+                "label": "Slider Btn Url"
+              },
+			  {
+                "type":      "header",
+                "content":   "Slide Caption Image" 
+              },
+			  {
+                  "type": "image_picker",
+                  "id": "slide_caption_img",
+                  "label": "Slide Caption Image",
+                  "info": "Recommended Size: 440 x 700px"
+              },
+			  {
+                  "type": "header",
+                  "content": "Content Row Reverse"
+              },
+              {
+                "type": "checkbox",
+                "id": "row_reverse",
+                "label": "Column Reverse",
+                "info": "It will work for Slide Content Style With Caption Image",
+                "default":  false
+              },
+			  {
+                "type":      "header",
+                "content":   "Justify Content" 
+              },
+			  {
+                "type":  "radio",
+                "id":    "justify_content",
+                "label": "Justify Content",
+                "options": [
+                  { "value": "start", "label": "Start" },
+                  { "value": "center", "label": "Center" },
+				  { "value": "end", "label": "end" }
+                ],
+                "default":   "end"
+              },
+			  {
+                "type":      "header",
+                "content":   "Content Alignment" 
+              },
+			  {
+                "type":  "radio",
+                "id":    "content_align",
+                "label": "Content Alignment",
+                "options": [
+                  { "value": "left", "label": "Left" },
+                  { "value": "center", "label": "Center" },
+				  { "value": "right", "label": "Right" }
+                ],
+                "default":   "left"
+              },
+			  {
+                "type":      "header",
+                "content":   "Slider Title#1" 
+              },
+			  {
+                "type": "color",
+                "id": "caption_title1_color",
+                "label": "Slider Caption Title#1",
+                "default": "#333"	
+              },
+			  {
+                 "type":    "font_picker",
+                 "label":   "SubTitle Font",
+                 "id":      "Subtitle_font",
+                 "info":    "Please select your Font",
+				 "default": "work_sans_n4"
+              },
+			  {
+                "type":      "header",
+                "content":   "Slider Title#2" 
+              },
+			  {
+                "type": "color",
+                "id": "caption_title2_color",
+                "label": "Slider Caption Title#2",
+                "default": "#333333"	
+              },
+			  {
+                 "type":    "font_picker",
+                 "label":   "SubTitle Font",
+                 "id":      "main_title_font",
+                 "info":    "Please select your Font",
+				 "default": "work_sans_n4"
+              },
+			  {
+                "type":      "header",
+                "content":   "Slider Button" 
+              },
+			  {
+                "type": "color",
+                "id": "slide_caption_btn_bg_color",
+                "label": "Slider Button Bg",
+                "default": "#333333"	
+              },
+			  {
+                "type": "color",
+                "id": "slide_caption_btn_color",
+                "label": "Slider Button Text Color",
+                "default": "#fff"	
+              },
+			  {
+                "type":      "paragraph",
+                "content":   "Slider Button Hover" 
+              },
+			  {
+                "type": "color",
+                "id": "slide_caption_btn_border_color",
+                "label": "Slider Button Hover BG Color",
+                "default": "#333333"	
+              },
+			  {
+                "type": "color",
+                "id": "slide_caption_btn_hover_color",
+                "label": "Slider Button Hover Text Color",
+                "default": "#333"	
+              },
+			  {
+                "type": "header",
+                "content": "Slider Caption Image Column",
+                "info": "It will work for Slide Content Style With Caption Image"
+              },
+		
+			  {
+                "type": "header",
+                "content": "Desktop",
+			    "info": "Minimum Width 992px"
+              },
+			  {
+                "type": "select",
+                "id": "lg_col",
+                "label": "Normal Desktop Column",
+                "options":[
+                      {
+                          "label": "Gird 12",
+                          "value": "12"
+                      },
+					  {
+                          "label": "Gird 11",
+                          "value": "11"
+                      },
+                      {
+                          "label": "Gird 10",
+                          "value": "10"
+                      },
+					  {
+                          "label": "Gird 9",
+                          "value": "9"
+                      },
+                      {
+                          "label": "Gird 8",
+                          "value": "8"
+                      },
+					  {
+                          "label": "Gird 7",
+                          "value": "7"
+                      },
+					  {
+                          "label": "Gird 6",
+                          "value": "6"
+                      },
+					  {
+                          "label": "Gird 5",
+                          "value": "5"
+                      },
+					  {
+                          "label": "Gird 4",
+                          "value": "4"
+                      },
+					  {
+                          "label": "Gird 3",
+                          "value": "3"
+                      },
+					  {
+                          "label": "Gird 2",
+                          "value": "2"
+                      }
+                  ],
+                  "default": "5"
+              },
+			  {
+                "type": "select",
+                "id": "lg_offset",
+                "label": "Normal Desktop Offset Column",
+                "options":[
+                      {
+                          "label": "Offset 12",
+                          "value": "12"
+                      },
+					  {
+                          "label": "Offset 11",
+                          "value": "11"
+                      },
+                      {
+                          "label": "Offset 10",
+                          "value": "10"
+                      },
+					  {
+                          "label": "Offset 9",
+                          "value": "9"
+                      },
+                      {
+                          "label": "Offset 8",
+                          "value": "8"
+                      },
+					  {
+                          "label": "Offset 7",
+                          "value": "7"
+                      },
+					  {
+                          "label": "Offset 6",
+                          "value": "6"
+                      },
+					  {
+                          "label": "Offset 5",
+                          "value": "5"
+                      },
+					  {
+                          "label": "Offset 4",
+                          "value": "4"
+                      },
+					  {
+                          "label": "Offset 3",
+                          "value": "3"
+                      },
+					  {
+                          "label": "Offset 2",
+                          "value": "2"
+                      },
+					  {
+                          "label": "Offset 1",
+                          "value": "1"
+                      },
+					  {
+                          "label": "Offset 0",
+                          "value": "0"
+                      }
+                  ],
+                  "default": "0"
+              },
+			{
+                "type": "header",
+                "content": "Tablet",
+				"info": "Less Than 992px"
+              },
+			{
+                "type": "select",
+                "id": "md_col",
+                "label": "Tablet Column",
+                "options":[
+                      {
+                          "label": "Gird 12",
+                          "value": "12"
+                      },
+					  {
+                          "label": "Gird 11",
+                          "value": "11"
+                      },
+                      {
+                          "label": "Gird 10",
+                          "value": "10"
+                      },
+					  {
+                          "label": "Gird 9",
+                          "value": "9"
+                      },
+                      {
+                          "label": "Gird 8",
+                          "value": "8"
+                      },
+					  {
+                          "label": "Gird 7",
+                          "value": "7"
+                      },
+					  {
+                          "label": "Gird 6",
+                          "value": "6"
+                      },
+					  {
+                          "label": "Gird 5",
+                          "value": "5"
+                      },
+					  {
+                          "label": "Gird 4",
+                          "value": "4"
+                      },
+					  {
+                          "label": "Gird 3",
+                          "value": "3"
+                      },
+					  {
+                          "label": "Gird 2",
+                          "value": "2"
+                      }
+                  ],
+                  "default": "5"
+              },
+			  {
+                "type": "select",
+                "id": "md_offset",
+                "label": "Tablet Offset Column",
+                "options":[
+                      {
+                          "label": "Offset 12",
+                          "value": "12"
+                      },
+					  {
+                          "label": "Offset 11",
+                          "value": "11"
+                      },
+                      {
+                          "label": "Offset 10",
+                          "value": "10"
+                      },
+					  {
+                          "label": "Offset 9",
+                          "value": "9"
+                      },
+                      {
+                          "label": "Offset 8",
+                          "value": "8"
+                      },
+					  {
+                          "label": "Offset 7",
+                          "value": "7"
+                      },
+					  {
+                          "label": "Offset 6",
+                          "value": "6"
+                      },
+					  {
+                          "label": "Offset 5",
+                          "value": "5"
+                      },
+					  {
+                          "label": "Offset 4",
+                          "value": "4"
+                      },
+					  {
+                          "label": "Offset 3",
+                          "value": "3"
+                      },
+					  {
+                          "label": "Offset 2",
+                          "value": "2"
+                      },
+					  {
+                          "label": "Offset 1",
+                          "value": "1"
+                      },
+					  {
+                          "label": "Offset 0",
+                          "value": "0"
+                      }
+                  ],
+                  "default": "0"
+              },
+			  {
+                "type": "header",
+                "content": "Slider Caption Content Column",
+                "info": "It will work for Slide Content Style With Caption Image"
+              },
+			  {
+                "type": "header",
+                "content": "Desktop",
+			    "info": "Minimum Width 992px"
+              },
+			  {
+                "type": "select",
+                "id": "content_lg_col",
+                "label": "Normal Desktop Column",
+                "options":[
+                      {
+                          "label": "Gird 12",
+                          "value": "12"
+                      },
+					  {
+                          "label": "Gird 11",
+                          "value": "11"
+                      },
+                      {
+                          "label": "Gird 10",
+                          "value": "10"
+                      },
+					  {
+                          "label": "Gird 9",
+                          "value": "9"
+                      },
+                      {
+                          "label": "Gird 8",
+                          "value": "8"
+                      },
+					  {
+                          "label": "Gird 7",
+                          "value": "7"
+                      },
+					  {
+                          "label": "Gird 6",
+                          "value": "6"
+                      },
+					  {
+                          "label": "Gird 5",
+                          "value": "5"
+                      },
+					  {
+                          "label": "Gird 4",
+                          "value": "4"
+                      },
+					  {
+                          "label": "Gird 3",
+                          "value": "3"
+                      },
+					  {
+                          "label": "Gird 2",
+                          "value": "2"
+                      }
+                  ],
+                  "default": "6"
+              },
+			  {
+                "type": "select",
+                "id": "content_lg_offset",
+                "label": "Normal Desktop Offset Column",
+                "options":[
+                      {
+                          "label": "Offset 12",
+                          "value": "12"
+                      },
+					  {
+                          "label": "Offset 11",
+                          "value": "11"
+                      },
+                      {
+                          "label": "Offset 10",
+                          "value": "10"
+                      },
+					  {
+                          "label": "Offset 9",
+                          "value": "9"
+                      },
+                      {
+                          "label": "Offset 8",
+                          "value": "8"
+                      },
+					  {
+                          "label": "Offset 7",
+                          "value": "7"
+                      },
+					  {
+                          "label": "Offset 6",
+                          "value": "6"
+                      },
+					  {
+                          "label": "Offset 5",
+                          "value": "5"
+                      },
+					  {
+                          "label": "Offset 4",
+                          "value": "4"
+                      },
+					  {
+                          "label": "Offset 3",
+                          "value": "3"
+                      },
+					  {
+                          "label": "Offset 2",
+                          "value": "2"
+                      },
+					  {
+                          "label": "Offset 1",
+                          "value": "1"
+                      },
+					  {
+                          "label": "Offset 0",
+                          "value": "0"
+                      }
+                  ],
+                  "default": "1"
+              },
+			{
+                "type": "header",
+                "content": "Tablet",
+				"info": "Less Than 992px"
+              },
+			{
+                "type": "select",
+                "id": "content_md_col",
+                "label": "Tablet Column",
+                "options":[
+                      {
+                          "label": "Gird 12",
+                          "value": "12"
+                      },
+					  {
+                          "label": "Gird 11",
+                          "value": "11"
+                      },
+                      {
+                          "label": "Gird 10",
+                          "value": "10"
+                      },
+					  {
+                          "label": "Gird 9",
+                          "value": "9"
+                      },
+                      {
+                          "label": "Gird 8",
+                          "value": "8"
+                      },
+					  {
+                          "label": "Gird 7",
+                          "value": "7"
+                      },
+					  {
+                          "label": "Gird 6",
+                          "value": "6"
+                      },
+					  {
+                          "label": "Gird 5",
+                          "value": "5"
+                      },
+					  {
+                          "label": "Gird 4",
+                          "value": "4"
+                      },
+					  {
+                          "label": "Gird 3",
+                          "value": "3"
+                      },
+					  {
+                          "label": "Gird 2",
+                          "value": "2"
+                      }
+                  ],
+                  "default": "7"
+              },
+			  {
+                "type": "select",
+                "id": "content_md_offset",
+                "label": "Tablet Offset Column",
+                "options":[
+                      {
+                          "label": "Offset 12",
+                          "value": "12"
+                      },
+					  {
+                          "label": "Offset 11",
+                          "value": "11"
+                      },
+                      {
+                          "label": "Offset 10",
+                          "value": "10"
+                      },
+					  {
+                          "label": "Offset 9",
+                          "value": "9"
+                      },
+                      {
+                          "label": "Offset 8",
+                          "value": "8"
+                      },
+					  {
+                          "label": "Offset 7",
+                          "value": "7"
+                      },
+					  {
+                          "label": "Offset 6",
+                          "value": "6"
+                      },
+					  {
+                          "label": "Offset 5",
+                          "value": "5"
+                      },
+					  {
+                          "label": "Offset 4",
+                          "value": "4"
+                      },
+					  {
+                          "label": "Offset 3",
+                          "value": "3"
+                      },
+					  {
+                          "label": "Offset 2",
+                          "value": "2"
+                      },
+					  {
+                          "label": "Offset 1",
+                          "value": "1"
+                      },
+					  {
+                          "label": "Offset 0",
+                          "value": "0"
+                      }
+                  ],
+                  "default": "0"
+              }
+			  
+          ]
+        },
+		{
+          "type": "section_padding",
+          "name": "Slider Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       }
+     ],
+	"presets": [
+        {
+          "category": "2. SlideShow",
+          "name": "Hero Fluid Slider",
+          "blocks":[
+				{
+					"type": "slide"
+				},
+				{
+					"type": "slide"
+				},
+				{
+					"type": "slide"
+				}
+			] 
+        }
+      ]
+  }
+{% endschema %}

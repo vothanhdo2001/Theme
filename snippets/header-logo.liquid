@@ -1,0 +1,22 @@
+{%- if section.settings.logo -%}
+{%- capture logo_size -%}{{ section.settings.logo_width | escape }}x{%- endcapture -%}
+<a href="{{ routes.root_url }}" class="theme-logo">
+  <img {% if section.settings.header_transparent == true and template != "index" %} class="logo_none" {% endif %} src="{{ section.settings.logo | img_url: '300x300' }}" alt="{{ section.settings.logo.alt | default: shop.name }}"
+       {%- if section.settings.ratina_logo_enable -%}
+       srcset="{{ section.settings.logo | img_url: logo_size }} 1x, {{ section.settings.logo | img_url: logo_size, scale: 2 }} 2x"
+       {%- endif -%}    
+       >
+  {%- if section.settings.header_transparent == true and section.settings.sticky_logo != blank -%}
+  <img  src="{{ section.settings.sticky_logo | img_url: '300x300' }}" alt="{{ section.settings.logo.alt | default: shop.name }}"
+       {%- if section.settings.ratina_logo_enable -%}
+       srcset="{{ section.settings.sticky_logo | img_url: logo_size }} 1x, {{ section.settings.sticky_logo | img_url: logo_size, scale: 2 }} 2x"
+       {%- endif -%}      
+       >
+  {%- endif -%}
+
+</a>
+{%- else -%}
+<a href="{{ routes.root_url }}">
+  <span>{{ shop.name }}</span>
+</a>
+{%- endif -%}

@@ -1,0 +1,28 @@
+{% capture html %}
+<!-- Modal -->
+<div class="modal fade bd-example-modal-lg" id="shipping_policy" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header justify-content-end">
+        <button type="button" data-dismiss="modal" aria-label="Close"><i class="ti-close"></i> </button>
+      </div>
+      <div class="modal-body">
+        {%- if block.settings.product_shipping_policy == "metafield" -%}       
+        {%- if product.metafields.meta.product_shipping_policy.type == "file_reference" -%}
+        <img src="{{ productShippingPolicy | img_url: "master" }}" alt="{{ "Product Shipping Policy" }}">
+        {%- else -%}
+        {{ productShippingPolicy }}
+        {%- endif -%}
+        {%- else -%}
+        {%- if shippinghandle != empty -%}
+        {{ shippinghandle }}	
+        {%- else -%}
+        Please select a page
+        {%- endif -%}
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+{% endcapture %}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}

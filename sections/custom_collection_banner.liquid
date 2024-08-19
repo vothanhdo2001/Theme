@@ -1,0 +1,482 @@
+{%- capture html -%}
+<div class="product-category-container mb-100 mb-md-80 mb-sm-80" id="section-{{ section.id }}" data-section="BannerSection">
+  <div class="{% if section.settings.container_width == 'container' %} container {% elsif section.settings.container_width == 'fluid' %} container wide {% endif %}">
+    <div class="row-5 masonry-category-layout">
+		
+      {% for block in section.blocks %}
+      
+      {%- capture bannerimg -%}
+      {%- if block.settings.custom_collection_img != blank -%}{{ block.settings.custom_collection_img | img_url: 'master' }} {%- else -%} https://via.placeholder.com/580x580{%- endif -%}
+      {%- endcapture -%}
+      
+      
+      {%- case block.type -%}
+      {% when 'collection_grid_6' %}
+      <div class="col-lg-6 grid-item">
+        <!--=======  single category  =======-->
+
+        <div class="single-category single-category--three">
+          <!--=======  single category image  =======-->
+
+          <div class="single-category__image single-category__image--three">
+            {%- if block.settings.custom_collection_img != blank -%}
+            <a class="img_rel" href="{{ block.settings.collection_link }}" style="padding-top:{{ 1 | divided_by: block.settings.custom_collection_img.aspect_ratio | times: 100}}%;">
+              {%- render 'responsive-image' with image: block.settings.custom_collection_img -%}
+            </a> 
+            {%- else -%}
+            {%- render 'svg_placholder', param: 'image', size: '580x580' -%}
+            {%- endif -%}
+          </div>
+
+          <!--=======  single category content  =======-->
+
+          <div class="single-category__content single-category__content--three mt-25 mb-25">
+            <div class="title">
+              
+              {% if  block.settings.collection_name != blank %}
+              <p>{{ block.settings.collection_name }}</p>
+              {% endif %}
+              {% if block.settings.collection_hover_title != blank %}
+                <a href="{{ block.settings.collection_link }}">{{ block.settings.collection_hover_title | default: "+ Store"  }}</a>
+              {% endif %}
+            </div>
+
+          </div>
+
+
+          <!--=======  End of banner-link  =======-->
+        </div>
+
+        <!--=======  End of single category  =======-->
+      </div>
+      
+      {% when 'collection_grid_small_6' %}
+      <div class="col-lg-6 grid-item">
+        <!--=======  single category  =======-->
+
+        <div class="single-category single-category--three">
+          <!--=======  single category image  =======-->
+
+          <div class="single-category__image single-category__image--three">
+
+            {%- if block.settings.custom_collection_img != blank -%}
+            <a class="img_rel" href="{{ block.settings.collection_link }}" style="padding-top:{{ 1 | divided_by: block.settings.custom_collection_img.aspect_ratio | times: 100}}%;">
+              {%- render 'responsive-image' with image: block.settings.custom_collection_img -%}
+            </a> 
+            {%- else -%}
+            {%- render 'svg_placholder', param: 'image', size: '580x285' -%}
+            {%- endif -%}
+          </div>
+
+          <!--=======  single category content  =======-->
+
+          <div class="single-category__content single-category__content--three mt-25 mb-25">
+            <div class="title">
+              
+              {% if  block.settings.collection_name != blank %}
+              <p>{{ block.settings.collection_name }}</p>
+              {% endif %}
+              {% if block.settings.collection_hover_title != blank %}
+                <a href="{{ block.settings.collection_link }}">{{ block.settings.collection_hover_title | default: "+ Store"  }}</a>
+              {% endif %}
+            </div>
+
+          </div>
+
+
+          <!--=======  End of banner-link  =======-->
+        </div>
+
+        <!--=======  End of single category  =======-->
+      </div>
+      {% when 'collection_grid_3' %}
+      <div class="col-lg-3 col-md-6 grid-item grid-item--width2">
+
+        <!--=======  single category  =======-->
+
+        <div class="single-category single-category--three">
+          <!--=======  single category image  =======-->
+
+          <div class="single-category__image single-category__image--three">
+            {%- if block.settings.custom_collection_img != blank -%}
+            <a class="img_rel" href="{{ block.settings.collection_link }}" style="padding-top:{{ 1 | divided_by: block.settings.custom_collection_img.aspect_ratio | times: 100}}%;">
+              {%- render 'responsive-image' with image: block.settings.custom_collection_img -%}
+            </a> 
+            {%- else -%}
+            {%- render 'svg_placholder', param: 'image', size: '275x275' -%}
+            {%- endif -%}
+          </div>
+
+          <div class="single-category__content single-category__content--three mt-25 mb-25">
+            <div class="title">
+              {% if  block.settings.collection_name != blank %}
+              <p>{{ block.settings.collection_name }}</p>
+              {% endif %}
+               {% if block.settings.collection_hover_title != blank %}
+                <a href="{{ block.settings.collection_link }}">{{ block.settings.collection_hover_title | default: "+ Store"  }}</a>
+              {% endif %}
+            </div>
+          </div>
+          
+        </div>
+
+        <!--=======  End of single category  =======-->
+      </div>
+      {% endcase %}
+      {% endfor %}
+      
+    </div>
+  </div>
+</div>
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+
+{% render 'section_typography' %}
+{%- capture css -%}
+<style>
+  {%- for block in section.blocks -%}
+  {%- case block.type -%}
+  {%- when "section_color_option" -%}
+  #section-{{ section.id }} .single-category__content--three .title p {
+    color: {{ block.settings.title_color }};
+  }
+  #section-{{ section.id }} .single-category__content .title a {
+    color: {{ block.settings.title_hover_color }};
+  }
+  {%- endcase -%}
+  {%- endfor -%}
+
+</style>
+{%- endcapture -%}
+
+{{ css | strip_newlines
+       | replace: '  ', '' 
+       | replace: ': ', ':'
+       | replace: ' {', '{'
+}}
+
+{% schema %}
+  {
+    "name": "Collection Banner Masonry",
+    "settings": [
+		{
+          "type":  "radio",
+          "id":    "container_width",
+          "label": "Container Width",
+          "options": [
+            { "value": "container", "label": "Container" },
+            { "value": "fluid", "label": "Full Width" }
+          ],
+          "default":   "container"
+        }
+	],
+	"blocks":[
+	   {
+          "type": "collection_grid_6",
+          "name": "Large Size Grid 6",
+		   "settings": [
+            {
+              "type": "image_picker",
+              "id": "custom_collection_img",
+              "label": "Collection Banner Image",
+              "info": "Recommended Size: 580 x 580 or 580 x 285 px"
+              },
+              {
+                "type": "textarea",
+                "id": "collection_name",
+                "label": "Collection Name",
+                "default": "Women"
+              },
+              {
+                  "type": "text",
+                  "id": "collection_hover_title",
+                  "label": "Collection Hover Title",
+                  "default": "+ Store"
+              },
+              {
+                "type": "url",
+                "id": "collection_link",
+                "label": "Collection URL"
+              }
+          ]
+       },
+		{
+          "type": "collection_grid_small_6",
+          "name": "Small Size Grid 6",
+		   "settings": [
+            {
+              "type": "image_picker",
+              "id": "custom_collection_img",
+              "label": "Collection Banner Image",
+              "info": "Recommended Size: 580 x 285 px"
+              },
+              {
+                "type": "textarea",
+                "id": "collection_name",
+                "label": "Collection Name",
+                "default": "Women"
+              },
+              {
+                  "type": "text",
+                  "id": "collection_hover_title",
+                  "label": "Collection Hover Title",
+                  "default": "+ Store"
+              },
+              {
+                "type": "url",
+                "id": "collection_link",
+                "label": "Collection URL"
+              }
+          ]
+       },
+	   {
+          "type": "collection_grid_3",
+          "name": "Collection Grid 3",
+		   "settings": [
+            {
+              "type": "image_picker",
+              "id": "custom_collection_img",
+              "label": "Collection Banner Image",
+              "info": "Recommended Size: 285 x 285 px"
+              },
+              {
+                "type": "textarea",
+                "id": "collection_name",
+                "label": "Collection Name",
+                "default": "Women"
+              },
+              {
+                  "type": "text",
+                  "id": "collection_hover_title",
+                  "label": "Collection Hover Title",
+                  "default": "+ Store"
+              },
+              {
+                "type": "url",
+                "id": "collection_link",
+                "label": "Collection URL"
+              }
+			  
+          ]
+       },
+	   {
+          "type": "section_color_option",
+          "name": "Section Color Options",
+		  "limit": 1,
+          "settings": [
+			{
+			  "type": "color",
+			  "id": "title_color",
+			  "label": "Title Color",
+			  "default": "#333"
+			},
+			{
+			  "type": "color",
+			  "id": "title_hover_color",
+			  "label": "Title Hover Color",
+			  "default": "#d3122a"
+			}
+          ]
+       },
+	   {
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#ffffff"
+			}
+          ]
+       }
+	],
+	"presets": [
+		{
+		  "name": "Custom Collection Banner Masonry",
+		  "category": "5. Collection Banner",
+			"blocks":[
+				{
+					"type": "collection_grid_6"
+				},
+				{
+					"type": "collection_grid_small_6"
+				},
+				{
+					"type": "collection_grid_6"
+				},
+				{
+					"type": "collection_grid_3"
+				},
+				{
+					"type": "collection_grid_3"
+				}
+			]
+		}
+	]
+  }
+{% endschema %}

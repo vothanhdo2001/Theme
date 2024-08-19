@@ -1,0 +1,166 @@
+<ul>
+  {%- for block in section.blocks -%}
+  	{%- case block.type -%}
+      {%- when 'singleMenu' -%}
+  	  <li><a href="{{ block.settings.menuItemUrl }}">{{ block.settings.menuItemText }}</a></li>
+  	  {%- when 'logo' -%}
+  	  <li class="menu__logo">
+        {%- if block.settings.logo -%}
+        <a href="{{ routes.root_url }}" class="theme-logo">
+          <img src="{{ block.settings.logo | img_url: '300x300' }}" alt="{{ block.settings.logo.alt | default: shop.name }}">
+        </a>
+        {%- else -%}
+        <a href="{{ routes.root_url }}">
+          {{ shop.name }}
+        </a>
+        {%- endif -%}
+  	  </li>
+      {%- when 'dropdown' -%}
+      {% assign sub_menu = block.settings.subMenu %}
+      <li {% if sub_menu != blank %}class="menu-item-has-children"{% endif %}><a href="{{ block.settings.menuItemUrl }}">{{ block.settings.menuItemText }}</a>
+        <ul class="sub-menu">
+          {% for link in linklists[sub_menu].links %}
+          <li class="drop_item"><a href="{{ link.url }}"> {{ link.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </li>
+  	  {%- when 'multi-level' -%}
+      {% assign sub_menu = block.settings.multiLevel %}
+      <li {% if sub_menu != blank %}class="menu-item-has-children"{% endif %}><a href="{{ block.settings.menuItemUrl }}">{{ block.settings.menuItemText }}</a>
+        <ul class="sub-menu multi-sub-menu">
+          {% for link in linklists[sub_menu].links %}
+          <li class="multi_item {% if link.links != blank %}single-column-has-children{% endif %}"><a href="{{ link.url }}"> {{ link.title }}</a>
+          	{%- if link.links != blank -%}
+            <ul class="multilevel-submenu">
+              {%- for child_link in link.links -%} 
+              <li class="multi_item {% if child_link.links != blank %}single-column-has-children{% endif %}"><a href="{{ child_link.url }}">{{ child_link.title }}</a>
+              	{%- if child_link.links != blank -%}
+                	<ul class="multilevel-submenu level__fourth">
+                      	{%- for grand_child_link  in child_link.links -%}
+                      	<li><a href="{{ grand_child_link.url }}">{{ grand_child_link.title }}</a></li>
+                      	{%- endfor -%}
+                	</ul>
+                {%- endif -%}
+              </li>
+              {%- endfor -%}              
+            </ul>
+            {%- endif -%}
+          </li>
+          {% endfor %}
+        </ul>
+      </li>
+      {%- when 'megaMenu' -%}
+      {% assign mega_menu = block.settings.MegaMenu %}
+      <li {% if mega_menu != blank %}class="menu-item-has-children"{% endif %}><a href="{{ block.settings.menuItemUrl }}">{{ block.settings.menuItemText }}</a>
+        <ul class="sub-menu">
+          {% for link in linklists[mega_menu].links %}
+          <li class="mega_dropdown"><a class="mega-column-title" href="{{ link.url }}"> {{ link.title }}</a>
+          	{%- if link.links != blank -%}
+            	<ul class="mega-sub-menu">
+                  	{%- for child_link in link.links -%} 
+                  	<li {% if child_link.links != blank %}class="single-column-has-children"{% endif %}><a href="{{ child_link.url }}">{{ child_link.title }}</a>
+                  		{%- if child_link.links != blank -%}
+                      		<ul class="mega-sub-level2">
+                              {%- for grandchild_link  in child_link.links -%}
+                              <li><a href="{{ grandchild_link.url }}">{{ grandchild_link.title }}</a></li>
+                              {%- endfor -%}
+                            </ul>
+                  		{%- endif -%}
+                  	</li>
+                  	{%- endfor -%}
+                </ul> 
+            {%- endif -%}
+          </li>
+          {% endfor %}
+          {%- if block.settings.megamenu_gallery -%}
+          <li class="mega_dropdown mega_gallery">
+            {%- if block.settings.megamenu_gallery_type == "banner" -%}
+            <div class="mega_menu_cat_banner" id="block-{{ block.id }}">
+              <a href="{{ block.settings.mega_cat_banner_link }}">
+                {%- if block.settings.cat_banner_image != blank -%}
+                {%- render 'lazyload_image_src',
+                        image: block.settings.cat_banner_image,
+                        size: 'master' -%}
+                {%- else -%}
+                {%- render 'svg_placholder', param: 'image', size: '260x350' -%}
+           		 {%- endif -%}
+                <div class="mega_banner_content">
+                  {%- if block.settings.mega_banner_title1 != blank -%}
+                  <div class="title1">{{ block.settings.mega_banner_title1 }}</div>
+                  {%- endif -%}
+                  {%- if block.settings.mega_banner_title2 != blank -%}
+                  <div class="title2">{{ block.settings.mega_banner_title2 }}</div>
+                  {%- endif -%}
+                  {%- if block.settings.mega_banner_content != blank -%}
+                  <div class="content">{{ block.settings.mega_banner_content }}</div>
+                  {%- endif -%}
+                  {%- if block.settings.mega_banner_btn != blank -%}
+                  <p class="banner__btn">{{ block.settings.mega_banner_btn }}</p>
+                  {%- endif -%}
+                </div>
+              </a>
+            </div>
+            {%- elsif block.settings.megamenu_gallery_type == "product" -%}
+            <div class="product_area" id="block-{{ block.id }}">
+              {%- if block.settings.menu_product_title != blank -%}
+              <div class="product_menu_title">{{ block.settings.menu_product_title }}</div>
+              {%- endif -%}
+
+              {%- capture data_owl_activation -%}
+              data-owl-carousel='{
+              "margin":0,
+              "loop": true,
+              "nav":true,
+              "autoplay": false,
+              "autoplayTimeout": 5000,
+              "dots": false,
+              "items":1,
+              {%- if settings.rtl_enable -%}
+              "rtl": true, 
+              {%- endif -%}
+              "navText": ["<i class=&#x27;ti-angle-left&#x27;></i>","<i class=&#x27;ti-angle-right&#x27;></i>"]
+              }'
+              {%- endcapture -%}
+
+              {%- assign product_handler = collections[block.settings.menu_product_cat_handle_id] -%}
+              <div class="menu_product_contain owl-carousel" {{ data_owl_activation }}>
+                {%- for product in product_handler.products -%}
+                <div class="menu_sin_product">
+                  <a class="image-wrap" href="{{ product.url | within: collection }}">
+                    <img class="responsive-image__image lazyload"
+                         data-src="{{ product.featured_image.src | img_url: '220x240', crop: 'center' }}"
+                         data-widths="[180,360,540,720,900,1080,1296,1512,1728,1944,2160,2376,2592,2808,3024]"
+                         data-aspectratio="{{ product.featured_image.aspect_ratio }}"
+                         data-sizes="auto"
+                         tabindex="-1"
+                         alt="{{ product.featured_image.alt | escape }}">
+                    <noscript>
+                      <img src="{{ product.featured_image | img_url: 'master' }}" alt="{{ product.featured_image.alt | escape }}">
+                    </noscript>
+                  </a>	
+                  {%- assign product_title_trim = block.settings.product_title_trim -%}
+                  <div class="product-title"><a href="{{ product.url | within: collection }}">{{ product.title | truncatewords: product_title_trim, "" }}</a></div>
+                  <div class="product__price">
+                    {{ product.variants.first.price | money }}
+                    {%- if product.variants.first.compare_at_price > product.variants.first.price -%}
+                    <div class="main-price discounted ">{{ product.variants.first.compare_at_price | money }}</div>
+                    {%- endif -%}
+                  </div>
+                </div>
+                {%- endfor -%}
+              </div>
+            </div>
+            {%- endif -%}
+          </li>
+          {%- endif -%}
+        </ul>
+      </li>
+  {%- endcase -%}
+  {%- endfor -%}  
+</ul>
+<script>
+  /* Mega Menu */
+  $('.mega_dropdown').parent('ul').addClass('mega-menu');
+  $('.drop_item').parent('ul').addClass('single-column-menu');
+  $('.multi_item').parent('ul').addClass('single-column-menu');
+</script>

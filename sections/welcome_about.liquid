@@ -1,0 +1,351 @@
+{%- capture html -%}
+{%- assign varId = section.settings -%}
+<div class="welcome_about mt-100 mb-100 mt-sm-80" id="section-{{ section.id }}">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="welcome_text_innner text-center">
+          {%- if varId.welcome_image_enable -%}
+          <div class="welcome_image">
+            {%- if section.settings.about_img != blank  -%}            
+              {%- render 'lazyload_image_src',
+                	  image: section.settings.about_img,
+                      size: '122x122', crop: 'center' -%}
+            
+            {%- else -%}
+            <img class="lazyload" data-src="https://via.placeholder.com/122x122" alt="">
+            {%- endif -%}
+          </div>
+          {%- endif -%}
+          {%- if varId.welcome_title != blank -%}
+          <h2 class="welcome_title mb-25">{{ varId.welcome_title }}</h2>
+          {%- endif -%}
+          {%- if varId.welcome_text != blank -%}
+          <p class="welcome_text mb-30">{{ varId.welcome_text }}</p>
+          {%- endif -%}
+          {%- if varId.welcome_btn_text != blank -%}
+          <a href="{{ varId.welcome_btn_link }}" class="phoone-button phoone-button-3 phoone-button--medium">{{ varId.welcome_btn_text }}</a>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+
+{%- render 'section_typography' -%}
+
+{%- capture css -%}
+<style>
+  {%- for block in section.blocks -%}
+  {%- assign schema = block.settings -%}
+  {%- case block.type -%}
+  {%- when 'content_color_options' -%}
+  #section-{{ section.id }} .welcome_text_innner > h2{
+    color: {{ schema.title_color }}
+  }
+  #section-{{ section.id }} .welcome_text_innner > p{
+    color: {{ schema.description_color }}
+  }
+  #section-{{ section.id }} .phoone-button-3{
+    color: {{ schema.button_color }} !important;
+    background-color: {{ schema.button_bg_color }};
+  }
+  #section-{{ section.id }} .phoone-button-3:hover{
+    color: {{ schema.button_hover_color }} !important;
+    background-color: {{ schema.button_hover_bg_color }};
+  }
+  {%- endcase -%}
+  {%- endfor -%}
+</style>
+{%- endcapture -%}
+
+{{ css | strip_newlines
+       | replace: '  ', '' 
+       | replace: ': ', ':'
+       | replace: ' {', '{'
+}}
+
+
+{% schema %}
+  {
+    "name": "Welcome About",
+    "settings": [
+		{
+		  "type": "header",
+          "content": "About Image"
+        },
+		{
+          "type": "checkbox",
+          "id": "welcome_image_enable",
+          "label": "Welcome I mage enable",  
+          "default": true
+      	},
+		{
+          "type": "image_picker",
+          "id": "about_img",
+          "label": "About Image",
+          "info": "Recommended Size: 122 x 122 px"
+        },
+		{
+		  "type": "header",
+          "content": "Welcome Content"
+        },
+		{
+          "type": "textarea",
+          "id": "welcome_title",
+          "label": "Welcome Title",
+          "default": "Living out every single day "
+        },
+        {
+          "type": "textarea",
+          "id": "welcome_text",
+          "label": "Welcome Content",
+          "default": "Take part in our summer parties, drink out from shiny glasses with juicy fresh smoothies specially made just for you."
+        },
+		{
+          "type": "text",
+          "id": "welcome_btn_text",
+          "label": "Button Text",
+          "default": "Shop Now"
+        },
+		{
+          "type": "url",
+          "id": "welcome_btn_link",
+          "label": "URL"
+        }
+    ],
+	"blocks": [
+		{
+          "type": "content_color_options",
+          "name": "Section Color Options",
+		  "limit": 1,
+          "settings": [
+			{
+			  "type": "color",
+			  "id": "title_color",
+			  "label": "Title Color",
+			  "default": "#404969"
+			},
+			{
+			  "type": "color",
+			  "id": "description_color",
+			  "label": "Description Color",
+			  "default": "#777"
+			},
+			{
+              "type": "header",
+              "content": "Phoone Button"
+            },
+			{
+			  "type": "color",
+			  "id": "button_bg_color",
+			  "label": "Button Bg Color",
+			  "default": "#e75e47"
+			},
+			{
+			  "type": "color",
+			  "id": "button_color",
+			  "label": "Button Text Color",
+			  "default": "#ffffff"
+			},
+			{
+			  "type": "color",
+			  "id": "button_hover_bg_color",
+			  "label": "Button Hover Bg Color",
+			  "default": "#404969"
+			},
+			{
+			  "type": "color",
+			  "id": "button_hover_color",
+			  "label": "Button Hover Text Color",
+			  "default": "#fff"
+			}
+          ]
+       },
+		{
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#ffffff"
+			}
+          ]
+       }
+	],
+	"presets": [
+		{
+		  "name": "Welcome Section",
+		  "category": "9.5 Theme New Features"
+		}
+	]
+  }
+{% endschema %}

@@ -1,0 +1,64 @@
+<div class="single-slider-post single-slider-post--list">
+
+  {% if article.image and section.settings.post_thumbnail_enable %}
+  <div class="single-slider-post__image single-slider-post--list__image mb-30">
+    <a href="{{ article.url }}">
+       {%- render 'lazyload_image_src',
+                image: article,
+        		size: '370x200', crop: 'center' -%}
+    </a>
+  </div>
+  {% endif %}
+  
+  <div class="single-slider-post__content single-slider-post--list__content">
+    
+     {% if section.settings.post_author_enable or section.settings.post_publish_time_enable or section.settings.post_comment_enbale %}
+    <div class="post-info d-flex flex-wrap align-items-center mb-10">
+      
+      {% if section.settings.post_author_enable %}
+      <div class="post-user  pr-30">
+        <i class="ion-android-person"></i><p><span>{{ section.settings.author_title }}</span> {{ article.author }}</p>
+      </div>
+      {% endif %}
+      
+    
+      {% if section.settings.post_publish_time_enable %}
+      <div class="post-date mb-0 pr-30">
+        <i class="ion-android-calendar"></i>
+        <p><time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: format: 'month_day_year' }}</time></p>
+      </div>
+      {% endif %}
+      
+      {% if blog.comments_enabled? and section.settings.post_comment_enbale %}
+      <div class="post-comment pr-30">
+        <i class="ion-ios-chatbubble-outline"></i>
+        <a href="{{ article.url }}#comments">
+          {{ 'blogs.comments.with_count' | t: count: article.comments_count }}
+        </a>
+      </div>
+      {% endif %}
+    </div>
+    
+    {% endif %}
+    
+    {% if section.settings.post_title_enable %}
+    <h2 class="post-title"><a href="{{ article.url }}">{{ article.title }}</a></h2>
+    {% endif %}
+
+    {% assign contentlen = section.settings.post_content_len %}
+    {% if section.settings.post_content_enbale %}
+    {% if article.excerpt.size > 0 %}
+    {{ article.excerpt }}
+    {% else %}
+    <p class="post-excerpt">{{ article.content | strip_html | truncatewords: contentlen }}</p>
+    {% endif %}
+    {% endif %}
+    
+    
+     {% if section.settings.post_readmore_btn_enbale %}
+    <a class="blog-readmore-btn" href="{{ article.url }}">{{ section.settings.read_more_button | default: 'read more' }}</a>
+    {% endif %}
+    
+
+  </div>
+</div>

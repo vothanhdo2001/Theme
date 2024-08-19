@@ -1,0 +1,38 @@
+<ul>
+  {%- assign cat_menu = section.settings.cat_menu_handle -%}
+  {%- if cat_menu != blank -%}
+  {%- for link in linklists[cat_menu].links -%}
+  {%- assign childlink_handle = link.title | handle -%}
+  {% if linklists[childlink_handle] and linklists[childlink_handle].links.size > 0 %}
+  <li class="sub_has_children" ><a href="{{ link.url }}">{{ link.title }}</a>
+  	<ul class="cat_sub_menu ssub_menu">
+      {%- for childlink in linklists[childlink_handle].links -%}
+      {%- assign grand_childlink_handle = childlink.title | handle -%}
+      {% if linklists[grand_childlink_handle] and linklists[grand_childlink_handle].links.size > 0 -%}
+      <li class="mega_dropdown">
+        <a class="mega-column-title" href="{{ childlink.url }}">{{ childlink.title }}</a>
+        <ul class="mega-sub-menu ssub_menu" >
+          {%- for grand_childlink_handle in linklists[grand_childlink_handle].links -%}
+          <li><a href="{{ grand_childlink_handle.url }}">{{ grand_childlink_handle.title }}</a></li>
+          {%- endfor -%}
+        </ul> 
+      </li> 
+      {%- else -%}
+      <li class="drop_item"><a href="{{ childlink.url }}">{{ childlink.title }}</a></li>
+      {% endif %}
+      {%- endfor -%}
+    </ul> 
+  </li>
+  {%- else -%}
+  <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+  {%- endif -%}
+  {%- endfor -%}
+  {%- else -%}
+   <li><a href="#">Demo Item 1</a></li>
+   <li><a href="#">Demo Item 2</a></li>
+   <li><a href="#">Demo Item 3</a></li>
+  {%- endif -%}
+  
+</ul>
+
+

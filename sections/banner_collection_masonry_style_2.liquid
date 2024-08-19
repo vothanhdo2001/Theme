@@ -1,0 +1,837 @@
+{%- capture html -%}
+<div data-section2="RevolutionmasornyBanner" data-section="BannerSection">
+{% if section.settings.collection_masonry_style_2_header %}
+<div class="cosmetics-home-intro-area mb-70" id="section-title-{{ section.id }}">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class=" {% if section.settings.section_header_img  %} col-md-6 {% else %} col-12 {% endif %} mb-30">
+        <div class="cosmetics-home-intro">
+          {% if section.settings.section_subtitle != blank %}
+          <p class="label">{{ section.settings.section_subtitle }}</p>
+          {% endif %}
+
+          {% if section.settings.section_title != blank %}
+          <h2 class="title">{{ section.settings.section_title }}</h2>
+          {% endif %}
+
+          {% if section.settings.section_description != blank %}
+          <p class="description">{{ section.settings.section_description }}</p>
+          {% endif %}
+          
+          {% if section.settings.section_btn_text != blank %}
+          <a href="{{ section.settings.section_btn_link }}" class="phoone-shop-link">{{ section.settings.section_btn_text }}</a>
+          {% endif %}
+          
+        </div>
+      </div>
+      {% if section.settings.section_header_img  %}
+      <div class="col-md-6 pl-60 pl-sm-15 pl-xs-15 pl-xxs-15 mb-30">
+        <div class="single-banner-image text-center text-md-right">
+          <img src="{% if section.settings.section_header_img_thumb != blank %}{{ section.settings.section_header_img_thumb | img_url: '470x570', crop: 'bottom' }} {% else %} https://via.placeholder.com/470x570 {% endif %}" data-src="{% if section.settings.section_header_img_thumb != blank %}{{ section.settings.section_header_img_thumb | img_url: '470x570', crop: 'bottom' }} {% else %} https://via.placeholder.com/470x570 {% endif %}" {%- if section.settings.section_header_img_thumb != blank -%} data-srcset="{%- render 'layload_datasrc', datascrc: section.settings.section_header_img_thumb , dataimgsize: '470x570' -%}" {%- endif -%} class="img-fluid lazyload" alt="{{ section.settings.section_header_img_thumb.alt }}">
+        </div>
+      </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<div class="cosmetics-category-area mb-70 mb-md-60 mb-sm-60" id="section-{{ section.id }}">
+  <div class="container">
+    <div class="row">
+      {% for block in section.blocks %}
+      
+      
+      
+      {% assign img_loader = 'dummy.png' | asset_img_url: 'master' %}
+	  {% assign img_lazy_loader = 'transparent.png' | asset_img_url: 'master' %}
+      {% assign cat_collection = collections[block.settings.categegory_handle] %}
+      
+      {%- case block.type -%}
+      {% when 'left_small_banner' %}
+      <div class="col-lg-4 offset-lg-1 col-md-6">
+        <!--=======  single category  =======-->
+
+        <div class="single-category single-category--cosmetics-home single-category--one">
+
+          <div class="single-category__image single-category__image--one">
+            <a href="{{ cat_collection.url }}">
+              
+              {% if block.settings.collection_img == 'default' %}
+              {%- if  cat_collection.image.src != blank -%}
+              {%- render 'lazyload_image_src',
+                	  image: cat_collection.image.src,
+              		  size: '745x745' -%}
+              {%- else -%}
+              {%- render 'svg_placholder', param: 'collection', size: '745x745' -%}
+              {%- endif -%}
+              {% elsif block.settings.collection_img == 'custom' %}
+              {%- if block.settings.custom_collection_img != blank -%}
+              {%- render 'lazyload_image_src',
+                	  image: block.settings.custom_collection_img,
+              		  size: '745x745' -%}
+              {%- else -%}
+              {%- render 'svg_placholder' with param: 'collection', size: '745x745' -%}
+              {%- endif -%}
+              
+              {% endif %}
+              
+            </a>
+          </div>
+
+          <div class="single-category__content single-category__content--one mt-25 mb-25">
+            <div class="title">
+              <p>{{ cat_collection.title | default: "Collection Title" }}</p>
+              <a href="{{ cat_collection.url }}">{{ block.settings.collection_hover_title | default: '+ Online store' }}</a>
+            </div>
+            <p class="product-count">{{ cat_collection.all_products_count }}</p>
+          </div>
+
+        </div>
+
+        <!--=======  End of single category  =======-->
+      </div>
+      {% when 'revoultion_banner' %}
+      <div class="col-lg-6 offset-lg-1 col-md-6 mt-100 mt-lg-80 mt-md-70 mt-sm-50 mt-xs-50">
+
+        <div class="revolution-banner-area revolution-js">
+          <div id="rev_slider_18_1" class="rev_slider fullwidthabanner" style="display:none;" data-version="5.4.7">
+            <ul>	<!-- SLIDE  -->
+              <li data-index="rs-48" data-transition="fade" data-slotamount="default" data-hideafterloop="0" data-hideslideonmobile="off"  data-easein="default" data-easeout="default" data-masterspeed="300"  data-rotate="0"  data-saveperformance="off"  data-title="Slide" data-param1="" data-param2="" data-param3="" data-param4="" data-param5="" data-param6="" data-param7="" data-param8="" data-param9="" data-param10="" data-description="">
+                <!-- MAIN IMAGE -->
+                <img src="{{ img_lazy_loader }}"  alt=""  data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-no-retina>
+                <!-- LAYERS -->
+
+                <!-- LAYER NR. 1 -->
+                <div class="tp-caption tp-shape tp-shapewrapper  tp-resizeme" 
+                     id="slide-48-layer-2" 
+                     data-x="['left','left','left','left']" data-hoffset="['51','51','105','105']" 
+                     data-y="['top','top','top','top']" data-voffset="['131','131','129','129']" 
+                     data-width="300"
+                     data-height="300"
+                     data-whitespace="nowrap"
+
+                     data-type="shape" 
+                     data-responsive_offset="on" 
+
+                     data-frames='[{"delay":310,"speed":1320,"frame":"0","from":"z:0;rX:0;rY:0;rZ:0;sX:0.8;sY:0.8;skX:0;skY:0;opacity:0;","to":"o:1;","ease":"Power4.easeOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+                     data-textAlign="['inherit','inherit','inherit','inherit']"
+                     data-paddingtop="[0,0,0,0]"
+                     data-paddingright="[0,0,0,0]"
+                     data-paddingbottom="[0,0,0,0]"
+                     data-paddingleft="[0,0,0,0]"
+
+                     style="z-index: 5;background-color:rgb(242,242,242);border-radius:150px 150px 150px 150px;"> </div>
+
+                <!-- LAYER NR. 2 -->
+                <div class="tp-caption   tp-resizeme" 
+                     id="slide-48-layer-1" 
+                     data-x="['left','left','left','left']" data-hoffset="['0','0','52','52']" 
+                     data-y="['top','top','top','top']" data-voffset="['-5','-5','11','11']" 
+                     data-width="none"
+                     data-height="none"
+                     data-whitespace="nowrap"
+
+                     data-type="image" 
+                     data-responsive_offset="on" 
+
+                     data-frames='[{"delay":550,"speed":1860,"frame":"0","from":"z:0;rX:0;rY:0;rZ:0;sX:0.9;sY:0.9;skX:0;skY:0;opacity:0;","to":"o:1;","ease":"Power2.easeOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+                     data-textAlign="['inherit','inherit','inherit','inherit']"
+                     data-paddingtop="[0,0,0,0]"
+                     data-paddingright="[0,0,0,0]"
+                     data-paddingbottom="[0,0,0,0]"
+                     data-paddingleft="[0,0,0,0]"
+
+                     style="z-index: 6;">
+                  <div class="rs-looped rs-slideloop"  data-easing="" data-speed="2" data-xs="0" data-xe="0" data-ys="0" data-ye="20"><img src="{% if block.settings.rev_banner_img != blank %}{{ block.settings.rev_banner_img | img_url: '456x582'  }} {% else %}  https://via.placeholder.com/456x582 {% endif %} " alt="" data-ww="['456px','456px','456px','456px']" data-hh="['582px','582px','582px','582px']" data-no-retina> </div></div>
+
+                <!-- LAYER NR. 3 -->
+                <div class="tp-caption   tp-resizeme" 
+                     id="slide-48-layer-3" 
+                     data-x="['left','left','left','left']" data-hoffset="['331','331','392','392']" 
+                     data-y="['top','top','top','top']" data-voffset="['224','224','226','226']" 
+                     data-width="none"
+                     data-height="none"
+                     data-whitespace="nowrap"
+
+                     data-type="text" 
+                     data-responsive_offset="on" 
+
+                     data-frames='[{"delay":550,"speed":1850,"frame":"0","from":"y:50px;opacity:0;","to":"o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"}]'
+                     data-textAlign="['inherit','inherit','inherit','inherit']"
+                     data-paddingtop="[0,0,0,0]"
+                     data-paddingright="[0,0,0,0]"
+                     data-paddingbottom="[0,0,0,0]"
+                     data-paddingleft="[0,0,0,0]"
+
+                     style="z-index: 7; white-space: nowrap; font-size: 34px; line-height: 48px; font-weight: 400; color: #333333; letter-spacing: 0px;font-family:Work Sans;">{{ block.settings.rev_banner_title }}</div>
+
+                <!-- LAYER NR. 4 -->
+                <div class="tp-caption button-under-line rev-btn " 
+                     id="slide-48-layer-4" 
+                     data-x="['left','left','left','left']" data-hoffset="['336','336','397','397']" 
+                     data-y="['top','top','top','top']" data-voffset="['344','344','353','353']" 
+                     data-width="none"
+                     data-height="none"
+                     data-whitespace="nowrap"
+
+                     data-type="button" 
+                     data-responsive_offset="on" 
+                     data-responsive="off"
+                     data-frames='[{"delay":1230,"speed":1840,"frame":"0","from":"y:50px;opacity:0;","to":"o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;","ease":"Power3.easeInOut"},{"frame":"hover","speed":"300","ease":"Linear.easeNone","to":"o:1;rX:0;rY:0;rZ:0;z:0;","style":"c:rgb(211,18,42);bc:rgb(211,18,42);"}]'
+                     data-textAlign="['inherit','inherit','inherit','inherit']"
+                     data-paddingtop="[0,0,0,0]"
+                     data-paddingright="[0,0,0,0]"
+                     data-paddingbottom="[3,3,0,0]"
+                     data-paddingleft="[0,0,0,0]"
+
+                     style="z-index: 8; white-space: nowrap; border-color:rgb(51,51,51);outline:none;box-shadow:none;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;cursor:pointer;"> <a class="revslider-button-red" href="{{ block.settings.banner_btn_link }}">{{ block.settings.banner_btn_text }}</a> </div>
+              </li>
+            </ul>
+            <div class="tp-bannertimer tp-bottom" style="visibility: hidden !important;"></div>	
+          </div>
+        </div>
+
+        <!--=======  End of revulation banner area  =======-->
+      </div>
+      {% when 'left_large_banner' %}
+      <div class="col-lg-5 offset-lg-1 col-md-6 mt-180 mt-lg-80 mt-md-30 mt-sm-70 mt-xs-70 mt-xxs-70">
+        <!--=======  single category  =======-->
+
+        <div class="single-category single-category--cosmetics-home single-category--one">
+
+          <div class="single-category__image single-category__image--one">
+            <a href="{{ cat_collection.url }}">
+              {% if block.settings.collection_img == 'default' %}
+              {%- if  cat_collection.image.src != blank -%}
+              {%- render 'lazyload_image_src',
+                	  image: cat_collection.image.src,
+              		  size: '745x745' -%}
+              {%- else -%}
+              {%- render 'svg_placholder', param: 'collection', size: '745x745' -%}
+              {%- endif -%}
+              {% elsif block.settings.collection_img == 'custom' %}
+              {%- if block.settings.custom_collection_img != blank -%}
+              {%- render 'lazyload_image_src',
+                	  image: block.settings.custom_collection_img,
+              		  size: '745x745' -%}
+              {%- else -%}
+              {%- render 'svg_placholder' with param: 'collection', size: '745x745' -%}
+              {%- endif -%}
+              
+              {% endif %}
+              
+            </a>
+          </div>
+
+          <div class="single-category__content single-category__content--one mt-25 mb-25">
+            <div class="title">
+              <p>{{ cat_collection.title | default: "Collection Title" }}</p>
+              <a href="{{ cat_collection.url }}">{{ block.settings.collection_hover_title | default: '+ Online store' }}</a>
+            </div>
+            <p class="product-count">{{ cat_collection.all_products_count }}</p>
+          </div>
+
+        </div>
+
+        <!--=======  End of single category  =======-->
+      </div>
+      {% when 'right_banner' %}
+      <div class="col-lg-4 offset-lg-2 col-md-6 mt-360 mt-lg-100 mt-md-80 mt-sm-70 mt-xs-70 mt-xxs-70">
+        <!--=======  single category  =======-->
+
+        <div class="single-category single-category--cosmetics-home single-category--one">
+
+          <div class="single-category__image single-category__image--one">
+            <a href="{{ cat_collection.url }}">
+              {% if block.settings.collection_img == 'default' %}
+              {%- if  cat_collection.image.src != blank -%}
+              {%- render 'lazyload_image_src',
+                	  image: cat_collection.image.src,
+              		  size: '745x745' -%}
+              {%- else -%}
+              {%- render 'svg_placholder', param: 'collection', size: '745x745' -%}
+              {%- endif -%}
+              {% elsif block.settings.collection_img == 'custom' %}
+              {%- if block.settings.custom_collection_img != blank -%}
+              {%- render 'lazyload_image_src',
+                	  image: block.settings.custom_collection_img,
+              		  size: '745x745' -%}
+              {%- else -%}
+              {%- render 'svg_placholder' with param: 'collection', size: '745x745' -%}
+              {%- endif -%}
+              
+              {% endif %}
+              
+            </a>
+          </div>
+
+          <div class="single-category__content single-category__content--one mt-25 mb-25">
+            <div class="title">
+              <p>{{ cat_collection.title | default: "Collection Title" }}</p>
+              <a href="{{ cat_collection.url }}">{{ block.settings.collection_hover_title | default: '+ Online store' }}</a>
+            </div>
+            <p class="product-count">{{ cat_collection.all_products_count }}</p>
+          </div>
+        </div>
+
+        <!--=======  End of single category  =======-->
+      </div>
+      {%- endcase -%}
+      {% endfor %}
+
+    </div>
+  </div>
+</div>
+</div>
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+
+{%- render 'section_typography' -%}
+
+{%- capture css -%}
+<style>
+  #section-title-{{ section.id }}{
+    margin-top: {{ section.settings.section_margin_top }}px !important;
+    margin-bottom: {{ section.settings.section_margin_bottom }}px !important;
+  }
+  @media (min-width: 768px) and (max-width: 991px) {
+    #section-title-{{ section.id }}{
+      margin-top: {{ section.settings.section_margin_top_md }}px !important;
+      margin-bottom: {{ section.settings.section_margin_bottom_md }}px !important;
+    }
+  }
+  @media (max-width: 767px) {
+    #section-title-{{ section.id }}{
+      margin-top: {{ section.settings.section_margin_top_xs }}px !important;
+      margin-bottom: {{ section.settings.section_margin_bottom_xs }}px !important;
+    }
+  }
+
+  {%- for block in section.blocks -%}
+  {%- case block.type -%}
+  
+  {%- when 'sectionColorOpt' -%}
+  
+  #section-{{ section.id }} .single-category__content .title a {
+    color: {{ block.settings.button_color }};
+  }
+  #section-{{ section.id }} .single-category__content .title p {
+    color: {{ block.settings.banner_title }};
+  }
+  #section-{{ section.id }} .single-category__content .product-count {
+    color: {{ block.settings.Proudct_count_number }};
+  }
+  #section-{{ section.id }} .single-category__content .product-count:before {
+    background-color: {{ block.settings.product_divider }};
+  }
+  
+  {%- endcase -%}
+  {%- endfor -%}
+
+  
+</style>
+{%- endcapture -%}
+{{ css | strip_newlines
+       | replace: '  ', '' 
+       | replace: ': ', ':'
+       | replace: ' {', '{'
+}}
+
+{% schema %}
+  {
+    "name": "Collection Masonry Style2",
+    "settings": [
+		{
+          "type": "header",
+          "content": "Masonry Collectin Header"
+        },
+        {
+          "type": "checkbox",
+          "id": "collection_masonry_style_2_header",
+          "label": "Section Header Enable",
+          "default": true
+        },
+		{
+          "type": "textarea",
+          "id": "section_subtitle",
+          "label": "Section Subtitle",
+          "default": "NEW COLLECTION/"
+        },
+		{
+          "type": "textarea",
+          "id": "section_title",
+          "label": "Section Title",
+          "default": "Professional <br> skin care for you"
+        },
+		{
+          "type": "textarea",
+          "id": "section_description",
+          "label": "Section Description",
+          "default": "Lorem ipsum dolor sit amet, consectetur cing elit. "
+        },
+		{
+          "type": "text",
+          "id": "section_btn_text",
+          "label": "Section Btn Text",
+		  "default": "Learn More"
+        },
+        {
+          "type": "url",
+          "id": "section_btn_link",
+          "label": "Section Button Link"
+        },
+		{
+          "type": "checkbox",
+          "id": "section_header_img",
+          "label": "Section Header Image Enable",
+          "default": true
+        },
+        {
+          "type": "image_picker",
+          "id": "section_header_img_thumb",
+          "label": "Section Header Img Thumb",
+          "info": "Recommended Size: 470 x 570 px"
+        },
+        {
+          "type": "header",
+          "content": "Section Title Margin Options"
+        },
+		{
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 250,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 250,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 70
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 250,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 250,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 70
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 250,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 250,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 70
+			}
+ 	],
+	"blocks": [
+		{
+        "type": "left_small_banner",
+        "name": "Left Small Collection",
+        "settings": [
+            {
+              "type": "collection",
+              "id": "categegory_handle",
+              "label": "Select Collection"
+            },
+			{
+              "type":  "radio",
+              "id":    "collection_img",
+              "label": "Collection Image",
+              "options": [
+                { "value": "default", "label": "Default Collection Thumb" },
+                { "value": "custom", "label": "Custom Collection Thumb" }
+              ],
+              "default":   "default"
+            },
+			{
+              "type": "image_picker",
+              "id": "custom_collection_img",
+              "label": "Custom Collection Image",
+              "info": "Recommended Size: 745 x 745 px"
+            },
+			{
+              "type": "text",
+              "id": "collection_hover_title",
+              "label": "Collection Hover Title",
+              "default": "+ Online Store"
+            }
+			
+          ]
+        },
+		{
+        "type": "revoultion_banner",
+        "name": "Revoultion Banner",
+        "settings": [
+            {
+              "type": "image_picker",
+              "id": "rev_banner_img",
+              "label": "Revoultion Banner Image",
+              "info": "Recommended Size: 456 x 582 px"
+            },
+			{
+              "type": "textarea",
+              "id": "rev_banner_title",
+              "label": "Revoultion Banner Title",
+              "default": "Organic <br> cosmetology "
+            },
+			{
+              "type": "text",
+              "id": "banner_btn_text",
+              "label": "Button Text",
+              "default": "Shop Now"
+            },
+            {
+              "type": "url",
+              "id": "banner_btn_link",
+              "label": "Button Link"
+            }
+          ]
+        },
+		{
+        "type": "left_large_banner",
+        "name": "Left large Collection",
+        "settings": [
+            {
+              "type": "collection",
+              "id": "categegory_handle",
+              "label": "Select Collection"
+            },
+			{
+              "type":  "radio",
+              "id":    "collection_img",
+              "label": "Collection Image",
+              "options": [
+                { "value": "default", "label": "Default Collection Thumb" },
+                { "value": "custom", "label": "Custom Collection Thumb" }
+              ],
+              "default":   "default"
+            },
+			{
+              "type": "image_picker",
+              "id": "custom_collection_img",
+              "label": "Custom Collection Image",
+              "info": "Recommended Size: 745 x 745 px"
+            },
+			{
+              "type": "text",
+              "id": "collection_hover_title",
+              "label": "Collection Hover Title",
+              "default": "+ Online Store"
+            }
+          ]
+        },
+		{
+        "type": "right_banner",
+        "name": "Right Collection Banner",
+        "settings": [
+            {
+              "type": "collection",
+              "id": "categegory_handle",
+              "label": "Select Collection"
+            },
+			{
+              "type":  "radio",
+              "id":    "collection_img",
+              "label": "Collection Image",
+              "options": [
+                { "value": "default", "label": "Default Collection Thumb" },
+                { "value": "custom", "label": "Custom Collection Thumb" }
+              ],
+              "default":   "default"
+            },
+			{
+              "type": "image_picker",
+              "id": "custom_collection_img",
+              "label": "Custom Collection Image",
+              "info": "Recommended Size: 745 x 745 px"
+            },
+			{
+              "type": "text",
+              "id": "collection_hover_title",
+              "label": "Collection Hover Title",
+              "default": "+ Online Store"
+            }
+          ]
+        },
+		{
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#ffffff"
+			}
+          ]
+       },
+	   {
+          "type": "sectionColorOpt",
+          "name": "Section Color Options",
+		  "limit": 1,
+          "settings": [
+			{
+			  "type": "color",
+			  "id": "button_color",
+			  "label": "Banner Button Color",
+			  "default": "#d3122a"
+			},
+			{
+			  "type": "color",
+			  "id": "banner_title",
+			  "label": "Banner Title Color",
+			  "default": "#333"
+			},
+			{
+			  "type": "header",
+			  "content": "Product Count",
+			  "info": "========="
+			},
+			{
+			  "type": "color",
+			  "id": "Proudct_count_number",
+			  "label": "Banner Title Color",
+			  "default": "#777"
+			},
+			{
+			  "type": "color",
+			  "id": "product_divider",
+			  "label": "Product Count Divider Color",
+			  "default": "#ccc"
+			}
+          ]
+       }
+	],
+	"presets": [
+		{
+		  "name": "Style 2 Collection Masonry Banner",
+		  "category": "5. Collection Banner",
+		  "blocks":[
+				{
+					"type": "left_small_banner"
+				},
+				{
+					"type": "revoultion_banner"
+				},
+				{
+					"type": "left_large_banner"
+				},
+				{
+					"type": "right_banner"
+				}
+			]
+		}
+	]
+  }
+{% endschema %}

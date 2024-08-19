@@ -1,0 +1,570 @@
+{%- capture html -%}
+<div class="hover-banner-area mb-50 mb-sm-30" id="section-{{ section.id }}" data-section="BannerSection">
+  <div class="{% if section.settings.container_width == 'container' %} container {% elsif section.settings.container_width == 'fluid' %} container wide {% endif %}">
+    <div class="row">
+      {% for block in section.blocks %}
+      {%- case block.type -%}
+      {% when 'banner_type_1' %}
+      <div id="block-{{ block.id }}" class="col-lg-{{ block.settings.lg_col }} col-md-{{ block.settings.md_col }} mb-30">
+        <!--=======  single banner  =======-->
+
+        <div class="single-banner single-banner--hoverborder">
+          <a class="img_rel" href="{{ block.settings.banner_link }}"  style="padding-top:{{ 1 | divided_by: block.settings.banner_img.aspect_ratio | times: 100}}%;">
+          	{%- if block.settings.banner_img != blank  -%}          
+          		{%- render 'lazyload_aspect_ratio' with image: block.settings.banner_img -%}
+            {%- else -%}
+            {%- render 'svg_placholder' with param: 'image', size: '855x280' -%}
+            {%- endif -%}
+          </a>
+          <div class="banner-content banner-content--middle-white">
+             {{ block.settings.banner_title1 }}
+            <p> {{ block.settings.banner_title2 }}</p>
+          </div>
+        </div>
+
+       <style>#block-{{ block.id }} .single-banner--hoverborder .banner-content--middle-white {color: {{ block.settings.banner_content_color }};}</style>
+      </div>
+      {% when 'banner_type_2' %}
+      <div id="block-{{ block.id }}" class="col-lg-{{ block.settings.lg_col }} col-md-{{ block.settings.md_col }} mb-30">
+        <div class="single-banner single-banner--hoverborder">
+          <a class="img_rel" href="{{ block.settings.banner_link }}"  style="padding-top:{{ 1 | divided_by: block.settings.banner_img.aspect_ratio | times: 100}}%;">
+          	{%- if block.settings.banner_img != blank  -%}          
+          		{%- render 'lazyload_aspect_ratio' with image: block.settings.banner_img -%}
+            {%- else -%}
+            {%- render 'svg_placholder' with param: 'image', size: '855x280' -%}
+            {%- endif -%}
+          </a>
+          <div class="banner-content banner-content--black-left">
+            <p> <span class="big-text">{{ block.settings.banner2_title1 }}</span>  <span class="small-text d-block">{{ block.settings.banner2_title2 }}</span></p>
+          </div>
+        </div>
+        <style>#block-{{ block.id }} .single-banner--hoverborder .banner-content span.big-text {color: {{ block.settings.banner_title_color }};} #block-{{ block.id }} .single-banner--hoverborder .banner-content span.small-text {color: {{ block.settings.banner_content_color }};}</style>
+      </div>
+      {%- endcase -%}
+      {%- endfor -%}
+
+    </div>
+  </div>
+</div>
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+{%- render 'section_typography' -%}
+{%- capture css -%}
+<style>
+  .single-banner--hoverborder:after {
+  	pointer-events: none;
+  }
+</style>
+{%- endcapture -%}
+
+{{ css | strip_newlines
+       | replace: '  ', '' 
+       | replace: ': ', ':'
+       | replace: ' {', '{'
+}} 
+{% schema %}
+  {
+    "name": "Simple Banner With Text",
+    "settings": [
+		{
+          "type":  "radio",
+          "id":    "container_width",
+          "label": "Container Width",
+          "options": [
+            { "value": "container", "label": "Container" },
+            { "value": "fluid", "label": "Full Width" }
+          ],
+          "default":   "fluid"
+        }
+	],
+	"blocks": [
+		{
+        "type": "banner_type_1",
+        "name": "Banner Type 1",
+        "settings": [
+            {
+              "type": "image_picker",
+              "id": "banner_img",
+              "label": "Banner Image",
+              "info": "Recommended Size: 430 x 610 px"
+            },
+			{
+               "type": "richtext",
+               "id": "banner_title1",
+               "label": "Banner Title 1",
+			  "default": "<p> <strong>10%</strong> off your </p>"
+            },
+			{
+              "type": "textarea",
+              "id": "banner_title2",
+              "label": "Banner Title 2",
+              "default": "next purchase"
+            },
+			{
+                "type": "url",
+                "id": "banner_link",
+                "label": "URL"
+              },
+			{
+                "type": "select",
+                "id": "lg_col",
+                "label": "Medium/Desktop Device Column",
+                "options":[
+                      {
+                          "label": "Gird 12",
+                          "value": "12"
+                      },
+					  {
+                          "label": "Gird 11",
+                          "value": "11"
+                      },
+                      {
+                          "label": "Gird 10",
+                          "value": "10"
+                      },
+					  {
+                          "label": "Gird 9",
+                          "value": "9"
+                      },
+                      {
+                          "label": "Gird 8",
+                          "value": "8"
+                      },
+					  {
+                          "label": "Gird 7",
+                          "value": "7"
+                      },
+					  {
+                          "label": "Gird 6",
+                          "value": "6"
+                      },
+					  {
+                          "label": "Gird 5",
+                          "value": "5"
+                      },
+					  {
+                          "label": "Gird 4",
+                          "value": "4"
+                      },
+					  {
+                          "label": "Gird 3",
+                          "value": "3"
+                      },
+					  {
+                          "label": "Gird 2",
+                          "value": "2"
+                      }
+                  ],
+                  "default": "6"
+              },
+			  {
+                "type": "select",
+                "id": "md_col",
+                "label": "Large/Mac Device Column",
+                "options":[
+                      {
+                          "label": "Gird 12",
+                          "value": "12"
+                      },
+					  {
+                          "label": "Gird 11",
+                          "value": "11"
+                      },
+                      {
+                          "label": "Gird 10",
+                          "value": "10"
+                      },
+					  {
+                          "label": "Gird 9",
+                          "value": "9"
+                      },
+                      {
+                          "label": "Gird 8",
+                          "value": "8"
+                      },
+					  {
+                          "label": "Gird 7",
+                          "value": "7"
+                      },
+					  {
+                          "label": "Gird 6",
+                          "value": "6"
+                      },
+					  {
+                          "label": "Gird 5",
+                          "value": "5"
+                      },
+					  {
+                          "label": "Gird 4",
+                          "value": "4"
+                      },
+					  {
+                          "label": "Gird 3",
+                          "value": "3"
+                      },
+					  {
+                          "label": "Gird 2",
+                          "value": "2"
+                      }
+                  ],
+                  "default": "6"
+              },
+			  
+			  {
+                "type": "header",
+                "content": "Banner Content Color"
+              },
+              {
+                "type": "color",
+                "id": "banner_content_color",
+                "label": "Banner Content Color",
+                "default": "#fff"	
+              }
+            
+          ]
+        },
+		
+		{
+        "type": "banner_type_2",
+        "name": "Banner Type 2",
+        "settings": [
+            {
+              "type": "image_picker",
+              "id": "banner_img",
+              "label": "Banner Image",
+              "info": "Recommended Size: 430 x 610 px"
+            },
+			{
+              "type": "textarea",
+              "id": "banner2_title1",
+              "label": "Banner Title ",
+              "default": "Free shipping"
+            },
+			{
+              "type": "textarea",
+              "id": "banner2_title2",
+              "label": "Banner Small Text",
+              "default": "Free shipping on domestic orders"
+            },
+			{
+                "type": "url",
+                "id": "banner_link",
+                "label": "URL"
+              },
+			{
+                "type": "select",
+                "id": "lg_col",
+                "label": "Medium/Desktop Device Column",
+                "options":[
+                      {
+                          "label": "Gird 12",
+                          "value": "12"
+                      },
+					  {
+                          "label": "Gird 11",
+                          "value": "11"
+                      },
+                      {
+                          "label": "Gird 10",
+                          "value": "10"
+                      },
+					  {
+                          "label": "Gird 9",
+                          "value": "9"
+                      },
+                      {
+                          "label": "Gird 8",
+                          "value": "8"
+                      },
+					  {
+                          "label": "Gird 7",
+                          "value": "7"
+                      },
+					  {
+                          "label": "Gird 6",
+                          "value": "6"
+                      },
+					  {
+                          "label": "Gird 5",
+                          "value": "5"
+                      },
+					  {
+                          "label": "Gird 4",
+                          "value": "4"
+                      },
+					  {
+                          "label": "Gird 3",
+                          "value": "3"
+                      },
+					  {
+                          "label": "Gird 2",
+                          "value": "2"
+                      }
+                  ],
+                  "default": "6"
+              },
+			  {
+                "type": "select",
+                "id": "md_col",
+                "label": "Large/Mac Device Column",
+                "options":[
+                      {
+                          "label": "Gird 12",
+                          "value": "12"
+                      },
+					  {
+                          "label": "Gird 11",
+                          "value": "11"
+                      },
+                      {
+                          "label": "Gird 10",
+                          "value": "10"
+                      },
+					  {
+                          "label": "Gird 9",
+                          "value": "9"
+                      },
+                      {
+                          "label": "Gird 8",
+                          "value": "8"
+                      },
+					  {
+                          "label": "Gird 7",
+                          "value": "7"
+                      },
+					  {
+                          "label": "Gird 6",
+                          "value": "6"
+                      },
+					  {
+                          "label": "Gird 5",
+                          "value": "5"
+                      },
+					  {
+                          "label": "Gird 4",
+                          "value": "4"
+                      },
+					  {
+                          "label": "Gird 3",
+                          "value": "3"
+                      },
+					  {
+                          "label": "Gird 2",
+                          "value": "2"
+                      }
+                  ],
+                  "default": "6"
+              },
+			  
+			  {
+                "type": "header",
+                "content": "Banner Content Color"
+              },
+              {
+                "type": "color",
+                "id": "banner_title_color",
+                "label": "Banner Title Color",
+                "default": "#333333"	
+              },
+              {
+                "type": "color",
+                "id": "banner_content_color",
+                "label": "Banner Content Color",
+                "default": "#777"	
+              }
+            
+          ]
+        },
+		{
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#ffffff"
+			}
+          ]
+       }
+	],
+	"presets": [
+		{
+		  "name": "Simple Banner With Text",
+		  "category": "4. Banner",
+		   "blocks":[
+				{
+					"type": "banner_type_1"
+				},
+				{
+					"type": "banner_type_2"
+				}
+			]
+		}
+	]
+  }
+{% endschema %}

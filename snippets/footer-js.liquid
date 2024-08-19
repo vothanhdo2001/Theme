@@ -1,0 +1,111 @@
+{% capture html %}
+<!-- Ajax Cart js -->
+<script src="{{ 'option_selection.js' | shopify_asset_url }}" defer="defer"></script>
+<script src="{{ 'api.jquery.js' | shopify_asset_url }}" defer="defer"></script>
+<script src="{{ 'cart.api.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'lazysizes.min.js' | asset_url }}" async></script>
+
+<script src="{{ 'bootstrap.min.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'owl.carousel.min.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'tippy.min.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'perfect-scrollbar.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'ajax-mailchimp.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'jquery.dlmenu.js' | asset_url }}" defer="defer"></script>
+
+
+{%- if content_for_layout contains 'data-countdown' or content_for_layout contains 'data-countdown2' or content_for_layout contains 'data-countdown3' -%}
+<script src="{{ 'jquery.countdown.min.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
+
+{%- if template contains 'product' -%}
+<script src="{{ 'jquery.zoom.min.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
+
+{%- if content_for_layout contains 'tilter' -%}
+<script src="{{ 'tilt.jquery.min.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
+
+{%- if content_for_layout contains 'pick_delivery_date' -%}
+<script src="{{ 'jquery-ui.min.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
+
+{%- if content_for_layout contains 'data-fancybox' -%}
+<script src="{{ 'fancyApps.min.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
+
+{%- if content_for_layout contains 'popup-video' -%}
+<script src="{{ 'jquery.magnific.min.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
+
+{%- if content_for_layout contains 'id="instafeed' or content_for_layout contains 'id="instafeed2' -%}
+<script src="{{ 'jquery.instagramFeed.min.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
+
+{%- if content_for_layout contains 'masonry-category-layout' or content_for_layout contains 'masonry-category-layout--creativehome' or content_for_layout contains 'blog-post-wrapper--masonry' -%}
+<script src="{{ 'masonry.min.js' | asset_url }}" ></script>
+{%- endif -%}
+
+{%- if content_for_layout contains 'nice-select' -%}
+<script src="{{ 'nice-select.min.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
+
+{%- if content_for_layout contains 'product-isotope' -%}
+<script src="{{ 'isotope.min.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
+
+{%- if content_for_layout contains 'jarallax' -%}
+<script src="{{ 'jarallax.min.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}  
+
+{%- if content_for_layout contains 'revolution-js' -%}
+<script src="{{ 'revolution-slider.js' | asset_url }}" defer="defer"></script>
+{%- elsif template == 'index' and settings.body_top_slider == true -%}
+<script src="{{ 'revolution-slider.js' | asset_url }}" defer="defer"> </script>
+{%- endif -%}
+<script src="{{ 'theme.min.js' | asset_url }}" defer="defer"></script>
+
+{% endcapture %}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+
+
+{%- comment -%}
+<script src="{{ 'theme.min.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
+{%- endcomment -%}
+
+{% comment %}
+Template-specific js
+{% endcomment %}
+<script>
+  {% if resetPassword %}
+  $(function() {
+    timber.resetPasswordSuccess();
+  });
+  {% endif %}
+</script>
+
+{%- unless settings.product_cart_type == 'without_ajax_cart' -%}
+{%- render 'popup_cart' -%}
+{%- endunless -%}
+
+{%- if settings.ajax_search_enable -%}
+{% render 'ajax-search-bar' %}
+{%- endif -%}
+
+{%- if settings.product_quickview_enalbe -%}
+{% render 'product-quickview' %}
+{%- endif -%}
+ 
+{%- if settings.currency_enable -%}
+{%- render 'currency' -%}
+{%- endif -%}
+
+{%- if settings.theme_custom_script != '' -%}
+{{ settings.theme_custom_script }}
+{%- endif -%}
+
+{%- if settings.product_quickview_enalbe -%}
+<script async>
+$(".cart-plus-minus").prepend('<div class="dec qtybutton">-</div>'),$(".cart-plus-minus").append('<div class="inc qtybutton">+</div>'),$(".qtybutton").on("click",function(){var t=$(this),n=t.parent().find("input").val();if("+"==t.text())var i=parseFloat(n)+1;else if(n>0)i=parseFloat(n)-1;else i=1;t.parent().find("input").val(i)});
+</script>
+{%- endif -%}

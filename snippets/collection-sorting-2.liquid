@@ -1,0 +1,137 @@
+{% if section.settings.tab_bar_enable %}
+<div class="col-6 col-md-3 col-xl-3 col-lg-3 col-sm-2">
+  <!--=======  filter icons  =======-->
+  <div class="filter-icons">
+    <div class="single-icon grid-icons">
+      <a data-target="five-column" href="javascript:void(0)"><i class="ti-layout-grid4-alt"></i></a>
+      <a data-target="four-column" {% unless template == "collection.list" %} class="active" {% endunless %}  href="javascript:void(0)"><i class="ti-layout-grid3-alt"></i></a>
+      <a data-target="three-column" href="javascript:void(0)"><i class="ti-layout-grid2-alt"></i></a>
+      <a data-target="grid-list" {% if template == "collection.list" %} class="active" {% endif %} href="javascript:void(0)"><i class="ti-view-list-alt"></i></a>
+    </div>
+  </div>
+  <!--=======  End of filter icons  =======-->
+</div>
+{% endif %}
+
+<div class="col-6 col-xl-9 col-lg-9 col-md-9 col-sm-10">
+  <!--=======  End of grid icons  =======-->
+  <div class="shopbar_right_info">
+    {% if section.settings.showing_product_counter_enable %}
+    {% assign paginate_checker = paginate.current_page | times: products_limit %}
+    {% if paginate.items > paginate_checker %}
+    {% assign paginate_final = paginate_checker %}
+    {% else %}
+    {% assign paginate_final = paginate.items %}
+    {% endif %}
+
+    {% assign showing_title = section.settings.showing_title_handle | split: "|" %}
+    <div class="showing_result d-none d-lg-block">{{ showing_title | slice: 0 }}  
+      {{ paginate.current_offset | plus: 1 }} - {{ paginate_final }}  
+      {{ showing_title | slice: 1 }}  
+      {{ paginate.items }}  
+      {{ showing_title | slice: 2 }} 
+    </div>
+    {% endif %}
+    
+    
+    {% if sset.show_ajax_paginate %}
+    {% assign ajax_show_title = sset.ajax_show_title_handle | split: "|" %}
+    <div class="product-showing">
+      <p>{{ ajax_show_title | slice: 0 }}     
+        <select name="paginateBy" id="paginateBy" class="collection-sort__input">
+          {% for i in (1..100) %}
+          {% assign v = i | append:'' %}
+          <option value="{{ v }}"
+                  {% if cart.attributes.pagination != blank and cart.attributes.pagination %}
+                  {% if cart.attributes.pagination == v %} selected{% endif %}
+                  {% else %}
+                  {% if i == products_limit %} selected{% endif %}
+                  {% endif %}>
+            {{ i }} 
+          </option>
+          {% endfor %}
+        </select>      
+        <span class="ajax_paginate__text">{{ ajax_show_title | slice: 1, 10 }}</span>
+      </p>
+    </div>{% endif %}
+
+    {%- if section.settings.enable_sorting -%}
+    <div class="single-icon filter-dropdown d-none d-sm-block">
+      <label for="SortBy">{{ 'collections.sorting.title' | t }}: </label>
+      <select name="SortBy" id="SortBy">
+        <option value="manual">{{ 'collections.sorting.featured' | t }}</option>
+        <option value="best-selling">{{ 'collections.sorting.best_selling' | t }}</option>
+        <option value="title-ascending">{{ 'collections.sorting.az' | t }}</option>
+        <option value="title-descending">{{ 'collections.sorting.za' | t }}</option>
+        <option value="price-ascending">{{ 'collections.sorting.price_ascending' | t }}</option>
+        <option value="price-descending">{{ 'collections.sorting.price_descending' | t }}</option>
+        <option value="created-descending">{{ 'collections.sorting.date_descending' | t }}</option>
+        <option value="created-ascending">{{ 'collections.sorting.date_ascending' | t }}</option>
+      </select>
+    </div>
+    {%- endif -%}
+
+
+    <!--=======  advance filter icon  =======-->
+
+   {%- if section.settings.enable_filtering and section.settings.collection_sidebar == "without_sidebar" or section.settings.collection_sidebar  == "without_sidebar_full" -%}
+    <div class="single-icon advance-filter-icon d-none d-lg-block">
+      <a href="javascript:void(0)" id="advance-filter-active-btn"><i class="ion-android-funnel"></i> {{ section.settings.filter_btn_text }}</a>
+    </div>
+    {% endif %}
+    
+    
+    {%- if section.settings.enable_filtering or section.settings.enable_sorting  -%}
+    <div class="single-icon advance-filter-icon d-lg-none">
+      <a id="sidebar-filter-active-btn" href="javascript:void(0)"><i class="ion-android-funnel"></i> {{ section.settings.filter_btn_text }}</a>
+    </div>
+    {%- endif -%}
+    
+
+  </div>
+
+</div>
+
+
+
+
+<script>
+  Shopify.queryParams = {};
+  if (location.search.length) {
+    for (var aKeyValue, i = 0, aCouples = location.search.substr(1).split('&'); i < aCouples.length; i++) {
+      aKeyValue = aCouples[i].split('=');
+      if (aKeyValue.length > 1) {
+        Shopify.queryParams[decodeURIComponent(aKeyValue[0])] = decodeURIComponent(aKeyValue[1]);
+      }
+    }
+  }
+
+  $(function() {
+    $('#SortBy')
+    .val('{{ collection.sort_by | default: collection.default_sort_by }}')
+         .bind('change', function() {
+      Shopify.queryParams.sort_by = jQuery(this).val();
+      location.search = jQuery.param(Shopify.queryParams);
+    }
+    );
+  });
+  
+  {% if sset.show_ajax_paginate %}
+  $('#paginateBy').on('change', function(){
+    var val = $(this).val();
+    $.ajax({
+      type: "POST",
+      url: '/cart.js',
+      data: {"attributes[pagination]": val},
+      success: function(d){
+        window.location.reload();
+      },
+      dataType: 'json'
+    });
+  });
+  {% endif %}
+  
+  
+  
+  
+</script>

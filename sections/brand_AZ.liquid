@@ -1,0 +1,265 @@
+{%- capture html -%}
+<div class="Brand_page mb-90 mb-md-80 mb-sm-65" id="section-{{ section.id }}">
+  <div class="container">
+    <ul class="azbranditem">
+      <li class="all active">{{ 'brand.general.all' | t }} </li>
+      <li class="alpha">{{ 'brand.general.a' | t }}</li>
+      <li class="alpha">{{ 'brand.general.b' | t }}</li>
+      <li class="alpha">{{ 'brand.general.c' | t }}</li>
+      <li class="alpha">{{ 'brand.general.d' | t }}</li>
+      <li class="alpha">{{ 'brand.general.e' | t }}</li>
+      <li class="alpha">{{ 'brand.general.f' | t }}</li>
+      <li class="alpha">{{ 'brand.general.g' | t }}</li>
+      <li class="alpha">{{ 'brand.general.h' | t }}</li>
+      <li class="alpha">{{ 'brand.general.i' | t }}</li>
+      <li class="alpha">{{ 'brand.general.j' | t }}</li>
+      <li class="alpha">{{ 'brand.general.k' | t }}</li>
+      <li class="alpha">{{ 'brand.general.l' | t }}</li>
+      <li class="alpha">{{ 'brand.general.m' | t }}</li>
+      <li class="alpha">{{ 'brand.general.n' | t }}</li>
+      <li class="alpha">{{ 'brand.general.o' | t }}</li>
+      <li class="alpha">{{ 'brand.general.p' | t }}</li>
+      <li class="alpha">{{ 'brand.general.q' | t }}</li>
+      <li class="alpha">{{ 'brand.general.r' | t }}</li>
+      <li class="alpha">{{ 'brand.general.s' | t }}</li>
+      <li class="alpha">{{ 'brand.general.t' | t }}</li>
+      <li class="alpha">{{ 'brand.general.u' | t }}</li>
+      <li class="alpha">{{ 'brand.general.v' | t }}</li>
+      <li class="alpha">{{ 'brand.general.w' | t }}</li>
+      <li class="alpha">{{ 'brand.general.x' | t }}</li>
+      <li class="alpha">{{ 'brand.general.y' | t }}</li>
+      <li class="alpha">{{ 'brand.general.z' | t }}</li>
+    </ul>
+
+    <ul class="vendot_item">
+      {% for product_vendor in shop.vendors %}
+      <li class="vendorTitle">{{ product_vendor | link_to_vendor }}</li>
+      {% endfor %}
+    </ul>
+    
+  </div>
+</div>
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+
+{%- render 'section_typography' -%}
+<script>
+  $(document).ready(function() {
+    var activeId = $(".azbranditem li");
+      activeId.on('click', function () {
+        var $this = $(this);
+        activeId.removeClass('active');
+        $this.addClass('active');
+      });
+    
+    $('.alpha').click(function() {
+      $('.vendorTitle').css('display','block');
+      window.alphaClick = $(this).text();
+      vendorFilter();
+    });
+
+    $('.all').click(function() {
+      $('.vendorTitle').css('display','block');
+    });
+
+    function vendorFilter() {
+      var vendor = $('.vendorTitle a');
+      $.each(vendor, function(i,val) {
+        var x = $(this).text();
+        var y = x.toUpperCase();
+        var newX = y.charAt(0);
+        if (newX === alphaClick) { 
+        }else {
+          $(this).parent().css('display','none'); 
+        }
+      });
+    }
+
+  });
+</script>
+
+
+{% schema %}
+  {
+    "name": "Brand/Vendor",
+    "settings": [],
+	"blocks":[
+	   {
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#fff"
+			}
+          ]
+       }
+	]	
+  }
+{% endschema %} 

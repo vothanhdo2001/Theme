@@ -1,0 +1,25 @@
+{%- if product.available -%}
+<div id="product-variants" class="product-variant-option">
+  {%- if variantCount > 0  and product.variants[0].title != 'Default Title'  -%}
+  <select id="product-selectors" name="id" style="display: none;">
+    {%- for variant in product.variants -%}
+    {%- if variant.available -%}
+    <option data-imge="{% if variant.image.size != blank %}{{ variant.image.src | product_img_url: 'compact' }}{% else  %}{{ product.featured_image.src | product_img_url: 'compact' }}{% endif %}" {% if variant == current_variant %} selected="selected" {% endif %} value="{{ variant.id }}">{{ variant.title }}</option>
+    {%- else -%}
+    <option disabled="disabled">{{ variant.title }} - {{ 'products.product.sold_out' | t }}</option>
+    {%- endif -%}
+    {%- endfor -%}
+  </select>
+  {%- if block.settings.product_variant_handle == 'product_variant_swatch_option' -%}
+  {%- for option in product.options -%}
+  {%- render 'swatch' with option, block: block-%}
+  {%- endfor -%}
+  {%- endif -%}
+  {%- else -%}
+  <input type="hidden" name="id" value="{{ product.variants[0].id }}" />
+  {%- endif -%}
+</div>
+{%- endif -%}
+{%- if block.settings.product_variant_handle == 'product_variant_swatch_option' or block.settings.product_variant_handle == 'product_variant_without_option' -%}
+<style>.product-variant-option .selector-wrapper{display: none;}</style>
+{%- endif -%}

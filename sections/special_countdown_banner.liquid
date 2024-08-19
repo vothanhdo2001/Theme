@@ -1,0 +1,449 @@
+{%- capture html -%}
+<section class="special-product-area special-product-bg" id="section-{{ section.id }}" data-section-id="{{ section.id }}"  data-section="CountDownBanner">
+  <div class="{% if section.settings.container_width == 'container' %} container {% elsif section.settings.container_width == 'fluid' %} container wide {% endif %}">
+    <div class="row align-items-center">
+      <div class="col-md-5 text-right">
+        {% if section.settings.show_img %}
+        <figure class="countdown_layer_img">                    
+          {%- if section.settings.ban_img -%}
+          {%- render 'lazyload_image_src',
+                	  image: section.settings.ban_img,
+                      size: 'master' -%}
+          {%- else -%}
+          <img data-src="https://via.placeholder.com/414x872" class="lazyload" alt="Banner">
+          {%- endif -%}
+        </figure>
+        {% endif %}
+      </div>
+      <div class="col-md-7">
+        <div class="special-product pl--65 pl-sm--15 pt-sm--30">
+          {% if section.settings.section_title1 != '' %}
+          <h3 class="special-product__title">{{ section.settings.section_title1 }}</h3>
+          {% endif %}
+          
+          {% if section.settings.section_title2 != '' %}
+          <h2 class="special-product__discount mb--35 mb-md--25 mb-sm--20">{{ section.settings.section_title2 }}</h2>
+          {% endif %}
+          
+          {% if section.settings.count != '' %}
+          <div class="special-product__countdown mb--30 mb-sm--20">
+            <div class="product-countdown zuka_countdown44" data-countdown4="{{ section.settings.count }}"></div>
+          </div>
+          {% endif %}
+          
+          {% if section.settings.btn != '' %}
+          <a href="{{ section.settings.btn_url }}" class="phoone-button phoone-button--medium phoone-button--icon--left"><i class="icon-left ion-ios-cart"></i> {{ section.settings.btn }}</a>
+          {% endif %}
+          
+          {% if section.settings.text != '' %}
+          <p class="mt--40 mt-md--30 mt-sm--20 heading-color">{{ section.settings.text }}</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+
+{%- render 'section_typography' -%}
+
+{%- capture css -%}
+
+{%- style -%}
+  {%- for block in section.blocks -%}
+  {%- case block.type -%}
+  {%- when 'section_content_style' -%}
+
+  #section-{{ section.id }} .special-product__title {
+  	color: {{ block.settings.sub_title_color }};
+  }
+  #section-{{ section.id }} .special-product__discount {
+    color: {{ block.settings.banner_title_color }};
+  }
+  #section-{{ section.id }} .special-product-area .single-countdown {
+  	color: {{ block.settings.count_color }};
+  }
+  #section-{{ section.id }} .phoone-button.phoone-button--medium {
+    background-color: {{ block.settings.banner_btn_bg_color }};
+    border-color: {{ block.settings.banner_btn_border_color }};
+    color: {{ block.settings.banner_btn_color }} !important;
+  }
+  #section-{{ section.id }} .phoone-button.phoone-button--medium:hover {
+    background-color: {{ block.settings.banner_btn_hover_bg_color }};
+    border-color: {{ block.settings.banner_btn_hover_border_color }};
+    color: {{ block.settings.banner_btn_hover_color }} !important;
+  }
+
+  #section-{{ section.id }} .product-countdown .single-countdown__time {
+    color: {{ block.settings.banner_btn_date_color }};
+  }
+
+  #section-{{ section.id }} .product-countdown .single-countdown__text {
+    color: {{ block.settings.banner_btn_date_label_color }};
+  }
+  #section-{{ section.id }} .special-product .heading-color {
+  	color: {{ block.settings.text_color }};
+  }
+  #section-{{ section.id }} .product-countdown .single-countdown{
+	background-color: {{ block.settings.banner_date_bg_color }};
+  }
+  {%- endcase -%}
+  {%- endfor -%}
+
+{%- endstyle -%}
+{%- endcapture -%}
+
+{{ css | strip_newlines
+       | replace: '  ', '' 
+       | replace: ': ', ':'
+       | replace: ' {', '{'
+}}
+
+
+
+{% schema %}
+  {
+    "name": "Countdown special product",
+    "settings": [
+		{
+          "type":  "radio",
+          "id":    "container_width",
+          "label": "Container Width",
+          "options": [
+            { "value": "container", "label": "Container" },
+            { "value": "fluid", "label": "Full Width" }
+          ],
+          "default":   "container"
+        },
+		{
+			"type": "header",
+            "content": "Image"
+        },
+		{
+            "type": "checkbox",
+            "id": "show_img",
+            "label": "Show Image",
+            "default": true
+        },
+		{
+            "type": "image_picker",
+            "id": "ban_img",
+            "label": "Image"
+        },
+		{
+			"type": "header",
+            "content": "Title"
+        },
+		{
+            "type": "textarea",
+            "id": "section_title1",
+            "label": "Title 1",
+            "default": "100 items - Flared leather trousers"
+        },
+		{
+            "type": "textarea",
+            "id": "section_title2",
+            "label": "Title 2",
+            "default": "Sale 50%"
+        },
+		{
+            "type": "text",
+            "id": "count",
+            "label": "Countdown Time",
+            "default": "2020/12/30",
+            "info": "Format: YYYY/MM/DD"
+        },
+		{
+            "type": "text",
+            "id": "btn",
+            "label": "Button",
+            "default": "Shop Now"
+        },
+        {
+          "type": "url",
+          "id": "btn_url",
+          "label": "URL",
+          "default": "\/collections\/all"
+        },
+		{
+            "type": "textarea",
+            "id": "text",
+            "label": "Text",
+            "default": "Freeship worldwide order over $120"
+        }
+    ],
+	"blocks":[
+	   {
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 300,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 300,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 300,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 300,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 300,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 300,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#EFF3F6"
+			}
+          ]
+       },
+	   {
+          "type": "section_content_style",
+          "name": "Section Content Style",
+		  "limit": 1,
+          "settings": [
+			{
+			  "type": "color",
+			  "id": "sub_title_color",
+			  "label": "Sub Title Color",
+			  "default": "#333"
+			},
+			{
+			  "type": "color",
+			  "id": "banner_title_color",
+			  "label": "Big Title Color",
+			  "default": "#333"
+			},
+			{
+			  "type": "color",
+			  "id": "banner_date_bg_color",
+			  "label": "Countdown Date BG Color",
+			  "default": "#fff"
+			},
+			{
+			  "type": "color",
+			  "id": "banner_btn_date_color",
+			  "label": "Countdown Date Color",
+			  "default": "#333"
+			},
+			{
+			  "type": "color",
+			  "id": "banner_btn_date_label_color",
+			  "label": "Countdown Label Color",
+			  "default": "#333"
+			},
+			{
+			  "type": "color",
+			  "id": "text_color",
+			  "label": "Text Color",
+			  "default": "#333"
+			},
+			{
+			  "type": "header",
+			  "content": "Banner Button"
+			},
+			{
+			  "type": "color",
+			  "id": "banner_btn_bg_color",
+			  "label": "Banner Button Bg Color",
+			  "default": "#333"
+			},
+			{
+			  "type": "color",
+			  "id": "banner_btn_border_color",
+			  "label": "Banner Button border Color",
+			  "default": "#333"
+			},
+			{
+			  "type": "color",
+			  "id": "banner_btn_color",
+			  "label": "Banner Button Color",
+			  "default": "#fff"
+			},
+			{
+			  "type": "color",
+			  "id": "banner_btn_hover_bg_color",
+			  "label": "Banner Button hover Bg Color",
+			  "default": "#F9F9F9"
+			},
+			{
+			  "type": "color",
+			  "id": "banner_btn_hover_border_color",
+			  "label": "Banner Button hover border Color",
+			  "default": "#333"
+			},
+			{
+			  "type": "color",
+			  "id": "banner_btn_hover_color",
+			  "label": "Banner Button hover Color",
+			  "default": "#333"
+			}
+          ]
+       }
+	],
+	"presets": [
+		{
+		  "name": "Countdown special product",
+		  "category": "4. Banner",
+		  "blocks": [
+              {
+                  "type": "section_background"
+              }
+		   ]
+		}
+	]
+  }
+{% endschema %}

@@ -1,0 +1,492 @@
+{%- capture html -%}
+<div class="slider-area revolution-js mb-100 mb-md-80  mb-sm-60" id="section-{{ section.id }}" data-section2="RevolutionSlider7">
+  <div id="rev_slider_17_1_wrapper" class="rev_slider_wrapper fullwidthbanner-container" data-alias="homepage-7" data-source="gallery" style="margin:0px auto;background:transparent;padding:0px;margin-top:0px;margin-bottom:0px;">
+    <!-- START REVOLUTION SLIDER 5.4.7 fullwidth mode -->
+    <div id="rev_slider_17_1" class="rev_slider fullwidthabanner" style="display:none;" data-version="5.4.7">
+      <ul>	<!-- SLIDE  -->
+			{% render 'rev_slider_widget_for_essential' %}
+      </ul>
+      <div class="tp-bannertimer tp-bottom" style="visibility: hidden !important;"></div>	</div>
+  </div><!-- END REVOLUTION SLIDER -->
+</div>
+
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+
+{%- capture css -%}
+<style>
+   #section-{{ section.id }}{
+    margin-top: {{ section.settings.section_margin_top }}px !important;
+    margin-bottom: {{ section.settings.section_margin_bottom }}px !important;
+  }
+  
+  @media (min-width: 768px) and (max-width: 991px) {
+    #section-{{ section.id }}{
+      margin-top: {{ section.settings.section_margin_top_md }}px !important;
+      margin-bottom: {{ section.settings.section_margin_bottom_md }}px !important;
+    }
+  }
+  @media (max-width: 767px) {
+    #section-{{ section.id }}{
+      margin-top: {{ section.settings.section_margin_top_xs }}px !important;
+      margin-bottom: {{ section.settings.section_margin_bottom_xs }}px !important;
+    }
+  }
+  
+  #section-{{ section.id }} #rev_slider_17_1_wrapper .metis.tparrows{
+    background: {{ section.settings.rev_arrow_bg_color}};
+  }; 
+  
+</style>
+{%- endcapture -%}
+
+{{ css | strip_newlines
+       | replace: '  ', '' 
+       | replace: ': ', ':'
+       | replace: ' {', '{'
+}}
+		
+
+{% schema %}
+  {
+    "name": "Revolution Essential",
+    "settings": [
+		{
+          "type": "header",
+          "content": "Slider Arrow Style"
+        },
+        {
+          "type": "color",
+          "id": "rev_arrow_bg_color",
+          "label": "Arrow Bg Color",
+          "default": "#fff"	
+        },
+		{
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 65
+			}
+	],
+	"blocks":[
+      {
+          "type": "slide1",
+          "name": "Slideshow 1",
+          "settings": [
+			  {
+                "type": "header",
+                "content": "Layer Thumbnail"
+              },
+              {
+                  "type": "image_picker",
+                  "id": "slider_thubnail",
+                  "label": "Slide Thumbnail",
+                  "info": "Recommended Size: 1720x760px"
+              },
+			  {
+                "type": "header",
+                "content": "Slide Caption"
+              },
+			  {
+                "type": "textarea",
+                "id": "layer_caption_title1",
+                "label": "Caption Title 1",
+				"default": "Stop & wear"
+			  },
+			  {
+                "type": "textarea",
+                "id": "layer_caption_title2",
+                "label": "Caption Title 2",
+				"default": "Summer Flowers "
+			  },
+			  {
+                  "type": "text",
+                  "id": "rev_slide1_btn",
+                  "label": "Caption Button",
+					"default": "SHOP COLLECTION"
+                },
+                {
+                  "type": "url",
+                  "id": "rev_slide1_btn_link",
+                  "label": "Caption Button Url"
+                },
+			  {
+                "type": "header",
+                "content": "Slider Caption Style"
+              },
+			  {
+                "type": "color",
+                "id": "slide_title1_color",
+                "label": "Slide Title Color",
+                "default": "#333"	
+              },
+			  {
+                "type": "color",
+                "id": "slide_title2_color",
+                "label": "Slide Title 2 Color",
+                "default": "#333"	
+              },
+			  {
+                "type": "paragraph",
+                "content": "Slider Caption Button"
+              },
+			  {
+                "type": "color",
+                "id": "rev_slide_caption_btn_color",
+                "label": "Caption Button Color",
+                "default": "#333"	
+              },
+			  {
+                "type": "color",
+                "id": "rev_slide_caption_btn_hover_color",
+                "label": "Caption Button Hover Color",
+                "default": "#d3122a"	
+              }
+			  
+          ]
+        },
+		{
+          "type": "slide2",
+          "name": "Slideshow 2",
+          "settings": [
+			  {
+                "type": "header",
+                "content": "Thumbnail Image"
+              },
+              {
+                  "type": "image_picker",
+                  "id": "slider_thubnail",
+                  "label": "Slide Thumbnail",
+                  "info": "Recommended Size: 1720x760px"
+              },
+			  {
+                "type": "header",
+                "content": "Caption Image" 
+              },
+		      {
+                "type": "checkbox",
+                "id": "slider_caption_img",
+                "label": "Slider Caption Image Enable",  
+                "default": true
+              },
+              {
+                  "type": "image_picker",
+                  "id": "slide_img_layer1",
+                  "label": "Layer Img 1",
+                  "info": "Recommended Size: 482 x 438px"
+              },
+			  {
+                "type": "header",
+                "content": "Slide Caption"
+              },
+			  {
+                "type": "textarea",
+                "id": "layer_caption_title1",
+                "label": "Caption Title 1",
+				"default": "New arrivals"
+			  },
+			  {
+                "type": "textarea",
+                "id": "layer_caption_title2",
+                "label": "Caption Title 2",
+				"default": "Summer 2018"
+			  },
+			  {
+                  "type": "text",
+                  "id": "rev_slide1_btn",
+                  "label": "Caption Button",
+					"default": "SHOP COLLECTION"
+                },
+                {
+                  "type": "url",
+                  "id": "rev_slide1_btn_link",
+                  "label": "Caption Button Url"
+                },
+			  
+			  {
+                "type": "header",
+                "content": "Slider Caption Style"
+              },
+			  {
+                "type": "color",
+                "id": "slide_title1_color",
+                "label": "Slide Title Color",
+                "default": "#333"	
+              },
+			  {
+                "type": "color",
+                "id": "slide_title2_color",
+                "label": "Slide Title 2 Color",
+                "default": "#333"	
+              },
+			
+			  {
+                "type": "paragraph",
+                "content": "Slider Caption Button"
+              },
+			  {
+                "type": "color",
+                "id": "rev_slide_caption_btn_color",
+                "label": "Caption Button Color",
+                "default": "#333"	
+              },
+			  {
+                "type": "color",
+                "id": "rev_slide_caption_btn_hover_color",
+                "label": "Caption Button Hover Color",
+                "default": "#d3122a"	
+              }
+			  
+			  
+          ]
+        },
+		
+		{
+          "type": "slide3",
+          "name": "Slideshow 3",
+          "settings": [
+			  {
+                "type": "header",
+                "content": "Layer Image"
+              },
+              {
+                  "type": "image_picker",
+                  "id": "slider_thubnail",
+                  "label": "Slide Thumbnail",
+                  "info": "Recommended Size: 1720x760px"
+              },
+			  {
+                "type": "header",
+                "content": "Caption Image" 
+              },
+		      {
+                "type": "checkbox",
+                "id": "slider_caption_img",
+                "label": "Slider Caption Image Enable",  
+                "default": true
+              },
+              {
+                  "type": "image_picker",
+                  "id": "slide_img_layer1",
+                  "label": "Layer Img 1",
+                  "info": "Recommended Size: 482 x 438px"
+              },
+			  {
+                "type": "header",
+                "content": "Slide Caption"
+              },
+			  {
+                "type": "textarea",
+                "id": "layer_caption_title1",
+                "label": "Caption Title 1",
+				"default": "New arrivals"
+			  },
+			  {
+                "type": "textarea",
+                "id": "layer_caption_title2",
+                "label": "Caption Title 2",
+				"default": "Summer 2019"
+			  },
+			  {
+                  "type": "text",
+                  "id": "rev_slide1_btn",
+                  "label": "Caption Button",
+					"default": "SHOP COLLECTION"
+                },
+                {
+                  "type": "url",
+                  "id": "rev_slide1_btn_link",
+                  "label": "Caption Button Url"
+                },
+			  
+			  { 
+				"type": "header",
+                "content": "Slider Caption Style"
+              },
+			  {
+                "type": "color",
+                "id": "slide_title1_color",
+                "label": "Slide Title Color",
+                "default": "#333"	
+              },
+			  {
+                "type": "color",
+                "id": "slide_title2_color",
+                "label": "Slide Title 2 Color",
+                "default": "#333"	
+              },
+			  {
+                "type": "paragraph",
+                "content": "Slider Caption Button"
+              },
+			  {
+                "type": "color",
+                "id": "rev_slide_caption_btn_color",
+                "label": "Caption Button Color",
+                "default": "#333"	
+              },
+			  {
+                "type": "color",
+                "id": "rev_slide_caption_btn_hover_color",
+                "label": "Caption Button Hover Color",
+                "default": "#d3122a"	
+              }
+			  
+          ]
+        },
+		{
+          "type": "video_slide",
+          "name": "Video Slide",
+          "settings": [
+			  {
+                "type": "header",
+                "content": "Youtube Video Id"
+              },
+              {
+                  "type": "text",
+                  "id": "yotube_video_id",
+                  "label": "Youtube Video Id",
+				   "default": "BVMsRltq2yU",
+                  "info": "Please Put Here Youtube Video Id"
+              },
+			  {
+                "type": "header",
+                "content": "Video Thumbnail"
+              },
+              {
+                  "type": "image_picker",
+                  "id": "video_thumbnail",
+                  "label": "Video Thumbnail",
+                  "info": "Recommended Size: 1920 x 790px"
+              },
+			  {
+                  "type": "header",
+                  "content": "Video Mute"
+              },
+			  {
+                 "type":  "select",
+                 "id":    "video_mute",
+                 "label": "Video Sound Off/On",
+                 "options": [
+                   { "value": "on", "label": "Off" },
+                   { "value": "off", "label": "On" }
+                 ],
+                 "default":   "off"
+              },
+			  {
+                  "type": "header",
+                  "content": "Video Volume"
+              },
+			  {
+                "type": "range",
+                "id": "video_volume",
+                "min": 0,
+                "max": 100,
+                "step": 1,
+                "label": "Video Sound Volume",
+                "default": 50
+              },
+			  {
+                  "type": "header",
+                  "content": "Video Loop"
+              },
+			  {
+                 "type":  "select",
+                 "id":    "video_loop",
+                 "label": "Video Loop Off/On",
+                 "options": [
+                   { "value": "on", "label": "Off" },
+                   { "value": "off", "label": "On" }
+                 ],
+                 "default":   "off"
+              }
+			  
+          ]
+        }
+     ],
+	"presets": [
+        {
+          "category": "1. Revolution Slider",
+          "name": "7. Slider - Essential",
+		  "blocks":[
+				{
+					"type": "slide1"
+				},
+				{
+					"type": "slide2"
+				},
+				{
+					"type": "slide3"
+				}
+			]
+           
+        }
+     ]
+  }
+{% endschema %}

@@ -1,0 +1,40 @@
+<div class="single-sidebar-widget selected-filter-value">
+  <ul class="filters__active_list">
+    {%- for filter in collection.filters -%}
+    {% if filter.type == "price_range"  %}
+    {%- if filter.min_value.value != nil or filter.max_value.value != nil -%}
+    <li>
+      <a class="active-facets__button" href="{{ filter.url_to_remove }}">
+        <span class="active-facets__button-inner">
+          {%- assign min_value = filter.min_value.value | default: 0 -%}
+          {%- assign max_value = filter.max_value.value | default: filter.range_max -%}
+          {{ min_value | money }} - {{ max_value | money }} 
+          <svg  aria-hidden="true" focusable="false" role="presentation" width="12" height="13" class="icon icon-close-small" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8.48627 9.32917L2.82849 3.67098" stroke="#333030" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2.88539 9.38504L8.42932 3.61524" stroke="#333030" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </a>
+    </li>
+    {%- endif -%}
+    {% endif %}
+    {%- for filter_value in filter.active_values -%}
+    <li>
+      <a class="active-facets__button" href="{{ filter_value.url_to_remove }}">
+        <span class="active-facets__button-inner">
+          {{ filter_value.label | escape }}
+          <svg  aria-hidden="true" focusable="false" role="presentation" width="12" height="13" class="icon icon-close-small" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8.48627 9.32917L2.82849 3.67098" stroke="#333030" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2.88539 9.38504L8.42932 3.61524" stroke="#333030" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+
+        </span>
+      </a>
+    </li>
+    {%- endfor -%}
+    {%- endfor -%}
+    <li class="active">
+      <a href="{{ collection.url }}" class="active-filters-clear">Clear all</a>
+    </li>
+  </ul>
+</div>

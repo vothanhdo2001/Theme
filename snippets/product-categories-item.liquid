@@ -1,0 +1,47 @@
+{%- assign on_sale = false -%}
+{%- if product.compare_at_price > product.price -%}
+{%- assign on_sale = true -%}
+{%- endif -%}
+
+{%- assign sold_out = true -%}
+{%- if product.available -%}
+{%- assign sold_out = false -%}
+{%- endif -%}
+
+{%- assign variant = product.selected_or_first_available_variant -%}
+
+{%- if product.available -%}
+{%- assign func = "Shopify.addItem(" | append: variant.id | append: ", 1)" -%}
+{%- endif -%} 
+
+
+{%- comment -%} "{{ variant.id }}" this Class is needed for Ajax popup cart {%- endcomment -%}
+
+<div class="single-widget-product__image">
+  <a href="{{ product.url | within: collection }}">
+    {%- capture productCatImg -%}
+    {{ product.featured_image.src | img_url : 'large' }}
+    {% endcapture %}
+     {%- render 'lazyload_image_src' with image: product.featured_image.src -%}
+  </a>
+</div>
+<div class="single-widget-product__content">
+       <div class="p_badge_area">
+           <!-- Start of Judge.me code -->
+            <div class='jdgm-widget jdgm-preview-badge'>
+              {{ product.metafields.judgeme.badge }}
+            </div>
+          <!-- End of Judge.me code -->
+
+     </div>
+  <h3 class="title"><a href="{{ product.url | within: collection }}">{{ product.title }}</a></h3>
+  <div class="price">
+    {% if product.variants.first.compare_at_price > product.variants.first.price %}
+    <span class="main-price discounted">{{ product.variants.first.compare_at_price | money }}</span>
+    {% endif %}
+    <span class="discounted-price">{{ product.variants.first.price | money }}</span>
+  </div>
+  <div class="rating">
+    <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+  </div>
+</div>

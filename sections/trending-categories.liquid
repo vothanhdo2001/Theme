@@ -1,0 +1,453 @@
+{%- capture html -%}
+<div class="category-area section-space--small nrb-trending-categories" id="section-{{ section.id }}" data-section="BannerSection">
+  <div class="{% if section.settings.container_width == 'container' %} container {% elsif section.settings.container_width == 'fluid' %} container wide {% endif %}">
+    {% if section.settings.section_title !='' %}
+    <div class="row">
+      <div class="col-lg-12">
+        {% if section.settings.section_title != blank or section.settings.section_title_paragraph != blank   %}
+        <div class="section-title section-title--one {% if section.settings.text_align == "left" %}text-left {% elsif section.settings.text_align == "right" %} text-right {% elsif section.settings.text_align == "center" %} text-center {% endif %}">
+          {% if section.settings.section_title != blank %}
+          <h1>{{ section.settings.section_title }}</h1>
+          {% endif %}
+          {% if section.settings.section_title_paragraph != blank %}
+          <p class="subtitle subtitle--deep mb-0">{{ section.settings.section_title_paragraph }}</p>
+          {% endif %}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+	{% endif %}
+    
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="category-grid-wrapper">
+          <div class="row">
+            {% for block in section.blocks %}
+            {% case block.type %}
+            {% when 'trending_category' %}
+            <div class="col-md-{{ block.settings.trending_cat_col }}">
+              <div class="single-category single-category--type-one text-center">
+                <div class="single-category--type-one__image">
+                  <a href="{{ block.settings.trending_cat_btn_url }}">
+                    {%- if block.settings.trending_cat_img != blank  -%}            
+                    {%- render 'lazyload_image_src',
+                        image: block.settings.trending_cat_img,
+                    	size: '570x415' -%}
+                    {%- else -%}
+                    {%- render 'svg_placholder' with param: 'image', size: '570x415' -%}
+                    {%- endif -%}
+                  </a>
+                </div>
+                <div class="single-category--type-one__content">
+                  {%if block.settings.trending_cat_title != '' %} 
+                 <a href="{{ block.settings.trending_cat_btn_url }}"> <h2 class="title mb-0">{{ block.settings.trending_cat_title }}</h2></a>
+                  {%endif%}
+                </div>
+              </div>
+            </div>
+            {% endcase %}
+            {% endfor %}
+           {%if section.settings.all_btntxt != '' %} 
+            <div class="shop_all">
+               <a class="phoone-button phoone-button--medium" href="{{ section.settings.all_btnurl }}">{{ section.settings.all_btntxt }}</a>
+            </div>
+            {%endif%}
+          </div>
+        </div>
+        <!--=======  End of ctaegory grid wrapper  =======-->
+      </div>
+    </div>
+  </div>
+</div>
+<!--====================  End of category grid   ====================-->
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+
+{%- render 'section_typography' -%}
+
+{%- capture css -%}
+{%- style -%}
+
+  {%- for block in section.blocks -%}
+  {% case block.type %}
+  {%- when 'categories_color_options' -%}
+      #section-{{ section.id }}  .section-title h1  {
+      color: {{ block.settings.section_title_color }}!important;
+      }
+      #section-{{ section.id }} .section-title p.subtitle--deep {
+      color: {{ block.settings.section_description_color }};
+      }
+      #section-{{ section.id }} .single-category--type-one__content .title {
+      color: {{ block.settings.item_title_color }};
+      }
+      #section-{{ section.id }} .single-category--type-one:hover .single-category--type-one__content .category-button--shop-now {
+         color: {{ block.settings.btn__color_on_hover }}!important;
+      }
+      #section-{{ section.id }} .category-button--shop-now {
+      color: {{ block.settings.btn__color }}!important;
+      }
+      #section-{{ section.id }} .single-category--type-one {
+      border-bottom-color: {{ block.settings.item_bottom_broder_color }}!important;
+      }
+      #section-{{ section.id }} .single-category--type-one:hover {
+      border-bottom-color: {{ block.settings.item_bottom_broder_hover_color }}!important;
+      }
+
+  {%- endcase -%}
+  {%- endfor -%}
+
+
+{%- endstyle -%}
+{%- endcapture -%}
+
+{{ css | strip_newlines
+       | replace: '  ', '' 
+       | replace: ': ', ':'
+       | replace: ' {', '{'
+}}
+
+
+
+{% schema %}
+  	{
+		"name": "Trending Categories",
+		"settings": [
+            {
+              "type":  "radio",
+              "id":    "container_width",
+              "label": "Container Width",
+              "options": [
+                { "value": "container", "label": "Container" },
+                { "value": "fluid", "label": "Full Width" }
+              ],
+              "default":   "fluid"
+            },
+            {
+              "type": "header",
+              "content": "Section Title"
+            }, 
+            {
+              "type": "text",
+              "id": "section_title",
+              "label": "Section Title Label",
+              "default": "Section Title"
+            },
+            {
+              "type": "textarea",
+              "id": "section_title_paragraph",
+              "label": "Section Title Description",
+              "default": "Section Title Description"
+            },
+            {
+              "type":  "radio",
+              "id":    "text_align",
+              "label": "Section Title Align",
+              "options": [
+                { "value": "left", "label": "Left" },
+                { "value": "right", "label": "Right" },
+                { "value": "center", "label": "Center" }
+              ],
+              "default":   "center"
+          },
+            {
+              "type": "header",
+              "content": "All categories button"
+            }, 
+            {
+              "type": "text",
+              "id": "all_btntxt",
+              "label": "All categories button text ",
+              "default": "See all categories"
+            },
+            {
+              "type": "url",
+              "id": "all_btnurl",
+              "label": "All categories button URL"
+            }
+		],
+        "blocks":[
+              {
+                  "type": "trending_category",
+                  "name": "Trending Categories",
+                  "settings": [
+                      {
+                        "type": "text",
+                        "id": "trending_cat_col",
+                        "label": "Column",
+                        "default": "4",
+                        "info": "Follow Bootstrap-4 Column"
+                      },
+                      {
+                        "type": "image_picker",
+                        "id": "trending_cat_img",
+                        "label": "Categories Banner Image"
+                      },
+					  {
+                        "type": "textarea",
+                        "id": "trending_cat_title",
+                        "label": "Trending Categories",
+                        "default": "Cables"
+                      },
+					  {
+                        "type": "url",
+                        "id": "trending_cat_btn_url",
+                        "label": "Categories URL"
+                      }
+                  ]
+               },
+               {
+                  "type": "section_padding",
+                  "name": "Section Padding",
+                  "limit": 1,
+                  "settings": [
+                    {
+                      "type": "header",
+                      "content": "Large/Desktop Device"
+                    },
+                    {
+                      "type": "range",
+                      "id": "section_padding_top",
+                      "min": 0,
+                      "max": 150,
+                      "step": 5,
+                      "label": "Padding Top",
+                      "unit": "px",
+                      "default": 0
+                    },
+                    {
+                      "type": "range",
+                      "id": "section_padding_bottom",
+                      "min": 0,
+                      "max": 150,
+                      "step": 5,
+                      "label": "Padding Bottom",
+                      "unit": "px",
+                      "default": 100
+                    },
+                    {
+                      "type": "header",
+                      "content": "Tablet Device"
+                    },
+                    {
+                      "type": "range",
+                      "id": "section_padding_top_md",
+                      "min": 0,
+                      "max": 150,
+                      "step": 5,
+                      "label": "Padding Top",
+                      "unit": "px",
+                      "default": 0
+                    },
+                    {
+                      "type": "range",
+                      "id": "section_padding_bottom_md",
+                      "min": 0,
+                      "max": 150,
+                      "step": 5,
+                      "label": "Padding Bottom",
+                      "unit": "px",
+                      "default": 80
+                    },
+                    {
+                      "type": "header",
+                      "content": "Mobile Device"
+                    },
+                    {
+                      "type": "range",
+                      "id": "section_padding_top_xs",
+                      "min": 0,
+                      "max": 150,
+                      "step": 5,
+                      "label": "Padding Top",
+                      "unit": "px",
+                      "default": 0
+                    },
+                    {
+                      "type": "range",
+                      "id": "section_padding_bottom_xs",
+                      "min": 0,
+                      "max": 150,
+                      "step": 5,
+                      "label": "Padding Bottom",
+                      "unit": "px",
+                      "default": 60
+                    }
+                  ]
+               },
+               {
+                  "type": "section_margin",
+                  "name": "Section Margin",
+                  "limit": 1,
+                  "settings": [
+                    {
+                      "type": "header",
+                      "content": "Large/Desktop Device"
+                    },
+                    {
+                      "type": "range",
+                      "id": "section_margin_top",
+                      "min": 0,
+                      "max": 150,
+                      "step": 5,
+                      "label": "Margin Top",
+                      "unit": "px",
+                      "default": 0
+                    },
+                    {
+                      "type": "range",
+                      "id": "section_margin_bottom",
+                      "min": 0,
+                      "max": 150,
+                      "step": 5,
+                      "label": "Margin Bottom",
+                      "unit": "px",
+                      "default": 0
+                    },
+                    {
+                      "type": "header",
+                      "content": "Tablet Device"
+                    },
+                    {
+                      "type": "range",
+                      "id": "section_margin_top_md",
+                      "min": 0,
+                      "max": 150,
+                      "step": 5,
+                      "label": "Margin Top",
+                      "unit": "px",
+                      "default": 0
+                    },
+                    {
+                      "type": "range",
+                      "id": "section_margin_bottom_md",
+                      "min": 0,
+                      "max": 150,
+                      "step": 5,
+                      "label": "Margin Bottom",
+                      "unit": "px",
+                      "default": 0
+                    },
+                    {
+                      "type": "header",
+                      "content": "Mobile Device"
+                    },
+                    {
+                      "type": "range",
+                      "id": "section_margin_top_xs",
+                      "min": 0,
+                      "max": 150,
+                      "step": 5,
+                      "label": "Margin Top",
+                      "unit": "px",
+                      "default": 0
+                    },
+                    {
+                      "type": "range",
+                      "id": "section_margin_bottom_xs",
+                      "min": 0,
+                      "max": 150,
+                      "step": 5,
+                      "label": "Margin Bottom",
+                      "unit": "px",
+                      "default": 0
+                    }
+                  ]
+               },
+               {
+                  "type": "section_background",
+                  "name": "Section Background",
+                  "limit": 1,
+                  "settings": [
+                    {
+                      "type": "image_picker",
+                      "id": "section_bg_image",
+                      "label": "BG Image"
+                    },
+                    {
+                      "type": "color",
+                      "id": "section_bg_color",
+                      "label": "BG Color",
+                      "default": "#ffffff"
+                    }
+                  ]
+               },
+               {
+                  "type": "categories_color_options",
+                  "name": "Categories Color Options",
+                  "limit": 1,
+                  "settings": [
+                        {
+                          "type": "header",
+                          "content": "Section Color"
+                        },
+                        {
+                           "type": "color",
+                           "id": "section_title_color",
+                           "label": "Section Title Color",
+                           "default": "#333"
+                        }, 
+                        {
+                           "type": "color",
+                           "id": "section_description_color",
+                           "label": "Section Description Color",
+                           "default": "#333"
+                        },
+                        {
+                          "type": "header",
+                          "content": "Categories Item Color"
+                        },
+                        {
+                           "type": "color",
+                           "id": "item_title_color",
+                           "label": "Item Title Color",
+                           "default": "#333"
+                        }, 
+                        {
+                           "type": "color",
+                           "id": "btn__color",
+                           "label": "Item Button Color",
+                           "default": "#ccc"
+                        }, 
+                        {
+                           "type": "color",
+                           "id": "btn__color_on_hover",
+                           "label": "Item Button Color On Hover",
+                           "default": "#d3122a"
+                        },
+                        {
+                           "type": "color",
+                           "id": "item_bottom_broder_color",
+                           "label": "Item Bottom Broder Color",
+                           "default": "#d3122a"
+                        },
+                        {
+                           "type": "color",
+                           "id": "item_bottom_broder_hover_color",
+                           "label": "Item Bottom Broder Color On Hover",
+                           "default": "#d3122a"
+                        }
+                  ]
+               }
+
+            ],
+       		"presets":[
+                {
+                    "name": "Trending Categories",
+                    "category": "5. Collection Banner",
+                    "blocks":[
+                        {
+                            "type": "trending_category"
+                        },
+						{
+                            "type": "trending_category"
+                        },
+						{
+                            "type": "trending_category"
+                        }
+                    ]
+                }
+            ]
+
+
+ 	 }
+{% endschema %}

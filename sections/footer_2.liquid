@@ -1,0 +1,510 @@
+{% capture html %}
+{% assign copyright_content = section.settings.copyright_contnet_description  %}
+{% assign copyright_payment = section.settings.copyright_payment_icon  %}
+{% if section.settings.copyright_menu == "style1" %}
+  {% if copyright_content != blank or copyright_payment != blank %}
+  <div class="{% if section.settings.section_snow_effect %}snow--section-effect {% endif %} footer nrb_f_2 footer--three pt-90 pb-100 pt-sm-70 pb-sm-80" id="section-{{ section.id }}">
+    <div class="{% if section.settings.container_width == 'container' %} container {% elsif section.settings.container_width == 'fluid' %} container wide {% endif %}">
+      <div class="row">
+        {% if copyright_content != blank %}
+        <div class="{% if copyright_payment != blank %}col-lg-9 {% else %} col-12 {% endif %} col-md-12 footer-single-widget mb-md-50 mb-sm-50">
+          <!--=======  footer navigation  =======-->
+
+          {% if section.settings.footer_navigation_enable == true %}
+          <div class="footer-nav-container footer-nav-container--horizontal mb-20">
+            <nav>
+              <ul>
+
+                {% assign footer_menu = section.settings.footer_menu_handle %}
+                {% for link in linklists[footer_menu].links %}
+                <li><a href="{{ link.url }}"> {{ link.title }}</a></li>
+                {% endfor %}
+
+              </ul>
+            </nav>
+          </div>
+          {% endif %}
+
+
+          <!--=======  copyright text  =======-->
+          {% if section.settings.copyright_enable == true %}
+          <div class="footer__copyright-text">
+            {{ section.settings.copy_ritht_text }}
+          </div>
+          {% endif %}
+          <!--=======  End of copyright text  =======-->
+        </div>
+        {% endif %}
+         {% if copyright_payment != blank %}
+        <div class="{% if copyright_content != blank %}col-lg-3 text-left text-lg-right {% else %} col-12 text-center {% endif %} col-md-12 footer-single-widget ">
+
+          <!--=======  social icons  =======-->
+
+          
+          {% if section.settings.footer_social_media_enable %}
+          <div class="social-icons--footer mb-20">
+           {%- render 'social-midea' -%}
+          </div>
+          {% endif %}
+
+
+          <!--=======  payment icon  =======-->
+
+          {% if section.settings.payment_icon_enable %}
+          <div class="payment-icon">
+            {% for block in section.blocks %}
+            {% case block.type %}
+            {% when 'amazon_payments' %}
+  			{{ 'amazon_payments' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'american_express' %}
+            {{ 'american_express' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'apple_pay' %}
+            {{ 'apple_pay' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'bitcoin' %}
+            {{ 'bitcoin' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'dankort' %}
+            {{ 'dankort' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'diners_club' %}
+            {{ 'diners_club' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'discover' %}
+            {{ 'discover' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'dogecoin' %}
+            {{ 'dogecoin' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'dwolla' %}
+            {{ 'dwolla' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'forbrugsforeningen' %}
+            {{ 'forbrugsforeningen' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'google_pay' %}
+            {{ 'google_pay' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'jcb' %}
+            {{ 'jcb' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'klarna' %}
+            {{ 'klarna' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'litecoin' %}
+            {{ 'litecoin' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'maestro' %}
+            {{ 'maestro' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'master' %}
+            {{ 'master' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'paypal' %}
+            {{ 'paypal' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'shopify_pay' %}
+            {{ 'shopify_pay' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'sofort' %}
+            {{ 'sofort' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'visa' %}
+            {{ 'visa' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'cod' %}
+            {{ 'cod' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% endcase %}
+            {% endfor %}
+          </div>
+          {% endif %}
+
+          <!--=======  End of payment icon  =======-->
+        </div>
+        {% endif %}
+
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+{% elsif section.settings.copyright_menu == "style2" %}
+	
+<div class="{% if section.settings.section_snow_effect %}snow--section-effect {% endif %} footer footer--four footer--four--creativehome pt-90 pb-100 no-bg" id="section-{{ section.id }}">
+  <div class="{% if section.settings.container_width == 'container' %} container {% elsif section.settings.container_width == 'fluid' %} container wide {% endif %}">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 footer-single-widget text-center">
+        <!--=======  footer navigation  =======-->
+
+        
+        {% if section.settings.footer_navigation_enable == true %}
+          <div class="footer-nav-container footer-nav-container--horizontal mb-40">
+            <nav>
+              <ul>
+
+                {% assign footer_menu = section.settings.footer_menu_handle %}
+                {% for link in linklists[footer_menu].links %}
+                <li><a href="{{ link.url }}"> {{ link.title }}</a></li>
+                {% endfor %}
+
+              </ul>
+            </nav>
+          </div>
+          {% endif %}
+        
+
+        <!--=======  End of footer navigation  =======-->
+
+        <!--=======  social icons  =======-->
+
+        
+        {% if section.settings.footer_social_media_enable %}
+          <div class="social-icons--footer mb-40">
+            <ul>
+              {% render 'social-midea' %}
+            </ul>
+          </div>
+          {% endif %}
+
+        
+
+        <!--=======  End of social icons  =======-->
+
+        <!--=======  copyright text  =======-->
+        {% if section.settings.copyright_enable == true %}
+        <div class="footer__copyright-text">
+          {{ section.settings.copy_ritht_text }}
+        </div>
+        {% endif %}
+        
+        
+        {% if section.settings.payment_icon_enable %}
+          <div class="payment-icon mt-40">
+            {% for block in section.blocks %}
+            {% case block.type %}
+            {% when 'amazon_payments' %}
+  			{{ 'amazon_payments' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'american_express' %}
+            {{ 'american_express' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'apple_pay' %}
+            {{ 'apple_pay' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'bitcoin' %}
+            {{ 'bitcoin' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'dankort' %}
+            {{ 'dankort' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'diners_club' %}
+            {{ 'diners_club' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'discover' %}
+            {{ 'discover' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'dogecoin' %}
+            {{ 'dogecoin' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'dwolla' %}
+            {{ 'dwolla' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'forbrugsforeningen' %}
+            {{ 'forbrugsforeningen' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'google_pay' %}
+            {{ 'google_pay' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'jcb' %}
+            {{ 'jcb' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'klarna' %}
+            {{ 'klarna' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'litecoin' %}
+            {{ 'litecoin' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'maestro' %}
+            {{ 'maestro' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'master' %}
+            {{ 'master' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'paypal' %}
+            {{ 'paypal' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'shopify_pay' %}
+            {{ 'shopify_pay' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'sofort' %}
+            {{ 'sofort' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% when 'visa' %}
+            {{ 'visa' | payment_type_svg_tag: 'payment-icon-name' }}
+            {% endcase %}
+            {% endfor %}
+          </div>
+          {% endif %}
+
+        <!--=======  End of copyright text  =======-->
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endif %}
+
+{% endcapture %}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+
+
+{%- capture css -%}
+<style>
+ 
+  {% for block in section.blocks %} 
+  	{% case block.type %}		
+      {% when 'footer_typography' %}
+         #section-{{ section.id }}.footer {
+            background-color: {{ block.settings.footer_bg_color }};
+          }
+  		  #section-{{ section.id }}.footer.no-bg {
+            background-color: {{ block.settings.footer_bg_color }} !important;
+          }
+          #section-{{ section.id }} .footer-single-widget .copyright-text p,.footer-nav-container nav ul li a,.footer .footer__copyright-text p {
+            color: {{ block.settings.footer_body_color }};
+          }
+           #section-{{ section.id }} .social-icons--footer ul li a{
+             color: {{ block.settings.social_icon_color }};
+          }
+  		   #section-{{ section.id }}  .footer-nav-container nav ul li a:hover,#section-{{ section.id }} .social-icons--footer ul li a:hover{
+              color: {{ block.settings.footer_body_hover_color }};
+          }
+  
+     {% endcase %}
+  {% endfor %}
+</style>
+{%- endcapture -%}
+
+{{ css | strip_newlines
+       | replace: '  ', '' 
+       | replace: ': ', ':'
+       | replace: ' {', '{'
+}}
+
+{% schema %}
+  {
+    "name": "Footer Copyright",
+    "settings": [
+		{
+             "type":  "radio",
+             "id":    "container_width",
+             "label": "Container Width",
+             "options": [
+               { "value": "container", "label": "Container" },
+               { "value": "fluid", "label": "Full Width" }
+             ],
+             "default":   "container"
+          },
+		{
+          "type": "radio",
+          "id": "copyright_menu",
+          "label": "Footer Copyright Style ",
+          "options": [
+            {
+              "label": "Styel 1",
+              "value": "style1"
+            },
+            {
+              "label": "Style 2",
+              "value": "style2"
+            }
+          ],
+          "default": "style1"
+        },
+		{
+          "type": "header",
+          "content": "Snow Effect"
+        },
+        {
+          "type": "checkbox",
+          "id": "section_snow_effect",
+          "label": "Snow Effect Enable",
+          "default": false
+        },
+		{
+          "type": "header",
+          "content": "Copyright Content"
+        },
+		{
+          "type": "checkbox",
+          "id": "copyright_contnet_description",
+          "label": "Copyright Content Box Enable For Style1",
+		  "default":   true
+        },
+		{
+          "type": "paragraph",
+          "content": "Navigation"
+        },
+		{
+          "type": "checkbox",
+          "id": "footer_navigation_enable",
+          "label": "Footer Menu",
+          "default": true
+        },
+        {
+          "type": "link_list",
+          "id": "footer_menu_handle",
+          "label": "Select Menu"
+        },
+	    {
+          "type": "paragraph",
+          "content": "Copyright"
+        },
+	    {
+          "type": "checkbox",
+          "id": "copyright_enable",
+          "label": "Copyright Enable",
+          "default": true
+        },
+		{
+          "type": "richtext",
+          "id": "copy_ritht_text",
+          "label": "CopyRight Text",
+		  "default": "<p>Copyright © 99 Shopify All Right Reserved.</p>",
+		  "info": "Default Content: content | content"
+		},
+		{
+          "type": "header",
+          "content": "Payment Icon & Soical"
+        },
+		{
+          "type": "checkbox",
+          "id": "copyright_payment_icon",
+          "label": "Copyright Box Enable For Style1",
+		  "default":   true
+        },
+		{
+          "type": "paragraph",
+          "content": "Footer Social"
+        },
+		{
+          "type": "checkbox",
+          "id": "footer_social_media_enable",
+          "label": "Social Media Enable",
+          "default": true
+      	},
+		{
+          "type": "paragraph",
+          "content": "Payment Icon"
+        },
+		{
+          "type": "checkbox",
+          "id": "payment_icon_enable",
+          "label": "Show Payment icon",
+          "default": true
+      	}
+		
+	],
+	"blocks":[
+		{
+          "type": "footer_typography",
+          "name": "Footer Color Options",
+		  "limit": 1,
+          "settings": [
+              {
+                "type": "color",
+                "id": "footer_bg_color",
+                "label": "Footer  Bg color",
+                "default": "#f8f8f8"
+              },
+			  {
+                "type": "color",
+                "id": "footer_body_color",
+                "label": "Footer Body color",
+                "default": "#7e7e7e"
+              },
+			  {
+                "type": "color",
+                "id": "footer_body_hover_color",
+                "label": "Footer Body Hover color",
+                "default": "#333"
+              },
+			  {
+                "type": "color",
+                "id": "social_icon_color",
+                "label": "Social Icon color",
+                "default": "#333"
+              }
+          ]
+		},
+		{
+          "type": "amazon_payments",
+          "name": "Amazon Payments",
+		  "limit": 1
+        },
+		{
+          "type": "american_express",
+          "name": "American Express",
+		  "limit": 1
+        },
+		{
+          "type": "apple_pay",
+          "name": "Apple Pay",
+		  "limit": 1
+        },
+		{
+          "type": "bitcoin",
+          "name": "Bitcoin",
+		  "limit": 1
+        },
+		{
+          "type": "cod",
+          "name": "Cash On Delivery",
+		  "limit": 1
+        },
+		{
+          "type": "dankort",
+          "name": "Dankort",
+		  "limit": 1
+        },
+		{
+          "type": "diners_club",
+          "name": "Diners Club",
+		  "limit": 1
+        },
+		{
+          "type": "discover",
+          "name": "Discover",
+		  "limit": 1
+        },
+		{
+          "type": "dogecoin",
+          "name": "Dogecoin",
+		  "limit": 1
+        },
+		{
+          "type": "dwolla",
+          "name": "Dwolla",
+		  "limit": 1
+        },
+		{
+          "type": "forbrugsforeningen",
+          "name": "Forbrugsforeningen",
+		  "limit": 1
+        },
+		{
+          "type": "google_pay",
+          "name": "Google Pay",
+		  "limit": 1
+        },
+		{
+          "type": "jcb",
+          "name": "Jcb",
+		  "limit": 1
+        },
+		{
+          "type": "klarna",
+          "name": "Klarna",
+		  "limit": 1
+        },
+		{
+          "type": "litecoin",
+          "name": "Litecoin",
+		  "limit": 1
+        },
+		{
+          "type": "maestro",
+          "name": "Maestro",
+		  "limit": 1
+        },
+		{
+          "type": "master",
+          "name": "Master",
+		  "limit": 1
+        },
+		{
+          "type": "paypal",
+          "name": "Paypal",
+		  "limit": 1
+        },
+		{
+          "type": "shopify_pay",
+          "name": "Shopify Pay",
+		  "limit": 1
+        },
+		{
+          "type": "sofort",
+          "name": "Sofort",
+		  "limit": 1
+        },
+		{
+          "type": "visa",
+          "name": "Visa",
+		  "limit": 1
+        }
+	 ]
+  }
+{% endschema %}

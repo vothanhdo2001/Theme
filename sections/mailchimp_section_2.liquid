@@ -1,0 +1,467 @@
+{%- capture html -%}
+{%- render 'section_overlay' -%}
+{% if section.settings.section_enable %}
+<div class="cta-area pt-30 pb-30 {{ data_section_overlay }}" id="section-{{ section.id }}">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="cta-content mailchimp_section-2 {% if section.settings.content_row_reverse %} flex-row-reverse {% endif %}">
+          
+          {% if section.settings.cta_title != blank or section.settings.newsletter_description %}
+          <div class="cta-title">
+            {% if section.settings.cta_title != blank %}
+            <h2>{{ section.settings.cta_title }}</h2>
+            {% endif %}
+            {% if section.settings.newsletter_description  != blank %}
+            <p>{{ section.settings.newsletter_description }}</p>
+            {% endif %}
+          </div>
+          {% endif %}
+
+          <div class="nesletter__form">
+            {%- if section.settings.newsletter_system == 'by_shopify_form' -%}
+            {%- assign formId = 'Contact_' | append: section.id -%}
+            {%- form 'customer', id: formId, class: "shopify_newsletter__form" -%}
+            {%- if form.posted_successfully? -%}
+            <p class="form-message form-success">{{ 'general.newsletter_form.confirmation'| t }} </p>
+            {%- else -%}
+            <div class="subscription-form">
+              {%- if form.errors -%}
+              <div class="form-message form-message--error">
+                {{ form.errors | default_errors }}
+              </div>
+              {%- endif -%}
+              <div class="form__inner">
+                <input type="hidden" name="contact[tags]" value="newsletter">
+                <input type="email" name="contact[email]" id="Email" value="{% if customer %}{{ customer.email }}{% endif %}"
+                       placeholder="{{ section.settings.newsletter_input_placeholder }}" aria-label="{{ 'general.newsletter_form.newsletter_email'| t }}" {% if form.errors %}aria-invalid="true"{% endif %} autocorrect="off" autocapitalize="off">
+                <button type="submit"  name="commit" id="Subscribe"><i class="ion-ios-arrow-thin-right"></i></button>
+              </div>
+            </div>
+            {%- endif -%}
+            {%- endform -%}
+
+            {%- elsif section.settings.newsletter_system == 'by_mailchimp' -%}
+            <div class="subscription-form">
+              <form id="mc-form" class="mc-form form__inner">
+                <input type="email" placeholder="{{ section.settings.newsletter_input_placeholder }}" required>
+                <button type="submit"><i class="ion-ios-arrow-thin-right"></i></button>
+              </form>
+            </div>
+            <div class="mailchimp-alerts">
+              <div class="mailchimp-submitting"></div><!-- mailchimp-submitting end -->
+              <div class="mailchimp-success"></div><!-- mailchimp-success end -->
+              <div class="mailchimp-error"></div><!-- mailchimp-error end -->
+            </div><!-- mailchimp-alerts end -->
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+{%- capture css -%}
+<style>
+  {%- for block in section.blocks -%}
+  {%- case block.type -%}
+  {%- when 'call_to_action_style' -%}
+  #section-{{ section.id }} .cta-title h2 {
+    color: {{ block.settings.call_to_actin_Title_color }};
+  }
+   #section-{{ section.id }}  .cta-title p {
+     color: {{ block.settings.newsletter_description_color }};
+  }
+  #section-{{ section.id }} .phoone-cta-button {
+    background-color: {{ block.settings.btn_Bg_color }};
+    color: {{ block.settings.btn_color }} !important;
+    border-color: {{ block.settings.btn_border_color }};
+  }	
+  #section-{{ section.id }} .phoone-cta-button:hover {
+    background-color: {{ block.settings.btn_hover_bg_color }};
+    color: {{ block.settings.btn_hover_color }} !important;
+    border-color: {{ block.settings.btn_hover_border_color }};
+  }	
+  /*Newsletter Css*/
+  .nesletter__form .subscription-form .form__inner input {
+    background: {{ block.settings.input_bg_color }};
+    color: {{ block.settings.newsletter_placholder_color }}
+  }
+  .nesletter__form .subscription-form .form__inner input::-webkit-input-placeholder {
+    color: {{ block.settings.newsletter_placholder_color }};
+  }
+  .nesletter__form .subscription-form .form__inner input:-ms-input-placeholder {
+    color: {{ block.settings.newsletter_placholder_color }};
+  }
+  .nesletter__form .subscription-form .form__inner input::placeholder {
+    color: {{ block.settings.newsletter_placholder_color }};
+  }
+  /*Newsletter Button*/
+  .nesletter__form .subscription-form .form__inner button {
+    background: {{ block.settings.newsletter_button_bg }};
+    color: {{ block.settings.newsletter_button_text_color }};
+  }
+  .nesletter__form .subscription-form .form__inner button:hover {
+    background: {{ block.settings.newsletter_button_hover_bg }};
+    color: {{ block.settings.newsletter_button_hover_text_color }};
+  }
+  {%- endcase -%}
+  {%- endfor -%}
+  
+</style>
+{%- endcapture -%}
+
+{{ css | strip_newlines
+       | replace: '  ', '' 
+       | replace: ': ', ':'
+       | replace: ' {', '{'
+}}
+{% render 'section_typography' %}
+
+{% schema %}
+  {
+    "name": "Newsletter Subscription 2",
+    "settings": [		
+		{
+		  "type": "header",
+          "content": "Section Enable"
+        },
+		{
+          "type": "checkbox",
+          "id": "section_enable",
+          "label": "Section Enable",  
+          "default": true
+      	},
+		 {
+          "type": "header",
+          "content": "Newsletter Type"
+        },
+        {
+          "type": "radio",
+          "id": "newsletter_system",
+          "label": "Newsletter Accept",
+          "options": [
+            {
+              "label": "Shopify Form",
+              "value": "by_shopify_form"
+            },
+            {
+              "label": "MailChimp",
+              "value": "by_mailchimp"
+            }
+          ],
+          "default": "by_shopify_form"
+        },
+        {
+          "type": "text",
+          "id": "newsletter_input_placeholder",
+          "label": "Placeholder Title",
+          "default": "Your email address."
+        },
+		{
+         "type": "header",
+         "content": "Section Title"
+        },		
+		{
+          "type": "textarea",
+          "id": "cta_title",
+          "label": "Newsletter Title",
+          "default": "Sign up to Newsletter"
+        },
+		{
+          "type": "textarea",
+          "id": "newsletter_description",
+          "label": "Newsletter Short Info",
+          "default": "Get the latest news & updates from phoone"
+        },
+		{
+          "type": "header",
+          "content": "Content Postion"
+        },
+		{
+          "type": "checkbox",
+          "id": "content_row_reverse",
+          "label": "Content Row Reverse",  
+          "default": false
+      	}
+	],
+	"blocks": [
+		{
+          "type": "call_to_action_style",
+          "name": "Section Color Options",
+		  "limit": 1,
+          "settings": [
+			{
+			  "type": "header",
+			  "content": "Mailchimp Content"
+			},
+			{
+			  "type": "color",
+			  "id": "call_to_actin_Title_color",
+			  "label": "Title Color",
+			  "default": "#fff"
+			},
+			{
+			  "type": "color",
+			  "id": "newsletter_description_color",
+			  "label": "Description Color",
+			  "default": "#fff"
+			},
+			{
+			  "type": "header",
+			  "content": "MailChimp Form"
+			},
+			{
+                "type": "color",
+                "id": "input_bg_color",
+                "label": "Newsletter Input Bg Color",
+                "default": "#fff"
+            },
+			{
+                "type": "color",
+                "id": "newsletter_placholder_color",
+                "label": "Newsletter Placeholder Color",
+                "default": "#333"
+            },
+			{
+			  "type": "header",
+			  "content": "Newsletter Button"
+			},
+			{
+                "type": "color",
+                "id": "newsletter_button_bg",
+                "label": "Newsletter Button Bg Color",
+                "default": "#333"
+            },
+			{
+                "type": "color",
+                "id": "newsletter_button_text_color",
+                "label": "Newsletter Button Text Color",
+                "default": "#fff"
+            },
+			{
+                "type": "color",
+                "id": "newsletter_button_hover_bg",
+                "label": "Newsletter Button Bg Color",
+                "default": "#d3122a"
+            },
+			{
+                "type": "color",
+                "id": "newsletter_button_hover_text_color",
+                "label": "Newsletter Button Hover Text Color",
+                "default": "#fff"
+            }
+          ]
+       },
+		{
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#6D7F96"
+			},
+			{
+                "type": "header",
+                "content": "Section Overlay"
+              },
+              {
+                "type": "checkbox",
+                "id": "section_overlay",
+                "label": "Section Overlay Enable",
+                "default": false
+              },
+              {
+                "type": "color",
+                "id": "section_overlay_color",
+                "label": "Overlay Color",
+                "default": "#000"
+              },
+              {
+                "type": "range",
+                "id": "section_overlay_opacity",
+                "min": 0,
+                "max": 1,
+                "step": 0.1,
+                "label": "Overlay Color Opacity",
+                "default": 0.5
+              }
+          ]
+       }
+	],
+	"presets": [
+		{
+		  "name": "Newsletter Subscription 2",
+		  "category": "9.2 Theme Others"
+		}
+	]
+  }
+{% endschema %}

@@ -1,0 +1,15 @@
+<script src="{{ "//cdn.shopify.com/s/javascripts/currencies.js" }}"></script>
+<script src="{{ "jquery.currencies.min.js" | asset_url }}"></script>
+
+<script async>
+  // Pick your format here:
+  // money_format or money_with_currency_format
+  Currency.format = 'money_format';
+  var shopCurrency = '{{ shop.currency }}';
+  /* Sometimes merchants change their shop currency, let's tell our JavaScript file */
+  Currency.moneyFormats[shopCurrency].money_with_currency_format = {{ shop.money_with_currency_format | strip_html | json }};
+  Currency.moneyFormats[shopCurrency].money_format = {{ shop.money_format | strip_html | json }};
+  var cookieCurrency;
+  try {cookieCurrency = Currency.cookie.read();} catch (err) {} // ignore errors reading cookies
+  jQuery('span.money span.money').each(function() {jQuery(this).parents('span.money').removeClass('money');});jQuery('span.money').each(function() {jQuery(this).attr('data-currency-{{ shop.currency }}', jQuery(this).html());});var buttons=jQuery(".currency li");null==cookieCurrency||cookieCurrency===shopCurrency?(buttons.removeClass("active"),jQuery(".currency li[data-currency="+shopCurrency+"]").addClass("active"),Currency.currentCurrency=shopCurrency,jQuery(".current-currency").text(shopCurrency)):(Currency.convertAll(shopCurrency,cookieCurrency),buttons.removeClass("active"),jQuery(".currency li[data-currency="+cookieCurrency+"]").addClass("active"),jQuery(".current-currency").text(cookieCurrency)),buttons.click(function(){buttons.removeClass("active");var r=jQuery(this).attr("data-currency");jQuery(".currency li[data-currency='"+r+"']").addClass("active");var e=jQuery(this).attr("data-currency");e==Currency.currentCurrency?Currency.convertAll(shopCurrency,e):Currency.convertAll(Currency.currentCurrency,e),jQuery(".current-currency").text(r)});var main_selectCallback=window.selectCallback,selectCallback=function(r,e){main_selectCallback(r,e),Currency.convertAll(shopCurrency,jQuery(".currency .active").attr("data-currency"))};
+</script>

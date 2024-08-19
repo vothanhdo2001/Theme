@@ -1,0 +1,844 @@
+{%- capture html -%}
+<div class="featured-banner two mt-100 mb-100 mb-md-80 mt-md-80 mb-sm-70 mt-mb-70 mt-xs-65 mb-xs-65" id="section-{{ section.id }}">
+  <div class="featured-banner-inner" style="background:url({%- if section.settings.featured_banner_image != blank -%} {{section.settings.featured_banner_image | img_url: '700x700' }} {%- else -%} https://via.placeholder.com/700x700 {%- endif -%} ) no-repeat scroll left center;">
+    <div class="container">
+      <div class="row featured-banner-align">
+        <div class="col-12 col-xl-{{ section.settings.xl_col }} offset-xl-{{ section.settings.xl_offset }} col-lg-{{ section.settings.lg_col }} offset-lg-{{ section.settings.lg_offset }} col-md-{{ section.settings.md_col }} offset-md-{{ section.settings.md_offset }}">
+           <div class="featured-banner-content {% if section.settings.content_align == "left" %}text-left {% elsif section.settings.content_align == "right" %} text-right {% elsif section.settings.content_align == "center" %} text-center {% endif %}">
+            {%- if section.settings.featured_banner_title != '' -%}
+            <h2>{{ section.settings.featured_banner_title }}</h2>
+            {%- endif -%}
+            {%- if section.settings.featured_banner_content != '' -%}
+            <div class="featured-banner-description">
+              <p>{{ section.settings.featured_banner_content }}</p>
+            </div>
+            {%- endif -%}
+            {%- if section.settings.featured_banner_list != '' -%}
+            <div class="featured-banner-list">
+              {% for block in section.blocks %}
+              {% case block.type %}
+              {% when 'feature_list_right' %}
+              <div class="single-feature {% if block.settings.text_align == "left" %}text-left {% elsif block.settings.text_align == "right" %} text-right {% elsif block.settings.text_align == "center" %} text-center {% endif %}">
+                {%- if block.settings.feature_icon_type == "img_icon" -%}
+                <div class="feature-icon">
+                  {%- if block.settings.feature_icon != blank -%}
+                   {%- render 'lazyload_image_src',
+                	  image: block.settings.feature_icon,
+              		  size: '50x50' -%}
+                    {%- else -%}
+                     <img class="lazyload" data-src="https://cdn.shopify.com/s/files/1/0081/2069/6885/files/icon-3_d1d51595-c2a3-4d7a-8bc8-14dc2c5df082.png?12000">
+                    {%- endif -%}
+                 </div>
+                {%- elsif block.settings.feature_icon_type == "font_icon" -%}
+                 <div class="feature-icon">
+                   <i class="{{ block.settings.icon_name }}"></i>
+                 </div>
+                {%- elsif block.settings.feature_icon_type == "none" -%}
+                
+                {%- endif -%}
+                {%- if block.settings.feature_title != '' -%}
+                <h3>{{ block.settings.feature_title }}</h3>
+                {%- endif -%}
+              </div>
+              {% endcase %}
+              {% endfor %}
+            </div>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+
+
+{%- render 'section_typography' -%}
+{%- capture css -%}
+{%- style -%}
+    {% for block in section.blocks %}
+    {% case block.type %}
+    {% when 'section_typography' %}
+    #section-{{ section.id }}.two .featured-banner-content > h2{
+    	color: {{ block.settings.title_color }};
+		font-size: {{ block.settings.main_title_font_size }}px;
+    }
+    #section-{{ section.id }}.two .featured-banner-description p {
+    	color: {{ block.settings.description_color }};
+    }
+
+    #section-{{ section.id }} .feature-icon i {
+      color: {{ block.settings.featured_icon_color }};
+    }
+    #section-{{ section.id }}.two .single-feature h3 {
+      color: {{ block.settings.featured_title_color }};
+    }
+	@media (min-width: 992px) and (max-width: 1199px) {
+      #section-{{ section.id }} .two .featured-banner-content > h2{
+      	font-size: {{ block.settings.main_title_md_font_size }}px;
+      }
+    }
+	@media (min-width: 768px) and (max-width: 991px) {
+      #section-{{ section.id }}.two .featured-banner-content > h2{
+      	font-size: {{ block.settings.main_title_sm_font_size }}px;
+      }
+    }
+    @media (max-width: 767px) {
+      #section-{{ section.id }}.two .featured-banner-content > h2{
+      	font-size: {{ block.settings.main_title_xs_font_size }}px;
+      }
+    }
+    {% endcase %}
+    {% endfor %}
+
+
+  @media (max-width: 767px) {
+	.featured-banner-content {
+      margin-top: 40px;
+    }
+  }
+{%- endstyle -%}
+{%- endcapture -%}
+
+{{ css | strip_newlines
+       | replace: '  ', '' 
+       | replace: ': ', ':'
+       | replace: ' {', '{'
+}}
+
+{% schema %}
+  {
+    "name": "Feature Banner 2",
+    "settings": [
+		{
+          "type": "image_picker",
+          "id": "featured_banner_image",
+          "label": "Banner Image",
+		  "info": "Recommended Size: 824 X 449px"
+      	},
+		{
+          "type": "text",
+          "id": "featured_banner_title",
+          "label": "Banner Title",
+          "default": "Banner Title"
+      	},
+		{
+          "type": "textarea",
+          "id": "featured_banner_content",
+          "label": "Banner Content",
+          "default": "Banner content here"
+      	},
+		{
+          "type": "header",
+          "content": "Banner Content Align"
+        },
+		{
+                "type":  "radio",
+                "id":    "content_align",
+                "label": "Content Alignment",
+                "options": [
+                  { "value": "left", "label": "Left" },
+                  { "value": "center", "label": "Center" },
+				  { "value": "right", "label": "Right" }
+                ],
+                "default":   "left"
+         },
+		
+		{
+          "type": "header",
+          "content": "Large Desktop",
+		  "info": " More Than 1200px "
+        },
+		{
+                "type": "select",
+                "id": "xl_col",
+                "label": "Large Device Column",
+                "options":[
+                      {
+                          "label": "Gird 12",
+                          "value": "12"
+                      },
+					  {
+                          "label": "Gird 11",
+                          "value": "11"
+                      },
+                      {
+                          "label": "Gird 10",
+                          "value": "10"
+                      },
+					  {
+                          "label": "Gird 9",
+                          "value": "9"
+                      },
+                      {
+                          "label": "Gird 8",
+                          "value": "8"
+                      },
+					  {
+                          "label": "Gird 7",
+                          "value": "7"
+                      },
+					  {
+                          "label": "Gird 6",
+                          "value": "6"
+                      },
+					  {
+                          "label": "Gird 5",
+                          "value": "5"
+                      },
+					  {
+                          "label": "Gird 4",
+                          "value": "4"
+                      },
+					  {
+                          "label": "Gird 3",
+                          "value": "3"
+                      },
+					  {
+                          "label": "Gird 2",
+                          "value": "2"
+                      }
+                  ],
+                  "default": "6"
+              },
+			  {
+                "type": "select",
+                "id": "xl_offset",
+                "label": "Large Device Offset Column",
+                "options":[
+                      {
+                          "label": "Offset 12",
+                          "value": "12"
+                      },
+					  {
+                          "label": "Offset 11",
+                          "value": "11"
+                      },
+                      {
+                          "label": "Offset 10",
+                          "value": "10"
+                      },
+					  {
+                          "label": "Offset 9",
+                          "value": "9"
+                      },
+                      {
+                          "label": "Offset 8",
+                          "value": "8"
+                      },
+					  {
+                          "label": "Offset 7",
+                          "value": "7"
+                      },
+					  {
+                          "label": "Offset 6",
+                          "value": "6"
+                      },
+					  {
+                          "label": "Offset 5",
+                          "value": "5"
+                      },
+					  {
+                          "label": "Offset 4",
+                          "value": "4"
+                      },
+					  {
+                          "label": "Offset 3",
+                          "value": "3"
+                      },
+					  {
+                          "label": "Offset 2",
+                          "value": "2"
+                      },
+					  {
+                          "label": "Offset 1",
+                          "value": "1"
+                      },
+					  {
+                          "label": "Offset 0",
+                          "value": "0"
+                      }
+                  ],
+                  "default": "6"
+              },
+			  {
+                "type": "header",
+                "content": "Normal Desktop",
+			    "info": "More Than 992px And Less Than 1200px"
+              },
+			  {
+                "type": "select",
+                "id": "lg_col",
+                "label": "Normal Desktop Column",
+                "options":[
+                      {
+                          "label": "Gird 12",
+                          "value": "12"
+                      },
+					  {
+                          "label": "Gird 11",
+                          "value": "11"
+                      },
+                      {
+                          "label": "Gird 10",
+                          "value": "10"
+                      },
+					  {
+                          "label": "Gird 9",
+                          "value": "9"
+                      },
+                      {
+                          "label": "Gird 8",
+                          "value": "8"
+                      },
+					  {
+                          "label": "Gird 7",
+                          "value": "7"
+                      },
+					  {
+                          "label": "Gird 6",
+                          "value": "6"
+                      },
+					  {
+                          "label": "Gird 5",
+                          "value": "5"
+                      },
+					  {
+                          "label": "Gird 4",
+                          "value": "4"
+                      },
+					  {
+                          "label": "Gird 3",
+                          "value": "3"
+                      },
+					  {
+                          "label": "Gird 2",
+                          "value": "2"
+                      }
+                  ],
+                  "default": "7"
+              },
+			  {
+                "type": "select",
+                "id": "lg_offset",
+                "label": "Normal Desktop Offset Column",
+                "options":[
+                      {
+                          "label": "Offset 12",
+                          "value": "12"
+                      },
+					  {
+                          "label": "Offset 11",
+                          "value": "11"
+                      },
+                      {
+                          "label": "Offset 10",
+                          "value": "10"
+                      },
+					  {
+                          "label": "Offset 9",
+                          "value": "9"
+                      },
+                      {
+                          "label": "Offset 8",
+                          "value": "8"
+                      },
+					  {
+                          "label": "Offset 7",
+                          "value": "7"
+                      },
+					  {
+                          "label": "Offset 6",
+                          "value": "6"
+                      },
+					  {
+                          "label": "Offset 5",
+                          "value": "5"
+                      },
+					  {
+                          "label": "Offset 4",
+                          "value": "4"
+                      },
+					  {
+                          "label": "Offset 3",
+                          "value": "3"
+                      },
+					  {
+                          "label": "Offset 2",
+                          "value": "2"
+                      },
+					  {
+                          "label": "Offset 1",
+                          "value": "1"
+                      },
+					  {
+                          "label": "Offset 0",
+                          "value": "0"
+                      }
+                  ],
+                  "default": "5"
+              },
+			{
+                "type": "header",
+                "content": "Tablet",
+				"info": "Less Than 992px"
+              },
+			{
+                "type": "select",
+                "id": "md_col",
+                "label": "Tablet Column",
+                "options":[
+                      {
+                          "label": "Gird 12",
+                          "value": "12"
+                      },
+					  {
+                          "label": "Gird 11",
+                          "value": "11"
+                      },
+                      {
+                          "label": "Gird 10",
+                          "value": "10"
+                      },
+					  {
+                          "label": "Gird 9",
+                          "value": "9"
+                      },
+                      {
+                          "label": "Gird 8",
+                          "value": "8"
+                      },
+					  {
+                          "label": "Gird 7",
+                          "value": "7"
+                      },
+					  {
+                          "label": "Gird 6",
+                          "value": "6"
+                      },
+					  {
+                          "label": "Gird 5",
+                          "value": "5"
+                      },
+					  {
+                          "label": "Gird 4",
+                          "value": "4"
+                      },
+					  {
+                          "label": "Gird 3",
+                          "value": "3"
+                      },
+					  {
+                          "label": "Gird 2",
+                          "value": "2"
+                      }
+                  ],
+                  "default": "6"
+              },
+			  {
+                "type": "select",
+                "id": "md_offset",
+                "label": "Tablet Offset Column",
+                "options":[
+                      {
+                          "label": "Offset 12",
+                          "value": "12"
+                      },
+					  {
+                          "label": "Offset 11",
+                          "value": "11"
+                      },
+                      {
+                          "label": "Offset 10",
+                          "value": "10"
+                      },
+					  {
+                          "label": "Offset 9",
+                          "value": "9"
+                      },
+                      {
+                          "label": "Offset 8",
+                          "value": "8"
+                      },
+					  {
+                          "label": "Offset 7",
+                          "value": "7"
+                      },
+					  {
+                          "label": "Offset 6",
+                          "value": "6"
+                      },
+					  {
+                          "label": "Offset 5",
+                          "value": "5"
+                      },
+					  {
+                          "label": "Offset 4",
+                          "value": "4"
+                      },
+					  {
+                          "label": "Offset 3",
+                          "value": "3"
+                      },
+					  {
+                          "label": "Offset 2",
+                          "value": "2"
+                      },
+					  {
+                          "label": "Offset 1",
+                          "value": "1"
+                      },
+					  {
+                          "label": "Offset 0",
+                          "value": "0"
+                      }
+                  ],
+                  "default": "6"
+              }
+    ],
+	"blocks":[
+	   {
+          "type": "feature_list_right",
+          "name": "Feature List",
+		  "limit": 5,
+          "settings": [
+			{
+			  "type": "header",
+			  "content": "Icon"
+			},
+			{
+              "type":  "radio",
+              "id":    "feature_icon_type",
+              "label": "Icon Type",
+              "options": [
+                { "value": "img_icon", "label": "Image Icon" },
+                { "value": "font_icon", "label": "Font Icon" },
+				{ "value": "none", "label": "None" }
+              ],
+              "default":   "img_icon"
+            },
+            {
+			  "type": "image_picker",
+			  "id": "feature_icon",
+			  "label": "Icon"
+			},
+			{
+                "type": "text",
+                "id": "icon_name",
+                "label": "Icon Name",
+                "default": "ti-mobile",
+                "info": "Themify Icon [See Icon](https:\/\/themify.me\/themify-icons) And Fontawesome Icon [See Icon](https:\/\/fontawesome.com\/v4.7.0\/icons\/) . FontAwesome Icon Use: fa fa-money  And Themify Icon Use: ti-mobile"
+            },
+			{
+			  "type": "text",
+			  "id": "feature_title",
+			  "label": "Title",
+			  "default": "Glass lenses"
+			},
+			{
+                "type":  "radio",
+                "id":    "text_align",
+                "label": "Features Content Align",
+                "options": [
+                  { "value": "left", "label": "Left" },
+                  { "value": "right", "label": "Right" },
+                   { "value": "center", "label": "Center" }
+                ],
+                "default":   "left"
+            }
+			
+          ]
+       },
+	   {
+          "type": "section_typography",
+          "name": "Section Typography",
+		  "limit": 1,
+          "settings": [
+			{
+			  "type": "color",
+			  "id": "title_color",
+			  "label": "Main Title Color",
+			  "default": "#333"
+			},
+			{
+			  "type": "color",
+			  "id": "description_color",
+			  "label": "Description Color",
+			  "default": "#333"
+			},
+			{
+			  "type": "header",
+			  "content": "Featured List"
+			},
+			{
+			  "type": "color",
+			  "id": "featured_title_color",
+			  "label": "Featured Title Color",
+			  "default": "#333"
+			},
+			{
+			  "type": "color",
+			  "id": "featured_icon_color",
+			  "label": "Featured Icon Color",
+			  "default": "#333",
+			  "info": "If Icon Type selected Font Icon, Then It will work."
+			},
+			{
+              "type": "header",
+              "content": "Main Title Font Size",
+			  "info": "More Than 1200 px"
+           },
+			{
+			  "type": "range",
+			  "id": "main_title_font_size",
+			  "min": 10,
+			  "max": 100,
+			  "step": 1,
+			  "label": "Desktop Font Size",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+              "type": "header",
+              "content": "Small Desktop Font Size",
+			  "info": "less Than 1199 px and More Than 991 px"
+            },
+			{
+			  "type": "range",
+			  "id": "main_title_md_font_size",
+			  "min": 10,
+			  "max": 100,
+			  "step": 1,
+			  "label": "Tablet Font Size",
+			  "unit": "px",
+			  "default": 70
+			},
+			{
+              "type": "header",
+              "content": "Mobile Font Size",
+			  "info": "Less Than 991 px and More Than 768 px"
+            },
+			{
+			  "type": "range",
+			  "id": "main_title_sm_font_size",
+			  "min": 10,
+			  "max": 100,
+			  "step": 1,
+			  "label": "Mobile Font Size",
+			  "unit": "px",
+			  "default": 55
+			},
+			{
+              "type": "header",
+              "content": "Mobile Font Size",
+			  "info": "Less Than 991 px and More Than 768 px"
+            },
+			{
+			  "type": "range",
+			  "id": "main_title_xs_font_size",
+			  "min": 10,
+			  "max": 100,
+			  "step": 1,
+			  "label": "Mobile Font Size",
+			  "unit": "px",
+			  "default": 45
+			}
+          ]
+       },
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#ffffff"
+			}
+          ]
+       }
+	],
+	"presets": [
+		{
+		  "name": "Featured Banner 2",
+		  "category": "9.4 Single Product",
+		  "blocks":[
+				{
+					"type": "feature_list_right"
+				},		
+				{
+					"type": "feature_list_right"
+				},
+				{
+					"type": "feature_list_right"
+				}
+			]
+		}
+	]
+  }
+{% endschema %}

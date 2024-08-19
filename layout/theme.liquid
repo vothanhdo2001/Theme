@@ -1,0 +1,177 @@
+{%- liquid 
+	assign body_font = settings.body_font_handle
+    assign header_font = settings.header_font_handle
+    assign paragraph_font = settings.paragraph_font_handle
+-%}
+<!doctype html>
+<html class="no-js" lang="{{ shop.locale }}">
+<head>
+  <!-- Basic and Helper page needs -->
+  {% capture html %}
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="{{ settings.color_primary }}">
+  <meta name="format-detection" content="telephone=no">
+   {%- if template contains 'collection' and current_tags -%}<meta name="robots" content="noindex"><link rel="canonical" href="{{ shop.url }}{{ collection.url }}"> {%- else -%}<link rel="canonical" href="{{ canonical_url }}">{%- endif -%}<link rel="prefetch" as="document" href="{{ canonical_url }}"><link rel="preconnect" href="//fonts.shopifycdn.com/" crossorigin><link rel="preconnect" href="//cdn.shopify.com/" crossorigin>
+  <link rel="dns-prefetch" href="//{{ shop.domain }}" crossorigin><link rel="dns-prefetch" href="//{{ shop.domain }}" crossorigin><link rel="dns-prefetch" href="//cdn.shopify.com" crossorigin><link rel="dns-prefetch" href="//fonts.shopifycdn.com" crossorigin><link rel="dns-prefetch" href="//fonts.googleapis.com" crossorigin><link rel="dns-prefetch" href="//ajax.googleapis.com" crossorigin><link rel="dns-prefetch" href="//via.placeholder.com" crossorigin>
+  <link rel="preconnect" href="//ajax.googleapis.com/">
+  <link rel="preload" href="{{ 'plugins.js' | asset_url }}" as="script">
+  {%- if template.name == 'product' -%}
+  {%- assign featured_media = product.selected_or_first_available_variant.featured_media | default: product.featured_media -%}
+  <link rel="preload" as="image" href="{{ featured_media | img_url: '180x' }}" imagesrcset="{% render 'as-img-src' with image: featured_media %}" imagesizes="(max-width: 767px) 100vw, 50vw">
+  {%- endif -%}
+  <link rel="preload" href="{{ 'theme.plugins.js' | asset_url }}" as="script">
+  <link rel="preload" href="{{ 'bootstrap.min.js' | asset_url }}" as="script">
+  <link rel="preload" href="{{ 'owl.carousel.min.js' | asset_url }}" as="script">
+  <link rel="preload" href="{{ 'lazysizes.min.js' | asset_url }}" as="script">
+  <link rel="preload" href="{{ 'tippy.min.js' | asset_url }}" as="script">
+  <link rel="preload" href="{{ 'slick.min.js' | asset_url }}" as="script">
+  <link rel="preload" href="{{ '//cdn.shopify.com/s/javascripts/currencies.js' }}" as="script">
+  <link rel="preload" href="{{ "jquery.currencies.min.js" | asset_url }}" as="script">
+  <link rel="preload" href="{{ 'theme.min.js' | asset_url }}" as="script">
+  {%- if content_for_layout contains 'revolution-js' -%}
+  <link rel="preload" href="{{ 'revolution-slider.js' | asset_url }}" as="script">
+  {%- elsif template == 'index' and settings.body_top_slider == true -%}
+  <link rel="preload" href="{{ 'revolution-slider.js' | asset_url }}" as="script">
+  {%- endif -%}
+  <link rel="preload" as="font" href="{{ body_font | font_url }}" type="font/woff2" crossorigin>
+  <link rel="preload" as="font" href="{{ header_font | font_url }}" type="font/woff2" crossorigin>
+  <link rel="preload" as="font" href="{{ paragraph_font | font_url }}" type="font/woff2" crossorigin>
+  <link rel="preload" href="{{ 'plugins.css' | asset_url }}" as="style">
+  <link rel="preload" href="{{ 'slick.min.css' | asset_url }}" as="style">
+  <link rel="preload" href="{{ 'style.min.css' | asset_url }}" as="style">
+  <link rel="preload" href="{{ 'theme-settings.css' | asset_url }}" as="style">
+  {%- if content_for_layout contains 'phoone-slick-slider' or content_for_layout contains 'shop-product__small-image-gallery-slider--vertical' or content_for_layout  contains 'slick-carousel-js' or content_for_layout contains 'related_product_slide' -%} 
+  <link rel="preload" href="{{ 'slick.min.css' | asset_url }}" as="style">
+  {%- endif -%}
+  {%- if content_for_layout contains 'data-fancybox' -%}
+  <link rel="preload" href="{{'fancyAPP.min.css' | asset_url}}" as="style">
+  {%- endif -%}
+  {%- if content_for_layout contains 'revolution-js' %}
+  <link rel="preload" href="{{ 'revolution-slider.css' | asset_url }}" as="style">
+  {%- elsif template == 'index' and settings.body_top_slider == true -%}
+  <link rel="preload" href="{{ 'revolution-slider.css' | asset_url }}" as="style">
+  {%- endif -%}
+  {%- if settings.rtl_enable -%}
+  <link rel="preload" href="{{ 'rtl.css' | asset_url }}" as="style">
+  {%- endif -%}
+  {%- if settings.dark_version_enable -%}  
+  <link rel="preload" href="{{ 'dark-color.css' | asset_url }}" as="style">
+  {%- endif -%}
+
+  {%- if settings.favicon != blank -%}
+  <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png" />
+  {%- endif -%}
+  <!-- Title and description -->
+  {%- capture seo_title -%}
+  {{ page_title }}
+  {%- if current_tags -%}
+  {%- assign meta_tags = current_tags | join: ', ' -%} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags }}
+  {%- endif -%}
+  {%- if current_page != 1 -%}
+  &ndash; {{ 'general.meta.page' | t: page: current_page }}
+  {%- endif -%}
+  {%- unless page_title contains shop.name -%}
+  &ndash; {{ shop.name }}
+  {%- endunless -%}
+  {%- endcapture -%}
+  <title>{{ seo_title }}</title>
+  {%- if page_description -%}
+  <meta name="description" content="{{ page_description | escape }}">
+  {%- endif -%}
+  <!-- Helpers -->
+  {%- render 'social-meta-tags' -%}
+  {% endcapture %}
+  {{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+  
+  {%- render 'header-css' with content_for_layout as content_for_layout -%}
+  {%- render 'theme-settings-inline-css' with body_font: body_font, header_font: header_font, paragraph_font: paragraph_font  -%}
+  
+  {{ 'theme-settings.css' | asset_url | stylesheet_tag }}
+  {%- if settings.dark_version_enable -%}  
+  {{ 'dark-color.css' | asset_url | stylesheet_tag }}
+  {%- endif -%}
+  {%- if settings.rtl_enable -%}
+  {{ 'rtl.css' | asset_url | stylesheet_tag }}
+  {%- endif -%}
+  
+
+  {%- if settings.theme_custom_css_style != '' -%}
+  {{ settings.theme_custom_css_style }}
+  {%- endif -%}
+
+  <!-- Header hook for plugins -->
+  {{ content_for_header }}
+  {%- render 'oldIE-js' -%}
+  <!-- JS -->
+  {%- render 'header-js' with content_for_layout as content_for_layout -%}
+  {%- if template contains 'customers' -%}
+  {{ 'shopify_common.js' | shopify_asset_url | script_tag }}
+  {%- endif -%}
+</head>
+
+<body {% if settings.rtl_enable %} dir="rtl" {% endif %} id="{{ page_title | handle }}" class="{% if customer %}customer-logged-in {% endif %}template-{{ template.name | handle }} {% if settings.header_type == "wearables" %}vertical-header {% endif %} {%- if settings.dark_version_enable -%} dark_v {%- endif -%} {% if settings.box_layout_enable -%} box_bg{%- endif -%}" >
+
+  {%- if settings.enable_preloader -%}
+  {%- render 'preloader' -%} 
+  {%- endif -%}
+
+  {%- if template == 'index' and settings.newsletter_popup_enable -%}
+  {%- render 'newsletter-popup' -%}
+  {%- endif -%}
+  
+  {%- if settings.phoone_snow_effect -%}
+  <span class="snow--effect"></span>
+  {%- endif -%}
+  <div class="wrapper {% if settings.box_layout_enable %} box-layout{% endif %}">
+	{%- if settings.topbar_notification_enable -%}
+    {%- if settings.topbar_notification == 'topbar_in_index' and template == 'index' -%}
+    {%- render 'top-notification-bar' -%}
+    {%- elsif settings.topbar_notification == 'topbar_in_template' -%}
+    {%- render 'top-notification-bar' -%}
+    {%- endif -%}
+    {%- endif -%}
+    
+    {%- if template == 'index' and settings.body_top_slider == true -%}
+    {%- section 'revslide_for_cosmetic' -%}
+    {%- endif -%}
+
+    {%- if settings.error_page_style != "style2" or template != '404' -%}
+    {%- render 'header_settings' -%}
+    {%- endif -%}
+
+    {%- if template != 'index' and template != '404' -%}
+    {%- render 'breadcrumb-banner' -%}
+    {%- endif -%}
+
+    <main>
+      {{ content_for_layout }}
+    </main>
+
+    {%- if settings.error_page_style != "style2" or template != '404' -%}
+    {%- render 'footer_settings' -%}
+    {%- endif -%}
+
+  </div>
+
+  <!-- Necessary JS -->
+  {%- render 'footer-js' with content_for_layout as content_for_layout -%}
+  {%- render 'modal-compare' -%}
+  
+  {%- if settings.scroll_to_top -%}
+  <!-- scroll to top  -->
+  <a href="#" class="scroll-top"></a>
+  <!-- end of scroll to top -->
+  {%- endif -%}
+  {%- if settings.recent_viewed_product and content_for_layout contains 'recent_view_product'  -%}
+    {%- if template contains 'product' -%}
+    <script defer="defer" src="{{'//ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js'}}"></script>
+    <script defer="defer" src="{{'jquery.products.min.js' | asset_url}}"></script>
+    <script>
+      Shopify.Products.recordRecentlyViewed();
+    </script>
+    {%- endif -%}
+  {%- endif -%}
+</body>
+</html>

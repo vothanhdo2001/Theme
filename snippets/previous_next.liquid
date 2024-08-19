@@ -1,0 +1,63 @@
+{% if section.settings.prev_next == "without_image" %}
+{% if collection.previous_product or collection.next_product %}
+<div class="product-navigation without_image ">
+  {% if collection.previous_product %}
+  <div class="prod_prev">
+    {{ '<i class="fa fa-angle-left"></i>' | link_to: collection.previous_product.url, 'Previous product' }}
+  </div>
+  {% endif %}
+
+  {% if collection.next_product %}
+  <div class="prod_next">
+    {{ '<i class="fa fa-angle-right" ></i>' | link_to: collection.next_product.url, 'Next product' }}
+  </div>
+  {% endif %}
+</div>
+{% endif %}
+{% elsif section.settings.prev_next == "with_image" %}
+
+{% if collection and collection.products_count > 1 %}
+    {% for productassign in collection.products %}
+        {% if productassign.handle == product.handle %}
+            {% assign index = forloop.index0 %}
+            {% assign col_size = collection.products | size | minus: 1 %}
+            {% if index > 0 %}
+                {% if index < col_size %}
+                    {% assign prev = index | minus: 1 %}
+                    {% assign next = index | plus: 1 %}
+                {% else %}
+                    {% assign prev = index | minus: 1 %}
+                    {% assign next = 0 %}
+                {% endif %}
+            {% else %}
+                {% assign prev = col_size %}
+                {% assign next = index | plus: 1 %}
+            {% endif %}
+            {% assign prev = collection.products[prev] %}
+            {% assign next = collection.products[next] %}
+            {% assign prevtitle = prev.title %}
+            {% assign nexttitle = next.title %}
+            {% capture prevurl %}/collections/{{ collection.handle }}{{ prev.url }}{% endcapture %}
+            {% capture nexturl %}/collections/{{ collection.handle }}{{ next.url }}{% endcapture %}
+            {% assign prev = prev.selected_or_first_available_variant.featured_image | default: prev.featured_image %}
+            {% assign next = next.selected_or_first_available_variant.featured_image | default: next.featured_image %}
+
+            <div class="product-navigation with_image ">
+              <div class="prod_prev">
+                <a href="{{ prevurl }}" class="product-prev">
+                  <img src="{{ prev | product_img_url: 'compact' }}" alt="{{ prev.alt | escape  }}" />
+                </a>
+              </div>
+              <div class="prod_next">
+                <a href="{{ nexturl }}" class="product-next">
+                  <img src="{{ next | product_img_url: 'compact' }}" alt="{{ next.alt | escape  }}" />
+                </a>
+              </div>
+            </div>
+            {% break %}
+        {% endif %}
+    {% endfor %}
+
+  {% endif %}
+
+{% endif %}

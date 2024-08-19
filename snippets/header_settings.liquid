@@ -1,0 +1,22 @@
+{%- if settings.header_type == "default" -%}
+{%- section 'header' -%}
+{% elsif settings.header_type == "special" %}
+{%- section 'header_special' -%}
+{%- elsif settings.header_type == "essential" -%}
+{%- section 'header_essentials' -%}
+{%- elsif settings.header_type == "wearables" -%}
+{%- section 'header-wearables' -%}
+{%- elsif settings.header_type == "overlap" -%}
+{%- section 'header-overlap-menu' -%}
+{%- elsif settings.header_type == "bottom_header" -%}
+{%- section 'header_below_in_slider' -%}
+{%- elsif settings.header_type == "new_index_header" -%}
+{%- section 'header_index_new' -%}
+{%- elsif settings.header_type == "logo_middle" -%}
+{%- section 'header_logo_middle_of_menu' -%}
+{%- endif -%}
+
+
+
+
+

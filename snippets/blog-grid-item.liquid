@@ -1,0 +1,71 @@
+<div class="single-slider-post">
+
+  {% if article.image and section.settings.post_thumbnail_enable %}
+  <div class="single-slider-post__image mb-30">
+    <a href="{{ article.url }}">
+      {% if section.settings.blog_layout_grid %}
+       <img id="bannerImage-{{ article.id }}" class="lazyload "
+               src="{{ article | img_url: '1170x500' }}" data-src="{{ article | img_url: '370x200',  crop: 'center' }}" data-sizes="auto"
+               alt="{{  article.alt | escape }}">
+      {% else%}
+      <img id="bannerImage-{{ article.id }}" class="lazyload "
+               src="{{ article | img_url: '1170x500' }}" data-src="{{ article | img_url: '1170x500',  crop: 'center' }}" data-sizes="auto"
+               alt="{{  article.alt | escape }}">
+      
+      {% endif %}
+    </a>
+  </div>
+  {% endif %}
+  
+  <div class="single-slider-post__content">
+    
+     {% if section.settings.post_author_enable or section.settings.post_publish_time_enable or section.settings.post_comment_enbale %}
+    <div class="post-info d-flex flex-wrap align-items-center mb-10">
+      
+      {% if section.settings.post_author_enable %}
+      <div class="post-user  pr-30">
+        <i class="ion"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></i><p><span>{{ section.settings.author_title }}</span> {{ article.author }}</p>
+      </div>
+      {% endif %}
+      
+    
+      {% if section.settings.post_publish_time_enable %}
+      <div class="post-date mb-0 pr-30">
+        <i class="ion"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></i>
+        <p>{{ article.published_at | date: "%b %d, %Y" }}</p>
+      </div>
+      {% endif %}
+      
+      {% if blog.comments_enabled? and section.settings.post_comment_enbale %}
+      <div class="post-comment pr-30">
+        <i class="ion"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></i>
+        <a href="{{ article.url }}#comments">
+          {{ 'blogs.comments.with_count' | t: count: article.comments_count }}
+        </a>
+      </div>
+      {% endif %}
+    </div>
+    
+    {% endif %}
+    
+    {% if section.settings.post_title_enable %}
+    <h2 class="post-title"><a href="{{ article.url }}">{{ article.title }}</a></h2>
+    {% endif %}
+
+    {% assign contentlen = section.settings.post_content_len %}
+    {% if section.settings.post_content_enbale %}
+    {% if article.excerpt.size > 0 %}
+    {{ article.excerpt }}
+    {% else %}
+    <p class="post-excerpt">{{ article.content | strip_html | truncatewords: contentlen }}</p>
+    {% endif %}
+    {% endif %}
+    
+     {% if section.settings.post_readmore_btn_enbale %}
+    <a class="phoone-button phoone-button--medium" href="{{ article.url }}">{{ section.settings.read_more_button | default: 'read more' }}</a>
+    {% endif %}
+    
+
+  </div>
+</div>
+

@@ -1,0 +1,486 @@
+{%- capture html -%}
+<div class="slider-area revolution-js" id="section-{{ section.id }}" data-section2="RevolutionSlider8">
+  <div id="rev_slider_14_1_wrapper" class="rev_slider_wrapper fullwidthbanner-container" data-alias="homapage-9" data-source="gallery" style="margin:0px auto;background:transparent;padding:0px;margin-top:0px;margin-bottom:0px;">
+    <!-- START REVOLUTION SLIDER 5.4.7 fullwidth mode -->
+    <div id="rev_slider_14_1" class="rev_slider fullwidthabanner" style="display:none;" data-version="5.4.7">
+      <ul>	<!-- SLIDE  --> 
+          {% render 'rev_slider_widget_for_wearables' %}
+      </ul>
+      <div class="tp-bannertimer tp-bottom" style="visibility: hidden !important;"></div>	</div>
+  </div><!-- END REVOLUTION SLIDER -->
+</div>
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+
+{%- capture css -%}
+<style>
+  
+  #section-{{ section.id }}{
+    margin-top: {{ section.settings.section_margin_top }}px !important;
+    margin-bottom: {{ section.settings.section_margin_bottom }}px !important;
+  }
+  
+  @media (min-width: 768px) and (max-width: 991px) {
+    #section-{{ section.id }}{
+      margin-top: {{ section.settings.section_margin_top_md }}px !important;
+      margin-bottom: {{ section.settings.section_margin_bottom_md }}px !important;
+    }
+  }
+  @media (max-width: 767px) {
+    #section-{{ section.id }}{
+      margin-top: {{ section.settings.section_margin_top_xs }}px !important;
+      margin-bottom: {{ section.settings.section_margin_bottom_xs }}px !important;
+    }
+  }
+  #rev_slider_14_1 .tp-bullets.phoone .tp-bullet{
+    background: {{ section.settings.bullet_bg_color }};
+  }; 
+</style>
+{%- endcapture -%}
+
+{{ css | strip_newlines
+       | replace: '  ', '' 
+       | replace: ': ', ':'
+       | replace: ' {', '{'
+}}
+		
+
+{% schema %}
+  {
+    "name": "Revolution Wearables",
+    "settings": [
+		{
+          "type": "header",
+          "content": "Pagination / Bullet"
+        },
+		{
+          "type": "checkbox",
+          "id": "slider_bullet_enable",
+          "label": "SLider Bullet Enable",
+		  "default":  true
+        },
+        {
+          "type": "color",
+          "id": "bullet_bg_color",
+          "label": "Bullet Bg Color",
+          "default": "#999999"	
+        },
+		{
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+	],
+	"blocks":[
+      {
+          "type": "slide1",
+          "name": "Slide Layer 1",
+          "settings": [
+			  {
+                "type": "header",
+                "content": "Layer Thumbnail"
+              },
+              {
+                  "type": "image_picker",
+                  "id": "slider_thubnail",
+                  "label": "Slide Thumbnail",
+                  "info": "Recommended Size: 1920 x 1000px"
+              },
+			  {
+                "type": "header",
+                "content": "Slide Caption"
+              },
+			   {
+                "type": "text",
+                "id": "slider_count_number",
+                "label": "Slider Slide Count",
+				"default": "01/"
+			  },
+			  {
+                "type": "textarea",
+                "id": "layer_caption_title1",
+                "label": "Caption Title 1",
+				"default": "Meet the trends <br> of the season"
+			  },
+			  {
+                "type": "header",
+                "content": "Slider Caption"
+              },
+			  {
+                "type": "color",
+                "id": "slider_slide_count_color",
+                "label": "Slide Counter Color",
+                "default": "#333"	
+              },
+			  {
+                "type": "color",
+                "id": "slide_title1_color",
+                "label": "Slide Title 1 Color",
+                "default": "#333"	
+              },
+			  {
+                "type": "header",
+                "content": "Slider Paginate"
+              },
+              {
+                "type": "color",
+                "id": "pgainate_active_color",
+                "label": "Paginate Active Color",
+                "default": "#333"	
+              },
+			  {
+                "type": "color",
+                "id": "pgainate_prev_color",
+                "label": "Paginate Color",
+                "default": "#ccc"	
+              },
+			  {
+                "type": "header",
+                "content": "Divider Color Options"
+              },
+			  {
+                "type": "color",
+                "id": "divider_color",
+                "label": "Divider Bg Color",
+                "default": "#000000"
+              },
+              {
+                "type": "range",
+                "id": "divider_color_opacity",
+                "min": 0,
+                "max": 1,
+                "step": 0.1,
+                "label": "Divider Color Opacity",
+                "default": 0.5
+              }
+			  
+          ]
+        },
+		{
+          "type": "slide2",
+          "name": "Slide Layer 2",
+          "settings": [
+			  {
+                "type": "header",
+                "content": "Layer Image"
+              },
+              {
+                  "type": "image_picker",
+                  "id": "slider_thubnail",
+                  "label": "Slide Thumbnail",
+                  "info": "Recommended Size: 1920 x 1000px"
+              },
+			  {
+                "type": "header",
+                "content": "Slide Caption"
+              },
+			   {
+                "type": "text",
+                "id": "slider_count_number",
+                "label": "Slider Slide Count",
+				"default": "02/"
+			  },
+			  {
+                "type": "textarea",
+                "id": "layer_caption_title1",
+                "label": "Caption Title 1",
+				"default": "Meet the trends <br> of the season"
+			  },
+			  {
+                "type": "header",
+                "content": "Slider Caption"
+              },
+			  {
+                "type": "color",
+                "id": "slider_slide_count_color",
+                "label": "Slide Counter Color",
+                "default": "#333"	
+              },
+			  {
+                "type": "color",
+                "id": "slide_title1_color",
+                "label": "Slide Title 1 Color",
+                "default": "#333"	
+              },
+			  {
+                "type": "header",
+                "content": "Slider Paginate"
+              },
+              {
+                "type": "color",
+                "id": "pgainate_active_color",
+                "label": "Paginate Active Color",
+                "default": "#333"	
+              },
+			  {
+                "type": "color",
+                "id": "pgainate_prev_color",
+                "label": "Paginate Color",
+                "default": "#ccc"	
+              },
+			  {
+                "type": "header",
+                "content": "Divider Color Options"
+              },
+			  {
+                "type": "color",
+                "id": "divider_color",
+                "label": "Divider Bg Color",
+                "default": "#000000"
+              },
+              {
+                "type": "range",
+                "id": "divider_color_opacity",
+                "min": 0,
+                "max": 1,
+                "step": 0.1,
+                "label": "Divider Color Opacity",
+                "default": 0.5
+              }
+			  
+			  
+          ]
+        },
+		
+		{
+          "type": "slide3",
+          "name": "Slide Layer 3",
+          "settings": [
+			  {
+                "type": "header",
+                "content": "Layer Image"
+              },
+              {
+                  "type": "image_picker",
+                  "id": "slider_thubnail",
+                  "label": "Slide Thumbnail",
+                  "info": "Recommended Size: 1920 x 1000px"
+              },
+			  {
+                "type": "header",
+                "content": "Slide Caption"
+              },
+			   {
+                "type": "text",
+                "id": "slider_count_number",
+                "label": "Slider Slide Count",
+				"default": "03/"
+			  },
+			  {
+                "type": "textarea",
+                "id": "layer_caption_title1",
+                "label": "Caption Title 1",
+				"default": "Meet the trends <br> of the season"
+			  },
+			  {
+                "type": "header",
+                "content": "Slider Caption"
+              },
+			  {
+                "type": "color",
+                "id": "slider_slide_count_color",
+                "label": "Slide Counter Color",
+                "default": "#333"	
+              },
+			  {
+                "type": "color",
+                "id": "slide_title1_color",
+                "label": "Slide Title 1 Color",
+                "default": "#333"	
+              },
+			  {
+                "type": "header",
+                "content": "Slider Paginate"
+              },
+              {
+                "type": "color",
+                "id": "pgainate_active_color",
+                "label": "Paginate Active Color",
+                "default": "#333"	
+              },
+			  {
+                "type": "color",
+                "id": "pgainate_prev_color",
+                "label": "Paginate Color",
+                "default": "#ccc"	
+              },
+			  {
+                "type": "header",
+                "content": "Divider Color Options"
+              },
+			  {
+                "type": "color",
+                "id": "divider_color",
+                "label": "Divider Bg Color",
+                "default": "#000000"
+              },
+              {
+                "type": "range",
+                "id": "divider_color_opacity",
+                "min": 0,
+                "max": 1,
+                "step": 0.1,
+                "label": "Divider Color Opacity",
+                "default": 0.5
+              }
+			  
+			  
+          ]
+        },
+		{
+          "type": "video_slide",
+          "name": "Video Slide",
+          "settings": [
+			  {
+                "type": "header",
+                "content": "Youtube Video Id"
+              },
+              {
+                  "type": "text",
+                  "id": "yotube_video_id",
+                  "label": "Youtube Video Id",
+				   "default": "BVMsRltq2yU",
+                  "info": "Please Put Here Youtube Video Id"
+              },
+			  {
+                "type": "header",
+                "content": "Video Thumbnail"
+              },
+              {
+                  "type": "image_picker",
+                  "id": "video_thumbnail",
+                  "label": "Video Thumbnail",
+                  "info": "Recommended Size: 1920 x 790px"
+              },
+			  {
+                  "type": "header",
+                  "content": "Video Mute"
+              },
+			  {
+                 "type":  "select",
+                 "id":    "video_mute",
+                 "label": "Video Sound Off/On",
+                 "options": [
+                   { "value": "on", "label": "Off" },
+                   { "value": "off", "label": "On" }
+                 ],
+                 "default":   "off"
+              },
+			  {
+                  "type": "header",
+                  "content": "Video Volume"
+              },
+			  {
+                "type": "range",
+                "id": "video_volume",
+                "min": 0,
+                "max": 100,
+                "step": 1,
+                "label": "Video Sound Volume",
+                "default": 50
+              },
+			  {
+                  "type": "header",
+                  "content": "Video Loop"
+              },
+			  {
+                 "type":  "select",
+                 "id":    "video_loop",
+                 "label": "Video Loop Off/On",
+                 "options": [
+                   { "value": "on", "label": "Off" },
+                   { "value": "off", "label": "On" }
+                 ],
+                 "default":   "off"
+              }
+			  
+          ]
+        }
+     ],
+	"presets": [
+        {
+          "category": "1. Revolution Slider",
+          "name": "8. Slider - Wearables",
+		  "blocks":[
+				{
+					"type": "slide1"
+				},
+				{
+					"type": "slide2"
+				},
+				{
+					"type": "slide3"
+				}
+			]
+           
+        }
+     ]
+  }
+{% endschema %}

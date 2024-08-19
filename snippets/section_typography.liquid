@@ -1,0 +1,85 @@
+{%- capture css -%}
+<style>
+  #section-{{ section.id }}{
+    {%- for block in section.blocks -%}
+    {%- case block.type -%}
+    {%- when 'section_margin' -%}
+    margin-top: {{ block.settings.section_margin_top }}px !important;
+    margin-bottom: {{ block.settings.section_margin_bottom }}px !important;
+    {%- when 'section_padding' -%}
+    padding-top: {{ block.settings.section_padding_top }}px !important;
+    padding-bottom: {{ block.settings.section_padding_bottom }}px !important;
+    {%- when 'section_background' -%}    
+    background: {{ block.settings.section_bg_color }} 
+      {%- if block.settings.section_bg_image -%}url("{{ block.settings.section_bg_image | img_url: 'master' }}"){%- endif -%} no-repeat scroll center center / cover;
+    {%- endcase -%}
+    {%- endfor -%}
+  }
+
+    {%- for block in section.blocks -%}
+    {%- case block.type -%}
+    {%- when 'section_background' -%}
+    #section-{{ section.id }}.section_overlay::before  {
+      background: {{ block.settings.section_overlay_color }};
+      opacity: {{ block.settings.section_overlay_opacity }};
+      }
+    {%- endcase -%}
+    {%- endfor -%}
+
+
+  @media (min-width: 768px) and (max-width: 991px) {
+    #section-{{ section.id }}{
+      {%- for block in section.blocks -%}
+      {%- case block.type -%}
+      {%- when 'section_margin' -%}
+      margin-top: {{ block.settings.section_margin_top_md }}px !important;
+      margin-bottom: {{ block.settings.section_margin_bottom_md }}px !important;
+      {%- when 'section_padding' -%}
+      padding-top: {{ block.settings.section_padding_top_md }}px !important;
+      padding-bottom: {{ block.settings.section_padding_bottom_md }}px !important;
+      {%- endcase -%}
+      {%- endfor -%}
+    }
+  }
+  @media (max-width: 767px) {
+    #section-{{ section.id }}{
+      {%- for block in section.blocks -%}
+      {%- case block.type -%}
+      {%- when 'section_margin' -%}
+      margin-top: {{ block.settings.section_margin_top_xs }}px !important;
+      margin-bottom: {{ block.settings.section_margin_bottom_xs }}px !important;
+      {%- when 'section_padding' -%}
+      padding-top: {{ block.settings.section_padding_top_xs }}px !important;
+      padding-bottom: {{ block.settings.section_padding_bottom_xs }}px !important;
+      {%- endcase -%}
+      {%- endfor -%}
+    }
+  }
+
+  {%- for block in section.blocks -%}
+  {%- case block.type -%}
+  {%- when 'section_title_margin' -%}
+    #section-{{ section.id }} .section-title-container.mb-80 {
+        margin-bottom: {{ block.settings.section_title_spacing }}px !important;
+    }
+    @media (min-width: 768px) and (max-width: 991px) {
+      #section-{{ section.id }} .section-title-container.mb-80 {
+        margin-bottom: {{ block.settings.section_title_md_spacing }}px !important;
+      }
+    }
+    @media (max-width: 767px){
+        #section-{{ section.id }} .section-title-container.mb-80 {
+          margin-bottom: {{ block.settings.section_title_xs_spacing }}px !important;
+        }
+    }
+  {%- endcase -%}
+  {%- endfor -%}
+
+</style>
+{%- endcapture -%}
+
+{{ css | strip_newlines
+       | replace: '  ', '' 
+       | replace: ': ', ':'
+       | replace: ' {', '{'
+}}

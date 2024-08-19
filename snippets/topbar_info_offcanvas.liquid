@@ -1,0 +1,51 @@
+{%- capture html -%}
+<!--=======  offcanvas mobile menu  =======-->
+<div class="topbar_offcanvas_overlay"></div>
+<div class="offcanvas-mobile-menu" id="mobile_topbar_menu_overlay">
+  <a href="javascript:void(0)" class="offcanvas-menu-close" id="mobile_topbar_close_trigger">
+    <i class="ti-close"></i>
+  </a>
+  <div class="offcanvas-wrapper">
+    <div class="offcanvas-inner-content">
+
+      <div class="header-top-left d-flex justify-content-center {% if section.settings.gtranslate_enable -%} lang_translate {%- endif -%}">
+        {% if settings.currency_enable %}
+        <div class="currency-change change-dropdown ">
+          {% render 'currency-picker' %}
+        </div>
+        {% endif %}
+
+        {%- if settings.currency_enable and section.settings.gtranslate_enable -%}
+        <span class="header-separator ">|</span>
+        {%- endif -%}
+
+        {%- if section.settings.gtranslate_enable -%}
+        <div class="translator_lang ">
+          {%- render 'gtranslate' -%}
+        </div>
+        {%- endif -%}
+      </div>
+
+
+      <div class="topbar_account_info text-center mt-20">
+        {%- if customer and shop.customer_accounts_enabled -%}
+        <a href="{{ routes.account_logout_url }}">{{ section.settings.logout_text }}</a>
+        {{ section.settings.or_text | default:'or' }}
+        <a href="{{ routes.account_url }}">{{ section.settings.account_text }}</a>
+
+        {%- else -%}
+        <a href="{{ routes.account_login_url }}">{{ section.settings.login_text }}</a>
+        {{ section.settings.or_text | default:'or' }}
+        <a href="{{ routes.account_register_url }}">{{ section.settings.register_text }}</a>
+        {%- endif -%}
+      </div>
+
+      <div class="order-online-text mt-20 text-center">
+        {{ section.settings.welcome_text_msg }} <a href="tel:{{ section.settings.phone_number_link }}"><span class="number"> {{ section.settings.welcome_text_phone_number}}</span></a>
+      </div>
+
+    </div>
+  </div>
+</div>
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}

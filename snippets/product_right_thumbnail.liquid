@@ -1,0 +1,49 @@
+<div class="product__sticky_content product__slide_wrapper">
+    <div class="row product-gallery-sticky vertical__slider">
+      <div class="col-md-3 order-2 order-sm-1">
+        <div class="product_media_nav left_vertical_slide {% if section.settings.vertical_mb_gallery %}sm_gallery_tab{% endif %}" data-rows="4" data-vertical="true" data-vertical-sm="{%- if section.settings.vertical_mb_gallery -%}false{%- else -%}true{%- endif -%}">
+          {%- for media in product.media -%}
+          {%- render 'media_nav' with media as media -%}
+          {%- endfor -%}
+        </div>
+      </div>
+      <div class="col-md-9 order-1 order-sm-1">
+        <div class="shop-product__big-image-gallery-wrapper">
+          {% if product.description contains '[new_products]' or sold_out or on_sale %} 
+          <div class="single-product__floating-badges single-product__floating-badges--shop-product">
+            {%- render 'product-badge', sold_out: sold_out,on_sale: on_sale -%}
+          </div>
+          {%- endif -%}
+
+          {%- if productMediaVideo -%}
+          <div class="shop-product-rightside-icons product-video__icon">
+            <span class="wishlist-icon">
+              <a class="popup-video" href="https://www.youtube.com/watch?v={{ productMediaVideo }}"><i class="ion-ios-videocam"></i></a>
+            </span>
+          </div>
+          {%- endif -%}
+                 
+
+          <div class="product_media_gallery slick-carousel-js">
+            {%- for media in product.media -%}
+            {%- render 'media' with media as media -%}
+            {%- endfor -%}
+          </div>
+        </div>
+        <!--=======  End of shop product big image gallery  =======-->
+      </div>
+      <div class="col-12">
+          {% assign first_3d_model = product.media | where: "media_type", "model" | first %}
+          {%- if first_3d_model and section.settings.ar_3d_enable -%}
+          <button
+                  class="{%- if section.settings.model_ar == "icon" -%}AR_3D_Viewer{%- else -%}product-single__view-in-space{%- endif -%}"
+                  data-shopify-xr
+                  data-shopify-model3d-id="{{ first_3d_model.id }}"
+                  data-shopify-title="{{ product.title | escape }}"
+                  data-shopify-xr-hidden>
+            {% render '3D_AR' %}
+          </button>
+          {%- endif -%}
+      </div>
+    </div>
+</div>

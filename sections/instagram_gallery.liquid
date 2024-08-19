@@ -1,0 +1,604 @@
+{%- capture html -%}
+{% if section.settings.instafeed_type == 'style1' %} 
+<div id="section-{{ section.id }}" data-section="InstagramSliderGallery">
+  {% if section.settings.section_title_enable %}
+  <div class="section-title-container mb-80 mb-md-60 mb-sm-40">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="section-title section-title--one text-center">
+            {% if section.settings.section_title != blank %}
+            <h1><a href="{{ section.settings.section_title_link }}">{{ section.settings.section_title }}</a></h1>
+            {% endif %}
+            {% if section.settings.section_subtitle != blank %}
+            <p class="subtitle subtitle--deep subtitle--trending-home">{{ section.settings.section_subtitle }}</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> 
+  {% endif %}
+  {% if section.settings.instagram_feed == true %}
+  <div class="instagram-image-slider-area mb-50 mb-md-70">
+
+    <div class="{% if section.settings.container_width == 'container' %} container {% elsif section.settings.container_width == 'fluid' %} container wide {% elsif section.settings.container_width == 'nogap' %} container-fluid p-0 {%- endif -%}">
+      <div class="row {% if section.settings.container_width == 'nogap' %}no-gutters{% endif %}">
+        <div class="col-lg-12">
+
+          {% render 'instafeed-gallery-part' %}
+
+          <!--=======  End of instagram image container  =======-->
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% elsif section.settings.instafeed_type == 'style2' %} 
+
+{% if section.settings.instagram_feed == true %}
+<div id="section-{{ section.id }}" class="instagram-slider-area mb-100 mb-md-90 mb-sm-70" data-section="InstagramSliderGallery">
+  <div class="{% if section.settings.container_width == 'container' %} container {% elsif section.settings.container_width == 'fluid' %} container wide  {%- endif -%}">
+    <div class="row {% if section.settings.container_width == 'nogap' %}no-gutters{% endif %} align-items-center">
+      <div class=" {% if section.settings.section_title_enable %} col-lg-8  {% if section.settings.content_align == "left" %} order-2 {% elsif section.settings.content_align == "right" %} order-2 order-lg-1 {% endif %} {% else %} col-12 {% endif %}">
+        <div class="instagram-image-slider-area">
+          {% render 'instafeed-gallery-part' %}
+        </div>
+      </div>
+
+      {% if section.settings.section_title_enable %}
+      <div class="col-lg-4 {% if section.settings.content_align == "left" %} order-1 {% elsif section.settings.content_align == "right" %} order-1 order-lg-2 {% endif %} ">
+        <div class="instagram-section-intro pl-50 pl-lg-50 pl-md-0 pl-sm-0 pl-xs-0 pl-xxs-0 mb-0 mb-lg-0 mb-md-50 mb-sm-50 mb-xs-50 mb-xxs-50">
+
+          {% if section.settings.section_title != blank %}
+          <p><a href="{{ section.settings.section_title_link }}">{{ section.settings.section_title }}</a></p>
+          {% endif %}
+
+          {% if section.settings.section_subtitle != blank %}
+          <h3 class="subtitle subtitle--deep subtitle--trending-home">{{ section.settings.section_subtitle }}</h3>
+          {% endif %}
+
+        </div>
+      </div>
+      {% endif %}
+
+    </div>
+  </div>
+</div>
+{% endif %}
+{% elsif section.settings.instafeed_type == 'style3' %} 
+
+<div id="section-{{ section.id }}" class="style3" data-section="InstagramSliderGallery">
+  {% if section.settings.section_title_enable %}
+  <div class="section-title-container mb-80 mb-md-60 mb-sm-40">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="section-title section-title--one text-center">
+            {% if section.settings.section_title != blank %}
+            <p><a href="{{ section.settings.section_title_link }}">{{ section.settings.section_title }}</a></p>
+            {% endif %}
+            {% if section.settings.section_subtitle != blank %}
+            <h1 class="subtitle subtitle--deep subtitle--trending-home">{{ section.settings.section_subtitle }}</h1>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  {% if section.settings.instagram_feed == true %}
+  <div class="instagram-image-slider-area mb-50 mb-md-70">
+
+    <div class="{% if section.settings.container_width == 'container' %} container {% elsif section.settings.container_width == 'fluid' %} container wide  {%- endif -%}">
+      <div class="row">
+        <div class="col-lg-12">
+
+          {% render 'instafeed-gallery-part' %}
+
+          <!--=======  End of instagram image container  =======-->
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endif %}
+
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+
+{%- render 'section_typography' -%}
+
+{%- capture css -%}
+<style>
+  @media only screen and (max-width: 1199px){
+    .wide .instagram-carousel:hover .slick-arrow.slick-prev {
+      left: 0;
+    }
+    .wide .instagram-carousel:hover .slick-arrow.slick-next {
+      right: 0;
+    }
+    .wide .instagram-carousel .slick-arrow.slick-next {
+      right: 0;
+    }
+    .wide .instagram-carousel .slick-arrow.slick-prev {
+      left: 0;
+    }
+  }
+
+</style>
+{%- endcapture -%}
+
+{{ css | strip_newlines
+       | replace: '  ', '' 
+       | replace: ': ', ':'
+       | replace: ' {', '{'
+}}
+{% schema %}
+  {
+    "name": "Instagram Gallery (New)",
+    "settings": [
+		{
+		  "type": "header",
+          "content": "Section Enable"
+        },
+		{
+          "type": "checkbox",
+          "id": "instagram_feed",
+          "label": "Instafeed News Enable",  
+          "default": true
+      	},
+		{
+		  "type": "header",
+          "content": "Wrapper Width"
+        },
+		{
+          "type":  "radio",
+          "id":    "container_width",
+          "label": "Container Width",
+          "options": [
+            { "value": "container", "label": "Container" },
+            { "value": "fluid", "label": "Full Width" },
+			{ "value": "nogap", "label": "No Gap" }
+          ],
+          "default":   "container"
+        },
+		{
+		  "type": "header",
+          "content": "Choose Layout",
+		  "info": "========"
+        },
+		{
+             "type":  "select",
+             "id":    "layout_mode",
+             "label": "Layout Type",
+             "options": [
+               { "value": "grid", "label": "Gird" },
+               { "value": "slider", "label": "Slider" }
+             ],
+             "default":   "slider"
+          },
+		{
+		  "type": "header",
+          "content": "Choose Style of Section Title",
+		  "info": "========"
+        },
+		{
+             "type":  "select",
+             "id":    "instafeed_type",
+             "label": "Section Style Type",
+             "options": [
+               { "value": "style1", "label": "Top Position" },
+               { "value": "style2", "label": "Inline Position" },
+			   { "value": "style3", "label": "Top Position of Different Style" }
+             ],
+             "default":   "style1"
+          },
+		
+		{
+		  "type": "header",
+          "content": "Section Heading"
+        },
+		{
+          "type": "checkbox",
+          "id": "section_title_enable",
+          "label": "Section Title Enable",  
+          "default": true
+      	},
+		{
+          "type": "text",
+          "id": "section_title",
+          "label": "Section Title",
+          "default": "@phoone_shop"
+      	},
+		{
+          "type": "url",
+          "id": "section_title_link",
+          "label": "Title Link"
+        },
+		{
+          "type": "textarea",
+          "id": "section_subtitle",
+          "label": "Section Sub Title",
+          "default": "Follow us on instagram"
+      	},
+		{
+		  "type": "header",
+          "content": "Content Align"
+        },
+		{
+             "type":  "radio",
+             "id":    "content_align",
+             "label": "Content Align",
+             "options": [
+               { "value": "left", "label": "Left" },
+               { "value": "right", "label": "Right" }
+             ],
+             "default":   "right"
+       },
+		{
+		  "type": "header",
+          "content": "Column Select",
+		  "info": "========"
+        },
+		{
+             "type":  "select",
+             "id":    "item_Column",
+             "label": "Column Select",
+			 "info": "It will work, When selecting the Grid layout",
+             "options": [
+               { "value": "6", "label": "Column 6" },
+               { "value": "5", "label": "Column 5" },
+			   { "value": "4", "label": "Column 4" },
+			   { "value": "3", "label": "Column 3" },
+			   { "value": "2", "label": "Column 2" }
+             ],
+             "default":   "5"
+          },
+		{
+		  "type": "paragraph",
+          "content": "Tablet Column Select"
+        },
+		{
+             "type":  "select",
+             "id":    "item_md_Column",
+             "label": "Tablet Column Select",
+			 "info": "It will work, When selecting the Grid layout",
+             "options": [
+               { "value": "6", "label": "Column 6" },
+               { "value": "5", "label": "Column 5" },
+			   { "value": "4", "label": "Column 4" },
+			   { "value": "3", "label": "Column 3" },
+			   { "value": "2", "label": "Column 2" }
+             ],
+             "default":   "4"
+          },
+		{
+		  "type": "paragraph",
+          "content": "Large Mobile Column Select"
+        },
+		{
+             "type":  "select",
+             "id":    "item_sm_Column",
+             "label": "Large Column Select",
+			 "info": "It will work, When selecting the Grid layout",
+             "options": [
+               { "value": "6", "label": "Column 6" },
+               { "value": "5", "label": "Column 5" },
+			   { "value": "4", "label": "Column 4" },
+			   { "value": "3", "label": "Column 3" },
+			   { "value": "2", "label": "Column 2" },
+			   { "value": "1", "label": "Column 1" }
+             ],
+             "default":   "3"
+          },
+		{
+		  "type": "paragraph",
+          "content": "Samll Mobile Column Select"
+        },
+		{
+             "type":  "select",
+             "id":    "item_xs_Column",
+             "label": "Small Column Select",
+			 "info": "It will work, When selecting the Grid layout",
+             "options": [
+               { "value": "6", "label": "Column 6" },
+               { "value": "5", "label": "Column 5" },
+			   { "value": "4", "label": "Column 4" },
+			   { "value": "3", "label": "Column 3" },
+			   { "value": "2", "label": "Column 2" },
+			   { "value": "1", "label": "Column 1" }
+             ],
+             "default":   "2"
+          },
+		{
+			"type": "header",
+            "content": "Slider Settings",
+			"info": "When selecting the slider layout"
+        },
+		{
+           "type": "header",
+           "content": "Autoplay"
+        },
+		{
+          "type": "checkbox",
+          "id": "autoplay_true",
+          "label": "Autoplay Enable",
+		  "default": false
+        },
+		{
+			"type": "header",
+            "content": "Slider Item Show"
+        },
+		{
+            "type":      "range",
+            "id":        "slide_item_show",
+            "min":        1,
+            "max":        15,
+            "step":       1,
+            "label":     "Slider Item Show",
+            "default":   4
+        },
+		{
+            "type":      "range",
+            "id":        "tablet_slide_item_show",
+            "min":        1,
+            "max":        15,
+            "step":       1,
+            "label": "Tablet Item Show",
+            "default":  2
+        },
+		{
+            "type":      "range",
+            "id":        "large_mobile_item_show",
+            "min":        1,
+            "max":        15,
+            "step":       1,
+            "label": "Large Mobile, Max width: 767px; Mind Width: 576px",
+            "default":   2
+        },
+		{
+            "type":      "range",
+            "id":        "small_mobile_item_show",
+            "min":        1,
+            "max":        15,
+            "step":       1,
+            "label": "Small Mobile, Max width: 575px; Mind Width: 480px",
+            "default":   1
+        },
+		{
+            "type":      "range",
+            "id":        "small_xs_mobile_item_show",
+            "min":        1,
+            "max":        15,
+            "step":       1,
+            "label": "Extra Small Mobile, Max width: 479px",
+            "default":   1
+        }
+	],
+	"blocks":[
+	   {
+        "type": "single_gallery_item",
+        "name": "Add Instagram Item",
+        "settings": [
+			{
+              "type": "image_picker",
+              "id": "inst_gallery_item",
+              "label": "Upload Instagram Iamge",
+              "info": "Recommended Size: 480 x 280 px"
+            },
+			{
+              "type": "url",
+              "id": "inst_gallery_item_link",
+              "label": "Iinstagram Item Link"
+            }
+          ]
+        },
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#ffffff"
+			}
+          ]
+       }
+	],
+	"presets": [
+		{
+			"name": "Instagram Gallery (New)",
+			"category": "9. Instagram",
+			"blocks":[
+				{
+					"type": "single_gallery_item"
+				},
+				{
+					"type": "single_gallery_item"
+				},
+				{
+					"type": "single_gallery_item"
+				},
+				{
+					"type": "single_gallery_item"
+				},
+				{
+					"type": "single_gallery_item"
+				},
+				{
+					"type": "single_gallery_item"
+				}
+			]
+		}
+	]
+  }
+{% endschema %}
+

@@ -1,0 +1,87 @@
+{% capture html %}
+{%- assign itemStyle = '' -%}{%- if cart.item_count == 0 -%}{%- assign itemStyle = ' style="display:none;"' -%}{%- endif -%}
+{%- assign itemEmpty = '' -%}{%- if cart.item_count == 0 -%}{%- assign itemEmpty = ' style="display:block;"' -%}{%- endif -%}
+{%- assign itemCount = '' -%}{%- if cart.item_count == 1 -%}{%- assign itemCount = ' style="display:block;"' -%}{%- endif -%}
+{%- assign itemCount2 = '' -%}{%- if cart.item_count > 1 -%}{%- assign itemCount2 = ' style="display:block;"' -%}{%- endif -%}
+
+
+{%- assign item_count = cart.item_count -%}
+
+<div class="cart-overlay" id="cart-overlay">
+  <div class="cart-overlay-close inactive"></div>
+  <div class="cart-overlay-content">
+    <!--=======  close icon  =======-->
+
+    <span class="close-icon" id="cart-close-icon">
+      <a href="javascript:void(0)">
+        <i class="ion-android-close"></i>
+      </a>
+    </span>
+
+    <div class="offcanvas-cart-content-container">
+      
+      <h3 class="cart-title">{{ section.settings.mini_cart_title | default: 'Cart' }}</h3>
+
+      <div class="single-cart-product empty" {{ itemEmpty }}>
+        <h3>{{ 'cart.general.empty' | t }}</h3>
+      </div>
+
+      <div class="cart-product-wrapper" {{ itemStyle  }}>
+        <div class="cart-product-container  ps-scroll single-cart-item-loop">
+          <!--=======  single cart product  =======-->
+
+          {%- for item in cart.items -%}
+          
+          <div class="single-cart-product">
+            <span class="cart-close-icon">
+              <a href="javascript:void(0);" onclick="Shopify.removeItem({{ item.variant.id }})"><i class="ti-close"></i></a>
+            </span>
+            <div class="image">
+              <a href="{{ item.url }}">
+                <img src="{{ item | img_url: 'compact',crop: 'bottom' }}" class="img-fluid" alt=""> 
+              </a>
+            </div>
+            <div class="content">
+              <h5><a href="{{ item.url }}">{{ item.title }}</a></h5>
+              <p><span class="cart-count">{{ item.quantity }} x </span> <span class="discounted-price">{{ item.price | money }}</span></p>
+            </div>
+          </div>
+          
+		{%- endfor -%}
+          <!--=======  End of single cart product  =======-->
+        </div>
+
+        <!--=======  subtotal calculation  =======-->
+
+        <p class="cart-subtotal">
+          <span class="subtotal-title"> {{ section.settings.mini_cart_total_title | default: 'Total:' }}</span>
+          <span class="subtotal-amount shopping-cart__total">{{ cart.total_price | money }}</span>
+        </p>
+
+        <!--=======  End of subtotal calculation  =======-->
+
+        <!--=======  cart buttons  =======-->
+		<div class="cart-buttons {% if section.settings.agree_button_enable and settings.agree_button_enable %}disabled{% endif %}">
+          
+          {%- if section.settings.checkout_btn_enable -%}
+          {%- if section.settings.agree_button_enable and settings.agree_button_enable -%}
+          <input type="checkbox" id="ageree_term_cond" value="1">
+          <label for="ageree_term_cond">{{ section.settings.agree_button_text }}</label>
+          {%- endif -%}
+          <a class="checkout_btn" href="/checkout">{{ section.settings.mini_cart_checkout_title }}</a>
+          {%- endif -%}
+          
+          {%- if section.settings.cart_btn_enable -%}
+          <a href="{{ routes.cart_url }}">{{ section.settings.view_cart_title }}</a>
+          {%- endif -%}
+        </div>
+
+
+      </div>
+      
+    </div>
+
+  </div>
+</div>
+{% endcapture %}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}

@@ -1,0 +1,171 @@
+{%- assign formId = 'Contact_' | append: section.id -%}
+{%- form 'customer', id: formId, class: "shopify_newsletter__form" -%}
+{%- if form.posted_successfully? -%}
+<p class="form-message form-message--success form-success">{{ 'general.newsletter_form.confirmation'| t }} <button class="success-form-close-btn"><i class="ion-close-round"></i></button></p>
+<script>
+  var SuccessFormToggle = $('.success-form-close-btn');
+  SuccessFormToggle.on('click', function(){
+    $('.form-message--success').slideToggle();
+  })
+</script>
+{%- else -%}
+{% if section.settings.mailchimp_type == "style1" %}
+<div class="mailchimp-newsletter-area mb-100 mb-sm-70 mt-100 mt-sm-70" id="section-{{ section.id }}">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="mc-newsletter-content-container text-center pt-15 pb-15 pl-15 pr-15 style1">
+          <div class="mc-newsletter-content pt-70 pb-70">
+            {% if section.settings.newsleter_icon != blank %}
+            <div class="icon">
+              <i class="{{ section.settings.newsleter_icon }}"></i>
+            </div>
+            {% endif %}
+            <div class="title mb-30">
+              {% if section.settings.newsletter_title != blank %}
+              <h3 class="mb-20">{{ section.settings.newsletter_title }}</h3>
+              {% endif %}
+              {% if section.settings.newsletter_subtitle != blank %}
+              <p>{{ section.settings.newsletter_subtitle }}</p>
+              {% endif %}
+            </div>
+            <div class="mc-newsletter-form subscription-form mb-50">
+              {%- if form.errors -%}
+              <div class="form-message form-message--error">
+                {{ form.errors | default_errors }}
+              </div>
+              {%- endif -%}
+              <div class="">
+                <div class="form__inner mc-form">
+                  <input type="hidden" name="contact[tags]" value="newsletter">
+                  <input type="email" name="contact[email]" id="Email" value="{% if customer %}{{ customer.email }}{% endif %}"
+                         placeholder="{{ section.settings.newsletter_input_placeholder }}" aria-label="{{ 'general.newsletter_form.newsletter_email'| t }}" {% if form.errors %}aria-invalid="true"{% endif %} autocorrect="off" autocapitalize="off">
+                  <button type="submit"  name="commit" id="Subscribe">{{ section.settings.subscrib_submit_button }}</button>
+                </div>
+              </div>
+            </div>
+
+            {% if section.settings.newsletter_btn != blank %}
+            <div class="link">
+              <a href="{{ section.settings.newsletter_btn_link }}">{{ section.settings.newsletter_btn }}</a>
+            </div>
+            {% endif %}
+
+          </div>
+        </div>
+
+        <!--=======  End of newsletter content  =======-->
+      </div>
+    </div>
+  </div>
+</div>
+{% elsif section.settings.mailchimp_type == "style2" %}
+<div class="mailchimp-newsletter-area border-top-bottom mb-100" id="section-{{ section.id }}">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <!--=======  newsletter content  =======-->
+
+        <div class="mc-newsletter-content-container no-bg text-center style2">
+          <div class="mc-newsletter-content mc-newsletter-content--big-icon pt-70 pb-70">
+            {% if section.settings.newsleter_icon != blank %}
+            <div class="icon mb-30">
+              <i class="{{ section.settings.newsleter_icon }}"></i>
+            </div>
+            {% endif %}
+            <div class="title mb-30">
+              {% if section.settings.newsletter_title != blank %}
+              <h3 class="mb-20">{{ section.settings.newsletter_title }}</h3>
+              {% endif %}
+              {% if section.settings.newsletter_subtitle != blank %}
+              <p>{{ section.settings.newsletter_subtitle }}</p>
+              {% endif %}
+            </div>
+
+            <div class="mc-newsletter-form subscription-form mb-50">
+              {%- if form.errors -%}
+              <div class="form-message form-message--error">
+                {{ form.errors | default_errors }}
+              </div>
+              {%- endif -%}
+              <div class="">
+                <div class="form__inner mc-form">
+                  <input type="hidden" name="contact[tags]" value="newsletter">
+                  <input type="email" name="contact[email]" id="Email" value="{% if customer %}{{ customer.email }}{% endif %}"
+                         placeholder="{{ section.settings.newsletter_input_placeholder }}" aria-label="{{ 'general.newsletter_form.newsletter_email'| t }}" {% if form.errors %}aria-invalid="true"{% endif %} autocorrect="off" autocapitalize="off">
+                  <button type="submit"  name="commit" id="Subscribe">{{ section.settings.subscrib_submit_button }}</button>
+                </div>
+              </div>
+            </div>
+
+            {% if section.settings.newsletter_btn != blank %}
+            <div class="link">
+              <a href="{{ section.settings.newsletter_btn_link }}">{{ section.settings.newsletter_btn }}</a>
+            </div>
+            {% endif %}
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+{% elsif section.settings.mailchimp_type == "style3" %}
+<div class="mailchimp-newsletter-area mc-newsletter-blue-bg mb-100" id="section-{{ section.id }}">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <!--=======  newsletter content  =======-->
+
+        <div class="mc-newsletter-content-container no-bg text-center pt-15 pb-15 pl-15 pr-15 style3">
+          <div class="mc-newsletter-content mc-newsletter-content--fullwidth pt-70 pb-70">
+
+            {% if section.settings.newsleter_icon != blank %}
+            <div class="icon mb-20">
+              <i class="{{ section.settings.newsleter_icon }}"></i>
+            </div>
+            {% endif %}
+
+            <div class="title mb-30">
+              {% if section.settings.newsletter_title != blank %}
+              <h3 class="mb-20">{{ section.settings.newsletter_title }}</h3>
+              {% endif %}
+              {% if section.settings.newsletter_subtitle != blank %}
+              <p>{{ section.settings.newsletter_subtitle }}</p>
+              {% endif %}
+            </div>
+
+            <div class="mc-newsletter-form subscription-form mb-50">
+              {%- if form.errors -%}
+              <div class="form-message form-message--error">
+                {{ form.errors | default_errors }}
+              </div>
+              {%- endif -%}
+              <div class="">
+                <div class="form__inner mc-form">
+                  <input type="hidden" name="contact[tags]" value="newsletter">
+                  <input type="email" name="contact[email]" id="Email" value="{% if customer %}{{ customer.email }}{% endif %}"
+                         placeholder="{{ section.settings.newsletter_input_placeholder }}" aria-label="{{ 'general.newsletter_form.newsletter_email'| t }}" {% if form.errors %}aria-invalid="true"{% endif %} autocorrect="off" autocapitalize="off">
+                  <button type="submit"  name="commit" id="Subscribe">{{ section.settings.subscrib_submit_button }}</button>
+                </div>
+              </div>
+            </div>
+
+            {% if section.settings.newsletter_btn != blank %}
+            <div class="link">
+              <a href="{{ section.settings.newsletter_btn_link }}">{{ section.settings.newsletter_btn }}</a>
+            </div>
+            {% endif %}
+
+          </div>
+        </div>
+
+        <!--=======  End of newsletter content  =======-->
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %} 
+{%- endif -%}
+{%- endform -%}

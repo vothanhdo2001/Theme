@@ -1,0 +1,670 @@
+{%- capture html -%}
+<div class="blog-post-area slick-carousel-js" id="section-{{ section.id }}" data-section="BlogPostSliderJs">
+  <div class="{% if section.settings.container_width == 'container' %} container {% elsif section.settings.container_width == 'fluid' %} container wide  {%- endif -%}">
+      {% capture data_slick_activation %}
+        data-slick='{
+        "slidesToShow": {{ section.settings.slide_items_show }},
+        "slidesToScroll": {{ section.settings.slide_items_show }},
+        "arrows": {{ section.settings.navigation_enable }},
+        {% if settings.rtl_enable %}                
+        "rtl": true,
+        {% endif %}
+        "autoplay": {{ section.settings.autoplay_true }},
+        "autoplaySpeed": 5000,
+        "speed": 1000,
+        "responsive":[
+          {"breakpoint":1501, "settings": {"slidesToShow": {{ section.settings.slide_items_show }}} },
+          {"breakpoint":1199, "settings": {"slidesToShow": {{ section.settings.items_more_than_1200 }} } },
+          {"breakpoint":991, "settings": {"slidesToShow": {{ section.settings.items_more_than_992 }}, "arrows": false} },
+          {"breakpoint":767, "settings": {"slidesToShow": {{ section.settings.items_more_than_768 }}, "arrows": false} },
+          {"breakpoint":575, "settings": {"slidesToShow": {{ section.settings.items_more_than_480 }}, "arrows": false} },
+          {"breakpoint":479, "settings": {"slidesToShow": {{ section.settings.items_more_than_320 }}, "arrows": false} }
+        ]}'
+      
+      {% endcapture %}
+
+    {% if section.settings.latest_blog_style == 'b_style_1' %}
+    <div class="row align-items-center nrb">
+      {% if section.settings.section_title_enable %}
+      <div class="col-lg-3 mb-50 mb-lg-0">
+        <!--=======  blog intro  =======-->
+        <div class="blog-intro {% if section.settings.text_align == "left" %}text-left {% elsif section.settings.text_align == "right" %} text-right {% elsif section.settings.text_align == "center" %} text-center {% endif %}">
+          {% if section.settings.section_title != blank %}
+          <h2>{{ section.settings.section_title }} </h2>
+          {% endif %}
+          {% if section.settings.section_description != blank %}
+          <p>{{ section.settings.section_description }}</p>
+          {% endif %}
+          {% if section.settings.section_btn_text != blank %}
+          <a href="{{ section.settings.section_btn_link }}" class="phoone-button phoone-button--medium">{{ section.settings.section_btn_text }}</a>
+          {% endif %}
+        </div>
+        <!--=======  End of blog intro  =======-->
+      </div>
+      {% endif %}
+      <div class="{% if section.settings.section_title_enable %} col-lg-9 {% else %} col-12 {% endif %}">
+        
+        <div class="blog-post-slider-container">
+          <div class="blog-post-slider" {{ data_slick_activation }}>
+            <!-- product-item start -->
+            {% assign blog = blogs[section.settings.blog_handle] %}
+            {% assign blog_limit = section.settings.blog_limit_handle %}
+
+            {%- if blog == empty -%}
+            {%- for i in (1..blog_limit) -%}
+            <div class="col">
+              <div>
+                <div style="background: #f2f2f2;">
+                  {{ 'image' | placeholder_svg_tag }}
+                </div>
+                <br>
+                <h6>
+                  Blog Post Title
+                </h6>
+              </div>
+            </div>
+            {%- endfor -%}
+            {%- else -%}
+            {% for article in blog.articles limit: blog_limit %}
+            <div class="col">
+              {% render 'latest_post_grid' with article as article %}
+            </div>
+            {% endfor %}
+            {%- endif -%}
+          </div>
+        </div>
+        <!--=======  End of blog post slider container  =======-->
+      </div>
+    </div>
+    {% elsif section.settings.latest_blog_style == 'b_style_2' %}
+    <div class="blog_grid_2">
+       {% if section.settings.section_title_enable %}
+          {% if section.settings.section_title != blank or section.settings.section_description != blank   %}
+          <div class="blog_2_title_area {% if section.settings.text_align == "left" %}text-left {% elsif section.settings.text_align == "right" %} text-right {% elsif section.settings.text_align == "center" %} text-center {% endif %}">
+            {% if section.settings.section_title != blank %}
+            <h2>{{ section.settings.section_title }}</h2>
+            {% endif %}
+            {% if section.settings.section_description != blank %}
+            <p>{{ section.settings.section_description }}</p>
+            {% endif %}
+          </div>
+          {% endif %}
+      {% endif %}
+
+      <div class="blog-post-slider-container">
+        <div class="blog-post-slider" {{ data_slick_activation }}>
+          <!-- product-item start -->
+          {% assign blog = blogs[section.settings.blog_handle] %}
+          {% assign blog_limit = section.settings.blog_limit_handle %}
+
+          {%- if blog == empty -%}
+          {% for i in (1..blog_limit) %}
+          <div class="col">
+            <div>
+              <div style="background: #f2f2f2;">
+                {{ 'image' | placeholder_svg_tag }}
+              </div>
+              <br>
+              <h6>
+                Blog Post Title
+              </h6>
+              <div class="">
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+          {%- else -%}
+          {% for article in blog.articles limit: blog_limit %}
+          <div class="col">
+            {% render 'blog-grid-item-2' with article as article %}
+          </div>
+          {% endfor %}
+          {%- endif -%}
+        </div>
+      </div>
+      <!--=======  End of blog post slider container  =======-->
+    </div>
+    {% elsif section.settings.latest_blog_style == 'b_style_3' %}
+      <div class="blog_grid_2">
+         {% if section.settings.section_title_enable %}
+            {% if section.settings.section_title != blank or section.settings.section_description != blank   %}
+            <div class="blog_2_title_area {% if section.settings.text_align == "left" %}text-left {% elsif section.settings.text_align == "right" %} text-right {% elsif section.settings.text_align == "center" %} text-center {% endif %}">
+              {% if section.settings.section_title != blank %}
+              <h2>{{ section.settings.section_title }}</h2>
+              {% endif %}
+              {% if section.settings.section_description != blank %}
+              <p>{{ section.settings.section_description }}</p>
+              {% endif %}
+            </div>
+            {% endif %}
+        {% endif %}
+       
+        <div class="blog-post-slider-container">
+          <div class="blog-post-slider" {{ data_slick_activation }}>
+            <!-- product-item start -->
+            {% assign blog = blogs[section.settings.blog_handle] %}
+            {% assign blog_limit = section.settings.blog_limit_handle %}
+
+            {%- if blog == empty -%}
+            {% for i in (1..blog_limit) %}
+            <div class="col">
+              <div>
+                <div style="background: #f2f2f2;">
+                  {{ 'image' | placeholder_svg_tag }}
+                </div>
+                <br>
+                <h6>
+                  Blog Post Title
+                </h6>
+                <div class="">
+                  <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+            {%- else -%}
+            {% for article in blog.articles limit: blog_limit %}
+            <div class="col">
+              {% render 'blog-grid-item-3' with article as article %}
+            </div>
+            {% endfor %}
+            {%- endif -%}
+          </div>
+        </div>
+        <!--=======  End of blog post slider container  =======-->
+      </div>
+    
+    {% endif %}
+  </div>
+</div>
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+{%- capture css -%}
+<style>
+  #section-{{ section.id }} .blog-post-slider .slick-arrow {
+    color: {{ section.settings.arrow_nav_icon_color }};
+  }  
+</style>
+{%- endcapture -%}
+
+{{ css | strip_newlines
+       | replace: '  ', '' 
+       | replace: ': ', ':'
+       | replace: ' {', '{'
+}}
+
+
+{% render 'section_typography' %}
+
+{% schema %}
+  {
+    "name": "Latest Blog",
+    "settings": [
+		{
+             "type":  "radio",
+             "id":    "container_width",
+             "label": "Container Width",
+             "options": [
+               { "value": "container", "label": "Container" },
+               { "value": "fluid", "label": "Full Width" }
+             ],
+             "default":   "container"
+        },
+        {
+          "type": "select",
+          "id": "latest_blog_style",
+          "label": "Latest Blog Style",
+          "options": [
+            {
+              "value": "b_style_1",
+              "label": "Blog Style One"
+            },
+            {
+              "value": "b_style_2",
+              "label": "Blog Style Two"
+            },
+            {
+              "value": "b_style_3",
+              "label": "Blog Style Three"
+            }
+          ],
+          "default": "b_style_1"
+        },
+		{
+		  "type": "header",
+          "content": "Section Heading"
+        },
+		{
+          "type": "checkbox",
+          "id": "section_title_enable",
+          "label": "Section Title Enable",
+          "default": true
+        },
+		{
+          "type": "text",
+          "id": "section_title",
+          "label": "Section Title",
+          "default": "Section Title Here"
+      	},
+		{
+          "type": "textarea",
+          "id": "section_description",
+          "label": "Section Description",
+          "default": "Lorem ipsum dolor sit amet, consecte tur cing elit."
+      	},
+		{
+          "type": "text",
+          "id": "section_btn_text",
+          "label": "Section Btn Text [This is works in Blog style one]",
+		  "default": "View All"
+        },
+        {
+          "type":  "radio",
+          "id":    "text_align",
+          "label": "Section Title Align",
+          "options": [
+          { "value": "left", "label": "Left" },
+          { "value": "right", "label": "Right" },
+          { "value": "center", "label": "Center" }
+          ],
+          "default":   "left"
+        },
+        {
+          "type": "url",
+          "id": "section_btn_link",
+          "label": "Section Btn Link"
+        },
+		{
+			"type": "header",
+            "content": "Blog"
+        },
+		{
+          "type": "blog",
+          "id": "blog_handle",
+          "label": "Select Blog"
+        },
+		{
+            "type": "range",
+            "id": "blog_limit_handle",
+            "min": 2,
+            "max": 12,
+            "step": 1,
+            "label": "Limit",
+            "default": 3
+        },	
+		{
+          "type": "header",
+          "content": "Post Thumbnail Enable"
+        },
+        {
+          "type": "checkbox",
+          "id": "post_thumbnail_enable",
+          "label": "Post Thumbnail Enable",
+          "default": true
+        },
+		{
+          "type": "header",
+          "content": "Post Meta"
+        },
+        {
+          "type": "checkbox",
+          "id": "post_author_enable",
+          "label": "Post Author Enable",
+          "default": false
+        },
+		{
+          "type": "checkbox",
+          "id": "post_publish_time_enable",
+          "label": "Post Publish Date Enable",
+          "default": true
+        },
+		{
+          "type": "checkbox",
+          "id": "post_comment_enbale",
+          "label": "Post Comment Enable",
+          "default": false
+        },
+		{
+          "type": "header",
+          "content": "Post Title Enable"
+        },
+        {
+          "type": "checkbox",
+          "id": "post_title_enable",
+          "label": "Post Title Enable",
+          "default": true
+        },
+		{
+          "type": "header",
+          "content": "Post Content Enable"
+        },
+        {
+          "type": "checkbox",
+          "id": "post_content_enbale",
+          "label": "Post Content Enable",
+          "default": true
+        },
+		{
+            "type": "range",
+            "id": "post_content_len",
+            "min": 2,
+            "max": 100,
+            "step": 1,
+            "label": "Post Limit",
+            "default": 20,
+			"info": "How many content are displayed on each Post"
+        },
+		{
+          "type": "header",
+          "content": "Post Read More Button"
+        },
+        {
+          "type": "checkbox",
+          "id": "post_readmore_btn_enbale",
+          "label": "Post Read More Button Enable",
+          "default": true
+        },
+		{
+          "type": "text",
+          "id": "read_more_button",
+          "label": "Read More Text",
+          "default": "Read More"
+        },
+		{
+          "type": "header",
+          "content": "Blog Author"
+        },
+        {
+          "type": "text",
+          "id": "author_title",
+          "label": "Author Title Label",
+          "default": "By :"
+        },	
+		{
+          "type": "header",
+          "content": "Blog Tags",
+		  "info": "This is Blog Style two"
+        },
+        {
+          "type": "checkbox",
+          "id": "blog_tags_enable",
+          "label": "Blog Tags enable",
+          "default": true
+        },
+		{
+          "type": "header",
+          "content": "Slider Autoplay"
+        },
+		{
+          "type": "checkbox",
+          "id": "autoplay_true",
+          "label": "Autoplay Enable",
+		  "default": false
+        },
+		{
+           "type": "header",
+           "content": "Navigation/Arrows"
+        },
+		{
+          "type": "checkbox",
+          "id": "navigation_enable",
+          "label": "Navigation Enable",
+		  "default": true
+        },
+		{
+          "type": "header",
+          "content": "Arrow Nav"
+        },
+		{
+			  "type": "color",
+			  "id": "arrow_nav_icon_color",
+			  "label": "Arrow Nav Icon Color",
+			  "default": "#e7e7e7"
+			},
+		{
+			"type": "header",
+            "content": "Blog Item Show"
+        },
+		{
+            "type":      "range",
+            "id":        "slide_items_show",
+            "min":        1,
+            "max":        15,
+            "step":       1,
+            "label":     "Large Device Number Of Item Show",
+            "default":   2
+        },
+		{
+            "type":      "range",
+            "id":        "items_more_than_1200",
+            "min":        1,
+            "max":        15,
+            "step":       1,
+            "label": "More Than 1200px Number Of Item Show",
+            "default":   2
+        },
+		{
+            "type":      "range",
+            "id":        "items_more_than_992",
+            "min":        1,
+            "max":        15,
+            "step":       1,
+            "label": "More Than 992px Number Of Item Show",
+            "default":   2
+        },
+		{
+            "type":      "range",
+            "id":        "items_more_than_768",
+            "min":        1,
+            "max":        15,
+            "step":       1,
+            "label": "Tablet Item Show",
+            "default":  1
+        },
+		{
+            "type":      "range",
+            "id":        "items_more_than_480",
+            "min":        1,
+            "max":        15,
+            "step":       1,
+            "label": "Large Mobile Item Show",
+            "default":   1
+        },
+		{
+            "type":      "range",
+            "id":        "items_more_than_320",
+            "min":        1,
+            "max":        15,
+            "step":       1,
+            "label": "Small Mobile Item Show",
+            "default":   1
+        }
+    ],
+	"blocks":[
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#ffffff"
+			}
+          ]
+       }
+	],
+	"presets": [
+		{
+		  "name": "Latest Blog",
+		  "category": "7. blog"
+		}
+	]
+  }
+{% endschema %}
+

@@ -1,0 +1,8 @@
+{%- capture data_section_overlay -%}
+{%- for block in section.blocks -%}
+{%- case block.type -%}
+  {%- when 'section_background' -%}
+  {%- if block.settings.section_overlay -%} section_overlay {%- endif -%}
+{%- endcase -%}
+{%- endfor -%}
+{%- endcapture -%}

@@ -1,0 +1,17 @@
+{%- comment -%}
+	{% render 'lazyload_image_src' with 
+    image: featured_image, 
+	size: 'master',
+	image_class: "css-class",
+	image_attributes: --- %}
+
+{%- render 'lazyload_image_src' with image: block.settings.banner_img -%}
+
+<a class="image-wrap img_rel" href="" style="padding-top:{{ 1 | divided_by: product.featured_image.aspect_ratio | times: 100}}%;">
+---------------
+</a>
+{%- endcomment -%}
+
+{%- assign img_url = image | img_url: size -%}
+<img id="bannerImage-{{ image.id }}" class="lazyload {{ image_class }}" data-src="{{ img_url }}" data-sizes="auto" alt="{{ image.alt | escape }}" {{ image_attributes }} >
+

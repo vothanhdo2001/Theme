@@ -1,0 +1,601 @@
+{%- capture html -%}
+<!-- Top Collections area Start Here -->
+<section class="top-collection-area" id="section-{{ section.id }}" data-section="BannerSection">
+   <div class="{% if section.settings.container_width == 'container' %} container {% elsif section.settings.container_width == 'fluid' %} container wide {% endif %}">
+    <div class="row align-items-center">
+      {% if section.settings.banner_text_enable %}
+      <div class="lez-mt {% if section.settings.banner_enable %} col-md-6 {% else %} col-12 {% endif %} {% if section.settings.product_banner_Post == 'left' %} order-2 {% elsif section.settings.product_banner_Post == 'right' %} order-1 {% endif %}">
+        <div class="text-block text-{% if section.settings.text_style == 'text_style_left' %}left{% elsif section.settings.text_style == 'text_style_center' %}center{% elsif section.settings.text_style == 'text_style_right' %}right{% endif %}">
+          {%- if section.settings.collection_title != '' -%}
+          <h2 class="heading-secondary mb--40 mb-md--20">{{ section.settings.collection_title }}</h2>
+            {%- endif -%}
+          {%- if section.settings.collection_description != '' -%}
+          <p class="font-2 heading-color font-size-16 mb--40 mb-md--25">{{ section.settings.collection_description }}</p>
+           {%- endif -%}
+           {%- if section.settings.button_title != '' -%}
+          <a href="{{ section.settings.button_url }}" class="phoone-button  phoone-button--medium  mb-sm--30">{{ section.settings.button_title }}</a>
+          {%- endif -%}
+        </div>
+      </div>
+      {% endif %}
+       {% if section.settings.banner_enable %}
+      <div class="{%- if section.settings.banner_text_enable -%} col-md-6 {%- else -%} col-12 {%- endif -%} {%- if section.settings.product_banner_Post == 'left' %} order-1 {%- elsif section.settings.product_banner_Post == 'right' %} order-2 {%- endif -%}">
+        <div class="row">
+          {%- for block in section.blocks -%}
+      {%- case block.type -%}
+      {%- when 'double_banner' -%}
+          <div class="col-md-{{ block.settings.double_banner_coloum }}">
+            <div class="banner-box banner-type-1 banner-hover-1 mb--20 mb-md--10 mb-sm--30">
+              <div class="banner-inner">
+                <div class="banner-image">
+                  {%- if block.settings.banner_img_1 != blank  -%}            
+                  {%- render 'lazyload_image_src',
+                	  image: block.settings.banner_img_1,
+                  	  size: 'master' -%}
+
+                  {%- else -%}
+                  {%- render 'svg_placholder' with param: 'image', size: '285x208' -%}
+                  {%- endif -%}
+                 </div>
+                {% if block.settings.banner_button_1 != '' %}
+                <div class="banner-info">
+                  <a class="banner-btn" href="{{ block.settings.banner_button_1_url }}">{{ block.settings.banner_button_1 }}</a>
+                </div>
+                {% endif %}
+                 {% if block.settings.banner_button_1 != '' %}
+                <a class="banner-link banner-overlay" href="{{ block.settings.banner_button_1_url }}">{{ block.settings.banner_button_1 }}</a>
+                {% endif %}
+              </div>
+            </div>
+            
+            <div class="banner-box banner-type-1 banner-hover-1 mb-sm--30">
+              <div class="banner-inner">
+                <div class="banner-image">
+                  {%- if block.settings.banner_img_2 != blank  -%}            
+                  {%- render 'lazyload_image_src',
+                	  image: block.settings.banner_img_2,
+                  	  size: 'master' -%}
+
+                  {%- else -%}
+                  {%- render 'svg_placholder' with param: 'image', size: '285x208' -%}
+                  {%- endif -%}
+                </div>
+                {% if block.settings.banner_button_2 != '' %}
+                <div class="banner-info">
+                  <a class="banner-btn" href="{{ block.settings.banner_button_2_url }}">{{ block.settings.banner_button_2 }}</a>
+                </div>
+                {% endif %}
+                {% if block.settings.banner_button_2 != '' %}
+                <a class="banner-link banner-overlay" href="{{ block.settings.banner_button_2_url }}">{{ block.settings.banner_button_2 }}</a>
+                {% endif %}
+              </div>
+            </div>
+            
+          </div>
+          {%- when 'banner' -%}
+          <div class="col-md-{{ block.settings.banner_coloum }}">    
+            <div class="banner-box banner-type-1 banner-hover-1">
+              <div class="banner-inner">
+                <div class="banner-image">
+                  {%- if block.settings.banner_img != blank  -%}            
+                  {%- render 'lazyload_image_src',
+                	  image: block.settings.banner_img,
+                  	  size: 'master' -%}
+
+                  {%- else -%}
+                  {%- render 'svg_placholder' with param: 'image', size: '285x448' -%}
+                  {%- endif -%}
+                 </div>
+                {%- if block.settings.banner_button_3 != '' -%}
+                <div class="banner-info">
+                  <a class="banner-btn" href="{{ block.settings.banner_button_3_url }}">{{ block.settings.banner_button_3 }}</a>
+                </div>
+                {%- endif -%}
+                {%- if block.settings.banner_button_3 != '' -%}
+                <a class="banner-link banner-overlay" href="{{ block.settings.banner_button_3_url }}">{{ block.settings.banner_button_3 }}</a>
+                {%- endif -%}
+              </div>
+            </div> 
+          </div>
+          
+      {%- endcase -%}
+      {%- endfor -%}
+
+        </div>
+      </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+<!-- Top Collections area End Here -->
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+
+{% render "section_typography" %}
+
+{%- capture css -%}
+{%- style -%}
+
+{%- for block in section.blocks -%}
+{%- case block.type -%}
+{%- when 'section_color' -%}
+#section-{{ section.id }} .heading-secondary {
+	color: {{ block.settings.section_title_color }};
+}
+#section-{{ section.id }} .heading-color {
+	color: {{ block.settings.section_description_color }}!important;
+}
+#section-{{ section.id }} .phoone-button.phoone-button--medium {
+  background-color: {{ block.settings.banner_btn_bg_color }};
+  border-color: {{ block.settings.banner_btn_border_color }};
+  color: {{ block.settings.banner_btn_color }} !important;
+}
+#section-{{ section.id }} .phoone-button.phoone-button--medium:hover {
+  background-color: {{ block.settings.banner_btn_hover_bg_color }};
+  border-color: {{ block.settings.banner_btn_hover_border_color }};
+  color: {{ block.settings.banner_btn_hover_color }} !important;
+}
+
+{%- endcase -%}
+{%- endfor -%}
+
+@media (max-width: 767px) {
+  #section-{{ section.id }} .lez-mt {
+	margin-top: 30px;
+}
+}
+
+{%- endstyle -%}
+{%- endcapture -%}
+
+{{ css | strip_newlines
+       | replace: '  ', '' 
+       | replace: ': ', ':'
+       | replace: ' {', '{'
+}}
+
+
+
+{% schema %}
+  {
+    "name": "Top Collection Banner",
+    "settings": [
+		{
+          "type":  "radio",
+          "id":    "container_width",
+          "label": "Container Width",
+          "options": [
+            { "value": "container", "label": "Container" },
+            { "value": "fluid", "label": "Full Width" }
+          ],
+          "default":   "container"
+        },
+        {
+          "type": "header",
+          "content": "Banner Position"
+        },
+        {
+            "type":  "radio",
+            "id":    "product_banner_Post",
+            "label": "Content Position",
+            "options": [
+              { 
+				"value": "left", 
+				"label": "Left Banner" 
+			  },
+              { 
+				"value": "right", 
+				"label": "Right Banner" 
+			  }
+            ],
+            "default":   "right"
+        },
+		{
+		  "type": "header",
+          "content": "Section Title"
+        },
+        {
+            "type": "checkbox",
+            "id": "banner_text_enable",
+            "label": "Text Enable",
+            "default": true
+        },
+        {
+          "type": "select",
+          "id": "text_style",
+          "label": "Text Align",
+          "options":[
+            {
+              "value":"text_style_left",
+              "label": "Left"
+            },
+            {
+              "value":"text_style_center",
+              "label": "center"
+            },
+            {
+              "value":"text_style_right",
+              "label": "right"
+            }
+          ],
+          "default": "text_style_left"
+        },
+		{
+          "type": "text",
+          "id": "collection_title",
+          "label": "Collection Title",
+          "default": "Top Collections"
+      	},
+		{
+          "type": "textarea",
+          "id": "collection_description",
+          "label": "Collection Description",
+          "default": "Integer ut ligula quis lectus fringilla elementum porttitor sed est. Duis fringilla efficitur ligula sed lobortis. Sed tempus faucibus mi, quis fringilla mauris lacinia sed."
+      	},
+		{
+          "type": "text",
+          "id": "button_title",
+          "label": "Button Title",
+          "default": "View All"
+      	},
+		{
+          "type": "url",
+          "id": "button_url",
+          "label": "URL"
+      	}, 
+		{
+          "type": "header",
+          "content": "Banner"
+        },
+        {
+            "type": "checkbox",
+            "id": "banner_enable",
+            "label": "Banner Enable",
+            "default": true
+        }
+	],
+	"blocks":[
+       {
+           "type": "double_banner",
+           "name": "Double Banner",
+           "settings": [
+              {
+                  "type": "text",
+                  "id": "double_banner_coloum",
+                  "label": "Banner Column",
+                  "default": "6",
+                  "info": "Follow Bootstrap Column"
+              },
+        	  {
+                  "type": "header",
+                  "content": "Image 1"
+              },
+              {
+                  "type": "image_picker",
+                  "id": "banner_img_1",
+                  "label": "Image",
+                  "info": "Recommended Size: 285 x 220px"
+              },
+              {
+                  "type": "text",
+                  "id": "banner_button_1",
+                  "label": "Button Title",
+                  "default": "Shop Now"
+              },
+              {
+                  "type": "url",
+                  "id": "banner_button_1_url",
+                  "label": "URL"
+              },
+        	  {
+                  "type": "header",
+                  "content": "Image 2"
+              },
+              {
+                  "type": "image_picker",
+                  "id": "banner_img_2",
+                  "label": "Image",
+                  "info": "Recommended Size: 285 x 220px"
+              },
+              {
+                  "type": "text",
+                  "id": "banner_button_2",
+                  "label": "Button Title",
+                  "default": "Shop Now"
+              },
+              {
+                  "type": "url",
+                  "id": "banner_button_2_url",
+                  "label": "URL"
+              }
+           ]
+         },
+      	 {
+           "type": "banner",
+           "name": "Banner",
+             "settings": [
+                {
+                    "type": "text",
+                    "id": "banner_coloum",
+                    "label": "Banner Column",
+                    "default": "6",
+                    "info": "Follow Bootstrap Column"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "banner_img",
+                    "label": "Image",
+                    "info": "Recommended Size: 270 x 425px"
+                },
+                {
+                    "type": "text",
+                    "id": "banner_button_3",
+                    "label": "Button Title",
+                    "default": "Shop Now"
+                },
+                {
+                    "type": "url",
+                    "id": "banner_button_3_url",
+                    "label": "URL"
+                }
+             ]
+         },
+         {
+            "type": "section_color",
+            "name": "Section Color Options",
+            "limit": 1,
+            "settings": [
+              {
+            "type": "header",
+            "content": "Color"
+          }, 
+          {
+             "type": "color",
+             "id": "section_title_color",
+             "label": "Section Title Color",
+             "default": "#282828"
+          }, 
+          {
+             "type": "color",
+             "id": "section_description_color",
+             "label": "Section Description Color",
+             "default": "#282828"
+          },
+              {
+                "type": "header",
+                "content": "Button"
+              },
+              {
+                "type": "color",
+                "id": "banner_btn_bg_color",
+                "label": "Button Bg Color",
+                "default": "#333"
+              },
+              {
+                "type": "color",
+                "id": "banner_btn_border_color",
+                "label": "Button border Color",
+                "default": "#333"
+              },
+              {
+                "type": "color",
+                "id": "banner_btn_color",
+                "label": "Button Color",
+                "default": "#fff"
+              },
+              {
+                "type": "color",
+                "id": "banner_btn_hover_bg_color",
+                "label": "Button hover Bg Color",
+                "default": "#F9F9F9"
+              },
+              {
+                "type": "color",
+                "id": "banner_btn_hover_border_color",
+                "label": "Button hover border Color",
+                "default": "#333"
+              },
+              {
+                "type": "color",
+                "id": "banner_btn_hover_color",
+                "label": "Button hover Color",
+                "default": "#333"
+              }
+          ]
+       },
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#ffffff"
+			}
+          ]
+       }
+	],
+	"presets": [
+		{
+		  "name": "Top Collection Banner",
+		  "category": "5. Collection Banner",
+		  "blocks":[
+				{
+					"type": "section_padding"
+				},
+				{
+					"type": "double_banner"
+				},
+				{
+					"type": "banner"
+				}
+			]
+		}
+	]
+  }
+{% endschema %}

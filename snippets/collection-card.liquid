@@ -1,0 +1,31 @@
+<div class="collection_block text-center">
+  <div class="collection_img d-block">
+    <a {% if collection.all_products_count > 0 %} href="{{ collection.url }}"{% endif %} class="d-block">
+      <div class="media media--{{ section.settings.image_ratio }} media--hover-effect overflow-hidden"
+           style="padding-bottom: {{ 1 | divided_by: collection.featured_image.aspect_ratio | times: 100 }}%;">
+
+        <img
+             srcset="{%- if collection.featured_image.width >= 165 -%}{{ collection.featured_image | img_url: '165x' }} 165w,{%- endif -%}
+                     {%- if collection.featured_image.width >= 360 -%}{{ collection.featured_image | img_url: '360x' }} 360w,{%- endif -%}
+                     {%- if collection.featured_image.width >= 535 -%}{{ collection.featured_image | img_url: '535x' }} 535w,{%- endif -%}
+                     {%- if collection.featured_image.width >= 750 -%}{{ collection.featured_image | img_url: '750x' }} 750w,{%- endif -%}
+                     {%- if collection.featured_image.width >= 1000 -%}{{ collection.featured_image | img_url: '1000x' }} 1000w,{%- endif -%}
+                     {%- if collection.featured_image.width >= 1500 -%}{{ collection.featured_image | img_url: '1500x' }} 1500w,{%- endif -%}"
+             src="{{ collection.featured_image | img_url: '1500x' }}"
+             sizes="(min-width: {{ settings.container_lg_width }}px) {{ settings.container_lg_width | minus: 100 | divided_by: 3 }}px, (min-width: 750px) calc((100vw - 130px) / 3), calc(100vw - 30px)"
+             alt="{{ collection.title | escape }}"
+             height="{{ collection.featured_image.height }}"
+             width="{{ collection.featured_image.width }}"
+             loading="lazy"
+             >
+      </div>
+    </a>
+  </div>
+  <div class="collection_content mt-20">
+    <h2> <a {% if collection.all_products_count > 0 %} href="{{ collection.url }}"{% endif %}>{{- collection.title -}}</a></h2>
+
+    <p class="coll_prod_count mb-0">{{ collection.products_count }} {{ section.settings.product_label | default: 'products' }}</p>
+
+    <a class="phoone-button phoone-button--small mt-15" {% if collection.all_products_count > 0 %} href="{{ collection.url }}"{% endif %}>{{ section.settings.more_title }} <i class="fa fa-angle-right"></i></a>
+  </div>
+</div>

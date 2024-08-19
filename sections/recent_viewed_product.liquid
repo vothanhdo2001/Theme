@@ -1,0 +1,344 @@
+{% capture html %}
+{{ '//ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js' | script_tag }}
+{{ 'jquery.products.min.js' | asset_url | script_tag }}
+
+{%- if section.settings.recent_viewed_product -%}
+<section class="recent_view_product mb-90 mb-md-80 mb-sm-70" id="section-{{ section.id }}">
+  <div class="container">
+    <div  class="row">
+      <div class="col-12">
+        <div class="recent_viewed_title mb-45 text-center">
+          {% if section.settings.recently_viewed_products_title != '' %}
+          <h2>{{ section.settings.recently_viewed_products_title | split: '|' | first }}</h2>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="recent_view_products-grid owl-carousel " id="recent_view_product-grid">
+
+    </div>
+  </div>
+</section>
+{%- endif -%}
+
+
+{%- render 'section_typography' -%}
+
+{% raw %}
+<script id="recently-viewed-product-grid-template"  type="text/x-jquery-tmpl">
+{% endraw %}
+<div class="{% raw %} col">
+  <div id="product-${id}" class="recent_view_product_grid {{if !available}} sold-out {{/if}}{{if compare_at_price_min > price_min}} on-sale {{/if}}">
+      <div class="product-thumbnail">
+          <a href="${url}" class="product-grid-image">
+            <img src="${Shopify.Products.resizeImage(featured_image, "400x600")}" alt="${featured_image.alt}"/>
+          </a>
+        </div>
+     
+  
+      <div class="recent_view_product__content">
+        <h3 class="product__title"><a class="product-title" href="${url}">${title}</a></h3>
+        <p class="pro-price">   
+					{{if compare_at_price > price}} 
+					<span class="new-price">{{html Shopify.formatMoney(price, window.money_format)}}</span>
+					<span class="old-price"> {{html Shopify.formatMoney(compare_at_price, window.money_format)}}</span>
+					{{else}}
+					<span class="new-price">{{html Shopify.formatMoney(price, window.money_format)}}</span>
+					{{/if}}
+				</p>
+        
+    
+        <div class="action">
+          <form action="/cart/add" method="post" class="variants" id="product-actions-${id}" enctype="multipart/form-data" style="padding:0px;">    
+            {{if !available}} 
+            <input class="phoone-button phoone-button--medium" type="submit" {% endraw %} value="{{ 'products.product.sold_out' | t }}{% raw %}" disabled="disabled"/>
+            {{else variants.length > 1 }}
+            <a class="phoone-button phoone-button--medium" href="${url}">{% endraw %} {{ 'products.product.select_options' | t }}{% raw %}</a>
+            {{else}}
+            <input type="hidden" name="id" value="${variants[0].id}" />      
+            <input class="phoone-button phoone-button--medium" type="submit" {% endraw %} value="{{ 'products.product.add_to_cart' | t }}{% raw %}"/>
+            {{/if}}
+          </form>
+        </div>    
+    
+    </div>
+  </div>
+</div>
+</script>
+{% endraw %}
+{% endcapture %}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+
+<script async>
+window.money_format = "{{ shop.money_with_currency_format }}";  
+Shopify.Products.showRecentlyViewed({ 
+  howManyToShow: {{ section.settings.number_of_recently_viewed_products }}, 
+  wrapperId: 'recent_view_product-grid', 
+  templateId: 'recently-viewed-product-grid-template',
+  onComplete: function() {
+    if (jQuery("#recent_view_product-grid").children().length > 0) {
+      jQuery(".recent_view_product").show();
+      if (window.product_image_resize) {
+          jQuery('#recent_view_product-grid img').fakecrop({ 
+            fill: window.images_size.is_crop,
+            widthSelector: ".recent_view_products-grid .product-thumbnail",
+            ratioWrapper: window.images_size
+          });
+      }
+      
+       $('#recent_view_product-grid').owlCarousel({
+        nav: true,
+        navText: ['<i class="ti-angle-left"></i>','<i class="ti-angle-right"></i>'],
+       loop: false,
+        autoplay: false,
+        autoplayTimeout: 5000,
+        items: 4,
+        {%- if settings.rtl_enable -%}
+        rtl: true, 
+        {%- endif -%}
+        dots: false,
+         responsiveClass:true,
+          responsive:{
+            0:{
+              items:1,
+            },
+            479:{
+              items:2,
+            },
+            575:{
+              items:2,
+            },
+            767:{
+              items:2,
+            },
+            992:{
+              items:3,
+            },
+            1200:{
+              items:4,
+            }
+
+          }
+      });
+
+  
+      if (window.show_multiple_currencies) {
+         Currency.convertAll(window.shop_currency, jQuery('#currencies').val(), 'span.money', 'money_format');
+      }     
+    }    
+  }
+});
+  
+
+  
+</script>
+
+
+{% schema %}
+  {
+    "name": "Recent Viewed Product",
+    "settings": [
+		{
+        "type": "header",
+        "content": "Recently Viewed Products"
+      },
+      {
+        "type": "checkbox",
+        "id": "recent_viewed_product",
+        "label": "Display Recently Viewed Products?",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "recently_viewed_products_title",
+        "label": "Title of recently viewed products",
+        "default": "Recently Viewed Products"
+      },
+      {
+        "type": "text",
+        "id": "number_of_recently_viewed_products",
+        "label": "Number of recently viewed products",
+        "default": "50"
+      }
+	],
+	"blocks":[
+	   {
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#ffffff"
+			}
+          ]
+       }
+	]
+  }
+{% endschema %}

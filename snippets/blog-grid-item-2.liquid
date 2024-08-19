@@ -1,0 +1,45 @@
+<article class="post">
+  {% if article.image and section.settings.post_thumbnail_enable %}
+  <div class="post-media">
+    <figure class="image text-center">
+      <a href="{{ article.url }}">
+        {{ article | img_url: '685x400', crop: 'center' | img_tag: article.title }}
+      </a>
+    </figure>
+  </div>
+  {% endif %}
+
+  <div class="post-info">
+    {% if article.tags.size > 0 and section.settings.blog_tags_enable %}
+    <div class="post-meta category-link">
+      {% for tag in article.tags limit: 4 %}
+      <a href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ tag }}</a>{% unless forloop.last == true %},{% endunless %}
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    {%- if section.settings.post_title_enable -%}
+    <h3 class="post-title"><a href="{{ article.url }}">{{ article.title }}</a></h3>
+    {%- endif -%}
+    
+    <div class="post-meta d-flex align-items-center justify-content-center mb--20">
+      {% if section.settings.post_publish_time_enable %}
+      <a href="{{ article.url }}" class="posted-on remove_href">
+        <span class="entry-date">{{ article.published_at | date: '%B %d, %Y' }}</span>
+      </a>
+      {% endif %}
+      
+      {% if section.settings.post_publish_time_enable and section.settings.post_author_enable  %}
+      <span class="meta-separator">-</span>
+      {% endif %}
+       
+      {% if section.settings.post_author_enable %}
+      <a href="{{ article.url }}" class="posted-by remove_href">{{ article.author }}</a>
+      {% endif %}
+      
+    </div>
+    {%- if section.settings.post_readmore_btn_enbale -%}
+    <a href="{{ article.url }}" class="read-more">{{ section.settings.read_more_button | default: 'read more' }} <i class="fa fa-caret-right"></i></a>
+    {%- endif -%}
+  </div>
+</article>

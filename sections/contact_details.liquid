@@ -1,0 +1,541 @@
+{%- capture html -%}
+{% if section.settings.section_enable %}
+<div id="section-{{ section.id }}" class="mt-100 mt-sm-80 nrb_contact_grid">
+  {% if section.settings.section_title_enable %}
+  <div class="section-title-container mb-50">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <!--=======  section title  =======-->
+
+          <div class="section-title section-title--one text-center">
+            {% if section.settings.section_subtitle != blank %}
+            <p class="subtitle subtitle--deep">{{ section.settings.section_subtitle }}</p>
+            {% endif %}
+            {% if section.settings.section_title != blank %}
+            <h1>{{ section.settings.section_title }}</h1>
+            {% endif %}
+          </div>
+
+          <!--=======  End of section title  =======-->
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="icon-box-area mb-100 mb-md-30 mb-sm-30">
+    <div class="container">
+      <div class="row">
+        {% for block in section.blocks %}
+        {%- case block.type -%}
+        {% when 'address' %}
+        <div class="col-lg-{{ block.settings.lg_banner_col }} col-md-{{ block.settings.md_banner_col }} mb-md-70 mb-sm-70">
+          <!--=======  single icon box  =======-->
+
+          <div class="single-icon-box">
+            {% if block.settings.address_icon != blank %}
+            <div class="icon-box-icon">
+              <i class="ion-svg"> {{ block.settings.address_icon }} </i>
+            </div>
+            {% endif %}
+            <div class="icon-box-content">
+              {% if block.settings.address_title != blank %}
+              <h3 class="title">{{ block.settings.address_title }}</h3>
+              {% endif %}
+              
+              {% if block.settings.address_content != blank %}
+              <p class="content">{{ block.settings.address_content }}</p>
+              {% endif %}
+            </div>
+          </div>
+
+          <!--=======  End of single icon box  =======-->
+        </div>
+        {% when 'contact' %}
+        <div class="col-lg-{{ block.settings.lg_banner_col }} col-md-{{ block.settings.md_banner_col }} mb-md-70 mb-sm-70">
+          
+          <div class="single-icon-box mb-10">
+            
+            {% if block.settings.phone_icon != blank %}
+            <div class="icon-box-icon">
+              <i class="ion-svg"> {{ block.settings.phone_icon }} </i>
+            </div>
+            {% endif %}
+            
+            <div class="icon-box-content">
+              {% if block.settings.phone_title != blank %}
+              <h3 class="title">{{ block.settings.phone_title }}</h3>
+              {% endif %}
+              {% if block.settings.phone_content != blank %}
+              <p class="content">{{ block.settings.phone_content }}</p>
+              {% endif %}
+            </div>
+          </div>
+          <!--=======  End of single icon box  =======-->
+        </div>
+        {% when 'special_note' %}
+        <div class="col-lg-{{ block.settings.lg_banner_col }} col-md-{{ block.settings.md_banner_col }} mb-md-70 mb-sm-70">
+          <div class="single-icon-box">
+            
+            {% if block.settings.special_icon != blank %}
+            <div class="icon-box-icon">
+               <i class="ion-svg"> {{ block.settings.special_icon }} </i>
+            </div>
+            {% endif %}
+            
+            <div class="icon-box-content">
+              {% if block.settings.special_title != blank %}
+              <h3 class="title">{{ block.settings.special_title }}</h3>
+              {% endif %}
+               {% if block.settings.special_content != blank %}
+              <p class="content">{{ block.settings.special_content }}</p>
+              {% endif %}
+            </div>
+          </div>
+
+          <!--=======  End of single icon box  =======-->
+        </div>
+        {% endcase %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endif %}
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+{% render 'section_typography' %}
+
+{% schema %}
+  {
+    "name": "Contact Details",
+    "settings": [
+		{
+		  "type": "header",
+          "content": "Section Enable"
+        },
+		{
+          "type": "checkbox",
+          "id": "section_enable",
+          "label": "Section Enable",  
+          "default": true
+      	},
+		{
+		  "type": "header",
+          "content": "Section Heading"
+        },
+		{
+          "type": "checkbox",
+          "id": "section_title_enable",
+          "label": "Section Title Enable",  
+          "default": true
+      	},
+		{
+          "type": "text",
+          "id": "section_subtitle",
+          "label": "Section SubTitle",
+          "default": "SIMPLY OR WHITE"
+      	},
+		{
+          "type": "text",
+          "id": "section_title",
+          "label": "Section Title",
+          "default": "Clever & unique ideas"
+      	}
+	],
+	"blocks":[
+	   {
+          "type": "address",
+          "name": "Contact Address",
+		   "settings": [
+              {
+                "type": "text",
+                "id": "address_icon",
+                "label": "Address Icon",
+                "info": "Add svg Icon [See Icon](https:\/\/feathericons.com\/)"
+              },
+              {
+                  "type": "text",
+                  "id": "address_title",
+                  "label": "Address Title",
+                  "default": "ADDRESS"
+              },
+              {
+                  "type": "textarea",
+                  "id": "address_content",
+                  "label": "Address Content",
+                  "default": "1800 Abbot Kinney Blvd. Unit D & E Venice"
+              },
+			  {
+                "type": "select",
+                "id": "lg_banner_col",
+                "label": "Desktop",
+                "options":[
+                      {
+                          "label": "Gird 6",
+                          "value": "6"
+                      },
+                      {
+                          "label": "Gird 4",
+                          "value": "4"
+                      },
+                      {
+                          "label": "Gird 3",
+                          "value": "3"
+                      }
+                  ],
+                  "default": "4"
+              },
+              {
+                "type": "select",
+                "id": "md_banner_col",
+                "label": "Tablet",
+                "options":[
+                      {
+                          "label": "Gird 6",
+                          "value": "6"
+                      },
+                      {
+                          "label": "Gird 4",
+                          "value": "4"
+                      },
+                      {
+                          "label": "Gird 3",
+                          "value": "3"
+                      }
+                  ],
+                  "default": "4"
+              }
+          ]
+       },
+		{
+          "type": "contact",
+          "name": "Contact Phone",
+		   "settings": [
+              {
+                "type": "text",
+                "id": "phone_icon",
+                "label": "Left Icon",
+                "info": "Add svg Icon [See Icon](https:\/\/feathericons.com\/)"
+              },
+			  {
+                "type": "header",
+                "content": "Phone"
+              },
+              {
+                  "type": "text",
+                  "id": "phone_title",
+                  "label": "Title",
+                  "default": "CONTACT"
+              },
+              {
+                  "type": "textarea",
+                  "id": "phone_content",
+                  "label": "Content text",
+                  "default": "Mobile: (+88) – 1990 – 6886 <br> Hotline: 1800 – 1102"
+              },
+			  {
+                "type": "select",
+                "id": "lg_banner_col",
+                "label": "Desktop",
+                "options":[
+                      {
+                          "label": "Gird 6",
+                          "value": "6"
+                      },
+                      {
+                          "label": "Gird 4",
+                          "value": "4"
+                      },
+                      {
+                          "label": "Gird 3",
+                          "value": "3"
+                      }
+                  ],
+                  "default": "4"
+              },
+              {
+                "type": "select",
+                "id": "md_banner_col",
+                "label": "Tablet",
+                "options":[
+                      {
+                          "label": "Gird 6",
+                          "value": "6"
+                      },
+                      {
+                          "label": "Gird 4",
+                          "value": "4"
+                      },
+                      {
+                          "label": "Gird 3",
+                          "value": "3"
+                      }
+                  ],
+                  "default": "4"
+              }
+          ]
+       },
+	   {
+          "type": "special_note",
+          "name": "Special Note",
+		   "settings": [
+              {
+                "type": "text",
+                "id": "special_icon",
+                "label": "Left Icon",
+                "info": "Add svg Icon [See Icon](https:\/\/feathericons.com\/)"
+              },
+              {
+                  "type": "text",
+                  "id": "special_title",
+                  "label": "Title text",
+                  "default": "HOUR OF OPERATION"
+              },
+              {
+                  "type": "textarea",
+                  "id": "special_content",
+                  "label": "Special Content",
+                  "default": "Monday – Friday : 09:00 – 20:00 <br> Sunday & Saturday: 10:30 – 22:00"
+              },
+			  {
+                "type": "select",
+                "id": "lg_banner_col",
+                "label": "Desktop",
+                "options":[
+                      {
+                          "label": "Gird 6",
+                          "value": "6"
+                      },
+                      {
+                          "label": "Gird 4",
+                          "value": "4"
+                      },
+                      {
+                          "label": "Gird 3",
+                          "value": "3"
+                      }
+                  ],
+                  "default": "4"
+              },
+              {
+                "type": "select",
+                "id": "md_banner_col",
+                "label": "Tablet",
+                "options":[
+                      {
+                          "label": "Gird 6",
+                          "value": "6"
+                      },
+                      {
+                          "label": "Gird 4",
+                          "value": "4"
+                      },
+                      {
+                          "label": "Gird 3",
+                          "value": "3"
+                      }
+                  ],
+                  "default": "4"
+              }
+          ]
+       },
+	   {
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#ffffff"
+			}
+          ]
+       }
+		
+	],
+	"presets": [
+		{
+		  "name": "Contact Details",
+		  "category": "9.3 Contact",
+			"blocks":[
+              {
+              	"type": "address"
+              },
+			  {
+              	"type": "contact"
+              },
+			  {
+              	"type": "special_note"
+              }
+          ]
+		}
+	]
+  }
+{% endschema %}

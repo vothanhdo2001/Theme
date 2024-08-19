@@ -1,0 +1,24 @@
+{%- comment -%}
+{%- render 'svg_placholder' with param: 'image', size: '500x250'  -%}
+{%- endcomment -%}
+
+{%- capture svg_tag -%}
+{%- case param -%}
+{%- when 'lifestyle' -%}
+{%- cycle 'lifestyle-1', 'lifestyle-2' -%}
+{%- when 'collection' -%}
+{%- cycle 'collection-1', 'collection-2', 'collection-3', 'collection-4', 'collection-5', 'collection-6' -%}
+{%- when 'image' -%}
+image
+{%- endcase -%}
+{%- endcapture -%}
+
+
+
+{%- assign svg_height = size | remove: 'px' | split: 'x' | last | append: 'px' | strip_newlines -%}
+
+<div class="placeholder_Svg" style="height: {{ svg_height }}; ">
+  {{ svg_tag | placeholder_svg_tag: 'placeholder-svg' }}
+  <span> {{ size }} </span>
+  
+</div>

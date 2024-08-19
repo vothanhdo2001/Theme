@@ -1,0 +1,352 @@
+{%- capture html -%}
+{% if section.settings.section_header_enable %}
+<div class="section-title-container section-title-container--instagram mb-80 mt-100">
+  <div class="container wide">
+    <div class="row">
+      <div class="col-xl-3 d-none d-xl-block">
+        {% if section.settings.collection_title != blank %}
+        <div class="section-title__label section-title__label--left">
+          <p>{{ section.settings.collection_title }}<span class="line">{{ section.settings.collection_count }}</span></p>
+        </div>
+        {% endif %}
+      </div>
+
+      <div class="col-xl-6 col-lg-10 offset-lg-1 offset-xl-0">
+        <!--=======  section title  =======-->
+        <div class="section-title text-center">
+          {% if section.settings.section_title != blank %}
+          <h1>{{ section.settings.section_title }}</h1>
+          {% endif %}
+
+          {% if section.settings.section_description != blank %}
+          <p>{{ section.settings.section_description }}</p>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="col-xl-3 d-none d-xl-block text-right">
+        <div class="section-title__label section-title__label--right">
+          {% if section.settings.section_rotate_title1 != blank %}
+          <p>{{ section.settings.section_rotate_title1 }}</p>
+          {% endif %}
+        </div>
+      </div>
+   
+  </div>
+</div>
+</div>
+{% endif %}
+
+  <div class="instagram-shop-area mb-100" id="section-{{ section.id }}">
+    <div class="container wide">
+      <div class="row">
+        <div class="col-lg-12">
+          <!--=======  instagram shop loader  =======-->
+
+          <div class="instagram-shop-loader">
+            {{ section.settings.snapppt_script_field }}
+
+            <!--=======  End of instagram shop loader  =======-->   
+
+            <!--=======  shop button  =======-->
+            {% if section.settings.shopping_btn !=  blank %}
+            <div class="shop-button text-center mt-80">
+              <a class="phoone-button phoone-button--medium" href="{{ section.settings.shopping_btn_link }}" >{{ section.settings.shopping_btn }}</a>
+            </div>
+            {% endif %}
+
+            <!--=======  End of shop button  =======-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+
+
+{%- render 'section_typography' -%}
+
+
+
+{% schema %}
+  {
+    "name": "Instagram With Snapppt",
+    "settings": [
+		{
+		  "type": "header",
+          "content": "Wrapper Width"
+        },
+		{
+             "type":  "radio",
+             "id":    "container_width",
+             "label": "Container Width",
+             "options": [
+               { "value": "container", "label": "Container" },
+               { "value": "fluid", "label": "Full Width" }
+             ],
+             "default":   "fluid"
+          },
+  		{
+		  "type": "header",
+          "content": "Snappt Script"
+        },
+  		{
+          "type": "textarea",
+          "id": "snapppt_script_field",
+          "label": "Paste Here Snappt Script Embed Code",
+  		  "info": "[Click Here](https:\/\/www.getsnapppt.com/) and [Screenshot](http:\/\/prntscr.com\/n23u7r) Get Snapppt",
+          "default": "<script src='https://snapppt.com/widgets/widget_loader/0478b242-6848-4637-a89d-f1a684293e80/grid.js' defer class='snapppt-widge'></script>"
+      	},
+  		{
+		  "type": "header",
+          "content": "Snappt More Details",
+		  "info": "[Snappt Guide](https:\/\/www.getsnapppt.com\/getting-started-guide)"
+        },
+		{
+		  "type": "header",
+          "content": "Section Heading"
+        },
+		{
+          "type": "checkbox",
+          "id": "section_header_enable",
+          "label": "Section Title Enable",  
+          "default": true
+      	},
+		{
+          "type": "textarea",
+          "id": "section_title",
+          "label": "Section Title",
+          "default": "Make Your Instagram Shop"
+      	},
+		{
+          "type": "textarea",
+          "id": "section_description",
+          "label": "Section Description",
+          "default": "Lorem ipsum dolor sit amet, consectetur cing elit. Suspe ndisse suscipit sagittis"
+      	},
+		{
+		  "type": "header",
+          "content": "Section Side Info"
+        },
+		{
+          "type": "textarea",
+          "id": "section_rotate_title1",
+          "label": "Section Right Side Title",
+          "default": "COME HAVE <br> A LOOK"
+      	},
+		{
+		  "type": "paragraph",
+          "content": "Section Left Side Info"
+        },
+		{
+          "type": "text",
+          "id": "collection_title",
+          "label": "Collection Name",
+          "default": "SS-2018"
+      	},
+		{
+          "type": "text",
+          "id": "collection_count",
+          "label": "Collection Count",
+          "default": "84"
+      	},
+		{
+          "type": "text",
+          "id": "shopping_btn",
+          "label": "Shopping Button Text",
+		  "default": "Shopping More"
+        },
+        {
+          "type": "url",
+          "id": "shopping_btn_link",
+          "label": "Collecton Section Btn Link"
+        }
+	],
+	"blocks":[
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#ffffff"
+			}
+          ]
+       }
+	],
+	"presets": [
+		{
+			"name": "Instagram With Snapppt",
+			"category": "9. Instagram"
+		}
+	]
+  }
+{% endschema %}

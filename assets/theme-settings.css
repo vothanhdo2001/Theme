@@ -1,0 +1,328 @@
+.grid__item h1{
+  color: ;
+}
+
+/* Breadcurmb Banner */
+.breadcrumb-area {
+    padding-top: 30px;
+    padding-bottom: 30px;
+ }
+
+.breadcrumb-area.bg-img { 
+	background: #f6f6f6 ;
+}
+.overlay-bg::before {
+  background: #000000 none repeat scroll 0 0;
+  opacity: 0;
+}
+h1.breadcrumb-title {
+  color: #666666;
+}
+.breadcrumb-list > li > a {
+  color: #666666;
+}
+.breadcrumb-list li::after{
+  color: #666666;
+}
+.breadcrumb-list > li {
+  color: #999999;
+}
+@media (max-width: 767px) {
+  .breadcrumb-area.pt-50.pb-70  {
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+}/* Typography */
+
+
+
+
+
+@font-face {
+  font-family: "Work Sans";
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("//shopidam.myshopify.com/cdn/fonts/work_sans/worksans_n4.29e3afeb38a0ba35e784cf169a40e8beaf814daa.woff2?h1=c2hvcGlkYW0uYWNjb3VudC5teXNob3BpZnkuY29t&hmac=9871132be47dbe5577419947c9d2ff82259286849358778fa2447a2590612f5a") format("woff2"),
+       url("//shopidam.myshopify.com/cdn/fonts/work_sans/worksans_n4.e7c533c4afbed28070f6ac45dbcfe6f37840c0a8.woff?h1=c2hvcGlkYW0uYWNjb3VudC5teXNob3BpZnkuY29t&hmac=3312729fd3084293ed14991eaf469bfcef896539788d236b6e06061804f75ad9") format("woff");
+}
+
+@font-face {
+  font-family: "Work Sans";
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("//shopidam.myshopify.com/cdn/fonts/work_sans/worksans_n4.29e3afeb38a0ba35e784cf169a40e8beaf814daa.woff2?h1=c2hvcGlkYW0uYWNjb3VudC5teXNob3BpZnkuY29t&hmac=9871132be47dbe5577419947c9d2ff82259286849358778fa2447a2590612f5a") format("woff2"),
+       url("//shopidam.myshopify.com/cdn/fonts/work_sans/worksans_n4.e7c533c4afbed28070f6ac45dbcfe6f37840c0a8.woff?h1=c2hvcGlkYW0uYWNjb3VudC5teXNob3BpZnkuY29t&hmac=3312729fd3084293ed14991eaf469bfcef896539788d236b6e06061804f75ad9") format("woff");
+}
+
+@font-face {
+  font-family: "Work Sans";
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("//shopidam.myshopify.com/cdn/fonts/work_sans/worksans_n4.29e3afeb38a0ba35e784cf169a40e8beaf814daa.woff2?h1=c2hvcGlkYW0uYWNjb3VudC5teXNob3BpZnkuY29t&hmac=9871132be47dbe5577419947c9d2ff82259286849358778fa2447a2590612f5a") format("woff2"),
+       url("//shopidam.myshopify.com/cdn/fonts/work_sans/worksans_n4.e7c533c4afbed28070f6ac45dbcfe6f37840c0a8.woff?h1=c2hvcGlkYW0uYWNjb3VudC5teXNob3BpZnkuY29t&hmac=3312729fd3084293ed14991eaf469bfcef896539788d236b6e06061804f75ad9") format("woff");
+}
+
+html, body, input, textarea, button, select{
+  font-family: "Work Sans", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}h1, h2, h3, h4, h5, h6{
+  font-family: "Work Sans", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}p{
+    font-family: "Work Sans", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }/* End Typography */
+/* Custom and Customer Page */
+.theme-default-margin, .shopify-challenge__container {
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+@media (max-width: 767px) {
+  .theme-default-margin, .shopify-challenge__container{
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+}
+
+.create-custom-page{
+  padding-top: 100px;
+  padding-bottom: 80px;
+}
+@media (max-width: 767px) {
+  .create-custom-page{
+    padding-top: 80px;
+    padding-bottom: 60px;
+  }
+}
+/* End Custom Page */
+/* QuickView */
+
+/* End Quickview */
+
+/*===========================
+	Theme Color Css liquid
+=================================*/
+
+body { 
+  color: #333333;
+  background-color: #ffffff;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,.multi-testimonial-single-item__author-info .content .name,.instagram-section-intro p a,.about-single-block p.subtitle,.single-faq .card-header h5 button  {
+  color: #333;
+}
+.single-product__content .price .discounted-price,.shop-product__price .discounted-price {
+  color: #333;
+}
+.single-product__content .price .main-price.discounted,.shop-product__price .main-price.discounted {
+	color: #aaa;
+}
+.single-product__content .title .product-cart-action a {
+  color: #f66608;
+}  
+.single-product__content .title h3{
+  color: #333;
+}
+/* Product Badge */
+.single-product__floating-badges span.soldout-title {
+    background: #f66608;
+    color: #fff;
+}
+.single-product__floating-badges span.onsale {
+    background-color: #f66608;
+    color: #fff;
+}
+.product_countdown .single-countdown {
+    background: ;
+}
+.single-product__floating-icons span a {
+  background-color: #f66608;
+  color: #ffffff;
+}
+.single-product__floating-icons span a:hover {
+  background-color: #333;
+  color: #ffffff;
+}
+.single-product__variations.size_variant_conatiner,.single-product__variations.color_variant_conatiner{
+  background-color: #fff;
+}
+.single-product__variations .size-container span{
+  color: #999;
+} 
+.single-product .single-countdown {
+  background: #f66608;
+  color: #fff;
+}
+  
+.phoone-button,.shop-product__buttons .product-cart-action button, .affiliate_btn > a,#shopify-product-reviews .spr-summary-actions-newreview,#shopify-product-reviews .spr-button.spr-button-primary.button.button-primary.btn.btn-primary,.recent_view_product__content input[disabled].phoone-button.phoone-button--medium {
+  background-color: #333333;
+  color: #fff !important;
+  border-color: #333;
+}
+#modalAddToCart .modal-button .theme-default-button {
+  color: #fff !important;
+  background-color: #333333;
+}
+#modalAddToCart .modal-button .theme-default-button:hover {
+  background: #f66608;
+}
+.phoone-button:hover,.phoone-button.phoone-button--medium:hover,.shop-product__buttons .product-cart-action button:hover, .affiliate_btn > a:hover,#shopify-product-reviews .spr-summary-actions-newreview:hover,#shopify-product-reviews .spr-button.spr-button-primary.button.button-primary.btn.btn-primary:hover {
+	background-color: #f66608;
+    color: #ffffff !important;
+    border-color: #f66608;
+}
+.modal-button .phoone-button.phoone-button--medium.popup-checkout--btn{
+  background: #f66608;
+  color: #fff !important;
+}
+.modal-button .phoone-button.phoone-button--medium.popup-checkout--btn:hover{
+  background: #f66608;
+  color: #fff !important;
+}
+a.scroll-top {
+  background: #f66608;
+	color: #fff;
+}
+a.scroll-top:hover {
+	background-color: #333333;
+    color: #fff;
+}
+.offcanvas-cart-content-container .cart-product-wrapper .cart-buttons a:hover {
+	background-color: #f66608;
+	border-color: #f66608;
+}
+.collection_content h2 a:hover {
+	color: #f66608;
+}
+.header-right-icons .single-icon a span.count {
+	background-color: #f66608;
+}
+.single-category__content--three--creativehome .title a:hover {
+	color: #f66608;
+}
+.single-category__content--three--banner .title > a:hover {
+	border-color: #f66608;
+}
+.single-category__content--textbanner a:hover {
+	color: #f66608;
+}
+.single-product--wearablehome .single-product__floating-cart span.title a {
+	color: #f66608;
+}
+.single-widget-product__content__bottom a.cart-btn {
+	color: #f66608;
+}
+.single-product:hover .single-product__content .title h3 a:hover{
+  color: #f66608;
+}
+.phoone-button-2:hover {
+	color: #f66608;
+}
+.single-slider-post__content a.blog-readmore-btn:hover {
+	color: #f66608;
+}
+ .list-product-collection .section-title a:hover {
+    color: #f66608;
+}
+.single-shoppable .cloth-tag__icon:hover {
+	background-color: #f66608;
+}
+.single-shoppable .cloth-tag__icon.active {
+	background-color: #f66608;
+}
+.single-banner--hoverzoom > a .banner-content--banner-type .phoone-button-link:hover {
+	color: #f66608;
+}
+.single-banner--hoverzoom > a .banner-content--banner-type .phoone-button-link:hover:after {
+	background-color: #f66608;
+}
+.nothing-found-content p a:hover {
+	color: #f66608;
+}
+.single-product__floating-badges span.hot {
+	background-color: #f66608;
+}
+.product-cart-action button {
+	color: #f66608;
+}
+.shopify-payment-button .shopify-payment-button__more-options {
+	color: #f66608;
+}
+nav.site-nav > ul > li a span,.site-mobile-nav .dl-menu li span,.vertical-menu-container-dark nav > ul > li > a span,.overlay-navigation-active .overlay-navigation-menu-container nav > ul > li > a span {
+  background: #f66608;;
+}
+nav.site-nav > ul > li a span:before,.site-mobile-nav .dl-menu li span::before,.vertical-menu-container-dark nav > ul > li > a span::before,.overlay-navigation-active .overlay-navigation-menu-container nav > ul > li > a span::before {
+  background: #f66608;;
+}
+#modalAddToCart .modal-button .theme-default-button:hover {
+	background: #f66608;
+}
+
+nav.site-nav > ul > li a span.sale,.site-mobile-nav .dl-menu li span.sale,.vertical-menu-container-dark nav > ul > li > a span.sale,.overlay-navigation-active .overlay-navigation-menu-container nav > ul > li > a span.sale {
+	background: #98d8ca;
+}
+nav.site-nav > ul > li a span.sale:before,.site-mobile-nav .dl-menu li span.sale::before,.vertical-menu-container-dark nav > ul > li > a span.sale::before,.overlay-navigation-active .overlay-navigation-menu-container nav > ul > li > a span.sale::before{ 
+ background: #98d8ca;
+}
+
+#quickViewModal .close:hover {
+	color: #98d8ca;
+	border-color: #98d8ca;
+}
+.copyright-text a:hover {
+	color: #98d8ca;
+}
+  
+.product_additional_information button:hover {
+	color: #f66608;
+}
+
+  
+  /* ====================
+  Preload Css here
+  =====================*/
+#preloader_active{
+    background-color: #ffffff;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: 999999;
+    margin-top: 0px;
+    top: 0px;
+  }
+  #loading-center{
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+  #loading-center-absolute {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    height: 150px;
+    width: 150px;
+    margin-top: -75px;
+    margin-left: -75px;
+  }
+  .object{
+    width: 20px;
+    height: 20px;
+    background-color:#f66608;
+    float: left;
+    margin-right: 20px;
+    margin-top: 65px;
+    -moz-border-radius: 50% 50% 50% 50%;
+    -webkit-border-radius: 50% 50% 50% 50%;
+    border-radius: 50% 50% 50% 50%;
+  }
+  #object_one{-webkit-animation:object_one 1.5s infinite;animation:object_one 1.5s infinite}#object_two{-webkit-animation:object_two 1.5s infinite;animation:object_two 1.5s infinite;-webkit-animation-delay:.25s;animation-delay:.25s}#object_three{-webkit-animation:object_three 1.5s infinite;animation:object_three 1.5s infinite;-webkit-animation-delay:.5s;animation-delay:.5s}@-webkit-keyframes object_one{75%{-webkit-transform:scale(0)}}@keyframes object_one{75%{transform:scale(0);-webkit-transform:scale(0)}}@-webkit-keyframes object_two{75%{-webkit-transform:scale(0)}}@keyframes object_two{75%{transform:scale(0);-webkit-transform:scale(0)}}@-webkit-keyframes object_three{75%{-webkit-transform:scale(0)}}@keyframes object_three{75%{transform:scale(0);-webkit-transform:scale(0)}}/* Customer Page */

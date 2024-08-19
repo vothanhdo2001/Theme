@@ -1,0 +1,844 @@
+{%- capture html -%}
+<div class="homepage-content--lookbook mb-50" id="section-{{ section.id }}">
+  {% for block in section.blocks %}
+  {%- case block.type -%}
+  {% when 'lookbook_banner' %}
+  <div id="block-{{ block.id }}" class="{% if forloop.first == true %} first_lookbook {% endif %}single-lookbook-section jarallax" style="background-image: url('{% if block.settings.lookbook_banner_bg != blank %}{{ block.settings.lookbook_banner_bg | img_url: 'master' }} {% else %} https://via.placeholder.com/1920x1436 {% endif %}');">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-{{ block.settings.xl_col }} offset-xl-{{ block.settings.xl_offset }}  col-lg-{{ block.settings.lg_col }} offset-lg-{{ block.settings.lg_offset }} col-md-{{ block.settings.md_col }} offset-md-{{ block.settings.md_offset }} ">
+          <!--=======  lookbook content  =======-->
+          <div class="lookbook-content-wrapper align-items-center d-flex  {% if block.settings.justify_content == "center" %} justify-content-center {% elsif block.settings.justify_content == "left" %} justify-content-start  {% elsif block.settings.justify_content == "right" %}justify-content-end {% endif %} ">
+            <div class="lookbook-content {% if block.settings.content_align == "center" %} text-center {% elsif block.settings.content_align == "left" %} text-left  {% elsif block.settings.content_align == "right" %} text-right {% endif %}">
+              {% if block.settings.lookbook_tag != blank %}
+              <p class="tag">{{ block.settings.lookbook_tag }}</p>
+              {% endif %}
+              {% if block.settings.lookbook_title != blank %}
+              <h2 class="lookbook-title">{{ block.settings.lookbook_title }}</h2>
+              {% endif %}
+
+              {% if block.settings.lookbook_btn_text != blank %}
+              <a href="{{ block.settings.lookbook_link }}" class="phoone-button phoone-button--medium lookbook-btn">{{ block.settings.lookbook_btn_text }}</a>
+              {% endif %}
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <style>
+      #block-{{ block.id }} .lookbook-content p,#block-{{ block.id }} .lookbook-content h2 {
+        color: {{ block.settings.content_color }};
+      }
+      #block-{{ block.id }} .lookbook-content a.lookbook-btn {
+        background-color: {{ block.settings.button_bg_color }};
+        color: {{ block.settings.button_color }} !important;
+        border-color: {{ block.settings.button_border_color }};
+      }
+      #block-{{ block.id }} .lookbook-content a.lookbook-btn:hover {
+        background-color: {{ block.settings.button_hover_bg_color }};
+        color: {{ block.settings.button_hover_color }} !important;
+        border-color: {{ block.settings.button_hover_border_color }};
+      }
+      
+      #block-{{ block.id }}.single-lookbook-section:before {
+        background: {{ block.settings.lookbook_overlay_color }};
+        opacity: {{ block.settings.lookbook_overlay_opacity }};
+      }
+    </style>
+  </div>
+  {%- endcase -%}
+  {%- endfor -%}
+
+</div>
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+
+{%- capture css -%}
+<style>
+  {%- if section.settings.slider_fullscreen_enable -%}
+    #section-{{ section.id }} .lookbook-content-wrapper {
+    height: 100vh;
+    }
+  	#section-{{ section.id }} .single-lookbook-section {
+       min-height: 100vh;
+    }
+    {%- else -%}
+
+    #section-{{ section.id }} .lookbook-content-wrapper {
+    height: {{ section.settings.slider_lg_height }}px;
+    }
+  	#section-{{ section.id }} .single-lookbook-section {
+         min-height: {{ section.settings.slider_lg_height }}px;
+    }
+  
+    {%- endif -%}
+      @media (min-width: 992px) and (max-width: 1199px) {
+        #section-{{ section.id }} .lookbook-content-wrapper {
+          height: {{ section.settings.slider_md_height }}px;
+        }
+        #section-{{ section.id }} .single-lookbook-section {
+          min-height: {{ section.settings.slider_md_height }}px;
+        }
+      }
+    @media (min-width: 768px) and (max-width: 991px) {
+      #section-{{ section.id }} .lookbook-content-wrapper {
+        height: {{ section.settings.slider_sm_height }}px;
+      }
+      #section-{{ section.id }} .single-lookbook-section {
+        min-height: {{ section.settings.slider_md_height }}px;
+      }
+    }
+    @media (max-width: 767px) {
+      #section-{{ section.id }} .lookbook-content-wrapper {
+        height: {{ section.settings.slider_xs_height }}px;
+      }
+      #section-{{ section.id }} .single-lookbook-section {
+        min-height: {{ section.settings.slider_xs_height }}px;
+      }
+    }
+  
+
+</style>
+{%- endcapture -%}
+
+{{ css | strip_newlines
+       | replace: '  ', '' 
+       | replace: ': ', ':'
+       | replace: ' {', '{'
+}}
+
+{%- render 'section_typography' -%}
+
+
+{% schema %}
+  {
+    "name": "Parallax Banner",
+    "settings": [
+		{
+			"type": "header",
+            "content": "Banner FullScreen"
+		},
+		{
+          "type": "checkbox",
+          "id": "slider_fullscreen_enable",
+          "label": "Banner Full Screen Enable",
+		  "info": "More Than 1200px Screen Size Supported(laptop,Desktop,mac) Etc.",
+		  "default":  false
+        },
+		{
+			"type": "header",
+            "content": "Banner Height Options"
+		},
+		{
+          "type": "range",
+          "id": "slider_lg_height",
+          "min": 300,
+          "max": 1000,
+          "step": 10,
+          "label": "Banner Height ",
+		  "info": "It'll work, when Slider Fullscreen Will be unchecked or False.( More Than 1200px )",
+          "unit": "px",
+          "default": 710
+        },
+		{
+          "type": "range",
+          "id": "slider_md_height",
+          "min": 300,
+          "max": 800,
+          "step": 5,
+          "label": "Banner Height ",
+		  "info": "More Than 992px and Less Than 1199px(Laptop or Small Desktop)",
+          "unit": "px",
+          "default": 650
+        },
+		{
+          "type": "range",
+          "id": "slider_sm_height",
+          "min": 200,
+          "max": 700,
+          "step": 5,
+          "label": "Banner Height ",
+		  "info": "More Than 768px and Less Than 991px( Tablet)",
+          "unit": "px",
+          "default": 500
+        },
+		{
+          "type": "range",
+          "id": "slider_xs_height",
+          "min": 150,
+          "max": 600,
+          "step": 5,
+          "label": "Banner Height ",
+		  "info": "Less Than 767px Mobile",
+          "unit": "px",
+          "default": 450
+        }
+	],
+	"blocks":[
+	   {
+          "type": "lookbook_banner",
+          "name": "LookBook Banner",
+		   "settings": [
+            {
+              "type": "image_picker",
+              "id": "lookbook_banner_bg",
+              "label": "Lookbook Background Image",
+              "info": "Recommended Size: 1920 x 1436 px"
+              },
+              {
+                "type": "textarea",
+                "id": "lookbook_tag",
+                "label": "LookBook Tag",
+                "default": "#NEW #COLLECTION #MEN"
+              },
+              {
+                "type": "textarea",
+                "id": "lookbook_title",
+                "label": "LookBook TItle",
+                "default": "Spring Collection"
+              },
+			  {
+                "type": "text",
+                "id": "lookbook_btn_text",
+                "label": "Shop Now Text",
+				"default": "shop now"
+              },
+              {
+                "type": "url",
+                "id": "lookbook_link",
+                "label": "Shop Now URL"
+              },	
+			  {
+                "type": "header",
+                "content": "Justify Content"
+              },
+			  {
+                "type":  "select",
+                "id":    "justify_content",
+                "label": "Justify Content",
+                "options": [
+                  { "value": "center", "label": "Center" },
+                  { "value": "left", "label": "Left" },
+				  { "value": "right", "label": "Right" }
+                ],
+                "default":   "center"
+              },
+			  {
+                "type": "header",
+                "content": "Content Alignment"
+              },
+			  {
+                "type":  "select",
+                "id":    "content_align",
+                "label": "Content Align",
+                "options": [
+                  { "value": "center", "label": "Center" },
+                  { "value": "left", "label": "Left" },
+				  { "value": "right", "label": "Right" }
+                ],
+                "default":   "center"
+              },
+			  {
+                "type": "select",
+                "id": "xl_col",
+                "label": "Large/Mac Device Column",
+                "options":[
+                      {
+                          "label": "Gird 12",
+                          "value": "12"
+                      },
+					  {
+                          "label": "Gird 11",
+                          "value": "11"
+                      },
+                      {
+                          "label": "Gird 10",
+                          "value": "10"
+                      },
+					  {
+                          "label": "Gird 9",
+                          "value": "9"
+                      },
+                      {
+                          "label": "Gird 8",
+                          "value": "8"
+                      },
+					  {
+                          "label": "Gird 7",
+                          "value": "7"
+                      },
+					  {
+                          "label": "Gird 6",
+                          "value": "6"
+                      },
+					  {
+                          "label": "Gird 5",
+                          "value": "5"
+                      },
+					  {
+                          "label": "Gird 4",
+                          "value": "4"
+                      },
+					  {
+                          "label": "Gird 3",
+                          "value": "3"
+                      },
+					  {
+                          "label": "Gird 2",
+                          "value": "2"
+                      }
+                  ],
+                  "default": "12"
+              },
+			  {
+                "type": "select",
+                "id": "xl_offset",
+                "label": "Large/Mac Device Offset Column",
+                "options":[
+                      {
+                          "label": "Offset 12",
+                          "value": "12"
+                      },
+					  {
+                          "label": "Offset 11",
+                          "value": "11"
+                      },
+                      {
+                          "label": "Offset 10",
+                          "value": "10"
+                      },
+					  {
+                          "label": "Offset 9",
+                          "value": "9"
+                      },
+                      {
+                          "label": "Offset 8",
+                          "value": "8"
+                      },
+					  {
+                          "label": "Offset 7",
+                          "value": "7"
+                      },
+					  {
+                          "label": "Offset 6",
+                          "value": "6"
+                      },
+					  {
+                          "label": "Offset 5",
+                          "value": "5"
+                      },
+					  {
+                          "label": "Offset 4",
+                          "value": "4"
+                      },
+					  {
+                          "label": "Offset 3",
+                          "value": "3"
+                      },
+					  {
+                          "label": "Offset 2",
+                          "value": "2"
+                      },
+					  {
+                          "label": "Offset 1",
+                          "value": "1"
+                      },
+					  {
+                          "label": "Offset 0",
+                          "value": "0"
+                      }
+                  ],
+                  "default": "0"
+              },
+			  {
+                "type": "select",
+                "id": "lg_col",
+                "label": "Medium/Desktop Device Column",
+                "options":[
+                      {
+                          "label": "Gird 12",
+                          "value": "12"
+                      },
+					  {
+                          "label": "Gird 11",
+                          "value": "11"
+                      },
+                      {
+                          "label": "Gird 10",
+                          "value": "10"
+                      },
+					  {
+                          "label": "Gird 9",
+                          "value": "9"
+                      },
+                      {
+                          "label": "Gird 8",
+                          "value": "8"
+                      },
+					  {
+                          "label": "Gird 7",
+                          "value": "7"
+                      },
+					  {
+                          "label": "Gird 6",
+                          "value": "6"
+                      },
+					  {
+                          "label": "Gird 5",
+                          "value": "5"
+                      },
+					  {
+                          "label": "Gird 4",
+                          "value": "4"
+                      },
+					  {
+                          "label": "Gird 3",
+                          "value": "3"
+                      },
+					  {
+                          "label": "Gird 2",
+                          "value": "2"
+                      }
+                  ],
+                  "default": "12"
+              },
+			  {
+                "type": "select",
+                "id": "lg_offset",
+                "label": "Medium/Desktop Device Offset Column",
+                "options":[
+                      {
+                          "label": "Offset 12",
+                          "value": "12"
+                      },
+					  {
+                          "label": "Offset 11",
+                          "value": "11"
+                      },
+                      {
+                          "label": "Offset 10",
+                          "value": "10"
+                      },
+					  {
+                          "label": "Offset 9",
+                          "value": "9"
+                      },
+                      {
+                          "label": "Offset 8",
+                          "value": "8"
+                      },
+					  {
+                          "label": "Offset 7",
+                          "value": "7"
+                      },
+					  {
+                          "label": "Offset 6",
+                          "value": "6"
+                      },
+					  {
+                          "label": "Offset 5",
+                          "value": "5"
+                      },
+					  {
+                          "label": "Offset 4",
+                          "value": "4"
+                      },
+					  {
+                          "label": "Offset 3",
+                          "value": "3"
+                      },
+					  {
+                          "label": "Offset 2",
+                          "value": "2"
+                      },
+					  {
+                          "label": "Offset 1",
+                          "value": "1"
+                      },
+					  {
+                          "label": "Offset 0",
+                          "value": "0"
+                      }
+                  ],
+                  "default": "0"
+              },
+			  {
+                "type": "select",
+                "id": "md_col",
+                "label": "Large/Mac Device Column",
+                "options":[
+                      {
+                          "label": "Gird 12",
+                          "value": "12"
+                      },
+					  {
+                          "label": "Gird 11",
+                          "value": "11"
+                      },
+                      {
+                          "label": "Gird 10",
+                          "value": "10"
+                      },
+					  {
+                          "label": "Gird 9",
+                          "value": "9"
+                      },
+                      {
+                          "label": "Gird 8",
+                          "value": "8"
+                      },
+					  {
+                          "label": "Gird 7",
+                          "value": "7"
+                      },
+					  {
+                          "label": "Gird 6",
+                          "value": "6"
+                      },
+					  {
+                          "label": "Gird 5",
+                          "value": "5"
+                      },
+					  {
+                          "label": "Gird 4",
+                          "value": "4"
+                      },
+					  {
+                          "label": "Gird 3",
+                          "value": "3"
+                      },
+					  {
+                          "label": "Gird 2",
+                          "value": "2"
+                      }
+                  ],
+                  "default": "12"
+              },
+			  {
+                "type": "select",
+                "id": "md_offset",
+                "label": "Tablet Device Offset Column",
+                "options":[
+                      {
+                          "label": "Offset 12",
+                          "value": "12"
+                      },
+					  {
+                          "label": "Offset 11",
+                          "value": "11"
+                      },
+                      {
+                          "label": "Offset 10",
+                          "value": "10"
+                      },
+					  {
+                          "label": "Offset 9",
+                          "value": "9"
+                      },
+                      {
+                          "label": "Offset 8",
+                          "value": "8"
+                      },
+					  {
+                          "label": "Offset 7",
+                          "value": "7"
+                      },
+					  {
+                          "label": "Offset 6",
+                          "value": "6"
+                      },
+					  {
+                          "label": "Offset 5",
+                          "value": "5"
+                      },
+					  {
+                          "label": "Offset 4",
+                          "value": "4"
+                      },
+					  {
+                          "label": "Offset 3",
+                          "value": "3"
+                      },
+					  {
+                          "label": "Offset 2",
+                          "value": "2"
+                      },
+					  {
+                          "label": "Offset 1",
+                          "value": "1"
+                      },
+					  {
+                          "label": "Offset 0",
+                          "value": "0"
+                      }
+                  ],
+                  "default": "0"
+              },
+			  {
+                "type": "header",
+                "content": "LookBook Overlay"
+              },
+			  {
+                "type": "color",
+                "id": "lookbook_overlay_color",
+                "label": "Overlay Color",
+                "default": "#000000"
+              },
+              {
+                "type": "range",
+                "id": "lookbook_overlay_opacity",
+                "min": 0,
+                "max": 1,
+                "step": 0.1,
+                "label": "Overlay Color Opacity",
+                "default": 0
+              },
+			  {
+                "type": "header",
+                "content": "LookBook Content"
+              },
+			  {
+                "type": "color",
+                "id": "content_color",
+                "label": "LookBook Content Color",
+                "default": "#fff"	
+              },
+              {
+                "type": "header",
+                "content": "LookBook Button"
+              },
+              {
+                "type": "color",
+                "id": "button_bg_color",
+                "label": "Button Bg Color",
+                "default": "#fff"	
+              },
+              {
+                "type": "color",
+                "id": "button_border_color",
+                "label": "Button Border Color",
+                "default": "#fff"	
+              },
+              {
+                "type": "color",
+                "id": "button_color",
+                "label": "Button Color",
+                "default": "#333"	
+              },
+              {
+                "type": "header",
+                "content": "Button Hover Color"
+              },
+              {
+                "type": "color",
+                "id": "button_hover_bg_color",
+                "label": "Button Hover Bg Color",
+                "default": "transparent"	
+              },
+              {
+                "type": "color",
+                "id": "button_hover_color",
+                "label": "Button Hover Color",
+                "default": "#fff"	
+              },
+              {
+                "type": "color",
+                "id": "button_hover_border_color",
+				"label": "Button Hover Border Color",
+                "default": "#fff"	
+              }
+              
+          ]
+       },
+	   {
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#ffffff"
+			}
+          ]
+       }
+		
+	],
+	"presets": [
+		{
+		  "name": "Parallax Banner",
+		  "category": "4. Banner",
+		  "blocks": [
+				{
+					"type" : "lookbook_banner"
+				}
+			]
+		}
+	]
+  }
+{% endschema %}

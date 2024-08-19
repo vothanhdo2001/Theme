@@ -1,0 +1,124 @@
+{% assign product_handle = all_products[block.settings.product_handgle_id] %}
+{% if block.settings.bullet_lookbook_1 %}
+<div class="cloth-tag" style="top: {{ block.settings.vertical_postion1 }}%; left:{{ block.settings.horizontal_postion1 }}%;">
+  <span class="cloth-tag__icon">
+    <i class="ion-ios-plus-empty"></i>
+  </span>
+  <div class="cloth-tag__content">
+    <span class="lookbook_close__icon">
+      <i class="ion-ios-close"></i>
+    </span>
+    <div class="cloth-tag__content__image">
+      {%- render 'lazyload_image_src',
+                	  image: product_handle.featured_image,
+        			  size: 'small', crop: 'center' -%}
+    </div>
+    <div class="cloth-tag__content__content">
+      {% assign title_trim = block.settings.prouct_title_limit %}
+      <h1>{{ product_handle.title | default: 'Test Title' | truncatewords: title_trim }}</h1>
+      <p class="price"><span class="main-price">{{ product_handle.variants.first.price | money }}</span></p>
+      <a href="{{ product_handle.url }}" class="phoone-button phoone-button--small phoone-button--small--style2"> {{ section.settings.lookbook_productbtn | default: "shop it" }}</a>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% assign product_handle2 = all_products[block.settings.product_handgle_id2] %}
+{% if block.settings.bullet_lookbook_2 %}
+<div class="cloth-tag" style="top: {{ block.settings.vertical_postion2 }}%; left:{{ block.settings.horizontal_postion2 }}%;">
+  <span class="cloth-tag__icon">
+    <i class="ion-ios-plus-empty"></i>
+  </span>
+  <div class="cloth-tag__content">
+    <span class="lookbook_close__icon">
+      <i class="ion-ios-close"></i>
+    </span>
+    <div class="cloth-tag__content__image">
+      {%- render 'lazyload_image_src',
+                	  image: product_handle2.featured_image,
+        			  size: 'small', crop: 'center' -%}
+     </div>
+    <div class="cloth-tag__content__content">
+      {% assign title_trim = block.settings.prouct_title_limit %}
+      <h1>{{ product_handle2.title | truncatewords: title_trim }}</h1>
+      <p class="price"><span class="main-price">{{ product_handle2.variants.first.price | money }}</span></p>
+      <a href="{{ product_handle2.url }}" class="phoone-button phoone-button--small phoone-button--small--style2"> {{ section.settings.lookbook_productbtn | default: "shop it" }}</a>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% assign product_handle3 = all_products[block.settings.product_handgle_id3] %}
+{% if block.settings.bullet_lookbook_3 %}
+<div class="cloth-tag" style="top: {{ block.settings.vertical_postion3 }}%; left:{{ block.settings.horizontal_postion3 }}%;">
+  <span class="cloth-tag__icon">
+    <i class="ion-ios-plus-empty"></i>
+  </span>
+  <div class="cloth-tag__content">
+    <span class="lookbook_close__icon">
+      <i class="ion-ios-close"></i>
+    </span>
+    <div class="cloth-tag__content__image">
+      {%- render 'lazyload_image_src',
+                	  image: product_handle3.featured_image,
+        			  size: 'small', crop: 'center' -%}
+    </div>
+    <div class="cloth-tag__content__content">
+      {% assign title_trim = block.settings.prouct_title_limit %}
+      <h1>{{ product_handle3.title | truncatewords: title_trim }}</h1>
+      <p class="price"><span class="main-price">{{ product_handle3.variants.first.price | money }}</span></p>
+      <a href="{{ product_handle3.url }}" class="phoone-button phoone-button--small phoone-button--small--style2"> {{ section.settings.lookbook_productbtn | default: "shop it" }}</a>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% assign product_handle4 = all_products[block.settings.product_handgle_id4] %}
+{% if block.settings.bullet_lookbook_4 %}
+<div class="cloth-tag" style="top: {{ block.settings.vertical_postion4 }}%; left:{{ block.settings.horizontal_postion4 }}%;">
+  <span class="cloth-tag__icon">
+    <i class="ion-ios-plus-empty"></i>
+  </span>
+  <div class="cloth-tag__content">
+    <span class="lookbook_close__icon">
+      <i class="ion-ios-close"></i>
+    </span>
+    <div class="cloth-tag__content__image">
+      {%- render 'lazyload_image_src',
+                	  image: product_handle4.featured_image,
+        			  size: 'small', crop: 'center' -%}
+    </div>
+    <div class="cloth-tag__content__content">
+      {% assign title_trim = block.settings.prouct_title_limit %}
+      <h1>{{ product_handle4.title | truncatewords: title_trim }}</h1>
+      <p class="price"><span class="main-price">{{ product_handle4.variants.first.price | money }}</span></p>
+      <a href="{{ product_handle4.url }}" class="phoone-button phoone-button--small phoone-button--small--style2"> {{ section.settings.lookbook_productbtn | default: "shop it" }}</a>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% assign product_handle5 = all_products[block.settings.product_handgle_id5] %}
+{% if block.settings.bullet_lookbook_5 %}
+<div class="cloth-tag" style="top: {{ block.settings.vertical_postion5 }}%; left:{{ block.settings.horizontal_postion5 }}%;">
+  <span class="cloth-tag__icon">
+    <i class="ion-ios-plus-empty"></i>
+  </span>
+  <div class="cloth-tag__content">
+    <span class="lookbook_close__icon">
+      <i class="ion-ios-close"></i>
+    </span>
+    <div class="cloth-tag__content__image">
+      {%- render 'lazyload_image_src',
+                	  image: product_handle5.featured_image,
+        			  size: 'small', crop: 'center' -%}
+    </div>
+    <div class="cloth-tag__content__content">
+      {% assign title_trim = block.settings.prouct_title_limit %}
+      <h1>{{ product_handle5.title | truncatewords: title_trim }}</h1>
+      <p class="price"><span class="main-price">{{ product_handle5.variants.first.price | money }}</span></p>
+      <a href="{{ product_handle5.url }}" class="phoone-button phoone-button--small phoone-button--small--style2"> {{ section.settings.lookbook_productbtn | default: "shop it" }}</a>
+    </div>
+  </div>
+</div>
+{% endif %}

@@ -1,0 +1,112 @@
+{%- capture html -%}
+{% if section.settings.error_page_style == "style1" %}
+<div class="theme-default-margin">
+  <div class="container">	
+    <div class="row">
+      <div class="col-lg-12 col-12">
+        <div class="error-content text-center">
+          {% if section.settings.opps_404 %}
+          <img src="{{ section.settings.opps_404 | img_url: '1024x1024' }}" alt="" />
+          {% endif %}
+          {% if section.settings.heading_404 !='' %}
+          <h4>{{ section.settings.heading_404 }}</h4>
+          {% endif %}
+          {% if section.settings.sub_text_404 !='' %}
+          <p>{{ section.settings.sub_text_404 }}</p>
+          {% endif %}
+          {% if section.settings.button_title !='' %}
+          <a class="phoone-button phoone-button--medium" href="{{ section.settings.button_url }}" data-text="{{ section.settings.button_title }}" >{{ section.settings.button_title }}</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% elsif section.settings.error_page_style == "style2" %}
+<div class="nothing-found-area bg-404" style="background-image: url('{% if section.settings.opps_404 != blank %}{{ section.settings.opps_404 | img_url: "master"}} {% else %} https://via.placeholder.com/1920x1000 {% endif %}');">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="nothing-found-content">
+           {% if section.settings.heading_404 !='' %}
+          <h1>{{ section.settings.heading_404 }}</h1>
+          {% endif %}
+          {% if section.settings.sub_text_404 !='' %}
+          <h1 class="mb-50">{{ section.settings.sub_text_404 }}</h1>
+          {% endif %}
+          <p class="direction-page">{{ section.settings.return_page_title }} <a href="{{ section.settings.button_url }}">{{ section.settings.button_title }}</a> </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+{% schema %}
+  {
+    "name": "404 Template",
+    "settings": [
+		 {
+        "type": "radio",
+        "id": "error_page_style",
+        "label": "404 Page Style",
+        "options": [
+          {
+            "value": "style1",
+            "label": "404 Style 1"
+          },
+          {
+            "value": "style2",
+            "label": "404 Style 2"
+          }
+        ],
+        "default": "style2"
+      },
+      {
+        "type": "image_picker",
+        "id": "opps_404",
+        "label": "Image",
+        "info": "Recommended Size: 1920 X 1000px"
+      },
+      {
+        "type": "text",
+        "id": "heading_404",
+        "label": "Heading 404",
+        "default": "Ooops!"
+      },
+      {
+        "type": "text",
+        "id": "sub_text_404",
+        "label": "Sub Text",
+        "default": "Page not found!"
+      },
+      {
+        "type": "text",
+        "id": "button_title",
+        "label": "Button Title",
+        "default": "Go to home page"
+      },
+      {
+        "type": "text",
+        "id": "return_page_title",
+        "label": "Back To Title",
+        "default": "PLEASE GO BACK TO "
+      },
+      {
+        "type": "url",
+        "id": "button_url",
+        "label": "Button URL",
+        "default": "\/"
+      }
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

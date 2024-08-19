@@ -1,0 +1,516 @@
+{%- capture html -%}
+{%- if section.settings.slider_enable == true -%}
+<div class="slider-area revolution-js header-bottom-slider-area" id="section-{{ section.id }}" data-section2="RevolutionSlider11">
+  <div id="rev_slider_16_1_wrapper" class="rev_slider_wrapper fullwidthbanner-container" data-alias="homepage-14" data-source="gallery" style="margin:0px auto;background:transparent;padding:0px;margin-top:0px;margin-bottom:0px;">
+    <!-- START REVOLUTION SLIDER 5.4.7 auto mode -->
+    <div id="rev_slider_16_1" class="rev_slider fullwidthabanner" style="display:none;" data-version="5.4.7">
+      <ul>	<!-- SLIDE  -->
+      {%- render 'rev_slider_widget_for_cosmetic' -%}
+      </ul>
+      <div class="tp-bannertimer tp-bottom" style="visibility: hidden !important;"></div>	</div>
+  </div><!-- END REVOLUTION SLIDER -->
+</div>
+{%- endif -%}
+
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+
+
+{%- capture css -%}
+<style>
+  #section-{{ section.id }} #rev_slider_16_1_wrapper .metis.tparrows{background: {{ section.settings.rev_arrow_bg_color}};}; #section-{{ section.id }}{margin-top: {{ section.settings.section_margin_top }}px !important;margin-bottom: {{ section.settings.section_margin_bottom }}px !important;}@media (min-width: 768px) and (max-width: 991px) {#section-{{ section.id }}{margin-top: {{ section.settings.section_margin_top_md }}px !important;margin-bottom: {{ section.settings.section_margin_bottom_md }}px !important;}}@media (max-width: 767px) {#section-{{ section.id }}{margin-top: {{ section.settings.section_margin_top_xs }}px !important;margin-bottom: {{ section.settings.section_margin_bottom_xs }}px !important;}}
+</style>
+{%- endcapture -%}
+
+{{ css | strip_newlines
+       | replace: '  ', '' 
+       | replace: ': ', ':'
+       | replace: ' {', '{'
+}}
+
+{%- schema -%}
+  {
+    "name": "Revolution Cosmetic",
+    "settings": [
+		{
+          "type": "header",
+          "content": "Slider Section enable"
+        },
+		{
+          "type": "checkbox",
+          "id": "slider_enable",
+          "label": "Slide Enable",
+		  "default": false
+        },
+		{
+          "type": "header",
+          "content": "Slider Arrow Style"
+        },
+        {
+          "type": "color",
+          "id": "rev_arrow_bg_color",
+          "label": "Arrow Bg Color",
+          "default": "#fff"	
+        },
+		{
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+	],
+	"blocks":[
+      {
+          "type": "slide1",
+          "name": "Slideshow 1",
+          "settings": [
+			  {
+                  "type": "header",
+                  "content": "Slide Layer Background Color"
+              },
+              {
+                "type": "color",
+                "id": "slide_Layer_bg_color",
+                "label": "Single slide Layer Bg Color",
+                "default": "#f8f8f8"	
+              },
+			  {
+                "type": "header",
+                "content": "Layer Caption Image"
+              },
+			  {
+                "type": "checkbox",
+                "id": "image_layer1",
+                "label": "Layer1 Caption Image Enable",
+                "default": true
+              },
+              {
+                  "type": "image_picker",
+                  "id": "slide_img_layer1",
+                  "label": "Slide Caption Layer Image 1",
+                  "info": "Recommended Size: 722x537px"
+              },
+			  {
+                  "type": "image_picker",
+                  "id": "slide_text_img_1",
+                  "label": "Slide Text Image",
+                  "info": "Recommended Size: 585x186px"
+              },
+		      {
+                  "type": "image_picker",
+                  "id": "corner_bottom_img",
+                  "label": "Corner Bottom Layer Image 1",
+                  "info": "Recommended Size: 722x537px"
+              },
+			  {
+                  "type": "image_picker",
+                  "id": "corner_top_img",
+                  "label": "Corner Top Layer Image 2",
+                  "info": "Recommended Size: 585x186px"
+              },
+			  {
+                "type": "header",
+                "content": "Slide Caption"
+              },
+			  {
+                  "type": "text",
+                  "id": "rev_slide1_btn",
+                  "label": "Caption Button",
+					"default": "SHOP COLLECTION"
+                },
+                {
+                  "type": "url",
+                  "id": "rev_slide1_btn_link",
+                  "label": "Caption Button Url"
+                },
+			  
+			  {
+                "type": "paragraph",
+                "content": "Slider Caption Button"
+              },
+			  {
+                "type": "color",
+                "id": "rev_slide_caption_btn_color",
+                "label": "Caption Button Color",
+                "default": "#333"	
+              },
+			  {
+                "type": "color",
+                "id": "rev_slide_caption_btn_hover_color",
+                "label": "Caption Button Hover Color",
+                "default": "#d3122a"	
+              }
+			  
+          ]
+        },
+		{
+          "type": "slide2",
+          "name": "Slideshow 2",
+          "settings": [
+			  {
+                "type": "header",
+                "content": "Layer Image"
+              },
+              {
+                  "type": "image_picker",
+                  "id": "slider_thubnail",
+                  "label": "Slide Thumbnail",
+                  "info": "Recommended Size: 1920x800px"
+              },
+			  {
+                "type": "header",
+                "content": "Layer Caption Image"
+              },
+              {
+                  "type": "image_picker",
+                  "id": "slide_left_bottom_corner_img",
+                  "label": "Slide Left Bottom Corner Image",
+                  "info": "Recommended Size: 294x176px"
+              },
+			   {
+                  "type": "image_picker",
+                  "id": "slide_left_top_corner_img",
+                  "label": "Slide Left Top Corner Image",
+                  "info": "Recommended Size: 174x129px"
+              },
+			  {
+                  "type": "image_picker",
+                  "id": "slide_right_tb_corner_img",
+                  "label": "Slide Right Top Bottom Corner Image",
+                  "info": "Recommended Size: 176x800px"
+              },
+			  {
+                "type": "header",
+                "content": "Layer Caption Image"
+              },
+			  {
+                "type": "checkbox",
+                "id": "image_layer1",
+                "label": "Layer1 Caption Image Enable",
+                "default": true
+              },
+			  {
+                  "type": "image_picker",
+                  "id": "slide_img_layer1",
+                  "label": "Slide Layer Image",
+                  "info": "Recommended Size: 564x736px"
+              },
+			  {
+                  "type": "image_picker",
+                  "id": "slide_text_img_1",
+                  "label": "Slide Text Image",
+                  "info": "Recommended Size: 648x107px"
+              },
+			  {
+                "type": "header",
+                "content": "Slide Caption"
+              },
+			  {
+                "type": "textarea",
+                "id": "layer_caption_title1",
+                "label": "Caption Title 1",
+				"default": " Free delivery from $30 "
+			  },
+			  
+			  {
+                  "type": "text",
+                  "id": "rev_slide1_btn",
+                  "label": "Caption Button",
+					"default": "SHOP COLLECTION"
+                },
+                {
+                  "type": "url",
+                  "id": "rev_slide1_btn_link",
+                  "label": "Caption Button Url"
+                },
+			  
+			  {
+                "type": "header",
+                "content": "Slider Caption Style"
+              },
+			  {
+                "type": "color",
+                "id": "slide_title1_color",
+                "label": "Slide Title Color",
+                "default": "#333"	
+              },
+			
+			  {
+                "type": "paragraph",
+                "content": "Slider Caption Button"
+              },
+			  {
+                "type": "color",
+                "id": "rev_slide_caption_btn_color",
+                "label": "Caption Button Color",
+                "default": "#333"	
+              },
+			  {
+                "type": "color",
+                "id": "rev_slide_caption_btn_hover_color",
+                "label": "Caption Button Hover Color",
+                "default": "#d3122a"	
+              }
+			  
+			  
+          ]
+        },
+		
+		{
+          "type": "slide3",
+          "name": "Slideshow 3",
+          "settings": [
+			  {
+                  "type": "header",
+                  "content": "Slide Layer Background Color"
+              },
+              {
+                "type": "color",
+                "id": "slide_Layer_bg_color",
+                "label": "Single slide Layer Bg Color",
+                "default": "#f9f0ee"	
+              },
+		      {
+                "type": "header",
+                "content": "Circle Shape"
+              },
+			  {
+                "type": "checkbox",
+                "id": "circle_shape",
+                "label": "Circle Shape Enable",
+                "default": true
+              },
+			  {
+                "type": "color",
+                "id": "shape_circle_bg_color",
+                "label": "Shape Circle Backgound Color",
+                "default": "#fff"	
+              },
+			  {
+                "type": "header",
+                "content": "Layer Caption Image"
+              },
+			  {
+                "type": "checkbox",
+                "id": "image_layer1",
+                "label": "Image Layer1 Enable",
+                "default": true
+              },
+			  {
+                  "type": "image_picker",
+                  "id": "slide_img_layer1",
+                  "label": "Slide Layer Image",
+                  "info": "Recommended Size: 411x696px"
+              },
+			  {
+                  "type": "image_picker",
+                  "id": "slide_text_img_1",
+                  "label": "Slide Text Image",
+                  "info": "Recommended Size: 511x215px"
+              },
+			  {
+                "type": "header",
+                "content": "Slide Caption"
+              },
+			  {
+                "type": "textarea",
+                "id": "layer_caption_title1",
+                "label": "Caption Title 1",
+				"default": "Free delivery from $30"
+			  },
+			  {
+                  "type": "text",
+                  "id": "rev_slide1_btn",
+                  "label": "Caption Button",
+					"default": "SHOP COLLECTION"
+                },
+                {
+                  "type": "url",
+                  "id": "rev_slide1_btn_link",
+                  "label": "Caption Button Url"
+                },
+			  
+			  { 
+				"type": "header",
+                "content": "Slider Caption Style"
+              },
+			  {
+                "type": "color",
+                "id": "slide_title1_color",
+                "label": "Slide Title Color",
+                "default": "#333"	
+              },
+			  {
+                "type": "paragraph",
+                "content": "Slider Caption Button"
+              },
+			  {
+                "type": "color",
+                "id": "rev_slide_caption_btn_color",
+                "label": "Caption Button Color",
+                "default": "#333"	
+              },
+			  {
+                "type": "color",
+                "id": "rev_slide_caption_btn_hover_color",
+                "label": "Caption Button Hover Color",
+                "default": "#d3122a"	
+              }
+			  
+          ]
+        },
+		{
+          "type": "video_slide",
+          "name": "Video Slide",
+          "settings": [
+			  {
+                "type": "header",
+                "content": "Youtube Video Id"
+              },
+              {
+                  "type": "text",
+                  "id": "yotube_video_id",
+                  "label": "Youtube Video Id",
+				   "default": "BVMsRltq2yU",
+                  "info": "Please Put Here Youtube Video Id"
+              },
+			  {
+                "type": "header",
+                "content": "Video Thumbnail"
+              },
+              {
+                  "type": "image_picker",
+                  "id": "video_thumbnail",
+                  "label": "Video Thumbnail",
+                  "info": "Recommended Size: 1920 x 790px"
+              },
+			  {
+                  "type": "header",
+                  "content": "Video Mute"
+              },
+			  {
+                 "type":  "select",
+                 "id":    "video_mute",
+                 "label": "Video Sound Off/On",
+                 "options": [
+                   { "value": "on", "label": "Off" },
+                   { "value": "off", "label": "On" }
+                 ],
+                 "default":   "off"
+              },
+			  {
+                  "type": "header",
+                  "content": "Video Volume"
+              },
+			  {
+                "type": "range",
+                "id": "video_volume",
+                "min": 0,
+                "max": 100,
+                "step": 1,
+                "label": "Video Sound Volume",
+                "default": 50
+              },
+			  {
+                  "type": "header",
+                  "content": "Video Loop"
+              },
+			  {
+                 "type":  "select",
+                 "id":    "video_loop",
+                 "label": "Video Loop Off/On",
+                 "options": [
+                   { "value": "on", "label": "Off" },
+                   { "value": "off", "label": "On" }
+                 ],
+                 "default":   "off"
+              }
+			  
+          ]
+        }
+     ],
+	"presets": [
+        {
+          "category": "1. Revolution Slider",
+          "name": "11. Slider - Cosmetics",
+           "blocks":[
+				{
+					"type": "slide1"
+				},
+				{
+					"type": "slide2"
+				},
+				{
+					"type": "slide3"
+				}
+			]
+        }
+     ]
+  }
+{%- endschema -%}

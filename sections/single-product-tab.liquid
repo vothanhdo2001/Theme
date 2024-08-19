@@ -1,0 +1,272 @@
+{% capture html %}
+{% if section.settings.product_tab_enable %}
+<div class="shop-page-wrapper mb-100 mb-sm-80">
+  <div class="{% if section.settings.container_width == 'container' %} container {% elsif section.settings.container_width == 'fluid' %} container wide {% endif %}">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="shop-product">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="shop-product__description-tab pt-80 pt-sm-60">
+                <div class="tab-product-navigation tab-product-navigation--product-desc mb-40">
+                  <div class="nav nav-tabs justify-content-center" id="nav-tab2" role="tablist">
+                    {%- for block in section.blocks -%}
+                    {%- case block.type -%}
+                    {%- when 'product_description' -%}
+                    <a href="#pro-dec" data-toggle="tab" role="tab" {% if forloop.first == true %}class="active" aria-selected="true"{% endif %}>
+                      {{ block.settings.tab_title }}
+                    </a>
+                    {%- when 'product_review' -%}
+                    <a href="#pro-review" data-toggle="tab" role="tab" {% if forloop.first == true %}}class="active" aria-selected="true"{% endif %}>
+                     {{ block.settings.tab_title }}
+                    </a>
+                    {%- when 'facbook_comment' -%}
+                    <a href="#comment-box" data-toggle="tab"  role="tab"  {% if forloop.first == true %}}class="active" aria-selected="true"{% endif %}>
+                      {{ block.settings.tab_title }}
+                    </a>
+                    {%- when 'unique_tab' -%}
+                    <a href="#unique-tab-{{ block.id }}" data-unique="unique-tab-{{ block.id }}" data-toggle="tab" role="tab" {% if forloop.first == true %}}class="active" aria-selected="true"{% endif %}>
+                      {{ block.settings.tab_title }}
+                    </a>
+                    {%- when 'custom_global_tab' -%}
+                    <a href="#custom-tab-{{ block.id }}" data-toggle="tab" role="tab" {% if forloop.first == true %}}class="active" aria-selected="true"{% endif %}>
+                     {{ block.settings.tab_title }}
+                    </a>
+                    {%- endcase -%}
+                    {%- endfor -%}
+                  </div>
+                </div>
+                <div class="tab-content" id="nav-tabContent2">
+                  {%- for block in section.blocks -%}
+                  {%- case block.type -%}
+                  {%- when 'product_description' -%}
+                  <div class="tab-pane {% if forloop.first == true %}active{% endif %}" id="pro-dec" role="tabpanel">
+                    {{ product.description  }}
+                  </div>
+                  {%- when 'product_review' -%}
+                  <div class="tab-pane {% if forloop.first == true %}active{% endif %}" id="pro-review" role="tabpanel">
+                        {%- for block in section.blocks -%}
+                          {%- case block.type -%}
+                            {%- when '@app' -%}
+                            {%- render block -%}
+                          {% endcase %}
+                        {% endfor %}
+                  </div>
+
+                  {%- when 'facbook_comment' -%}
+                  <div role="tabpanel" class="tab-pane {% if forloop.first == true %}active{% endif %}" id="comment-box">
+                    <div class="fb-comment-box">
+                      <!-- disqus comment box start -->
+                      {% if block.settings.product_page_comments_box =='disqus_comment' %}
+                      {% render 'disqus-comment' %}
+                      {% endif %}
+                      <!-- disqus comment box end -->                
+                      <!-- facebook comment box start -->
+                      {% if block.settings.product_page_comments_box == 'facebook_comment' %}
+                      {% render 'facebook-comment' %}
+                      {% render 'facebook-comment-box-script' %}
+                      {% endif %}
+                      <!-- facebook comment box end -->
+                    </div>
+                  </div>
+                  {%- when 'custom_global_tab' -%}
+                  <div class="tab-pane {% if forloop.first == true %}active{% endif %}" id="custom-tab-{{ block.id }}" role="tabpanel">
+                    {{ block.settings.custom_tab_content }}
+                    {{ pages[block.settings.custom_tab_handle].content }}
+                  </div>
+                  {%- when 'unique_tab' -%}
+                  <div class="tab-pane {% if forloop.first == true %}active{% endif %} unique__tab-item" id="unique-tab-{{ block.id }}" role="tabpanel">
+                    {{ block.settings.unique_tab_liquid }}
+                  </div>
+                  {%- endcase -%}
+                  {%- endfor -%}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+{% endcapture %}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+
+<script defer>
+  const uniqueTabAllList = document.querySelectorAll('.unique__tab-item')
+  uniqueTabAllList.forEach((item) => {
+     var uniqueTabID = item.id;
+    if (item.textContent === null || item.textContent.match(/^ *$/) !== null) {
+      let uniqueTabList = item.parentElement.previousElementSibling.firstElementChild.children;
+       Object.values(uniqueTabList).forEach((sinitem) => {
+        if('unique' in sinitem.dataset){
+          if(sinitem.dataset.unique === uniqueTabID){
+              sinitem.remove();
+          };		
+        }
+      });
+      item.remove();
+    }
+  });
+</script>
+
+{% schema %}
+  {
+    "name": "Information Tab",
+    "settings": [
+		{
+            "type": "checkbox",
+            "id": "product_tab_enable",
+            "label": "Show Product Tab Section",
+            "default": true
+        },
+		{
+              "type": "header",
+              "content": "Container Width"
+          },
+		  {
+             "type":  "radio",
+             "id":    "container_width",
+             "label": "Container Width",
+             "options": [
+               { "value": "container", "label": "Container" },
+               { "value": "fluid", "label": "Full Width" }
+             ],
+             "default":   "container"
+          }
+       
+	],
+	"blocks": [
+      {
+        "type": "@app"
+      },
+	  {
+          "name": "Product Description",
+          "type": "product_description",
+		  "limit": 1,
+          "settings": [
+              {
+                "type": "text",
+                "id": "tab_title",
+                "label": "Tab Title",
+                "default": "Description"
+              }	
+          ]
+      },
+	  {
+          "name": "Product Review",
+          "type": "product_review",
+		  "limit": 1,
+          "settings": [
+              {
+                "type": "text",
+                "id": "tab_title",
+                "label": "Tab Title",
+                "default": "Review"
+              },
+			  {
+                      "type": "header",
+                      "content": "Product Review",
+                      "info": "[Install App](https://apps.shopify.com/product-reviews?surface_detail=product+review&surface_inter_position=1&surface_intra_position=7&surface_type=search)"
+                    }
+          ]
+      }, 
+	  {
+          "name": "Facebook Comment",
+          "type": "facbook_comment",
+		  "limit": 1,
+          "settings": [
+              {
+                "type": "text",
+                "id": "tab_title",
+                "label": "Tab Title",
+                "default": "Comment"
+              },
+               {
+                    "type": "text",
+                    "id": "product_comments_title",
+                    "label": "Comments Title",
+                    "default": "Comments"
+                },
+                {
+                    "type": "radio",
+                    "id": "product_page_comments_box",
+                    "label": "Select comments box",
+                    "options": [
+                      {
+                        "value": "disqus_comment",
+                        "label": "Disqus comments"
+                      },
+                      {
+                        "value": "facebook_comment",
+                        "label": "Facebook comments"
+                      }
+                    ],
+                    "default": "facebook_comment"
+                },
+                {
+                    "type": "text",
+                    "id": "facebook_comments_post_limit",
+                    "label": "FacebooK Comment Limit",
+                    "default": "10"
+                },
+                {
+                    "type": "text",
+                    "id": "disqus_shortname",
+                    "label": "Your Store Name",
+                    "default": "demo-store",
+                    "info": "Disqus Shortname (Get your shortname)[disqus.com](http:\/\/disqus.com)"
+                }  
+          ]
+      },
+	  {
+          "name": "Unique Tab",
+          "type": "unique_tab",
+          "settings": [
+              {
+                "type": "text",
+                "id": "tab_title",
+                "label": "Unique Tab Title",
+                "default": "Unique Tab"
+              },
+			  {
+                "type": "liquid",
+                "id": "unique_tab_liquid",
+                "label": "Unique Tab Liquid",
+				"info": "You need to put the product metafield directly here, e.g. \"{{ product.metafields.meta.unique_tab.value }}\" Go to the [metafileds](\/admin\/metafields\/product)"
+              },
+			  {
+                "type": "header",
+                "content": "Unique Tab Documentation",
+				"info": "Go to the documentation, [Click here](https:\/\/phoone.docs.team90degree.com\/product\/product-metafield-for-online-store-2.0\/unique-tab)"
+            }
+          ]
+      },
+	  {
+          "name": "Custom Tab",
+          "type": "custom_global_tab",
+          "settings": [
+			  {
+                "type": "text",
+                "id": "tab_title",
+                "label": "Tab Title",
+                "default": "Custom Tab"
+              },
+			  {
+                "type": "textarea",
+                "id": "custom_tab_content",
+                "label": "Add Tab Content",
+                "default": "Custom Tab Content"
+              },
+			  {
+                "type": "page",
+                "id": "custom_tab_handle",
+                "label": "Select Page for information",
+                "info": "[Create a page](\/admin\/pages\/new)"
+              }		
+          ]
+      }
+  	]
+  }
+{% endschema %}

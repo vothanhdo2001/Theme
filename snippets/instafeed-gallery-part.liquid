@@ -1,0 +1,132 @@
+{%- assign ssettings = section.settings -%}
+{%- capture layoutMode -%}
+{%- if ssettings.layout_mode == "slider" -%}
+slider-layout 
+{%- elsif ssettings.layout_mode == "grid" -%}
+grid-layout
+{%- endif -%}
+{%- endcapture -%}
+
+{%- capture itmeColumn -%}
+{%- assign column = ssettings.item_Column -%}
+{%- assign mdcolumn = ssettings.item_md_Column -%}
+{%- assign smcolumn = ssettings.item_sm_Column -%}
+{%- assign xscolumn = ssettings.item_xs_Column -%}
+
+{%- case column -%}
+  {% when '6' %}
+  column-6
+  {% when '5' %}
+  column-5 
+  {% when '4' %}
+  column-4 
+  {% when '3' %}
+  column-3 
+  {% when '2' %}
+  column-2 
+{%- endcase -%}
+
+{%- case mdcolumn -%}
+  {% when '6' %}
+  column-md-6
+  {% when '5' %}
+  column-md-5 
+  {% when '4' %}
+  column-md-4 
+  {% when '3' %}
+  column-md-3 
+  {% when '2' %}
+  column-md-2 
+{%- endcase -%}
+
+{%- case smcolumn -%}
+  {% when '6' %}
+  column-sm-6
+  {% when '5' %}
+  column-sm-5 
+  {% when '4' %}
+  column-sm-4 
+  {% when '3' %}
+  column-sm-3 
+  {% when '2' %}
+  column-sm-2 
+  {% when '1' %}
+  column-sm-1 
+{%- endcase -%}
+
+{%- case xscolumn -%}
+  {% when '6' %}
+  column-xs-6
+  {% when '5' %}
+  column-xs-5 
+  {% when '4' %}
+  column-xs-4 
+  {% when '3' %}
+  column-xs-3 
+  {% when '2' %}
+  column-xs-2 
+  {% when '1' %}
+  column-xs-1 
+{%- endcase -%}
+
+{%- endcapture -%}
+
+{%- capture data_slick_activation -%}
+        data-slick='{
+        "slidesToShow": {{ section.settings.slide_item_show }},
+        "slidesToScroll": 1,
+        "arrows": true,
+        "dots": false,
+        {% if settings.rtl_enable %}                
+        "rtl": true,
+        {% endif %}
+        "autoplay": {{ section.settings.autoplay_true }},
+        "autoplaySpeed": 5000,
+        "speed": 1000,
+        "responsive":[
+          {"breakpoint":1199, "settings": {"slidesToShow": {{ section.settings.slide_item_show }}}},
+          {"breakpoint":991, "settings": {"slidesToShow": {{ section.settings.tablet_slide_item_show }}}},
+          {"breakpoint":767, "settings": {"slidesToShow": {{ section.settings.large_mobile_item_show }}}},
+          {"breakpoint":575, "settings": {"slidesToShow": {{ section.settings.small_mobile_item_show }}}},
+          {"breakpoint":479, "settings": {"slidesToShow": {{ section.settings.small_xs_mobile_item_show }}}}	
+        ]}'
+ {%- endcapture -%}
+
+
+{%- capture instafeedblock -%}
+<div id="instafeed2-{{ section.id }}" class="{% if ssettings.layout_mode == "slider" %} instagram-carousel {% endif %} slick-carousel-js">
+	<div class="instagram_gallery" {{ data_slick_activation }}>
+      {%- for block in section.blocks -%}
+      {%- case block.type -%}
+      {%- when 'single_gallery_item' -%}      
+        <a href="{{ block.settings.inst_gallery_item_link }}" target="_blank">
+          {%- if block.settings.inst_gallery_item != blank -%}
+          {%- render 'lazyload_image_src',
+                	  image: block.settings.inst_gallery_item,
+          size: '480x280', crop: 'center' -%}
+          {%- else -%}
+          {%- render 'svg_placholder' with param: 'image', size: '480x270' -%}
+          {%- endif -%}
+        </a>
+      {%- endcase -%}
+      {%- endfor -%}
+  	</div>
+</div>
+{%- endcapture -%}
+
+{% if ssettings.instafeed_type == 'style1' or ssettings.instafeed_type == 'style3'  %} 
+<div class="instagram-image-slider-container {{ layoutMode }} {%- if ssettings.layout_mode == "grid" -%} {{ itmeColumn }} {%- endif -%}">
+  <div class="instagram-feed-thumb"> 
+      {{ instafeedblock }}
+  </div>
+</div>
+
+{% elsif ssettings.instafeed_type == 'style2' %} 
+
+<div class="instagram-image-slider-container {{ layoutMode }} {{ itmeColumn }}">
+  <div class="instagram-feed-thumb">
+     {{ instafeedblock }}
+  </div>
+</div>
+
+{% endif %}

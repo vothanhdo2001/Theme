@@ -1,0 +1,768 @@
+{%- capture html -%}
+<div class="home-content--concept mb-65 mb-md-50 mb-sm-30" id="section-{{ section.id }}" data-section="BannerSection">
+  <div class="{% if section.settings.container_width == 'container' %} container {% elsif section.settings.container_width == 'fluid' %} container wide {% endif %}">
+    <div class="row">
+      
+      {% if section.settings.collection_banner_left %} 
+      <div class="{% if section.settings.collection_banner_right %} col-lg-6 {% else %} col-12 {% endif %}">
+        <div class="row">
+          {%- if section.settings.banner_collection_header -%}
+          <div class="col-lg-8 offset-lg-4">
+            <!--=======  section title  =======-->
+
+            <div class="section-title section-title--one section-title--concepthome mb-150 mb-md-50 mb-sm-50 mb-xs-50 mb-xxs-50">
+              {% if section.settings.collection_section_subtitle != blank %}
+              <p class="section-label mb-25">{{ section.settings.collection_section_subtitle }}</p>
+              {% endif %}
+              
+              {% if section.settings.collection_section_title != blank %}
+              <h1>{{ section.settings.collection_section_title }}</h1>
+              {% endif %}
+              
+              {% if section.settings.collection_section_description != blank %}
+              <p>{{ section.settings.collection_section_description }}</p>
+              {% endif %}
+
+              {% if section.settings.collection_setion_btn_text != blank %}
+              <a href="{{ section.settings.collection_setion_btn_link }}" class="phoone-button-2">{{ section.settings.collection_setion_btn_text }}</a>
+              {% endif %}
+            </div>
+          </div>
+          {%- endif -%}
+          
+          {% for block in section.blocks %}
+          {% assign cat_collection = collections[block.settings.categegory_handle] %}
+          
+          {%- case block.type -%}
+          {%- when 'left_large_collection' -%}
+          <div class="col-lg-10 col-md-10 col-sm-10">
+            <!--=======  single category  =======-->
+
+            <div class="single-category single-category--one  single-category--concept-home mb-150 mb-md-50 mb-sm-50 mb-xs-50 mb-xxs-50">
+              <!--=======  single category image  =======-->
+
+              <div class="single-category__image single-category__image--one">
+                 <a href="{{ cat_collection.url }}">
+                   {% if block.settings.collection_img == 'default' %}
+                       {%- if  cat_collection.image.src != blank -%}
+                       {%- render 'lazyload_image_src',
+                          image: cat_collection.image.src,
+                          size: '745x745' -%}
+                       {%- else -%}
+                       {%- render 'svg_placholder', param: 'collection', size: '745x745' -%}
+                       {%- endif -%}
+                    {% elsif block.settings.collection_img == 'custom' %}
+                    {%- if block.settings.custom_collection_img != blank -%}
+                   {%- render 'lazyload_image_src',
+                	  image: block.settings.custom_collection_img,
+                   	  size: '745x745' -%}
+                   {%- else -%}
+                   {%- render 'svg_placholder' with param: 'collection', size: '745x745' -%}
+                   {%- endif -%}
+                   {%- endif -%}
+                  </a>
+              </div>
+
+              <!--=======  End of single category image  =======-->
+
+              <!--=======  single category content  =======-->
+
+              <div class="single-category__content single-category__content--one mt-25 mb-25">
+                <div class="title">
+                  <p>{{ cat_collection.title  }}</p>
+                   <a href="{{ cat_collection.url }}">{{ block.settings.collection_hover_title | default: '+ Online store' }}</a>
+                </div>
+                <p class="product-count">{{ cat_collection.all_products_count }}</p>
+              </div>
+
+              <!--=======  End of single category content  =======-->
+
+              <!--=======  banner-link  =======-->
+
+            
+
+              <!--=======  End of banner-link  =======-->
+            </div>
+
+            <!--=======  End of single category  =======-->
+          </div>
+          {%- when 'left_medium_collection' -%}
+          <div class="col-lg-8 offset-lg-4 col-md-8 offset-md-4 col-sm-8 offset-sm-4">
+            <!--=======  single category  =======-->
+
+            <div class="single-category single-category--one  single-category--concept-home mb-150 mb-md-50 mb-sm-50 mb-xs-50 mb-xxs-50">
+              <!--=======  single category image  =======-->
+
+              <div class="single-category__image single-category__image--one">
+                <a href="{{ cat_collection.url }}">
+                  {% if block.settings.collection_img == 'default' %}
+                    {%- if  cat_collection.image.src != blank -%}
+                    {%- render 'lazyload_image_src',
+                            image: cat_collection.image.src,
+                    		size: '570x380' -%}
+                    {%- else -%}
+                    {%- render 'svg_placholder', param: 'collection', size: '570x380' -%}
+                    {%- endif -%}
+                  {% elsif block.settings.collection_img == 'custom' %}
+                    {%- if block.settings.custom_collection_img != blank -%}
+                    {%- render 'lazyload_image_src',
+                        image: block.settings.custom_collection_img,
+                    	size: '570x380' -%}
+                    {%- else -%}
+                    {%- render 'svg_placholder' with param: 'collection', size: '570x380' -%}
+                    {%- endif -%}
+                  {%- endif -%}
+                  </a>
+              </div>
+
+              <!--=======  End of single category image  =======-->
+
+              <!--=======  single category content  =======-->
+
+              <div class="single-category__content single-category__content--one mt-25 mb-25">
+                <div class="title">
+                  <p>{{ cat_collection.title  }}</p>
+                   <a href="{{ cat_collection.url }}">{{ block.settings.collection_hover_title | default: '+ Online store' }}</a>
+                </div>
+                <p class="product-count">{{ cat_collection.all_products_count }}</p>
+              </div>
+
+            </div>
+
+            <!--=======  End of single category  =======-->
+          </div>
+ 		  {%- when 'left_small_collection' -%}
+          <div class="col-lg-6 offset-lg-5 col-md-8 col-sm-8">
+            <!--=======  single category  =======-->
+
+            <div class="single-category single-category--one  single-category--concept-home">
+              <!--=======  single category image  =======-->
+
+              <div class="single-category__image single-category__image--one">
+                <a href="{{ cat_collection.url }}">
+                  {% if block.settings.collection_img == 'default' %}
+                    {%- if  cat_collection.image.src != blank -%}
+                    {%- render 'lazyload_image_src',
+                            image: cat_collection.image.src,
+                    		size: '370x370' -%}
+                    {%- else -%}
+                    {%- render 'svg_placholder', param: 'collection', size: '370x370' -%}
+                    {%- endif -%}
+                  {% elsif block.settings.collection_img == 'custom' %}
+                    {%- if block.settings.custom_collection_img != blank -%}
+                    {%- render 'lazyload_image_src',
+                        image: block.settings.custom_collection_img,
+                    	size: '370x370' -%}
+                    {%- else -%}
+                    {%- render 'svg_placholder' with param: 'collection', size: '370x370' -%}
+                    {%- endif -%}
+                  {%- endif -%}
+                  </a>
+              </div>
+
+              <!--=======  End of single category image  =======-->
+
+              <!--=======  single category content  =======-->
+
+              <div class="single-category__content single-category__content--one mt-25 mb-25">
+                <div class="title">
+                  <p>{{ cat_collection.title  }}</p>
+                   <a href="{{ cat_collection.url }}">{{ block.settings.collection_hover_title | default: '+ Online store' }}</a>
+                </div>
+                <p class="product-count">{{ cat_collection.all_products_count }}</p>
+              </div>
+            </div>
+          </div>
+          {%- endcase -%}
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+      {% if section.settings.collection_banner_right %} 
+      <div class="{% if section.settings.collection_banner_left %} col-lg-6 {% else %} col-12 {% endif %}">
+        
+        <div class="row">
+          {% for block in section.blocks %}
+          {% assign cat_collection = collections[block.settings.categegory_handle] %}
+          {%- case block.type -%}
+          
+          {%- when 'right_small_collection' -%}
+          <div class="col-lg-8 offset-lg-2">
+            <div class="single-category single-category--one single-category--concept-home single-category--concept-home--custom-width1 mt-100 mt-md-50 mt-sm-50 mt-xs-50 mt-xxs-50">
+              <div class="single-category__image single-category__image--one">
+                <a href="{{ cat_collection.url }}">
+                  {% if block.settings.collection_img == 'default' %}
+                    {%- if  cat_collection.image.src != blank -%}
+                    {%- render 'lazyload_image_src',
+                            image: cat_collection.image.src,
+                    		size: '385x520' -%}
+                    {%- else -%}
+                    {%- render 'svg_placholder', param: 'collection', size: '385x520' -%}
+                    {%- endif -%}
+                  {% elsif block.settings.collection_img == 'custom' %}
+                    {%- if block.settings.custom_collection_img != blank -%}
+                    {%- render 'lazyload_image_src',
+                        image: block.settings.custom_collection_img,
+                    	size: '385x520' -%}
+                    {%- else -%}
+                    {%- render 'svg_placholder' with param: 'collection', size: '385x520' -%}
+                    {%- endif -%}
+                  {%- endif -%}
+                </a>
+              </div>
+              <div class="single-category__content single-category__content--one mt-25 mb-25">
+                <div class="title">
+                  <p>{{ cat_collection.title  }}</p>
+                  <a href="{{ cat_collection.url }}">{{ block.settings.collection_hover_title | default: '+ Online store' }}</a>
+                </div>
+                <p class="product-count">{{ cat_collection.all_products_count }}</p>
+              </div>
+            </div>
+            
+          </div>
+          {%- when 'right_custom_banner' -%}
+          <div class="col-lg-6 offset-lg-2 col-md-8 col-sm-8">
+            <div class="single-category single-category--one single-category--concept-home mt-200 mt-md-50 mt-sm-50 mt-xs-50 mt-xxs-50">
+
+              <div class="single-category__content single-category__content--textbanner single-category-textbanner-bg {% if block.settings.custom_collection_img != blank %}lazyload{% else %}lazyloaded{% endif %}" data-bgset="{% render 'responsive-bg-image', image: block.settings.custom_collection_img %}" style="background-image: url('{% if block.settings.custom_collection_img != blank %}{{ block.settings.custom_collection_img | img_url: '370x500',  crop: 'center'  }} {% else %} https://via.placeholder.com/370x500 {% endif %}');">
+
+                {% if block.settings.collection_banner_text != blank  %}
+                  <p class="text">
+                    <span>
+                    	{{ block.settings.collection_banner_text }}
+                    </span>
+                  </p>
+                  {% endif %}
+                <a href="{{ block.settings.collection_banner_link }}" class="banner-link"></a>
+              </div>
+            </div>
+          </div>
+          {%- when 'right_large_collection' -%}
+          <div class="col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-8 offset-sm-2">
+            <!--=======  single category  =======-->
+
+            <div class="single-category single-category--one single-category--concept-home mt-350 mt-md-50 mt-sm-50 mt-xs-50 mt-xxs-50">
+              <!--=======  single category image  =======-->
+
+              <div class="single-category__image single-category__image--one">
+                <a href="{{ cat_collection.url }}">
+                   {% if block.settings.collection_img == 'default' %}
+                    {%- if  cat_collection.image.src != blank -%}
+                    {%- render 'lazyload_image_src',
+                            image: cat_collection.image.src,
+                    		size: '745x745' -%}
+                    {%- else -%}
+                    {%- render 'svg_placholder', param: 'collection', size: '745x745' -%}
+                    {%- endif -%}
+                  {% elsif block.settings.collection_img == 'custom' %}
+                    {%- if block.settings.custom_collection_img != blank -%}
+                    {%- render 'lazyload_image_src',
+                        image: block.settings.custom_collection_img,
+                    	size: '745x745' -%}
+                    {%- else -%}
+                    {%- render 'svg_placholder' with param: 'collection', size: '745x745' -%}
+                    {%- endif -%}
+                  {%- endif -%}
+                </a>
+              </div>
+
+             
+
+              <div class="single-category__content single-category__content--one mt-25 mb-25">
+                <div class="title">
+                  <p>{{ cat_collection.title  }}</p>
+                  <a href="{{ cat_collection.url }}">{{ block.settings.collection_hover_title | default: '+ Online store' }}</a>
+                </div>
+                <p class="product-count">{{ cat_collection.all_products_count }}</p>
+              </div>
+              
+            </div>
+
+            <!--=======  End of single category  =======-->
+          </div>
+          {%- endcase -%}
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+      
+    </div>
+  </div>
+</div>
+
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+
+
+{% render 'section_typography' %}
+
+{% schema %}
+  {
+    "name": "Collection Masonry Style",
+    "settings": [
+		{
+          "type":  "radio",
+          "id":    "container_width",
+          "label": "Container Width",
+          "options": [
+            { "value": "container", "label": "Container" },
+            { "value": "fluid", "label": "Full Width" }
+          ],
+          "default":   "fluid"
+        },
+		{
+          "type": "header",
+          "content": "Collection Banner Left Side"
+        },
+        {
+          "type": "checkbox",
+          "id": "collection_banner_left",
+          "label": "Collection Banner Left Side",
+          "default": true
+        },
+		{
+          "type": "header",
+          "content": "Collection Banner Right Side"
+        },
+        {
+          "type": "checkbox",
+          "id": "collection_banner_right",
+          "label": "Collection Banner Right Side",
+          "default": true
+        },
+        {
+          "type": "header",
+          "content": "Banner Collection Header"
+        },
+        {
+          "type": "checkbox",
+          "id": "banner_collection_header",
+          "label": "Banner Collection Header",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "collection_section_subtitle",
+          "label": "Collection Section SubTitle",
+          "default": "SS-2018"
+        },
+		{
+          "type": "text",
+          "id": "collection_section_title",
+          "label": "Collection Section Title",
+          "default": "Basic instinct"
+        },
+		{
+          "type": "textarea",
+          "id": "collection_section_description",
+          "label": "Collection Section Description",
+          "default": "Lorem ipsum dolor sit amet, consectetur cing elit"
+        },
+		{
+          "type": "text",
+          "id": "collection_setion_btn_text",
+          "label": "Collecton Section Btn Text",
+		  "default": "shop collection"
+        },
+        {
+          "type": "url",
+          "id": "collection_setion_btn_link",
+          "label": "Collecton Section Btn Link"
+        }
+	],
+	"blocks": [
+		{
+        "type": "left_large_collection",
+        "name": "Left large Collection",
+        "settings": [
+            {
+              "type": "collection",
+              "id": "categegory_handle",
+              "label": "Select Collection"
+            },
+			{
+              "type":  "radio",
+              "id":    "collection_img",
+              "label": "Collection Image",
+              "options": [
+                { "value": "default", "label": "Default Collection Thumb" },
+                { "value": "custom", "label": "Custom Collection Thumb" }
+              ],
+              "default":   "default"
+            },
+			{
+              "type": "image_picker",
+              "id": "custom_collection_img",
+              "label": "Custom Collection Image",
+              "info": "Recommended Size: 745 x 745 px"
+            },
+			{
+              "type": "text",
+              "id": "collection_hover_title",
+              "label": "Collection Hover Title",
+              "default": "+ Online Store"
+            }
+          ]
+        },
+		{
+        "type": "left_medium_collection",
+        "name": "Left Medium Collection",
+        "settings": [
+            {
+              "type": "collection",
+              "id": "categegory_handle",
+              "label": "Select Collection"
+            },
+			{
+              "type":  "radio",
+              "id":    "collection_img",
+              "label": "Collection Image",
+              "options": [
+                { "value": "default", "label": "Default Collection Thumb" },
+                { "value": "custom", "label": "Custom Collection Thumb" }
+              ],
+              "default":   "default"
+            },
+			{
+              "type": "image_picker",
+              "id": "custom_collection_img",
+              "label": "Custom Collection Image",
+              "info": "Recommended Size: 570 x 380 px"
+            },
+			{
+              "type": "text",
+              "id": "collection_hover_title",
+              "label": "Collection Hover Title",
+              "default": "+ Online Store"
+            }
+          ]
+        },
+		{
+        "type": "left_small_collection",
+        "name": "Left Small Collection",
+        "settings": [
+            {
+              "type": "collection",
+              "id": "categegory_handle",
+              "label": "Select Collection"
+            },
+			{
+              "type":  "radio",
+              "id":    "collection_img",
+              "label": "Collection Image",
+              "options": [
+                { "value": "default", "label": "Default Collection Thumb" },
+                { "value": "custom", "label": "Custom Collection Thumb" }
+              ],
+              "default":   "default"
+            },
+			{
+              "type": "image_picker",
+              "id": "custom_collection_img",
+              "label": "Custom Collection Image",
+              "info": "Recommended Size: 370 x 370 px"
+            },
+			{
+              "type": "text",
+              "id": "collection_hover_title",
+              "label": "Collection Hover Title",
+              "default": "+ Online Store"
+            }
+          ]
+        },
+       
+		{
+        "type": "right_small_collection",
+        "name": "Right Small Collection",
+        "settings": [
+            {
+              "type": "collection",
+              "id": "categegory_handle",
+              "label": "Select Collection"
+            },
+			{
+              "type":  "radio",
+              "id":    "collection_img",
+              "label": "Collection Image",
+              "options": [
+                { "value": "default", "label": "Default Collection Thumb" },
+                { "value": "custom", "label": "Custom Collection Thumb" }
+              ],
+              "default":   "default"
+            },
+			{
+              "type": "image_picker",
+              "id": "custom_collection_img",
+              "label": "Custom Collection Image",
+              "info": "Recommended Size: 385 x 520 px"
+            },
+			{
+              "type": "text",
+              "id": "collection_hover_title",
+              "label": "Collection Hover Title",
+              "default": "+ Online Store"
+            }
+          ]
+        },
+		{
+        "type": "right_custom_banner",
+        "name": "Right Custom Banner",
+        "settings": [
+			{
+              "type": "image_picker",
+              "id": "custom_collection_img",
+              "label": "Custom Collection Image",
+              "info": "Recommended Size: 370 x 500 px"
+            },
+			{
+              "type": "text",
+              "id": "collection_banner_text",
+              "label": "Collection Banner Text",
+              "default": "brand<br>made<br>with love"
+            },
+			{
+              "type": "url",
+              "id": "collection_banner_link",
+              "label": "Banner Collection Link"
+            }
+          ]
+        },
+		{
+        "type": "right_large_collection",
+        "name": "Right Large Collection",
+        "settings": [
+            {
+              "type": "collection",
+              "id": "categegory_handle",
+              "label": "Select Collection"
+            },
+			{
+              "type":  "radio",
+              "id":    "collection_img",
+              "label": "Collection Image",
+              "options": [
+                { "value": "default", "label": "Default Collection Thumb" },
+                { "value": "custom", "label": "Custom Collection Thumb" }
+              ],
+              "default":   "default"
+            },
+			{
+              "type": "image_picker",
+              "id": "custom_collection_img",
+              "label": "Custom Collection Image",
+              "info": "Recommended Size: 745 x 745 px"
+            },
+			{
+              "type": "text",
+              "id": "collection_hover_title",
+              "label": "Collection Hover Title",
+              "default": "+ Online Store"
+            }
+          ]
+        },
+		{
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#ffffff"
+			}
+          ]
+       }
+	],
+	"presets": [
+		{
+		  "name": "Style 1 Collection Masonry Banner",
+		  "category": "5. Collection Banner",
+			"blocks":[
+				{
+					"type": "left_large_collection"
+				},
+				{
+					"type": "left_medium_collection"
+				},
+				{
+					"type": "left_small_collection"
+				},
+				{
+					"type": "right_small_collection"
+				},
+				{
+					"type": "right_custom_banner"
+				},
+				{
+					"type": "right_large_collection"
+				}
+			]
+		}
+		
+	]
+  }
+{% endschema %}

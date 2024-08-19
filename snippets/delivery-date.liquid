@@ -1,0 +1,55 @@
+<div class="pick_delivery_date mb-50">
+<!-- Pick a delivery date and Time -->
+  {%- if section.settings.pick_delivery_time_title -%}
+  <h3 class="mb-25">{{ section.settings.pick_delivery_time_title }}</h3>
+  {%- endif -%}
+  
+  {%- if section.settings.pick_delivery_only_date -%}
+  <p class="Delivery_date">
+    <input id="date" type="text" name="attributes[Date]" value="{{ cart.attributes.date }}" />
+  </p>
+  {%- endif -%}
+  
+  {%- if section.settings.pick_delivery_time -%}
+  <p class="Delivery_time">
+    <input id="time" type="text" placeholder="Write delivery time" name="attributes[Time]" value="{{ cart.attributes.time }}" />
+  </p>
+  {%- endif -%}
+  {%- if section.settings.special_note_for_the_customers -%}
+  <p class="m-0">{{ section.settings.special_note_for_the_customers }}</p>
+  {%- endif -%}
+</div>
+
+
+<script>
+  function onlyTheseWeekDays(arr) {
+    var days = [];
+    if (arr instanceof Array) {
+      days = arr;
+    } else if (!isNaN(Number(arr))) {
+      days.push(arr);
+    }
+    return function (date) {
+      var dayOfWeek = date.getDay(),
+          i;
+      for (i = 0; i < days.length; i += 1) {
+        if (days[i] === dayOfWeek) {
+          return [true];
+        }
+      }
+      return [false];
+    }
+  }
+  jQuery(function() {
+    jQuery("#date").datepicker( { 
+      minDate: +1, 
+      dateFormat: 'dd/mm/yy',
+      maxDate: '+2M',
+      beforeShowDay: onlyTheseWeekDays([{{ section.settings.selectweekDays | default: '1, 2, 3, 4, 5' }}])
+    });
+  });
+  $('#date').keypress(function(e) {
+    e.preventDefault();
+  });
+</script>
+

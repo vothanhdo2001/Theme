@@ -1,0 +1,231 @@
+{%- capture html -%}
+<header data-section="HeaderSection" class="header header-vertical d-none d-xl-block" id="section-{{ section.id }}">
+  <!--=======  vertical header container  =======-->
+
+  <div class="vertical-header-container">
+
+    <!--=======  logo  =======-->
+
+    <div class="vertical-header-logo">
+      {% render 'header-logo' %}
+    </div>
+
+    <!--=======  End of logo  =======-->
+
+    <!--=======  menu icon  =======-->
+
+    <div class="menu-icon-container">
+      <a href="javascript:void(0)" class="" id="vertical-menu-icon">
+        <span class="menu-icon"></span>
+        <span class="menu-icon"></span>
+        <span class="menu-icon"></span>
+      </a>
+    </div>
+
+    <!--=======  End of menu icon  =======-->
+
+    <!--=======  headeer bottom container  =======-->
+
+    <div class="header-bottom-container">
+
+
+      <!--=======  header right icons  =======-->
+
+      <div class="header-right-icons vertical-dark-menu-bottom">
+
+        <!--=======  copyright text  =======-->
+
+        {% if section.settings.copyright_text != blank %}	
+        <p class="copyright-text">{{ section.settings.copyright_text }}</p>
+        {% endif %}	
+
+        <!--=======  End of copyright text  =======-->
+
+        <!--=======  single-icon  =======-->
+
+		{% if section.settings.search_bar_enable %}
+        <div class="single-icon search">
+          <a href="javascript:void(0)" id="search-icon">
+            <i class="ion-ios-search-strong"></i>
+          </a>
+        </div>
+        {% endif %}
+
+        <!--=======  End of single-icon  =======-->
+
+        <!--=======  single-icon  =======-->
+
+        {% if section.settings.wishlist_enable %}
+        <div class="single-icon wishlist">
+          <a href="/pages/wishlist" id="offcanvas-wishlist-icon">
+            <i class="ion-android-favorite-outline"></i>
+          </a>
+        </div>
+         {% endif %}
+
+        <!--=======  End of single-icon  =======-->
+        <!--=======  single-icon  =======-->
+
+		{% if section.settings.mini_cart_enable and template != "cart" %}
+        <div class="single-icon cart">
+          {%- assign item_count = cart.item_count -%}
+          <a href="javascript:void(0)" id="offcanvas-cart-icon">
+            <i class="ion-ios-cart"></i>
+            <span class="count bigcounter">{{ item_count }}</span>
+          </a>
+        </div>
+        {% endif %}
+        <!--=======  End of single-icon  =======-->
+      </div>
+      <!--=======  End of header right icons  =======-->
+
+    </div>
+
+    <!--=======  End of headeer right container  =======-->
+
+
+  </div>
+
+  <!--=======  End of vertical header container  =======-->
+
+</header>
+
+<!--===== End of Header wide topbar ======-->
+
+<!--=============================================
+=            Header wide topbar         =
+=============================================-->
+
+<header class="header header-wide-topbar vertical-menu-mobile-header d-block d-xl-none" id="section-{{ section.id }}">
+
+
+
+  <!--=======  header bottom  =======-->
+
+  <div class="header-bottom pt-md-20 vertical_mobile pb-md-20 pt-sm-20 pb-sm-20">
+    <div class="container wide">
+
+
+      <!--=======  header bottom container  =======-->
+
+      <div class="header-bottom-container vertical-header-bottom">
+
+        <!--=======  logo with off canvas  =======-->
+
+        <div class="logo-with-offcanvas d-flex">
+
+
+
+          <!--=======  logo   =======-->
+
+          <div class="logo">
+            {% render 'header-logo' %}
+          </div>
+
+          <!--=======  End of logo   =======-->
+        </div>
+
+        <!--=======  End of logo with off canvas  =======-->
+
+
+        <!--=======  headeer right container  =======-->
+
+        <div class="header-right-container">
+
+          <!--=======  header right icons  =======-->
+
+          <div class="header-right-icons d-flex justify-content-end align-items-center h-100">
+            <!--=======  single-icon  =======-->
+
+            {% if section.settings.search_bar_enable %}
+            <div class="single-icon search">
+              <a href="javascript:void(0)" id="search-icon-2">
+                <i class="ion-ios-search-strong"></i>
+              </a>
+            </div>
+            {% endif %}
+            
+
+            <!--=======  End of single-icon  =======-->
+            {% if section.settings.account_icon %}
+            <!--=======  single-icon  =======-->
+            <div class="single-icon user-login">
+              {% if customer and shop.customer_accounts_enabled %}
+              <a href="{{ routes.account_url }}">
+                <i class="ion-person-add"></i>
+              </a>
+              {% else %}
+              <a href="{{ routes.account_login_url }}">
+
+                <i class="ion-android-person"></i>
+              </a>
+              {% endif %}
+            </div>
+            {% endif %}
+
+            <!--=======  End of single-icon  =======-->
+            {% if section.settings.wishlist_enable %}
+            <!--=======  single-icon  =======-->
+            <div class="single-icon wishlist">
+              <a href="/pages/wishlist" id="offcanvas-wishlist-icon">
+                <i class="ion-android-favorite-outline"></i>
+              </a>
+            </div>
+            <!--=======  End of single-icon  =======-->
+            {% endif %}
+            
+            {% if section.settings.mini_cart_enable and template != "cart" %}
+            <!--=======  single-icon  =======-->
+            <div class="single-icon cart">
+              {%- assign item_count = cart.item_count -%}
+              <a href="javascript:void(0)" id="offcanvas-cart-icon">
+                <i class="ion-ios-cart"></i>
+                <span class="count bigcounter">{{ item_count }}</span>
+              </a>
+            </div>
+            <!--=======  End of single-icon  =======-->
+             {% endif %}
+            
+          </div>
+          <!--=======  End of header right icons  =======-->
+
+        </div>
+
+        <!--=======  End of headeer right container  =======-->
+
+
+      </div>
+
+      <!--=======  End of header bottom container  =======-->
+
+      <!-- Mobile Navigation Start Here -->
+
+      <div class="site-mobile-navigation d-block d-lg-none">
+        {%- if section.settings.mobile_menu == "default" -%}
+        <div id="dl-menu" class="dl-menuwrapper site-mobile-nav">
+          <!--Site Mobile Menu Toggle Start-->
+          <button class="dl-trigger hamburger hamburger--spin">
+            <span class="hamburger-box">
+              <span class="hamburger-inner"></span>
+            </span>
+          </button><!--Site Mobile Menu Toggle End-->
+          {%- render 'mobile_nav_2' -%}
+        </div>
+        {%- elsif section.settings.mobile_menu == "offcanvas" -%}
+        <div class="mobile-navigation-icon" id="mobile-menu-trigger">
+          <i></i>
+        </div>
+        {%- render 'offcanvas_menu_2' -%}
+        {%- endif -%}
+      </div>
+
+      <!-- Mobile Navigation End Here -->
+
+
+    </div>
+  </div>
+
+  <!--=======  End of header bottom  =======-->
+</header>
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}

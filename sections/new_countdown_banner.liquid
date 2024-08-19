@@ -1,0 +1,260 @@
+{%- capture html -%}
+{% assign isset = section.settings  %}
+<div class="new_countdown_section"  data-section="CountDownBanner" id="section-{{ section.id }}">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="special_countdown_banner_inner {% if section.settings.text_align == "left" %}text-left {% elsif section.settings.text_align == "right" %} text-right {% elsif section.settings.text_align == "center" %} text-center {% endif %}">
+          <div class="special_countdown_header">
+            {%- if isset.countdown_title1 -%}
+            <h4>{{ isset.countdown_title1 }}</h4>
+            {%- endif -%}
+            {%- if isset.countdown_title2  -%}
+            <h1>{{ isset.countdown_title2 }}</h1>
+            {%- endif -%}
+          </div>
+          <div class="special_countdown" data-countdown3="{{ isset.countdown_timer | default: "2020/01/01" }}"></div>
+          {% if isset.countdown_fooetr %}
+          <div class="sepcial_countdown_banner_footer">
+            <p> {{ isset.countdown_fooetr }} </p>
+          </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+{%- render 'section_typography' -%}
+{% schema %}
+  {
+    "name": "Countdown Banner New",
+    "settings": [
+		{
+          "type": "header",
+          "content": "Countdown Banner"
+        },
+		{
+            "type": "textarea",
+            "id": "countdown_title1",
+            "label": "Countdown Title 1",
+            "default": "FOR ALL EXCLUSIVE COLLETIONS"
+        },
+		{
+            "type": "textarea",
+            "id": "countdown_title2",
+            "label": "Countdown Title 2",
+            "default": "Count down is going on..."
+        },
+		{
+            "type": "text",
+            "id": "countdown_timer",
+            "label": "Countdown Time",
+            "default": "2020/12/30",
+            "info": "Format: YYYY/MM/DD"
+        },
+		{
+            "type": "textarea",
+            "id": "countdown_fooetr",
+            "label": "Countdown Footer Content",
+            "default": "don’t miss the opportunity <br> buy now!"
+        },
+		{
+          "type":  "radio",
+          "id":    "text_align",
+          "label": "Content Alignment",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "right", "label": "Right" },
+			 { "value": "center", "label": "Center" }
+          ],
+          "default":   "center"
+        }
+	],
+	"blocks":[
+	   {
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 300,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 300,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 300,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 300,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 300,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 300,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#EFF3F6"
+			}
+          ]
+       }
+	],
+	"presets": [
+		{
+		  "name": "Countdown Banner New",
+		  "category": "4. Banner"
+		}
+	]
+  }
+{% endschema %}

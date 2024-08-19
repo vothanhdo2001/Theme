@@ -1,0 +1,510 @@
+{%- capture html -%}
+<section class="image_and_services" id="section-{{ section.id }}" data-section="BannerSection">
+  <div class="{% if section.settings.container_width == 'container' %} container {% elsif section.settings.container_width == 'fluid' %} container wide {% elsif section.settings.container_width == 'no_gap' %} container-fluid p-0 {% endif %} ">
+    <div class="row {% if section.settings.gutter_enable -%}no-gutters{%- endif -%}">
+      {%- for block in section.blocks -%}
+      {%- capture imagblocksrc -%}
+      {%- if block.settings.image_block != blank -%}{{ block.settings.image_block | img_url: 'master' }} {%- else -%} https://via.placeholder.com/480x650 {%- endif -%}
+      {%- endcapture -%}
+
+      
+      
+      {%- case block.type -%}
+      {%- when 'image_block' -%}
+      <div class="col-{{ section.settings.small__mobile_col }} col-lg-{{ section.settings.product_column }} col-md-{{ section.settings.product_column_md }} col-sm-{{ section.settings.product_column_xs }}">
+        <div class="image_block">
+          <figure>
+            {%- if  block.settings.image_block_link != blank -%}
+            <a href="{{ block.settings.image_block_link }}">
+               {%- if block.settings.image_block != blank -%}
+                {%- render 'lazyload_image_src',
+                        image: block.settings.image_block,
+                		size: 'master' -%}
+                {%- else -%}
+                {%- render 'svg_placholder', param: 'image', size: '480x650' -%}
+                {%- endif -%}
+            </a>
+            {%- else -%}
+            {%- if block.settings.image_block != blank -%}
+                {%- render 'lazyload_image_src',
+                        image: block.settings.image_block,
+                		size: 'master' -%}
+                {%- else -%}
+                {%- render 'svg_placholder', param: 'image', size: '480x650' -%}
+                {%- endif -%}
+            {%- endif -%}
+          </figure>
+        </div>
+      </div>
+      {%- when 'services_block' -%}
+      <div class="col-{{ section.settings.small__mobile_col }} col-lg-{{ section.settings.product_column }} col-md-{{ section.settings.product_column_md }} col-sm-{{ section.settings.product_column_xs }}">
+        <div class="services_block text-center" id="block-{{ block.id }}">
+            {%- if block.settings.feature_icon_type == "img_icon" -%}
+            <div class="services_block_icon">
+              <img class="lazyload img-fluid"  data-src="{%- if block.settings.services_icon != blank -%}{{ block.settings.services_icon | img_url: 'master' }} {%- else -%} https://cdn.shopify.com/s/files/1/0159/0355/5638/files/new-img-15.png?13585 {%- endif -%}" alt="{{ block.settings.services_icon.alt }}">
+            </div>
+            {%- elsif block.settings.feature_icon_type == "font_icon" -%}
+            <div class="services_block_icon">
+              <i class="{{ block.settings.icon_name }}"></i>
+            </div>
+            {%- elsif block.settings.feature_icon_type == "none" -%}
+
+            {%- endif -%}
+         
+          {%- if block.settings.services_title != blank -%}
+          <div class="services_block_title">
+            <h3>{{ block.settings.services_title }}</h3>
+          </div>
+          {%- endif -%}
+          {%- if block.settings.services_btn != blank -%}
+          <div class="services_block_btn mt-25">
+            <a href="{{ block.settings.services_btn_link }}">{{ block.settings.services_btn }}</a>
+          </div>
+          {%- endif -%}
+        </div>
+        
+        <style>
+          #block-{{ block.id }}.services_block {
+            background-color: {{ block.settings.services_bg_color }};
+          }
+          #block-{{ block.id }} .services_block_title h3 {
+            color: {{ block.settings.services_title_color }};
+          }
+          #block-{{ block.id }} .services_block_icon i {
+            color: {{ block.settings.services_icon_color }};
+          }
+          #block-{{ block.id }} .services_block_btn > a {
+            color: {{ block.settings.service_btn_color }};
+          }
+          #block-{{ block.id }} .services_block_btn > a::after {
+            background-color: {{ block.settings.service_btn_color }};
+          }
+          #block-{{ block.id }} .services_block_btn > a:hover {
+            color: {{ block.settings.service_btn_hover_color }};
+          }
+        </style>
+      </div>
+      {%- endcase -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{%- endcapture -%}
+{{ html | strip_newlines | replace:'	','' | replace:'    ','' | replace:'  ',' ' }}
+{%- render 'section_typography' -%}
+
+{% schema %}
+  {
+    "name": "Image & Servics Block", 
+    "settings": [
+		{
+          "type":  "radio",
+          "id":    "container_width",
+          "label": "Container Width",
+          "options": [
+            { "value": "container", "label": "Container" },
+            { "value": "fluid", "label": "Full Width" },
+			{ "value": "no_gap", "label": "No Gap Fluid" }
+          ],
+          "default":   "no_gap"
+        },
+		{
+			"type": "header",
+            "content": "Column Gutter"
+		},
+	    {
+          "type": "checkbox",
+          "id": "gutter_enable",
+          "label": "Column Gap Enable",
+		  "default":  true
+        },
+		{
+			"type": "header",
+            "content": "Product Column"
+        },
+		{
+          "type": "select",
+          "id": "product_column",
+          "label": "Desktop",
+		  "options":[
+				{
+                    "label": "1 Column",
+                    "value": "12"
+                },
+				{
+                    "label": "2 Column",
+                    "value": "6"
+                },
+                {
+                    "label": "3 Column",
+                    "value": "4"
+                },
+                {
+                    "label": "4 Column",
+                    "value": "3"
+                }
+			],
+			"default": "3"
+      	},
+		{
+          "type": "select",
+          "id": "product_column_md",
+          "label": "Tablet",
+		  "options":[
+				{
+                    "label": "1 Column",
+                    "value": "12"
+                },
+				{
+                    "label": "2 Column",
+                    "value": "6"
+                },
+                {
+                    "label": "3 Column",
+                    "value": "4"
+                },
+                {
+                    "label": "4 Column",
+                    "value": "3"
+                }
+			],
+			"default": "6"
+      	},
+		{
+          "type": "select",
+          "id": "product_column_xs",
+          "label": "Mobile",
+		  "options":[
+				{
+                    "label": "1 Column",
+                    "value": "12"
+                },
+                {
+                    "label": "2 Column",
+                    "value": "6"
+                },
+				{
+                    "label": "3 Column",
+                    "value": "4"
+                }
+			],
+			"default": "6"
+      	},
+		{
+          "type": "select",
+          "id": "small__mobile_col",
+          "label": "Samll Mobile",
+		  "options":[
+				{
+                    "label": "1 Column",
+                    "value": "12"
+                },
+                {
+                    "label": "2 Column",
+                    "value": "6"
+                },
+				{
+                    "label": "3 Column",
+                    "value": "4"
+                }
+			],
+			"default": "12"
+      	}
+	],
+	"blocks": [
+		{
+        "type": "image_block",
+        "name": "Image Block",
+        "settings": [
+			{
+              "type": "image_picker",
+              "id": "image_block",
+              "label": "Image Block",
+              "info": "Recommended Size: 480 x 650 px"
+            },
+			{
+                "type": "url",
+                "id": "image_block_link",
+                "label": "URL"
+              }
+          ]
+        },
+		{
+        "type": "services_block",
+        "name": "Services Block",
+        "settings": [
+			{
+              "type": "header",
+              "content": "Services Icon"
+            },
+			{
+              "type":  "radio",
+              "id":    "feature_icon_type",
+              "label": "Icon Type",
+              "options": [
+                { "value": "img_icon", "label": "Image Icon" },
+                { "value": "font_icon", "label": "Font Icon" },
+				{ "value": "none", "label": "None" }
+              ],
+              "default":   "img_icon"
+            },
+            {
+			  "type": "image_picker",
+			  "id": "services_icon",
+			  "label": "Image Icon"
+			},
+			{
+                "type": "text",
+                "id": "icon_name",
+                "label": "Font Icon ",
+                "default": "ti-mobile",
+                "info": "Themify Icon [See Icon](https:\/\/themify.me\/themify-icons) And Fontawesome Icon [See Icon](https:\/\/fontawesome.com\/v4.7.0\/icons\/) . FontAwesome Icon Use: fa fa-money  And Themify Icon Use: ti-mobile"
+            },
+			{
+              "type": "header",
+              "content": "Title"
+            },
+            {
+              "type": "textarea",
+              "id": "services_title",
+              "label": "Services Title 1",
+              "default": "Services Title"
+            },
+			{
+              "type": "header",
+              "content": "Button"
+            },
+			{
+              "type": "text",
+              "id": "services_btn",
+              "label": "Services Button Text",
+              "default": "Read More"
+            },
+			{
+                "type": "url",
+                "id": "services_btn_link",
+                "label": "URL"
+            },
+			{
+              "type": "header",
+              "content": "Color Options"
+            },
+			{
+			  "type": "color",
+			  "id": "services_bg_color",
+			  "label": "Background Color",
+			  "default": "#fbd47d"
+			},
+			{
+			  "type": "color",
+			  "id": "services_title_color",
+			  "label": "Services Title Color",
+			  "default": "#333333"
+			},
+			{
+			  "type": "color",
+			  "id": "services_icon_color",
+			  "label": "Services Icon Color",
+			  "info": "It will work When font Icon Will be select",
+			  "default": "#777"
+			},
+			{
+              "type": "paragraph",
+              "content": "Button"
+            },
+			{
+			  "type": "color",
+			  "id": "service_btn_color",
+			  "label": "Button Color",
+			  "default": "#333333"
+			},
+			{
+			  "type": "color",
+			  "id": "service_btn_hover_color",
+			  "label": "Button Hover Color",
+			  "default": "#d3122a"
+			}
+
+          ]
+        },
+		{
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 65
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 65
+			}
+          ]
+       },
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       }
+	],
+	"presets": [
+		{
+		  "name": "Image & Servics Block",
+		  "category": "9.5 Theme New Features",
+		  "blocks":[
+				{
+					"type": "image_block"
+				},
+				{
+					"type": "services_block"
+				},
+				{
+					"type": "image_block"
+				},
+				{
+					"type": "services_block"
+				}
+			]
+		}
+	]
+  }
+{% endschema %}
